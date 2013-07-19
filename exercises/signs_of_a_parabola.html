@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html data-require="math graphie">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>משמעות החיוביות והשליליות של הפרבולה</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars" data-ensure="( A !== 0 ) && -10 &lt; C && C &lt; 10 ">
+			<!-- Pick a random top point and coefficient A -->
+			<!-- This makes it easy to spot whether B is zero or not. -->
+			<var id="A"> randRange( -5, 5 ) </var>
+			<!-- Top = (H,K) -->
+			<var id="H"> randRange( -5, 5 )</var>
+			<var id="K"> randRange( -5, 5 )</var>
+			<!-- Calculate B and C from A, H and K -->
+			<!-- y = A*(x-H)^2 + K = A(x^2-2Hx+H^2) + K = Ax^2 -2AHx + A*H^2+K -->
+			<var id="B">-2 * A * H</var>
+			<var id="C">A * H * H + K</var>
+			<var id="F">( function( x ){ return B * x + C; })</var>
+			<var id="DrawTangent">"initialized later"</var> <!-- The body must be in the scope of "grid" -->
+		</div>
+
+		<div class="problems">
+			<div>
+				<p class="question"><code>a\cdot x^2 + b\cdot x + c</code> מסורטט למטה, קבע את החיוביות או השליליות של <code>a</code>, <code>b</code>, ו <code>c</code>.</p>
+
+				<div id="grid" class="graphie">
+					init({
+						range: [ [ -10, 10 ], [ -10, 10 ] ],
+						scale: [ 30, 30 ]
+					});
+					grid( [ -10, 10 ], [ -10, 10 ], { stroke: "#e2e2e2" });
+
+					// draw axes
+					style({ stroke: "#000000", strokeWidth: 2 });
+					path( [ [ -10,  0 ], [ 10,  0 ] ] );
+					path( [ [ 0,  -10 ], [ 0, 10 ] ] );
+
+					// graph
+					style({ stroke: "#FF0000", strokeWidth: 2});
+					plot( function(x) { return A * x * x + B * x + C; }, [ -10,10 ] );
+				</div>
+
+				<div class="solution" data-type="multiple">
+					<p><code>a</code> <span class="sol" data-type="list" data-choices="['חיובי', 'אפס', 'שלילי']"><var>(A > 0) ? 'חיובי' : 'שלילי' </var></span></p>
+					<p><code>b</code>  <span class="sol" data-type="list" data-choices="['חיובי', 'אפס', 'שלילי']"><var>(B > 0) ? 'חיובי' : ( (B &lt; 0) ? 'שלילי' : 'אפס' )</var></span></p>
+					<p><code>c</code>  <span class="sol" data-type="list" data-choices="['חיובי', 'אפס', 'שלילי']"><var>(C > 0) ? 'חיובי' : ( (C &lt; 0) ? 'שלילי' : 'אפס' )</var></span></p>
+				</div>
+
+				<div class="hints">
+					<p>המספר <code>a</code>מראה איך סידור רגלי הפרבולה יהיה. האם הפרבולה מחייכת או עצובה?</p>
+					<p>פרבולה מחייכת משמעותה <code>a</code> חיובי, ופרבולה עצובה משמעותה <code>a</code> שלילי.</p>
+					<p>פרבולה זו הינה <var>( A > 0) ? "מחייכת" : "עצובה"</var> ולכן <code>a</code> <var>( A > 0 ) ? "חיובי" : "שלילי"</var>.</p>
+					<p>המספר <code>c</code> מראה איפה הפרבולה תחתוך עם ציר ה<code>y</code>. האם נקודת החיתוך חיובית או שלילית?</p>
+					<p>אם הפרבולה חותכת בצד החיובי של ציר ה<code>y</code>, אז <code>c</code> יהיה חיובי.</p>
+					<p>הפרבולה חותכת את ציר ה<code>y</code> בנקודה <code>(0,c) = (0,<var>C</var>)</code>, לכן <code>c</code> הינו <var>( C > 0 ) ? 'חיובי' : ( (C &lt; 0) ? 'שלילי' : 'אפס' )</var>.</p>
+					<p>הפרמטר <code>b</code> קובע איך החיתוך יהיה עם ציר ה <code>y</code>. דמיינו ישר המשיק לפרבולה וחותך בנקודת החיתוך שלה עם ציר ה<code>y</code> האם השיפוע שלו חיובי או שלילי?</p>
+					<div class="graphie" data-update="grid">
+						style({ stroke: "#FF8800", strokeWidth: 2});
+						line( [ -10, F( -10 )], [ 10, F( 10 )]);
+					</div>
+					<p>נצייר את אותו ישר לפי הפרבולה והחיתוך עם ציר ה <code>y</code> בכתום. הפרמטר  <code>b</code> הינו השיפוע.</p>
+					<p> לישר יש שיפוע <var>(B > 0) ? 'חיובי' : ( (B &lt; 0) ? 'שלילי' : 'אפס' )</var> ולכן השיפוע  <code>b</code> הינו <var>(B > 0) ? 'חיובי' : ( (B &lt; 0) ? 'שלילי' : 'אפס' )</var>.</p>
+					<p><code>a</code>  <var>( A > 0 ) ? "חיובי" : "שלילי"</var>, <code>b</code> הינו <var>(B > 0) ? 'חיובי' : ( (B &lt; 0) ? 'שלילי' : 'אפס' )</var>, ו <code>c</code> הינו <var>(C > 0) ? 'חיובי' : ( (C &lt; 0) ? 'שלילי' : 'אפס' )</var>.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

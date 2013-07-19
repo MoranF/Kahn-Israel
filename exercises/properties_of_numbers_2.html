@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html data-require="math">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>תכונות של מספרים 2</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="vars">
+		<var id="NUM">randRange( 1000, 9999 )</var>
+	</div>
+
+	<div class="problems">
+		<div id="multiplication-identity">
+			<p class="question"><code><var>NUM</var> \times 1 =</code></p>
+			<p class="solution"><var>NUM</var></p>
+			<div class="hints">
+				<p>כאשר מכפילים כל מספר ממשי ב- <code>1</code> התוצאה היא אותו המספר.</p>
+				<p>על כן, גם בלי לבצע שום פעולת הכפלה, אנו יודעים ש <code><var>NUM</var> \times 1 = <var>NUM</var></code>.</p>
+				<p>עובדה זו לגבי הכפלה ב- <code>1</code> נקראת תכונת הזהות של פעולה המכפלה. היא שימושית במיוחד במציאת שברים שקולים.</p>
+			</div>
+		</div>
+
+		<div id="addition-identity">
+			<p class="question"><code><var>NUM</var> + 0 =</code></p>
+			<p class="solution"><var>NUM</var></p>
+			<div class="hints">
+				<p>כאשר מוסיפים לכל מספר ממשי <code>0</code> התוצאה היא אותו המספר.</p>
+				<p>על כן, בלי לבצע שום פעולת חיבור, אנו יודעים ש <code><var>NUM</var> + 0 = <var>NUM</var></code>.</p>
+				<p>תכונה זו לגבי הוספת <code>0</code> נקראת תכונת הזהות של פעולת החיבור.</p>
+			</div>
+		</div>
+
+		<div id="multiplicative-inverse">
+			<p class="question">באיזה מספר עלינו להכפיל את  <code><var>NUM</var></code> על מנת לקבל <code>1</code>?</p>
+			<p class="solution" data-forms="proper"><var>1 / NUM</var></p>
+			<div class="hints">
+				<p>כל מספר ממשי <code>x</code> (למעט <code>0</code>) ניתן להכפיל ב- <code>\dfrac{1}{x}</code> על מנת לקבל <code>1</code>.</p>
+				<p>על כן, בלי לבצע שום פעולת כפל או חילוק, אנו יודעים ש <code><var>NUM</var> \times \dfrac{1}{<var>NUM</var>} = 1</code>.</p>
+				<p>אם כך, התשובה היא <code>\dfrac{1}{<var>NUM</var>}</code>.</p>
+				<p>תכונה זו לגבי הכפלה ב- <code>\dfrac{1}{x}</code> נקראת תכונת ההופכיות של פעולה המכפלה.
+			</div>
+		</div>
+
+		<div id="additive-inverse">
+			<p class="question">איזה מספר עלינו להוסיף ל- <code><var>NUM</var></code> על מנת לקבל <code>0</code>?</p>
+			<p class="solution" data-forms="integer"><var>-1 * NUM</var></p>
+			<div class="hints">
+				<p>הוספת המספר הנגדי למספר ועוד המספר עצמו מסתכמת ב- <code>0</code>.</p>
+				<p>על כן, בלי לבצע שום פעולה חיבור או חיסור, אנו יודעים ש <code><var>NUM</var> +(<var>-1 * NUM</var>) = 0</code>.</p>
+				<p>אם כך, התשובה היא <code><var>-1 * NUM</var></code>.</p>
+				<p>תכונה זו לגבי הוספת המספר הנגדי נקראת תכונת ההופכיות של פעולת החיבור.</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html data-require="math calculus polynomials expressions">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>כלל השרשרת 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="INNER">generateFunction("x")</var>
+			<var id="OUTER">new CalcFunctions[randRange(1, CalcFunctions.length - 1)](INNER.f)</var>
+
+			<var id="PRE_SIMPLIFICATION">
+				( ( OUTER.f[0] === '^' &amp;&amp; OUTER.f[1] === 'e' &amp;&amp; INNER.f[0] === 'ln' )
+					|| ( OUTER.f[0] === 'ln' &amp;&amp; INNER.f[0] === '^' &amp;&amp; INNER.f[1] === 'e' ) )
+					? 'x'
+					: null
+			</var>
+
+			<div data-ensure="expr(INNER_WRONG_1) !== expr(['-', INNER.ddxF]) || expr(OUTER_WRONG_1) !== expr(['-', OUTER.ddxF])">
+				<var id="INNER_WRONG_1">randFromArray( INNER.wrongs )</var>
+				<var id="OUTER_WRONG_1">randFromArray( OUTER.wrongs )</var>
+			</div>
+
+			<div data-ensure="expr(INNER_WRONG_2) !== expr(['-', INNER.ddxF]) || expr(OUTER_WRONG_2) !== expr(['-', OUTER.ddxF])">
+				<var id="INNER_WRONG_2">randFromArray( INNER.wrongs )</var>
+				<var id="OUTER_WRONG_2">randFromArray( OUTER.wrongs )</var>
+			</div>
+
+			<var id="UNSIMPLIFIED_DERIVATIVE">['*', OUTER.ddxF, INNER.ddxF]</var>
+
+			<var id="DERIVATIVE_SIMPLIFICATIONS">
+				( ( OUTER.f[0] === '^' &amp;&amp; OUTER.f[1] === 'e' &amp;&amp; INNER.f[0] === 'ln' )
+					|| ( OUTER.f[0] === 'ln' &amp;&amp; INNER.f[0] === '^' &amp;&amp; INNER.f[1] === 'e' ) )
+					? [['frac', 'x', 'x'], '1']
+					: []
+			</var>
+
+			<var id="DERIVATIVE">
+				DERIVATIVE_SIMPLIFICATIONS.length === 0
+					? expr(UNSIMPLIFIED_DERIVATIVE)
+					: expr(DERIVATIVE_SIMPLIFICATIONS[DERIVATIVE_SIMPLIFICATIONS.length - 1])
+			</var>
+
+			<var id="NOTATION">funcNotation("x")</var>
+		</div>
+
+		<div class="problems">
+			<div>
+				<p class="problem">נסמן <code><var>NOTATION.f</var> = <var>OUTER.fText</var></code></p>
+				<p class="question"><code><var>NOTATION.ddxF</var> = {?}</code></p>
+
+				<p class="solution"><code><var>DERIVATIVE</var></code></p>
+
+				<ul class="choices" data-none="true" data-show="5">
+					<li><code><var>
+						expr(["*", OUTER.ddxF, randFromArray(INNER.wrongs)])
+					</var></code></li>
+					<li><code><var>
+						expr(["*", randFromArray(OUTER.wrongs), INNER.ddxF])
+					</var></code></li>
+					<li><code><var>
+						expr(["*", OUTER_WRONG_1, INNER_WRONG_1])
+					</var></code></li>
+					<li><code><var>
+						expr(["*", OUTER_WRONG_2, INNER_WRONG_1])
+					</var></code></li>
+					<li><code><var>
+						expr(["+", randFromArray(OUTER.wrongs), randFromArray(INNER.wrongs)])
+					</var></code></li>
+					<li><code><var>
+						expr(["+", randFromArray(OUTER.wrongs), randFromArray(INNER.wrongs)])
+					</var></code></li>
+					<li><code><var>
+						expr(OUTER.ddxF)
+					</var></code></li>
+					<li><code><var>
+						expr(randFromArray(OUTER.wrongs))
+					</var></code></li>
+					<li><code><var>
+						expr(randFromArray(OUTER.wrongs))
+					</var></code></li>
+					<li><code>
+						1
+					</code></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="hints">
+			<p><code><var>NOTATION.ddxF</var></code> הוא נגזרת של <code><var>OUTER.fText</var></code> לפי <code>(<var>INNER.fText</var>)
+			 </code> כפול הנגזרת של <code><var>INNER.fText</var></code> לפי <code>x</code></p>
+
+			<p>הנגזרת של <code><var>OUTER.fText</var></code> לפי <code>(<var>INNER.fText</var>)</code> היא <code><var>OUTER.ddxFText</var></code>.</p>
+			<p>הנגזרת של <code><var>INNER.fText</var></code> לפי <code>x</code> היא <code><var>INNER.ddxFText</var></code>.</p>
+
+			<p data-if="DERIVATIVE_SIMPLIFICATIONS.length !== 0">הנגזרת בנקודה זו היא  <code><var>expr(UNSIMPLIFIED_DERIVATIVE)</var></code>, אבל ניתן לפשט את התוצאה הזו.</p>
+
+			<div data-if="DERIVATIVE_SIMPLIFICATIONS.length !== 0" data-each="DERIVATIVE_SIMPLIFICATIONS as i, newexpr">
+				<p>את <code><var>expr( i === 0 ? UNSIMPLIFIED_DERIVATIVE : DERIVATIVE_SIMPLIFICATIONS[i - 1] )</var></code> ניתן להציג בצורה פשוטה יותר כ- <code><var>expr(newexpr)</var></code>.</p>
+			</div>
+
+			<p>לכן <code><var>NOTATION.ddxF</var> = <var>DERIVATIVE</var></code>.</p>
+
+			<p data-if="PRE_SIMPLIFICATION !== null">נשים לב שאם נפשט את הפונקציה לפני ביצוע הנגזרת ניתן להגיע לתשובה הרבה יותר בקלות: את <code><var>OUTER.fText</var></code> ניתן להציג בצורה פשוטה כ- <code><var>expr(PRE_SIMPLIFICATION)</var></code>, והרי <code>\frac{d}{dx}(<var>expr(PRE_SIMPLIFICATION)</var>)</code> הוא <code><var>DERIVATIVE</var></code>.</p>
+		</div>
+	</div>
+</body>
+</html>

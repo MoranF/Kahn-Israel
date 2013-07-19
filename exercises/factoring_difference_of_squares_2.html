@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html data-require="math">
+<head>
+	<meta charset="UTF-8" />
+	<title>פירוק לגורמים של הפרשי ריבועים 2</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div>
+				<div class="vars" data-ensure="getGCD( A, B ) === 1">
+					<var id="A">randRange( 2, 9 )</var>
+					<var id="B">randRange( 1, 9 )</var>
+					<var id="SQUARE">A * A</var>
+					<var id="CONSTANT">-B * B</var>
+				</div>
+				<div>
+					<p class="question">
+						פרקו לגורמים את הביטוי הבא:
+					</p>
+					<p>
+						<code><var>SQUARE</var>x^2 + <var>CONSTANT</var></code>
+					</p>
+				</div>
+
+				<div class="solution" data-type="set">
+					<div class="set-sol" data-type="regex">^\s*\(\s*<var>A</var>\s*[xX]\s*\+\s*<var>B</var>\s*\)\s*\(\s*<var>A</var>\s*[xX]\s*[-\u2212]\s*<var>B</var>\s*\)\s*$</div>
+					<div class="set-sol" data-type="regex">^\s*\(\s*<var>A</var>\s*[xX]\s*[-\u2212]\s*<var>B</var>\s*\)\s*\(\s*<var>A</var>\s*[xX]\s*\+\s*<var>B</var>\s*\)\s*$</div>
+					<div class="input-format"><span class="entry"></span></div>
+					<div class="example">a factored expression, like <b>(3x+1)(3x+2)</b></div>
+				</div>
+
+				<div class="hints">
+					<p>
+						הביטוי הוא מהצורה <code>\color{<var>PINK</var>}{a^2} - \color{<var>BLUE</var>}{b^2}</code>,
+						שהיא למעשה הפרש של שני ריבועים, אותם ניתן לכתוב כ-
+						<code>(\color{<var>PINK</var>}{a} + \color{<var>BLUE</var>}{b})
+						(\color{<var>PINK</var>}{a} - \color{<var>BLUE</var>}{b})</code>.
+					</p>
+					<p>
+						מהם הערכים של  <code class="hint_pink">a</code> ושל  <code class="hint_blue">b</code>?
+					</p>
+					<div>
+						<p><code class="hint_pink">\qquad a = \sqrt{<var>SQUARE</var>x^2} = <var>A</var>x</code></p>
+						<p><code class="hint_blue">\qquad b = \sqrt{<var>B * B</var>} = <var>B</var></code></p>
+					</div>
+					<p>
+						השתמשו בערכים שקיבלנו עבור  <code class="hint_pink">a</code> ושל  <code class="hint_blue">b</code>
+						כדי להשלים את הפירוק לגרומים,
+						<code>(\color{<var>PINK</var>}{a} + \color{<var>BLUE</var>}{b})
+						(\color{<var>PINK</var>}{a} - \color{<var>BLUE</var>}{b})</code>.
+					</p>
+					<p class="final_answer">
+						אם כך, אנו יכולים לרשום את הביטוי המקורי בצורה הבאה:
+						<code>(\color{<var>PINK</var>}{<var>A</var>x} + \color{<var>BLUE</var>}{<var>B</var>})
+						(\color{<var>PINK</var>}{<var>A</var>x} - \color{<var>BLUE</var>}{<var>B</var>})</code>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

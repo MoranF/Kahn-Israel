@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html data-require="math math-format graphie graphie-geometry graphie-polygon word-problems word-problems-heb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>זויות של מצולע</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="vars">
+        <var id="SIDES">randRange( 5, 7 )</var>
+    </div>
+    <div class="problems">
+        <div id="interior">
+            <div class="vars">
+                <var id="ANSWER">180 * ( SIDES - 2 )</var>
+                <var id="CLONE">{}</var>
+            </div>
+            <p class="question">מהו סכום הזויות הפנימיות של המצולע?</p>
+            <div class="graphie" id="circle">
+                init({
+                    range: [ [ -5, 5 ], [ -1, 5 ] ],
+                    scale: [ 40, 40 ]
+                });
+                graph.polygon = new Polygon( SIDES );
+                graph.polygon.draw();
+                CLONE = graph.polygon.clone();
+            </div>
+            <div class="solution" data-type="multiple">
+                <span class="sol"><var>ANSWER</var></span> מעלות
+            </div>
+            <div class="hints">
+                <p>יש מספר דרכים לגשת לשאלה הזו.</p>
+                <p>האם ניתן להשתמש בעובדה שסכום הזויות במשולש הוא 180 מעלות?</p>
+                <div>
+                    <p>מכיון ולמצולע יש  <var>SIDES</var> צלעות, אנו יכולים לצייר  <var>SIDES</var> משולשים שנפגשים במרכזו.</p>
+                    <div class="graphie" data-update="circle">
+                        graph.polygon.drawRadialDiagonals();
+                    </div>
+                </div>
+                <p>נחבר את זויות כל המשולשים, ואז נפחית 360 מעלות משום שספרנו גם את המעגל שבאמצע שאיננו מייצג את זויות המצולע.</p>
+                <p><code>\begin{align*}&<var>SIDES</var> \times 180^{\circ} - 360^{\circ} \\
+                    &= <var>SIDES * 180</var>^{\circ} - 360^{\circ} \\
+                    &= <var>ANSWER</var>^{\circ}\end{align*}</code></p>
+
+                <div>
+                    <p>ישנה גם דרך נוספת לפתור את השאלה.</p>
+                    <p>אפשר להשתמש בארבע מתוך <var> SIDES </var> הצלעות כדי ליצור שני משולשים, כפי שמוצג בציור.</p>
+                    <div class="graphie" data-id="other">
+                        init({
+                             range: [ [ -5, 5 ], [ -1, 5 ] ]
+                        });
+                        graph.polygon = CLONE;
+                        graph.polygon.draw();
+                        graph.polygon.drawDiagonals( randRange( 0, SIDES - 1 ) );
+                    </div>
+                </div>
+                <p>יש  <var></var> <var>plural_heb( SIDES - 4, "צלע","צלעות","f" )</var> בין המשולשים הכתומים. לכן נוכל לצייר    <var>plural_heb( SIDES - 4, "משולש נוסף", "משולשים נוספים", "m" )</var>.</p>
+                <p>חתכנו את המצולע ל- <var>SIDES - 2</var> משולשים, שבכל אחד סכום הזויות הוא 180 מעלות.</p>
+                <p><code><var>SIDES - 2</var> \times 180^{\circ} = <var>ANSWER</var>^{\circ}</code></p>
+                <p>אם כך, סכום הזויות הפנימיות במצולע שמצויר למעלה הוא  <var>ANSWER</var> מעלות.</p>
+            </div>
+        </div>
+        <div id="exterior">
+            <p class="question">מהו סכום הזויות החיצוניות של המצולע?</p>
+            <div class="graphie" id="polygon">
+                init({
+                     range: [ [ -6, 6 ], [ -2, 7 ] ]
+                });
+                graph.polygon = new Polygon( SIDES );
+                graph.polygon.draw();
+            </div>
+            <div class="solution" data-type="multiple">
+                <span class="sol"><var>360</var></span> מעלות
+            </div>
+
+            <div class="hints">
+                <div>
+                    <p>הזויות החיצוניות מצוירות למעלה.</p>
+                    <div class="graphie" data-update="polygon">
+                        graph.polygon.drawExteriorAngles();
+                    </div>
+                </div>
+                <div class="graphie" data-update="polygon">
+                    graph.polygon.animateExteriorAngles( randRange( 0, SIDES - 1 ) );
+                </div>
+                <p>הזויות החיצוניות יוצרות יחד מעגל.</p>
+				<p>על כן, סכום הזויות החיצוניות הוא 360 מעלות.</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

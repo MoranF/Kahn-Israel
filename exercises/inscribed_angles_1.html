@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-polygon interactive">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>זווית היקפית 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="find-angle">
+			<div class="vars">
+				<var id="START">randRange( 0, 360 )</var>
+				<var id="CENTRAL">randRange( 10, 80 ) * 2</var>
+				<var id="SUBTENDED_POINT">( START + 180 ) % 360</var>
+				<var id="RADIUS">4</var>
+
+				<var id="GIVEN">CENTRAL</var>
+				<var id="GIVEN_LABEL">"הכתומה"</var>
+				<var id="ASKED_LABEL">"הכחולה"</var>
+			</div>
+			<p dir=rtl class="question">אם הזווית <var>GIVEN_LABEL</var> הינה <var>GIVEN</var> מעלות, כמה מעלות הזווית   <var>ASKED_LABEL</var> ?</p>
+			<p dir=rtl>מדובר במקרה מיוחד בו הזווית הכחולה והזווית הכתומה חולקות אל אותו הקו. הזווית הכחולה נקראת זווית מרכזית, והזווית הכתומה נקראת זווית היקפית.</p>
+			<div class="graphie" id="circle">
+				init({
+					range: [ [ -RADIUS - 1, RADIUS + 1 ], [ -RADIUS - 1, RADIUS + 1 ] ]
+				});
+				addMouseLayer();
+				graph.circle = new Circle( RADIUS );
+
+				style({ stroke: BLUE, fill: BLUE });
+				graph.circle.drawCenter();
+				graph.circle.drawPoint( START );
+				graph.circle.drawPoint( START + CENTRAL );
+
+				graph.circle.drawCentralAngle( START, START + CENTRAL );
+
+				style({ stroke: ORANGE, fill: ORANGE });
+				graph.circle.drawInscribedAngle( SUBTENDED_POINT, START, START + CENTRAL );
+
+				graph.circle.drawMovablePoint( SUBTENDED_POINT, START + CENTRAL, START );
+			</div>
+			<div class="solution" data-type="multiple">
+				<span class="sol"><var>CENTRAL / 2</var></span> :מעלות
+			</div>
+			<div class="hints">
+				<div>
+					<p dir=rtl>הזוויות הירוקה והכחולה הן זוויות משלימות. אם הזווית הכחולה הינה  <var>CENTRAL</var> מעלות, הזווית הירוקה חייבת להיות  <var>180 - CENTRAL</var> מעלות.</p>
+					<div class="graphie" data-update="circle">
+						style({ stroke: GREEN }, function() {
+							graph.circle.drawCentralArc( START + CENTRAL, SUBTENDED_POINT );
+						})
+					</div>
+				</div>
+				<div>
+					<p>אנו יודעים שסכום זוויות במשולש שווה 180 מעלות.</p>
+					<div class="graphie" data-update="circle">
+						style({ stroke: PINK }, function() {
+							graph.circle.drawInscribedArc( START + CENTRAL, SUBTENDED_POINT, START + CENTRAL + 180 );
+						});
+					</div>
+					<p><code>\color{<var>GREEN</var>}{\text{זווית ירוקה}} + \color{<var>PINK</var>}{\text{זווית ורודה}} + \color{<var>ORANGE</var>}{\text{זווית כתומה}} = 180^{\circ}</code></p>
+				</div>
+				<div>
+					<p dir=rtl>הצלעות הורודות של המשולש הן רדיוס, ולכן חייבות להיות שוות.</p>
+					<div class="graphie" data-update="circle">
+						style({ stroke: PINK }, function() {
+							graph.circle.drawRadius( START + CENTRAL );
+							graph.circle.drawRadius( SUBTENDED_POINT );
+						});
+					</div>
+				</div>
+				<p dir=rtl>זה אומר שהמשולש הינו שווה שוקיים וזוויות הבסיס (הזווית הורודה והזווית הכתומה) שוות.</p>
+				<p><code>\color{<var>GREEN</var>}{\text{זווית ירוקה }} + 2 \cdot \color{<var>ORANGE</var>}{\text{זווית כתומה}} = 180^{\circ}</code></p>
+				<p><code>2 \cdot \color{<var>ORANGE</var>}{\text{זווית כתומה}}  = 180^{\circ} - \color{<var>GREEN</var>}{<var>180 - CENTRAL</var>^{\circ}}</code></p>
+				<p><code>2 \cdot \color{<var>ORANGE</var>}{\text{זווית כתומה}}  = \color{<var>BLUE</var>}{<var>CENTRAL</var>^{\circ}}</code></p>
+				<p><code>\color{<var>ORANGE</var>}{\text{זווית כתומה}} = \dfrac{1}{2} \cdot \color{<var>BLUE</var>}{<var>CENTRAL</var>^{\circ}}</code></p>
+				<p><code>\color{<var>ORANGE</var>}{\text{זווית כתומה}} = \color{<var>ORANGE</var>}{<var>CENTRAL / 2</var>^{\circ}}</code></p>
+			</div>
+		</div>
+		<div id="find-central-on" data-type="find-angle">
+			<div class="vars">
+				<var id="GIVEN">CENTRAL / 2</var>
+				<var id="GIVEN_LABEL">"הכתומה"</var>
+				<var id="ASKED_LABEL">"הכחולה"</var>
+			</div>
+			<div class="solution" data-type="multiple">
+				<span class="sol"><var>CENTRAL</var></span> מעלות:
+			</div>
+
+			<div class="hints">
+				<div>
+					<p>הצלעות הורודות של המשולש הן רדיוס, ולכן חייבות להיות שוות. זה אומר שהמשולש הינו שווה שוקיים וזוויות הבסיס (הזווית הורודה והזווית הכתומה) שוות.</p>
+					<div class="graphie" data-update="circle">
+						style({ stroke: PINK }, function() {
+							graph.circle.drawRadius( START + CENTRAL );
+							graph.circle.drawRadius( SUBTENDED_POINT );
+						});
+						style({ stroke: PINK }, function() {
+							graph.circle.drawInscribedArc( START + CENTRAL, SUBTENDED_POINT, START + CENTRAL + 180 );
+						});
+					</div>
+				</div>
+				<div>
+					<p>אנו יודעים שסכום זוויות במשולש שווה 180 מעלות.</p>
+					<div class="graphie" data-update="circle">
+						style({ stroke: GREEN }, function() {
+							graph.circle.drawCentralArc( START + CENTRAL, SUBTENDED_POINT );
+						})
+					</div>
+					<p><code>\color{<var>GREEN</var>}{\text{זווית ירוקה}} + \color{<var>PINK</var>}{\text{זווית ורודה}} + \color{<var>ORANGE</var>}{\text{זווית כתומה}} = 180^{\circ}</code></p>
+				</div>
+				<p>הזווית הירוקה והזווית הכחולה הן זוויות משלימות.</p>
+				<p><code>\color{<var>GREEN</var>}{\text{זווית ירוקה}} + \color{<var>BLUE</var>}{\text{זווית כחולה}} = 180^{\circ}</code></p>
+				<p><code>\color{<var>BLUE</var>}{\text{זווית כחולה}} = 180^{\circ} - \color{<var>GREEN</var>}{\text{זווית ירוקה}} </code></p>
+				<p><code>\color{<var>BLUE</var>}{\text{זווית כחולה}} = 180^{\circ} - \color{<var>GREEN</var>}{\text{<var>180 - CENTRAL</var>}^{\circ}} </code></p>
+				<p><code>\color{<var>BLUE</var>}{\text{זווית כחולה}} = \color{<var>BLUE</var>}{<var>CENTRAL</var>^{\circ}} </code></p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

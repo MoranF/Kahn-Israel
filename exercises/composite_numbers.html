@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>מספרים פריקים</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="COMPOSITE">rand( 5 ) === 0 ? getEvenComposite() : getOddComposite()</var>
+            <var id="PRIMES">shuffle( primes, 4 )</var>
+            <var id="CHOICES">shuffle( PRIMES.concat([ COMPOSITE ]) )</var>
+        </div>
+
+        <div class="problems">
+            <div>
+                <p class="question">אילו מהמספרים הבאים פריק?</p>
+                <p><code>\large{<var>CHOICES.join( ",\\ " )</var>}</code></p>
+                <p class="solution"><code><var>COMPOSITE</var></code></p>
+                <ul class="choices" data-category="true">
+                    <li data-each="CHOICES as CHOICE"><code><var>CHOICE</var></code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="hints">
+            <p>מספר פריק הוא מספר המורכב מיותר משני גורמים (כולל 1 והמספר עצמו).</p>
+            <p><var>toSentence( _.filter( CHOICES, function( p ) { return p !== COMPOSITE; } ) )</var> מורכבים כולם משני גורמים.</p>
+            <p>הגורמים של  <var>COMPOSITE</var> הם <var>toSentence( getFactors( COMPOSITE ) )</var>.</p>
+            <p>לכן, <var>COMPOSITE</var> הוא מספר פריק.</p>
+        </div>
+    </div>
+</body>
+</html>

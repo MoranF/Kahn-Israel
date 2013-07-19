@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות חשבון מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+    <style>
+        #workarea { direction: rtl; }
+    </style>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div>
+
+				<div class="vars" data-ensure="!isPrime( TOTAL_ITEMS )">
+					<var id="ITEMS_PER_GROUP">randRange( 3, 12 )</var>
+					<var id="ITEMS_LEFT">randRange( 1, ITEMS_PER_GROUP - 1 )</var>
+					<var id="GROUPS">randRange( 2, 12 )</var>
+					<var id="ITEMS_IN_GROUPS">GROUPS * ITEMS_PER_GROUP</var>
+					<var id="TOTAL_ITEMS">ITEMS_IN_GROUPS + ITEMS_LEFT</var>
+					<var id="NEW_ITEMS_PER_GROUP">getNontrivialFactor( TOTAL_ITEMS )</var>
+					<var id="NEW_GROUPS">TOTAL_ITEMS / NEW_ITEMS_PER_GROUP</var>
+				</div>
+
+				<div class="question">
+					<var>person(1)</var> <var>genderize(1,"מארגן","מארגנת")</var> <var>items(1)</var> <var>group_prop(1)</var><var>groups(1)</var>.
+					אם <var>he(1)</var> <var>genderize(1,"יחליט","תחליט")</var> לשים בכל <var>group(1)</var> <var>plural_heb( ITEMS_PER_GROUP, item(1),items(1) )</var>,
+          סך הכל <var>he(1)</var> <var>genderize(1,"ימלא","תמלא")</var> <var>plural_heb( GROUPS, group(1),groups(1) )</var>
+          ויישארו <var>tohim(1)</var>	<var>plural_heb( ITEMS_LEFT, item(1),items(1) )</var>.
+
+					אם במקום זאת <var>he(1)</var> <var>genderize(1,"יחליט","תחליט")</var> לשים
+					<var>plural_heb( NEW_ITEMS_PER_GROUP, item(1),items(1) )</var> בכל
+					<var>group(1)</var>, כמה <var>groups(1)</var>
+					<var>he(1)</var> <var>genderize(1,"ימלא","תמלא")</var>?
+				</div>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NEW_GROUPS</var></span> <var>groups(1)</var>
+				</div>
+
+				<div class="hints">
+					<p>
+						אם נמלא <var>plural_heb( GROUPS, group(1),groups(1) )</var> של
+						<var>plural_heb( ITEMS_PER_GROUP, item(1),items(1) )</var> יהיו לנו
+						<code><var>GROUPS</var> \times <var>ITEMS_PER_GROUP</var> = <var>ITEMS_IN_GROUPS</var></code>
+						<var>items(1)</var>.
+					</p>
+
+					<p>
+						נסכום <var>plural_heb( ITEMS_IN_GROUPS, item(1),items(1) )</var> ועוד 
+						<var>ITEMS_LEFT</var> שנשארו ונקבל סך הכל
+            <var>plural_heb( TOTAL_ITEMS, item(1),items(1) )</var>.
+					</p>
+
+					<p>
+						כעת אם נחלק <var>plural_heb( TOTAL_ITEMS, item(1),items(1) )</var>
+						לקבוצות של <var>NEW_ITEMS_PER_GROUP</var> נקבל
+						<code><var>TOTAL_ITEMS</var> \div <var>NEW_ITEMS_PER_GROUP</var> = <var>NEW_GROUPS</var></code>
+						<var>groups(1)</var>.
+					</p>
+				</div>
+			</div>
+
+			<div>
+
+				<div class="vars">
+					<var id="ITEM_1_COUNT">randRange( 4, 12 )</var>
+					<var id="ITEM_1_COST">randRange( 4, 12 )</var>
+					<var id="ITEM_2_COST">randRange( 4, 12 )</var>
+					<var id="TOTAL_SPENT_ON_1">ITEM_1_COUNT * ITEM_1_COST</var>
+					<var id="TOTAL_SPENT">TOTAL_SPENT_ON_1 + ITEM_2_COST</var>
+				</div>
+
+				<div class="question">
+					<var>person(1)</var> <var>genderize(1,"קנה","קנתה")</var> <var>plural_heb( ITEM_1_COUNT, storeItem(1, 1),storeItems(1, 1) )</var>,
+					שעלו אותו המחיר, מחנות <var>store(1)</var>.
+
+					<var>He(1)</var> גם <var>genderize(1,"קנה","קנתה")</var> <var>storeItem(1, 2)</var> בעבור <var>plural_heb( ITEM_2_COST, "שקל" )</var>.
+
+					<var>He(1)</var> <var>genderize(1,"הוציא","הוציאה")</var> סך הכל <var>plural_heb( TOTAL_SPENT, "שקל" )</var>.
+
+					מה היה המחיר של כל <var>storeItem(1, 1)</var> ?
+				</div>
+
+				<p class="solution" data-forms="dollar"><var>ITEM_1_COST</var></p>
+
+				<div class="hints">
+					<p>
+						מתוך <var>plural_heb( TOTAL_SPENT, "שקל" )</var> ש<var>he(1)</var> <var>genderize(1,"הוציא","הוציאה")</var>
+						 <var>plural_heb( ITEM_2_COST, "שקל" )</var> שימשו לקניית <var>definite_heb(storeItem(1, 2))</var>, ולכן <var>he(1)</var> בהכרח
+						<var>genderize(1,"שילם","שילמה")</var> <code><var>TOTAL_SPENT</var> - <var>ITEM_2_COST</var> = <var>TOTAL_SPENT_ON_1</var></code>
+						שקלים בעבור <var>definite_heb( storeItems(1, 1) )</var>.
+					</p>
+
+					<p>
+						<var>He(1)</var> <var>genderize(1,"שילם","שילמה")</var> סך הכל <var>plural_heb( TOTAL_SPENT_ON_1, "שקל" )</var> בעבור
+						<var>plural_heb( ITEM_1_COUNT, storeItem(1, 1),storeItems(1, 1) )</var>,
+						ולכן אנו מסיקים ש<var>he(1)</var> <var>genderize(1,"שילם","שילמה")</var> 
+						<code><var>TOTAL_SPENT_ON_1</var> \div <var>ITEM_1_COUNT</var> = <var>ITEM_1_COST</var></code>
+						עבור כל <var>storeItem(1, 1)</var>.
+					</p>
+				</div>
+			</div>
+
+			<div>
+
+				<div class="vars" data-ensure="!isPrime( TOTAL_ITEMS ) && NEW_ITEMS !== ITEMS">
+					<var id="TOTAL_ITEMS">randRange( 10, 99 )</var>
+					<var id="ITEMS">getNontrivialFactor( TOTAL_ITEMS )</var>
+					<var id="GROUPS">TOTAL_ITEMS / ITEMS</var>
+					<var id="NEW_ITEMS">getNontrivialFactor( TOTAL_ITEMS )</var>
+					<var id="NEW_GROUPS">TOTAL_ITEMS / NEW_ITEMS</var>
+				</div>
+
+				<div class="question">
+					ל<var>person(1)</var> יש כמה <var>items(1)</var>. כאשר <var>person(1)</var> מסדר <var>plural_heb( ITEMS, item(1),items(1) )</var> בכל
+					<var>group(1)</var>, <var>he(1)</var> <var>genderize(1,"ממלא","ממלאת")</var> <var>plural_heb( GROUPS, group(1),groups(1) )</var>.
+
+					אם <var>he(1)</var> רוצה למלא <var>plural_heb( NEW_GROUPS, group(1), groups(1) )</var>,
+					כמה <var>items(1)</var> <var>genderize(1,"עליו","עליה")</var> לשים בכל <var>group(1)</var>?
+				</div>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NEW_ITEMS</var></span> <var>items(1)</var>
+				</div>
+
+				<div class="hints">
+					<p>
+						<var>plural_heb( ITEMS, item(1),items(1) )</var> <code>\times</code>
+						<var>plural_heb( GROUPS, group(1),groups(1) )</var> <code>=</code>
+						<var>plural_heb( TOTAL_ITEMS, item(1),items(1) )</var>.
+					</p>
+
+					<p>
+						אם נחלק <var>plural_heb( TOTAL_ITEMS, item(1),items(1) )</var> ל-
+						<var>plural_heb( NEW_GROUPS, group(1),groups(1) )</var>, נקבל
+						<code><var>TOTAL_ITEMS</var> \div <var>NEW_GROUPS</var> = <var>NEW_ITEMS</var></code>
+						<var>items(1)</var> בכל <var>group(1)</var>.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

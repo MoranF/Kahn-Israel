@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie graphie-helpers">
+<head>
+	<meta charset="UTF-8" />
+	<title>חילוק והכפלה של מספרים מרוכבים בצורה פולארית</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="multiply-cplx">
+			<div class="vars" data-ensure="ANSWER_REAL &gt;= -10 &amp;&amp; ANSWER_IMAG &gt;= -10 &amp;&amp; ANSWER_REAL &lt;= 10 &amp;&amp; ANSWER_IMAG &lt;= 10">
+				<var id="DENOMINATOR">24</var>
+				<var id="USE_EULER_FORM">randFromArray( [ true, false ] )</var>
+				<var id="A_RADIUS">randRange( 1, 7 )</var>
+				<var id="A_ANGLE_NUMERATOR">randRange( 0, DENOMINATOR - 1 )</var>
+				<var id="A_ANGLE">A_ANGLE_NUMERATOR * PI * 2 / DENOMINATOR</var>
+				<var id="A_ANGLE_REP">piFraction( A_ANGLE, true )</var>
+				<var id="A_REP">polarForm( A_RADIUS, A_ANGLE, USE_EULER_FORM )</var>
+				<var id="A_REAL">cos( A_ANGLE ) * A_RADIUS</var>
+				<var id="A_IMAG">sin( A_ANGLE ) * A_RADIUS</var>
+
+				<var id="B_RADIUS">randRange( 1, 7 )</var>
+				<var id="B_ANGLE_NUMERATOR">randRange( 0, DENOMINATOR - 1 )</var>
+				<var id="B_ANGLE">B_ANGLE_NUMERATOR * PI * 2 / DENOMINATOR</var>
+				<var id="B_ANGLE_REP">piFraction( B_ANGLE, true )</var>
+				<var id="B_REP">polarForm( B_RADIUS, B_ANGLE, USE_EULER_FORM )</var>
+				<var id="B_REAL">cos( B_ANGLE ) * B_RADIUS</var>
+				<var id="B_IMAG">sin( B_ANGLE ) * B_RADIUS</var>
+
+				<var id="ANSWER_RADIUS">A_RADIUS * B_RADIUS</var>
+				<var id="ANSWER_ANGLE_NUMERATOR">( A_ANGLE_NUMERATOR + B_ANGLE_NUMERATOR ) % DENOMINATOR</var>
+				<var id="ANSWER_ANGLE">ANSWER_ANGLE_NUMERATOR * PI * 2 / DENOMINATOR</var>
+				<var id="ANSWER_ANGLE_REP">piFraction( ANSWER_ANGLE, true )</var>
+				<var id="ANSWER_REAL">cos( ANSWER_ANGLE ) * ANSWER_RADIUS</var>
+				<var id="ANSWER_IMAG">sin( ANSWER_ANGLE ) * ANSWER_RADIUS</var>
+
+				<!-- the R(cos A + i sin A) form contains parentheses, so it's better wrapped in brackets
+				     rather than another pair of parentheses... -->
+				<var id="BRACKETS">USE_EULER_FORM ? '()' : '[]'</var>
+				<var id="LEFT_BRACKET">BRACKETS[0]</var>
+				<var id="RIGHT_BRACKET">BRACKETS[1]</var>
+
+				<var id="INTERMEDIATE_ANGLE_REP">piFraction( ( A_ANGLE_NUMERATOR + B_ANGLE_NUMERATOR ) * PI * 2 / DENOMINATOR, true )</var>
+			</div>
+			<p class="question">
+				הכפל את המספרים המרוכבים הבאים, המסומנים בנקודות <strong class="hint_blue">כחולות</strong> על הגרף:
+			</p>
+			<p>
+				<code><var>LEFT_BRACKET</var><var>A_REP</var><var>RIGHT_BRACKET</var> \cdot <var>LEFT_BRACKET</var><var>B_REP</var><var>RIGHT_BRACKET</var></code>
+			</p>
+			<p>
+				(התשובה הנכונה תסורטט ב<strong class="hint_orange">כתום</strong>.)
+			</p>
+
+			<!-- TODO: use the dots in hints? -->
+			<div class="graphie">
+				graphInit({
+					range: [ [ -10, 10 ], [ -10 ,10 ] ],
+					scale: 20,
+					tickStep: 1,
+					axisArrows: "<->"
+				});
+
+				drawComplexChart( 10, DENOMINATOR );
+
+				circle( [A_REAL, A_IMAG], 1 / 4, {
+					fill: KhanUtil.BLUE,
+					stroke: "none"
+				});
+
+				circle( [B_REAL, B_IMAG], 1 / 4, {
+					fill: KhanUtil.BLUE,
+					stroke: "none"
+				});
+
+				graph.currComplexPolar = new ComplexPolarForm( DENOMINATOR, 10, USE_EULER_FORM );
+			</div>
+
+			<div class="solution" data-type="complexNumberPolarForm">
+				[ <var>ANSWER_ANGLE_NUMERATOR</var>, <var>ANSWER_RADIUS</var> ]
+			</div>
+
+			<div class="hints">
+				<p>
+					בהכפלת מספרים מרוכבים בצורה פולארית, אנו נכפיל את האורכים ( הרדיוסים) ונחבר את הזוויות.
+				</p>
+				<p>
+					המספר הראשון (<code><var>A_REP</var></code>) בעל זווית של <code><var>A_ANGLE_REP</var></code> ורדיוס של <code><var>A_RADIUS</var></code>.
+				</p>
+				<p>
+					המספר השני (<code><var>B_REP</var></code>) בעל זווית של <code><var>B_ANGLE_REP</var></code> ורדיוס של <code><var>B_RADIUS</var></code>.
+				</p>
+				<p>
+					הרדיוס החדש יהיה <code><var>A_RADIUS</var> \cdot <var>B_RADIUS</var></code>, כלומר <code><var>ANSWER_RADIUS</var></code>.
+				</p>
+				<div data-if="A_ANGLE_NUMERATOR + B_ANGLE_NUMERATOR > 12 * 2" data-unwrap>
+					<p>
+						סכום הזוויות הינו <code><var>A_ANGLE_REP</var> + <var>B_ANGLE_REP</var> = <var>INTERMEDIATE_ANGLE_REP</var></code>.
+					</p>
+					<p>
+						הזווית <code><var>INTERMEDIATE_ANGLE_REP</var></code> הינה יותר מ <code>2 \pi</code>. מספר מרוכב עושה סיבוב שלם אם מוספת לו זווית של <code>2 \pi</code>, אז הוא חזר לאותה זווית. בגלל זה, מטעמי נוחות אנו מקפידים לרשום את הזווית של המספר המרוכב בין <code>0</code> ובין <code>2 \pi</code>.
+					</p>
+					<p>
+						<code><var>INTERMEDIATE_ANGLE_REP</var> - 2 \pi = <var>ANSWER_ANGLE_REP</var></code>
+						<!-- The A and B angles are both between 0 and 2pi, so the maximum angle here is 4pi, so it's safe not to handle further 2pi multiples. -->
+					</p>
+				</div>
+				<p data-else>
+					זווית התוצאה היא <code><var>A_ANGLE_REP</var> + <var>B_ANGLE_REP</var> = <var>ANSWER_ANGLE_REP</var></code>.
+				</p>
+				<p>
+					רדיוס התוצאה הוא <code><var>ANSWER_RADIUS</var></code> וזווית התוצאה היא <code><var>ANSWER_ANGLE_REP</var></code>.
+				</p>
+			</div>
+		</div>
+
+		<div id="divide-cplx">
+			<div class="vars" data-ensure="A_REAL &gt;= -10 &amp;&amp; A_IMAG &gt;= -10 &amp;&amp; A_REAL &lt;= 10 &amp;&amp; A_IMAG &lt;= 10">
+				<var id="DENOMINATOR">24</var>
+				<var id="USE_EULER_FORM">randFromArray( [ true, false ] )</var>
+
+				<var id="ANSWER_RADIUS">randRange( 1, 10 )</var>
+				<var id="ANSWER_ANGLE_NUMERATOR">randRange( 0, DENOMINATOR - 1 )</var>
+				<var id="ANSWER_ANGLE">ANSWER_ANGLE_NUMERATOR * PI * 2 / DENOMINATOR</var>
+				<var id="ANSWER_ANGLE_REP">piFraction( ANSWER_ANGLE, true )</var>
+
+				<var id="B_RADIUS">randRange( 1, 7 )</var>
+				<var id="B_ANGLE_NUMERATOR">randRange( 0, DENOMINATOR - 1 )</var>
+				<var id="B_ANGLE">B_ANGLE_NUMERATOR * PI * 2 / DENOMINATOR</var>
+				<var id="B_ANGLE_REP">piFraction( B_ANGLE )</var>
+				<var id="B_REP">polarForm( B_RADIUS, B_ANGLE, USE_EULER_FORM )</var>
+				<var id="B_REAL">cos( B_ANGLE ) * B_RADIUS</var>
+				<var id="B_IMAG">sin( B_ANGLE ) * B_RADIUS</var>
+
+				<var id="A_RADIUS">ANSWER_RADIUS * B_RADIUS</var>
+				<var id="A_ANGLE_NUMERATOR">( ANSWER_ANGLE_NUMERATOR + B_ANGLE_NUMERATOR ) % DENOMINATOR</var>
+				<var id="A_ANGLE">A_ANGLE_NUMERATOR * PI * 2 / DENOMINATOR</var>
+				<var id="A_ANGLE_REP">piFraction( A_ANGLE, true )</var>
+				<var id="A_REP">polarForm( A_RADIUS, A_ANGLE, USE_EULER_FORM )</var>
+				<var id="A_REAL">cos( A_ANGLE ) * A_RADIUS</var>
+				<var id="A_IMAG">sin( A_ANGLE ) * A_RADIUS</var>
+
+				<var id="INTERMEDIATE_ANGLE_REP">piFraction( ( A_ANGLE_NUMERATOR - B_ANGLE_NUMERATOR ) * PI * 2 / DENOMINATOR, true )</var>
+			</div>
+			<p class="question">
+				חלק את המספרים המרוכבים הבאים:
+			</p>
+			<p>
+				<code>\dfrac{<var>A_REP</var>}{<var>B_REP</var>}</code>
+			</p>
+			<p>
+				(המונה מסומן בגרף בצבע <strong class="hint_blue">כחול</strong> והמכנה מסומן בגרף בצבע <strong class="hint_green">ירוק</strong>.
+				תשובתך מסומנת בצבע <strong class="hint_orange">כתום</strong>.)
+			</p>
+
+			<!-- TODO: differentiate the dots! -->
+			<div class="graphie">
+				graphInit({
+					range: [ [ -10, 10 ], [ -10, 10 ] ],
+					scale: 20,
+					tickStep: 1,
+					axisArrows: "<->"
+				});
+
+				drawComplexChart( 10, DENOMINATOR );
+
+				circle( [A_REAL, A_IMAG], 1 / 4, {
+					fill: KhanUtil.BLUE,
+					stroke: "none"
+				});
+
+				circle( [B_REAL, B_IMAG], 1 / 4, {
+ 				fill: KhanUtil.GREEN,
+					stroke: "none"
+				});
+
+				graph.currComplexPolar = new ComplexPolarForm( DENOMINATOR, 10, USE_EULER_FORM );
+			</div>
+
+			<div class="solution" data-type="complexNumberPolarForm">
+				[ <var>ANSWER_ANGLE_NUMERATOR</var>, <var>ANSWER_RADIUS</var> ]
+			</div>
+
+			<div class="hints">
+				<p>
+					חילוק מספרים מרוכבים בצורה פולארית נעשה על ידי חילוק האורכים ( הרדיוסים) וחיסור הזוויות.
+				</p>
+				<p>
+					המספר הראשון (<code><var>A_REP</var></code>) בעל זווית של <code><var>A_ANGLE_REP</var></code> ורדיוס של <var>A_RADIUS</var>.
+				</p>
+				<p>
+					המספר השני (<code><var>B_REP</var></code>) בעל זווית של <code><var>B_ANGLE_REP</var></code> ורדיוס של <var>B_RADIUS</var>.
+				</p>
+				<p>
+					הרדיוס החדש יהיה <code>\frac{<var>A_RADIUS</var>}{<var>B_RADIUS</var>}</code>, כלומר <var>ANSWER_RADIUS</var>.
+				</p>
+				<div data-if="A_ANGLE_NUMERATOR - B_ANGLE_NUMERATOR < 0" data-unwrap>
+					<p>
+						חיסור הזוויות יהיה <code><var>A_ANGLE_REP</var> - <var>B_ANGLE_REP</var> = <var>INTERMEDIATE_ANGLE_REP</var></code>.
+					</p>
+					<p>
+						הזווית <code><var>INTERMEDIATE_ANGLE_REP</var></code>הינה שלילית. מספר מרוכב עושה סיבוב שלם אם הזווית שלו מוגדלת ב <code>2 \pi</code>, אז הוא יחזור על עצמו. בגלל זה, נהוג לשמור על הזווית של המספר המרוכב בין <code>0</code> ובין <code>2 \pi</code>.
+					</p>
+					<p>
+						<code><var>INTERMEDIATE_ANGLE_REP</var> + 2 \pi = <var>ANSWER_ANGLE_REP</var></code>
+					</p>
+				</div>
+				<p data-else>
+					זווית התוצאה היא <code><var>A_ANGLE_REP</var> - <var>B_ANGLE_REP</var> = <var>ANSWER_ANGLE_REP</var></code>.
+				</p>
+				<p>
+					רדיוס התוצאה הוא <code><var>ANSWER_RADIUS</var></code> וזווית התוצאה היא <code><var>ANSWER_ANGLE_REP</var></code>.
+				</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

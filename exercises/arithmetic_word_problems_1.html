@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות חשבון מילוליות 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="TOTAL">randRange( 10, 100 )</var>
+			<var id="NUM1">randRange( 1, TOTAL - 1 )</var>
+			<var id="NUM2">TOTAL - NUM1</var>
+		</div>
+
+		<div class="problems">
+
+			<div id="take-away-result">
+				<p class="problem">
+					לפני התחנה הקודמת <var>plural_heb_verb(TOTAL,"היה","היו")</var> <var>plural_heb(TOTAL, "איש","אנשים","m")</var> ברכבת.
+					<var>plural_heb(NUM2, "איש","אנשים","m")</var> <var>plural_heb_verb(TOTAL,"ירד","ירדו")</var> בתחנה ההיא.
+				</p>
+				<p class="question">
+					כמה אנשים ישנם כעת על הרכבת?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> אנשים
+				</div>
+				<div class="hints">
+					<p>
+          מספר האנשים על הרכבת עכשיו הוא ההפרש בין מספר האנשים שהיו בה לפני התחנה הקודמת ומספר האנשים שירדו בתחנה ההיא.
+					</p>
+					<p>
+					ההפרש הוא <code><var>TOTAL</var> - <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>TOTAL</var> - <var>NUM2</var> = <var>NUM1</var></code><br> 
+          לכן <var>NUM1</var> הוא מספר האנשים על הרכבת כעת.
+					</p>
+				</div>
+			</div>
+
+			<div id="take-away-start">
+				<p class="problem">
+					<var>plural_heb(NUM1, "איש","אנשים","m")</var> <var>plural_heb_verb(NUM1,"נמצא","נמצאים")</var> על הרכבת.
+					בתחנה הקודמת  <var>plural_heb_verb(NUM1,"ירד","ירדו")</var> מהרכבת <var>plural_heb(NUM2, "איש","אנשים","m")</var>. יש לציין שאיש לא עלה בתחנה הקודמת.
+				</p>
+				<p class="question">
+					כמה אנשים היו על הרכבת כשהיא הגיעה לתחנה הקודמת?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>TOTAL</var></span> אנשים
+				</div>
+				<div class="hints">
+					<p>
+          מספר האנשים שהיו על הרכבת כשהיא הגיעה לתחנה הקודמת הוא סכום מספר האנשים עליה עכשיו ועוד מספר האנשים שירדו בתחנה הקודמת.
+					</p>
+					<p>
+					הסכום הוא <code><var>NUM1</var> + <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>NUM1</var> + <var>NUM2</var> = <var>TOTAL</var></code><br> 
+          לכן <var>TOTAL</var> הוא מספר האנשים שהיו על הרכבת כשזו הגיעה לתחנה הקודמת.
+					</p>
+				</div>
+			</div>
+
+			<div id="take-away-change">
+				<p class="problem">
+          <var>plural_heb_verb(TOTAL,"היה","היו")</var> <var>plural_heb(TOTAL, "איש","אנשים","m")</var> ברכבת לפני שהיא עצרה ומספר אנשים ירדו ממנה.
+          כעת יש על הרכבת <var>plural_heb(NUM2, "איש","אנשים","m")</var>. 
+				</p>
+				<p class="question">
+          כמה אנשים ירדו מהרכבת בתחנה האחרונה?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> אנשים
+				</div>
+				<div class="hints">
+					<p>
+          מספר האנשים שירדו מהרכבת הוא ההפרש בין מספר האנשים שהיו עליה קודם ומספר האנשים שנמצאים עליה כעת.
+					</p>
+					<p>
+					ההפרש הוא <code><var>TOTAL</var> - <var>NUM2</var></code>.
+					</p>
+					<p>        
+					<code><var>TOTAL</var> - <var>NUM2</var> = <var>NUM1</var></code><br>  
+          לכן <var>NUM1</var> הוא מספר האנשים שירדו.
+					</p>
+				</div>
+			</div>
+
+			<div id="put-together">
+				<p class="problem">
+					על הגדה הימנית של הנהר <var>plural_heb_verb(NUM1,"ישנו","ישנם")</var> <var>plural_heb(NUM1, "עץ","עצים","m")</var> ואילו על הגדה השמלאית <var>plural_heb_verb(NUM2,"ישנו","ישנם")</var> <var>plural_heb(NUM2, "עץ","עצים","m")</var>.
+				</p>
+				<p class="question">
+					כמה עצים יש סך הכל על שתי גדותיו של הנהר?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>TOTAL</var></span> עצים
+				</div>
+				<div class="hints">
+					<p>
+          מספר העצים על שתי גדות הנהר הוא מספר העצים על הגדה השמאלית ומספר העצים על הגדה הימנית.
+					</p>
+					<p>
+					הסכום הוא <code><var>NUM1</var> + <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>NUM1</var> + <var>NUM2</var> = <var>TOTAL</var></code><br> 
+          לכן מספר העצים הוא <var>TOTAL</var>.
+					</p>
+				</div>
+			</div>
+
+			<div id="take-apart">
+				<p class="problem">
+          <var>plural_heb_verb(TOTAL,"ישנו","ישנם")</var> סך הכל <var>plural_heb(TOTAL, "עץ","עצים","m")</var> על שתי גדות הנהר.
+          על הגדה הימנית  <var>plural_heb_verb(NUM2,"ישנו","ישנם")</var> <var>plural_heb(NUM2, "עץ","עצים","m")</var>.
+				</p>
+				<p class="question">
+					כמה עצים ישנם על הגדה השמאלית של הנהר?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> עצים
+				</div>
+				<div class="hints">
+					<p>
+          מספר העצים על הגדה השמאלית הוא ההפרש בין סך הכל העצים למספר העצים על הגדה הימנית.
+					</p>
+					<p>
+					ההפרש הוא <code><var>TOTAL</var> - <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>TOTAL</var> - <var>NUM2</var> = <var>NUM1</var></code><br>
+          לכן מספר העצים על הגדה השמאלית הוא <var>NUM1</var>.
+					</p>
+				</div>
+			</div>
+
+			<div id="add-start">
+				<p class="problem">
+				  לפני כשעה היו בחניון של חנות <var>store(1)</var> מספר מכוניות.
+				  כעת הגיעו לחניון <var>NUM2</var> נוספות, וסך הכל יש בו  
+					<var>plural_heb(TOTAL, "מכונית","מכוניות","f")</var>.
+				</p>
+				<p class="question">
+					כמה מכוניות היו בחנות חנות <var>store(1)</var> בתחילה?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> מכוניות
+				</div>
+				<div class="hints">
+					<p>
+          מספר המכוניות בחניון החנות בהתחלה שווה להפרש בין מספר המכוניות בחניון כעת לבין מספר המכוניות שנוספו.
+					</p>
+					<p>
+					ההפרש הוא  <code><var>TOTAL</var> - <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>TOTAL</var> - <var>NUM2</var> = <var>NUM1</var></code><br>
+          לכן מספר המכוניות שהיו בחניון הוא  <var>NUM1</var>.
+					</p>
+				</div>
+			</div>
+
+			<div id="add-change">
+				<p class="problem">
+          בתחילת היום <var>plural_heb_verb(NUM2,"חנתה","חנו")</var> בחניון של חנות <var>store(1)</var>  <var>plural_heb(NUM2, "מכונית","מכוניות","f")</var>.        
+					במהלך <var>randRange( 2, 3 )</var> השעות האחרונות הגיעו הגיעו לחניון <var>store(1)</var> מכוניות נוספות וכעת יש בו  <var>plural_heb(TOTAL, "מכונית","מכוניות","f")</var> 
+          . אף מכונית לא עזבה את החניון בזמן הזה.
+				</p>
+				<p class="question">
+				כמה מכוניות נוספו בזמן הזה לחניון?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> מכוניות
+				</div>
+				<div class="hints">
+					<p>
+          מספר המכוניות שנוספו הוא ההפרש בין מספר המכוניות שיש כעת ומספר המכוניות שהיו בו בהתחלה.
+					<p>
+					ההפרש הוא <code><var>TOTAL</var> - <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>TOTAL</var> - <var>NUM2</var> = <var>NUM1</var></code><br>
+          <var>NUM1</var> הוא מספר המכוניות שנוספו לחניון.
+					</p>
+				</div>
+			</div>
+
+			<div id="add-result">
+				<p class="problem">
+          בתחילת היום <var>plural_heb_verb(NUM2,"חנתה","חנו")</var> בחניון של חנות <var>store(1)</var>  <var>plural_heb(NUM2, "מכונית","מכוניות","f")</var>.
+          כעת בחניון יש <var>plural_heb(NUM1, "מכונית","מכוניות","f")</var> יותר.        
+				</p>
+				<p class="question">
+					כמה מכוניות יש בחניון כעת?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>TOTAL</var></span> מכוניות
+				</div>
+				<div class="hints">
+					<p>
+          מספר המכוניות בחניון הוא הסכום של מספר המכוניות שהיו בו בתחילת היו ומספר המכוניות שנוספו.
+					</p>
+					<p>
+					הסכום הוא <code><var>NUM1</var> + <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>NUM1</var> + <var>NUM2</var> = <var>TOTAL</var> </code>
+          לכן מספר המכוניות בחניון הוא  <var>TOTAL</var>.
+					</p>
+				</div>
+			</div>
+
+			<div id="compare-diff-more">
+				<p class="problem">
+					<var>person(1)</var> <var>genderize(1,"עשה","עשתה")</var> <var>plural_heb(TOTAL,  exercise(1), exercise_plural(1),"f")</var> <var>timeofday(1)</var>.
+					<var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> <var>plural_heb(NUM2,  exercise(1), exercise_plural(1),"f")</var> <var>timeofday(2)</var>.
+				</p>
+				<p class="question">
+					כמה <var>exercise_plural(1)</var> נוספות <var>genderize(1,"עשה","עשתה")</var> <var>person(1)</var> ביחס ל<var>person(2)</var>?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> <var>exercise_plural(1)</var>
+				</div>
+				<div class="hints">
+					<p>
+					מצאו את ההפרש בין מספר <var>exercise_plural(1)</var> ש<var>genderize(1,"עשה","עשתה")</var>
+          <var>person(1)</var> ומספר <var>exercise_plural(1)</var> ש<var>genderize(2,"עשה","עשתה")</var> <var>person(2)</var>.
+					</p>
+					<p>
+					ההפרש הוא <code><var>TOTAL</var> - <var>NUM2</var></code>.
+					</p>
+					<p>
+					<code><var>TOTAL</var> - <var>NUM2</var> = <var>NUM1</var></code>.
+					</p>
+				</div>
+			</div>
+
+			<div id="compare-diff-less"  data-type="compare-diff-more">
+				<p class="question">
+          <var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> פחות <var>exercise_plural(1)</var> מאשר <var>person(1)</var>. כמה פחות ?
+				</p>
+			</div>
+
+			<div id="compare-bigger-more">
+				<p class="problem">
+          <var>person(1)</var> ו<var>person(2)</var> עשו <var>timeofday(1)</var> <var>exercise_plural(1)</var>. 
+					<var>person(1)</var> <var>genderize(1,"עשה","עשתה")</var> <var>NUM1</var> <var>plural_heb_word(TOTAL,  exercise(1), exercise_plural(1))</var> 
+          יותר מאשר <var>person(2)</var>.
+          <var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> <var>plural_heb(NUM2,  exercise(1), exercise_plural(1),"f")</var>.        
+				</p>
+				<p class="question">
+					כמה <var>exercise_plural(1)</var> <var>genderize(1,"עשה","עשתה")</var> <var>person(1)</var>?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>TOTAL</var></span> <var>exercise_plural(1)</var>
+				</div>
+				<div class="hints">
+					<p>
+					<var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> <var>plural_heb(NUM2,  exercise(1), exercise_plural(1),"f")</var>, ואילו <var>person(1)</var> <var>genderize(1,"עשה","עשתה")</var>
+           <var>NUM1</var> יותר. עליכם פשוט למצוא את הסכום.
+					</p>
+					<p>
+					הסכום הוא <code><var>NUM2</var> + <var>NUM1</var></code>.
+					</p>
+					<p>
+					<var>person(1)</var> <var>genderize(1,"עשה","עשתה")</var> <code><var>NUM2</var> + <var>NUM1</var> = <var>TOTAL</var></code> <var>exercise_plural(1)</var>.
+					</p>
+				</div>
+			</div>
+
+			<div id="compare-bigger-less" data-type="compare-bigger-more">
+				<p class="problem">
+          <var>person(1)</var> ו<var>person(2)</var> עשו <var>timeofday(1)</var> <var>exercise_plural(1)</var>.      
+					<var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> <var>NUM1</var> פחות מאשר <var>person(1)</var>.
+					<var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> <var>plural_heb(NUM2,  exercise(1), exercise_plural(1),"f")</var>.
+				</p>
+			</div>
+
+			<div id="compare-smaller-more">
+				<p class="problem">
+          <var>person(1)</var> ו<var>person(2)</var> עשו <var>timeofday(1)</var> <var>exercise_plural(1)</var>.
+					<var>person(1)</var> <var>genderize(2,"עשה","עשתה")</var> <var>NUM1</var> יותר מאשר <var>person(2)</var>.
+					<var>person(1)</var> <var>genderize(1,"עשה","עשתה")</var> <var>plural_heb(TOTAL,  exercise(1), exercise_plural(1),"f")</var>.
+				</p>
+				<p class="question">
+					כמה <var>exercise_plural(1)</var> <var>genderize(2,"עשה","עשתה")</var> <var>person(2)</var> ?
+				</p>
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM2</var></span> <var>exercise_plural(1)</var>
+				</div>
+				<div class="hints">
+					<p>
+					<var>person(1)</var> <var>genderize(1,"עשה","עשתה")</var>
+           <var>plural_heb(TOTAL,  exercise(1), exercise_plural(1),"f")</var>, ואילו <var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> <var>NUM1</var> פחות.
+           לכן עליכם פשוט למצוא את ההפרש בין שני המספרים הללו.
+					</p>
+					<p>
+					ההפרש הוא <code><var>TOTAL</var> - <var>NUM1</var></code>.
+					</p>
+					<p>
+					<var>person(2)</var> <var>genderize(2,"עשה","עשתה")</var> <code><var>TOTAL</var> - <var>NUM1</var> = <var>NUM2</var></code> <var>exercise_plural(1)</var>.
+					</p>
+				</div>
+			</div>
+
+			<div id="compare-smaller-fewer" data-type="compare-smaller-more">
+				<p class="problem">
+          <var>person(1)</var> ו<var>person(2)</var> עשו <var>timeofday(1)</var> <var>exercise_plural(1)</var>.      
+					<var>person(2)</var> <var>genderize(1,"עשה","עשתה")</var> <var>NUM1</var> פחות מאשר <var>person(1)</var>.
+					<var>person(1)</var> <var>genderize(1,"עשה","עשתה")</var> <var>plural_heb(TOTAL,  exercise(1), exercise_plural(1),"f")</var>.
+				</p>
+			</div>
+
+		</div>
+	</div>
+</body>
+

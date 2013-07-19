@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ביטוי עם תנאי וערכי אמת</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+<div class="exercise">
+    <div class="vars">
+        <var id="PROBLEMS">
+            
+            
+                   <!-- [ normal, converse, inverse, contrapositive ] -->
+            [
+               {    
+		    original: "אם ירד גשם היום, שיעור הכדורגל יתבטל.",
+                    converse: "אם שיעור הכדורגל יתבטל היום, אז ירד גשם.",
+                    inverse: "אם לא ירד גשם היום, שיעור הכדורגל לא יתבטל.",
+                    contrapositive: "אם שיעור הכדורגל לא התבטל היום, לא ירד גשם."
+                              
+                },
+                {
+                    original: "כאשר אני רעב, אני אוכל פיצה.",
+                    converse: "אם אני אוכל פיצה, אז אני רעב.",
+                    inverse: "אם אני לא רעב, אני לא אוכל פיצה.",
+                    contrapositive: "אם אני לא אוכל פיצה, אני לא רעב."
+                },
+                {
+                    original: "אם אלמד ממש קשה, אצליח במבחן.",
+                    converse: " אם הצלחתי במבחן, למדתי ממש קשה .",
+                    inverse: "אם אני לא אלמד ממש קשה, לא אצליח במבחן.",
+                    contrapositive: "אם לא הצלחתי במבחן, לא למדתי קשה."
+                },
+                {
+                    original: "ירין אוהב סושי.",
+                    converse: "אם אדם אוהב סושי, אז האדם הזה הוא ירין.",
+                    inverse: "אם האדם אינו ירין, אז האדם הזה לא אוהב סושי.",
+                    contrapositive: "אם האדם לא אוהב סושי, אז האדם הזה אינו ירין."
+                },
+                {
+                    original: "אם הזוויות קודקודיות, אז הן חופפות.",
+                    converse: "אם הזוויות חופפות, אז הזוויות קודקודיות.",
+                    inverse: "אם אלו לא זוויות קודקודיות, אז הזוויות לא שוות.",
+                    contrapositive: "אם שתי זוויות אינן חופפות, אז הזוויות לא קודקודיות."
+                },
+                {
+                    original: "אבא שלי יקח אותי לבית ספר אם אחמיץ את האוטובוס.",
+                    converse: "אם אבא שלי לוקח אותי לבית ספר, החמצתי את הבית ספר.",
+                    inverse: "אם לא אחמיץ את האוטובוס, אבא שלי לא יקח אותי לבית ספר.",
+                    contrapositive: "אם אבא שלי לא חייב לקחת אותי לבית הספר, אז לא החמצתי את האוטובוס."
+                },
+                {
+                    original: "כל הריבועים הינם מצולעים בעלי 4 צלעות.",
+                    converse: "כל מצולע בעל 4 צלעות הינו ריבוע.",
+                    inverse: "כל המצולעים שאין להם 4 צלעות, אינם ריבועים.",
+                    contrapositive: "אם למצולע אין 4 צלעות, אז הוא אינו ריבוע."
+                },
+                {
+                    original: "לכל האופניים יש 2 גלגלים.",
+                    converse: "כל רכב בעל 2 גלגלים הינו אופניים.",
+                    inverse: "כל רכב שאינו אופניים, אינו בעל 2 גלגלים.",
+                    contrapositive: "אם לרכב אין 2 גלגלים, אז הוא לא אופניים."
+                },
+                {
+                    original: "אם עכשיו פסח, אנו נאכל ארוחה גדולה.",
+                    converse: "אם אנחנו אוכלים ארוחה גדולה, אז עכשיו פסח.",
+                    inverse: "אם עכשיו לא פסח, לא נאכל ארוחה גדולה.",
+                    contrapositive: "אם לא נאכל ארוחה גדולה, אז עכשיו לא פסח."
+                },
+                {
+                    original: "אם אנחנו הולכים לתחרות אכילת העוגות, נאכל עוגות.",
+                    converse: "אכלנו עוגות, הלכנו לתחרות אכילת עוגות.",
+                    inverse: "אם לא נלך לתחרות העוגות, לא נאכל עוגות.",
+                    contrapositive: "אם לא אכלנו עוגות, לא הלכתנו לתחרות אכילת העוגות."
+                },
+                {
+                    original: "אכילת תרד גורמת לילדים להיות חזקים.",
+                    converse: "אם הילדים מתחזקים, אז הם אכלו תרד.",
+                    inverse: "אם הילדים לא אכלו תרד, אז הם לא יתחזקו.",
+                    contrapositive: "אם הילדים לא מתחזקים, אז הם לא אוכלים תרד."
+                },
+                {
+                    original: "אסור להשתמש בפלאפון בזמן נהיגה במכונית.",
+                    converse: "אם אדם לא משתמש בפלאפון, אז הוא נוהג במכונית.",
+                    inverse: "אם אדם לא נוהג, אז הוא מדבר בפלאפון .",
+                    contrapositive: "אם אדם משתמש בפלאפון, אז אסור לו לנהוג במכונית."
+                },
+                {
+                    original: "אם המספר מתחלק ב10, אז המספר זוגי.",
+                    converse: "אם המספר זוגי, אז הוא מתחלק ב10.",
+                    inverse: "אם המספר אינו מתחלק ב10, אז זהו לא מספר זוגי.",
+                    contrapositive: "אם המספר לא זוגי, אז הוא לא מתחלק ב10."
+                }
+            ]
+        </var>
+    </div>
+    <div class="problems">
+        <div id="deduce">
+            <div class="vars">
+                <var id="PROBLEM">randFromArray(PROBLEMS)</var>
+                <var id="MUST">"כן, ניתן להניח זאת מהמשפט הראשון"</var>
+                <var id="MIGHT">"לא, אי אפשר להניח זאת מהמשפט הראשון"</var>
+                <var id="STATEMENT_TYPE">randFromArray(["converse", "inverse", "contrapositive"])</var>
+                <var id="HEB_TYPE"> (STATEMENT_TYPE=="converse")? "הופכי":(STATEMENT_TYPE=="inverse")? "נגדי":"קונטרה חיובי" </var>
+                <var id="STATEMENT">PROBLEM[STATEMENT_TYPE]</var>
+                <var id="ANS">STATEMENT_TYPE === "contrapositive" ? MUST : MIGHT</var>
+            </div>
+            <div class="problem">
+                <p>הנח שהמשפט הראשון הינו נכון:</p>
+                <p class="question"><var>PROBLEM.original</var></p>
+            </div>
+            <div class="question">
+                <p> באופן לוגי, האם אתה יכול להניח שהמשפט השני נכון לפי המשפט הראשון הנתון?</p>
+                <p class="question"><var>STATEMENT</var></p>
+            </div>
+            <p class="solution"><var>ANS</var></p>
+            <ul class="choices" data-category="true">
+                <li><var>MUST</var></li>
+                <li><var>MIGHT</var></li>
+            </ul>
+            <div class="hints">
+                <p>המשפט השני הינו המשפט ההופכי , הנגדי, או קונטרה חיובי למשפט הראשון?</p>
+                <p>המשפט השני הינו ה<var>HEB_TYPE</var> למשפט המקורי.</p>
+                <p data-if="STATEMENT_TYPE === 'contrapositive'">ה<var>HEB_TYPE</var> הינו שווה באופן לוגי למשפט הראשון , אז כן, המשפט השני נכון בהנחה שהמשפט הראשון נכון.</p>
+                <p data-else>ה<var>HEB_TYPE</var> אינו שווה באופן לוגי למשפט המקורי, אז לא, המשפט השני אינו בהכרח נכון על פי המשפט הראשון.</p>
+            </div>
+        </div>
+
+        <div id="choose">
+            <div class="vars">
+                <var id="PROBLEM">randFromArray(PROBLEMS)</var>
+                <var id="ANS">PROBLEM.contrapositive</var>
+                <var id="OPTIONS">[PROBLEM.converse, PROBLEM.inverse]</var>
+            </div>
+            <div class="question">
+                <p>הנח שהמשפט מתחת נכון:</p>
+                <p class="question"><var>PROBLEM.original</var></p>
+            </div>
+            <p class="problem">בחר את המשפט שחייב להיות נכון על פי המשפט זה:</p>
+            <p class="solution"><var>ANS</var></p>
+            <ul class="choices">
+                <li data-each="OPTIONS as option"><var>option</var></li>
+            </ul>
+            <div class="hints">
+                <p>רק המשפט הקונטרה חיובי למשפט המקורי חייב להיות נכון.</p>
+                <p>מצא את המשפט הקונטרה חיובי. במילים אחרות, מצא משפט ההופך את מיקום הנתון והמסקנה והופך אותם לנגדיים באותו זמן.</p>
+                <p>במקרה זה, המשפט הקונטרה חיובי הוא <strong>"<var>PROBLEM.contrapositive</var>"</strong></p>
+            </div>
+        </div>
+
+        <div id="equivalent">
+            <div class="vars">
+                <var id="NAMES">["משפט המקורי", "הופכי", "נגדי", "קונטרה חיובי"]</var>
+                <var id="CASE">randRange(0, 3)</var>
+                <var id="ANS">NAMES[3-CASE]</var>
+                <var id="OPTIONS">shuffle((function(){var opt = NAMES.slice(); opt.splice(CASE, 1); return opt;})())</var>
+            </div>
+            <p class="question">אם ה<var>NAMES[CASE]</var> הינו נכון, איזה משפט נוסף חייב להיות נכון גם הוא?</p>
+            <p class="solution">ה<var>ANS</var></p>
+            <ul class="choices" data-category="true">
+                <li data-each="OPTIONS as option">ה<var>option</var></li>
+            </ul>
+            <div class="hints">
+                <p>המשפט ה<span class="hint_blue">המקורי</span> והמשפט ה<span class="hint_blue">קונטרה חיובי</span>שלו שווים לוגית, וה<span class="hint_green">הופכי</span> וה<span class="hint_green">נגדי</span> שווים לוגית.</p>
+                <p>למשפטים השווים לוגית, יש ערכי אמת זהים.</p>
+                <p>בגלל שה<var>NAMES[CASE]</var> נכון, אז ה<strong><var>NAMES[3-CASE]</var></strong> גם הוא נכון.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

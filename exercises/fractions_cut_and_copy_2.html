@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie graphie-helpers word-problems word-problems-heb slice-clone">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>שברים - גזור והעתק 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <div data-ensure="SLICES < 20 && isInt( SLICES )">
+                <var id="D_PARENT">randRangeWeighted( 3, 8, 1, 1 / 6 )</var>
+                <var id="N_PARENT" data-ensure="getGCD( D_PARENT, N_PARENT ) === 1">D_PARENT === 1 ? randRange( 1, 2 ) : randRange( D_PARENT + 1,  2 * D_PARENT - 1 )</var>
+                <var id="PARENT">N_PARENT / D_PARENT</var>
+                <var id="D_OFFSPRING_1">randRange( 3, 8 )</var>
+                <var id="D_OFFSPRING_2" data-ensure="D_OFFSPRING_1 !== D_OFFSPRING_2">randRange( 3, 8 )</var>
+                <var id="N_OFFSPRING_1" data-ensure="getGCD( D_OFFSPRING_1, N_OFFSPRING_1 ) === 1 && PARENT > N_OFFSPRING_1 / D_OFFSPRING_1">randRangeExclude( 2, 2 * D_OFFSPRING_1 - 1, [ D_OFFSPRING_1 ] )</var>
+                <var id="N_OFFSPRING_2" data-ensure="getGCD( D_OFFSPRING_2, N_OFFSPRING_2 ) === 1 && PARENT > N_OFFSPRING_2 / D_OFFSPRING_2">randRangeExclude( 2, 2 * D_OFFSPRING_2 - 1, [ D_OFFSPRING_2 ] )</var>
+                <var id="SLICES">N_PARENT * getLCM(D_OFFSPRING_1, D_OFFSPRING_2) / D_PARENT</var>
+            </div>
+            <var id="CODE_PARENT">D_PARENT === 1 ? N_PARENT : mixedOrImproper( N_PARENT, D_PARENT )</var>
+            <var id="CODE_OFFSPRING_1">mixedOrImproper( N_OFFSPRING_1, D_OFFSPRING_1 )</var>
+            <var id="CODE_OFFSPRING_2">mixedOrImproper( N_OFFSPRING_2, D_OFFSPRING_2 )</var>
+            <var id="OFFSPRING_1">N_OFFSPRING_1 / D_OFFSPRING_1</var>
+            <var id="OFFSPRING_2">N_OFFSPRING_2 / D_OFFSPRING_2</var>
+            <var id="ANSWER_1">OFFSPRING_1 / PARENT</var>
+            <var id="ANSWER_2">OFFSPRING_2 / PARENT</var>
+            <var id="LCM">getLCM( D_OFFSPRING_1, D_OFFSPRING_2 )</var>
+        </div>
+
+        <div class="problems">
+            <div>
+                <p class="question">המלבן ההתחלתי שלמטה הוא באורך  <code><var>CODE_PARENT</var></code> יחידות. השתמשו בכלים שמימין כדי להמיר את המלבן ההתחלתי לשני מלבני המטרה שאורכם  <code><var>CODE_OFFSPRING_1</var></code> יחידות ו- <code><var>CODE_OFFSPRING_2</var></code> יחידות. אתם יכולים לראות את המצב הנוכחי של המלבן מתחת לציור של המלבן ההתחלתי</p>
+
+                <p>מלבן התחלתי:</p>
+
+                <div class="graphie" id="parent_block">
+                    initSliceClone([ "current_block_1", "current_block_2" ]);
+                    init({ range: [ [ 0, 1 ], [ 0, 1 ] ],scale: [ 600, 25 ] });
+                    rectchart( [ 1, 0 ], [ "#e00", "#999" ] );
+                </div>
+
+                <p>מלבן נוכחי 1:</p>
+
+                <div class="graphie" id="current_block_1">
+                    init({ range: [ [ 0, 1 ], [ 0, 1 ] ],scale: [ 600, 25 ] });
+                    rectchart( [ 1, 0 ], [ "#e00", "#999" ] );
+                </div>
+
+                <p>מלבן מטרה 1:</p>
+
+                <div class="graphie" id="goal_block_2">
+                    init({ range: [ [ 0, 1 ], [ 0, 1 ] ],scale: [ 600 * ANSWER_1, 25 ] });
+                    rectchart( [ 1, 0 ], [ BLUE, "#999" ] );
+                </div>
+
+                <p>מלבן נוכחי 2:</p>
+
+                <div class="graphie" id="current_block_2">
+                    init({ range: [ [ 0, 1 ], [ 0, 1 ] ],scale: [ 600, 25 ] });
+                    rectchart( [ 1, 0 ], [ "#e00", "#999" ] );
+                </div>
+
+                <p>מלבן מטרה 2:</p>
+
+                <div class="graphie" id="goal_block_2">
+                    init({ range: [ [ 0, 1 ], [ 0, 1 ] ],scale: [ 600 * ANSWER_2, 25 ] });
+                    rectchart( [ 1, 0 ], [ ORANGE, "#999" ] );
+                </div>
+
+                <div class="solution" data-type="multiple">
+                    <div style="margin-bottom: 10px;">
+                        <span>פרוס את המלבן ההחתלתי ל-</span>
+                        <input type="button" value="-" class="simple-button" onclick="KhanUtil.changePieces( false )">
+                        <span id="pieces" style="display: inline-block; width: 54px; text-align: center;">פרוסה אחת</span>
+                        <input type="button" value="+" class="simple-button" onclick="KhanUtil.changePieces( true )">
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <span>שכפל את מלבן נוכחי 1</span>
+                        <input type="button" value="-" class="simple-button" onclick="KhanUtil.changeTimes( false, 'current_block_1' )" disabled="disabled">
+                        <span id="current_block_1_times" style="display: inline-block; width: 54px; text-align: center;">פעם אחת</span>
+                        <input type="button" value="+" class="simple-button" onclick="KhanUtil.changeTimes( true, 'current_block_1' )">
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <span>שכפל את מלבן נוכחי 2</span>
+                        <input type="button" value="-" class="simple-button" onclick="KhanUtil.changeTimes( false, 'current_block_2' )" disabled="disabled">
+                        <span id="current_block_2_times" style="display: inline-block; width: 54px; text-align: center;">פעם אחת</span>
+                        <input type="button" value="+" class="simple-button" onclick="KhanUtil.changeTimes( true, 'current_block_2' )">
+                    </div>
+
+                    <span class="sol" id="current_block_1_answer" style="display: none;"><var>roundTo( 3, ANSWER_1 )</var></span>
+                    <span class="sol" id="current_block_2_answer" style="display: none;"><var>roundTo( 3, ANSWER_2 )</var></span>
+                </div>
+
+                <div class="hints">
+                    <p data-if="CODE_OFFSPRING_1 !== fraction( N_OFFSPRING_1, D_OFFSPRING_1)">מלבן המטרה 1, שאורכו  <code><var>CODE_OFFSPRING_1</var></code> יחידות, 
+                    ניתן לכתוב כ- <code><var>fraction( N_OFFSPRING_1, D_OFFSPRING_1 )</var></code>.</p>
+                    <p data-if="CODE_OFFSPRING_2 !== fraction( N_OFFSPRING_2, D_OFFSPRING_2)">מלבן המטרה 2, שאורכו <code><var>CODE_OFFSPRING_2</var></code> יחידות, 
+                    ניתן לכתוב כ- <code><var>fraction( N_OFFSPRING_2, D_OFFSPRING_2 )</var></code>.</p>
+                    <p>לפרוס את המלבן ההתחלתי ל- <code>x</code> פרוסות זה כמו לחלק את אורכו ב- <code>x</code>.</p>
+                    <p>אנו רוצים לפרוס את המלבן ההתחלתי לפרוסות שניתן לשכפל ולהגיע לאורכו של מלבן המטרה 1 ומלבן המטרה 2.</p>A
+                    <p>המכנה המשותף הקטן ביותר של  <code><var>D_OFFSPRING_1</var></code> ו- <code><var>D_OFFSPRING_2</var></code> (אלו המכנים של אורכם של מלבני המטרה) הוא
+                    <code><var>LCM</var></code>. לכן ניתן לשכפל את מלבן שאורכו <code>\dfrac{1}{<var>LCM</var>}</code> יחידות כדי ליצור את שני מלבני המטרה.</p>
+                    <p>כדי למצוא לכמה פרוסות עלינו לחלק את המלבן ההתחלתי עלינו למצוא את  <code>s</code> במשוואה הבאה:</p>
+                    <p><code><var>CODE_PARENT</var> ÷ s = \dfrac{1}{<var>LCM</var>}</code></p>
+                    <p><code><var>CODE_PARENT</var> = \dfrac{1}{<var>LCM</var>}s</code></p>
+                    <p><code><var>CODE_PARENT</var> \cdot <var>LCM</var> = s</code></p>
+                    <p><code>s = <var>SLICES</var></code></p>
+                    <p>כעת קיבלנו מלבן שאורכו  <code>\dfrac{1}{<var>LCM</var>}</code> יחידות. עכשיו צריך פשוט לחלק את אורכם של מלבני המטרה בערך זה כדי למצוא כמה פעמים עלינו לשכפל את המלבן הנוכחי.</p>
+                    <p><code>\color{<var>BLUE</var>}{c1 = \dfrac{<var>N_OFFSPRING_1</var>}{<var>D_OFFSPRING_1</var>} ÷ \dfrac{1}{<var>LCM</var>} =
+                        \dfrac{<var>N_OFFSPRING_1</var>}{<var>D_OFFSPRING_1</var>} \cdot <var>LCM</var> = <var>N_OFFSPRING_1 * LCM / D_OFFSPRING_1</var>}</code></p>
+                    <p><code>\color{<var>ORANGE</var>}{c2 = \dfrac{<var>N_OFFSPRING_2</var>}{<var>D_OFFSPRING_2</var>} ÷ \dfrac{1}{<var>LCM</var>} =
+                        \dfrac{<var>N_OFFSPRING_2</var>}{<var>D_OFFSPRING_2</var>} \cdot <var>LCM</var> = <var>N_OFFSPRING_2 * LCM / D_OFFSPRING_2</var>}</code></p>
+                    <p><strong>אם כך, הפתרון הוא לפרוס את המלבן ההתחלתי ל- <code><var>SLICES</var></code> פרוסות, לשכפל את הפרוסה הראשונה   <code><var>N_OFFSPRING_1 * LCM / D_OFFSPRING_1</var></code> פעמים כדי לקבל את מלבן המטרה 1 ולשכפלה  <code><var>N_OFFSPRING_2 * LCM / D_OFFSPRING_2</var></code> פעמים כדי לקבל את מלבן המטרה 2.</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers angles">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>זויות מתחלפות חיצוניות בין ישרים מקבילים</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="vars">
+        <var id="ANCHOR">randRange( 20, 160 )</var>
+        <var id="KNOWN_INDEX, UNKNOWN_INDEX">shuffle( randFromArray( [ [ 2, 4 ], [ 3, 5 ] ] ) )</var>
+        <var id="MEASURE">KNOWN_INDEX % 2 === 0 ? ANCHOR : 180 - ANCHOR</var>
+    </div>
+
+    <div class="problems">
+        <div>
+            <p>שני הישרים האופקיים הם מקבילים וישנו ישר שלישי שחותך אותם כפי שמוצג למטה.</p>
+            <p class="question">אם אנו יודעים שגודלה של  <span class="hint_blue">הזוית הכחולה הוא  <var>MEASURE</var> מעלות</span>, מהו גודלה של  <span class="hint_orange">הזוית הכתומה </span>?</p>
+            <p class="solution" data-forms="integer"><var>MEASURE</var></p>
+            <div class="graphie" id="parallel-lines">
+                init({
+                    range: [ [ -1, 11 ], [-1, 4] ]
+                });
+                graph.pl = new ParallelLines( 0, 0, 10, 0, 3 );
+                graph.pl.draw();
+                graph.pl.drawMarkers(ANCHOR);
+                graph.pl.drawTransverse( ANCHOR );
+                graph.pl.drawAngle( KNOWN_INDEX, true );
+                graph.pl.drawAngle( UNKNOWN_INDEX, false, "#FFA500" );
+            </div>
+        </div>
+    </div>
+
+    <div class="hints">
+        <div>
+            <p>זויות הופכיות הן שוות, ולכן גודלה של הזוית הורודה הוא  <var>MEASURE</var> מעלות.</p>
+            <div class="graphie" data-update="parallel-lines">
+                graph.pl.drawVerticalAngle( KNOWN_INDEX, true, "#FF00AF" );
+            </div>
+        </div>
+        <p>הזוית הכתומה והזוית הורודה הן זויות מתאימות, ולכן הן בהכרח שוות.</p>
+        <div>
+            <p>גודלה של הזוית הכתומה הוא  <var>MEASURE</var> מעלות.</p>
+            <div class="graphie" data-update="parallel-lines">
+                graph.pl.drawAngle( UNKNOWN_INDEX, true, "#FFA500" );
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

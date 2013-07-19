@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems stat">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>שיעור מספרים עשרוניים</title>
+	<script src="../khan-exercise.js"></script>
+	<style>
+		.estimation span {
+			width: 100px;
+		}
+		.estimation span:first-child {
+			width: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div class="exercise">
+
+	<div class="problems">
+		<div>
+			<div class="vars">
+				<var id="VALUES">$.map( randRange( 1000, 16000, randRange( 3, 7 ) ), function( n ){ return ( n / 1000 ).toFixed( randRange( 1, 2 ) ); } )</var>
+				<var id="ANSWER">sum( $.map( VALUES, round ) )</var>
+				<var id="TYPES">randFromArray( [ [ "רץ", "רצתי", "קילומטר","קילומטרים" ], [ "רוכב על אופניים ", "נסעתי", "קילומטר", "קילומטרים" ], [ "אוסף פטריות", "פטריות אספתי", "קילו" ,"קילו"], [ "צבעתי את גג ביתי", "צבעתי", "מטר מרובע", "מטר מרובע" ], [ "קצרתי חיטה", "חיטה קצרתי", "טון", "טונות" ] ] )</var>
+				<var id="ACC">0</var>
+				<var id="SIZE">
+					$.map( VALUES, function( i ){
+						if ( round( i ) &lt; i ) {
+							return "קטן מ";
+						}
+						else{
+							return "גדול או שווה ל";
+						}
+					} )
+				</var>
+				<var id="SUM">
+					(function() {
+						var sum = 0;
+						$.each( VALUES, function( i, val ) {
+							sum += parseFloat( val );
+						});
+						return roundTo( 2, sum );
+					})()
+				</var>
+			</div>
+			<p>אני   <var>TYPES[ 0 ]</var> כל יום כבר <var>VALUES.length</var> ימים.</p>
+			<p class="question">נתון שאני  <var>TYPES[ 1 ]</var> את הכמויות הבאות (ב<var>TYPES[ 3 ]</var>) כל יום, שער כמה אני <var>TYPES[ 1 ]</var> על ידי עיגול הנתונים למספר המלא הקרוב וחיבורם .</p>
+			<div class="fake_header estimation">
+				<span>יום<br /> <span style="color:white">" "</span></span>
+				<span>כמות <br /><font size="2">(ב<var>TYPES[ 3 ]</var>)</font></span>
+			</div>
+			<div class="fake_row estimation" data-each="VALUES as i, val">
+				<span><var>i+1</var></span>
+				<span><var>val</var></span>
+			</div>
+			
+			<p class="solution" data-type="multiple">
+				<span class="sol" data-forms="integer"><var>ANSWER</var></span> <var>plural( TYPES[ 2 ] )</var>
+			</p>
+
+			<div class="hints">
+			<p><br />יש לציין כי אם אתה ראשית מחבר את כל הסכומים ואז מעגל, הסכום יהיה (<var>SUM.toFixed( 2 )</var>) ואז אם נעגל , אנו נקבל  <var>round( SUM )</var>. בשביל ההבנה, שים לב איך המספר הזה משתווה לשיעור שלך.</p>
+				<p>נעגל את כל הנתונים ל<var>TYPES[ 2 ]</var> הקרוב ונחבר אותם.</p>
+				
+				<div class="fake_header estimation">
+					<span>יום</span>
+					<span>כמות</span>
+					<span>עיגול</span>
+					<span>סך הכל</span>
+				</div>
+				<div class="fake_row estimation" data-each="VALUES as i, val">
+					<span><var>i+1</var></span>
+					<span><var>val</var></span>
+					<span><var>round( val )</var></span>
+					<span><var>ACC += round( val )</var></span>
+				</div>
+				<p>לכן השיעור הינו <code><var>ANSWER</var></code> <var>plural( TYPES[ 2 ] )</var>.</p>
+			</div>
+		</div>
+	</div>
+
+	</div>
+</body>
+</html>

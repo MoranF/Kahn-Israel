@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html data-require="math graphie">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>שורש ממעלה שלישית</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="cx">0</var>
+            <var id="y">0</var>
+
+            <var id="N">randRange( 2, 12 )</var>
+            <var id="F_N">getPrimeFactorization( N )</var>
+        </div>
+
+        <div class="hints">
+            <p>
+                אם אתה לא יכול לחשוב על מספר כזה, אנו יכולים לפרק את <code><var>Q</var></code> לגורמים הראשוניים שלו ולסדר לפי קבוצות שוות.
+            </p>
+            <div>
+                <p>נצייר עץ מספרים ראשוניים.</p>
+                <div class="graphie" id="factor-tree">
+                    init({
+                        range: [ [-1, FACTORIZATION.length + 2], [ -2 * FACTORIZATION.length - 1, 1] ],
+                        scale: [30, 30]
+                    });
+
+                    label( [cx + 1, y], curr );
+                </div>
+            </div>
+
+            <div class="graphie" data-update="factor-tree" data-each="FACTORIZATION as factor">
+                    path( [ [cx + 1, y - 0.5], [cx, y - 1.5] ] );
+                    path( [ [cx + 1, y - 0.5], [cx + 2, y - 1.5] ] );
+                    y -= 2;
+                    cx += 1;
+
+                    curr = curr / factor;
+
+                    label( [cx - 1, y], factor );
+                    circle( [cx - 1, y], 0.5);
+                    label( [cx + 1, y], curr );
+            </div>
+
+            <div class="graphie" data-update="factor-tree">
+                circle( [cx + 1, y], 0.5);
+            </div>
+
+            <p>הפירוק לגורמים ראשוניים של  <code><var>Q</var></code> הוא <code><var>PRIMES.join( "\\times " )</var></code>.</p>
+        </div>
+
+        <div class="problems">
+            <div id="cube">
+                <div class="vars">
+                    <var id="Q">N * N * N</var>
+                    <var id="PRIMES">getPrimeFactorization( Q )</var>
+                    <var id="FACTORIZATION">PRIMES.slice( 0, PRIMES.length - 1 )</var>
+                    <var id="curr">Q</var>
+                </div>
+
+                <p class="question">לכמה שווה <code>\sqrt[3]{<var>Q</var>}</code>?</p>
+
+                <p class="solution"><var>N</var></p>
+
+                <div class="hints" data-apply="prependContents">
+                    <p>
+                        <code>\sqrt[3]{<var>Q</var>}</code> הינו המספר, אשר נכפיל אותו 3 פעמים עם עצמו הוא יהיה שווה ל<code><var>Q</var></code>.
+                    </p>
+                </div>
+
+                <div class="hints" data-apply="appendContents">
+                    <p>אנו מחפשים עבור <code>\sqrt[3]{<var>Q</var>}</code>, אז אנו רוצים לפצל את הגורמים הראשוניים שמצאנו ל3 קבוצות זהות.</p>
+
+                    <div data-if="PRIMES.length === 3" data-unwrap>
+
+                        <p>יש לנו רק 3 מספרים ראשוניים, אז אנו יכולים לפצל אותם ל3 קבוצות זהות הכוללות מספר אחד.</p>
+                        <p><code><var>Q</var> = <var>PRIMES.join( "\\times " )</var></code>, או <code><var>N</var>^3 = <var>Q</var></code>.</p>
+
+                    </div><div data-else data-unwrap>
+
+                        <div>
+                            <p>יש להשים לב שאנו יכולים לסדר את המספרים הראשוניים מחדש כך:</p>
+                            <p><code><var>Q</var> = <var>PRIMES.join( "\\times " )</var> = \left(<var>[ F_N.join( "\\times " ), F_N.join( "\\times " ), F_N.join( "\\times ") ].join( "\\right)\\times\\left(" )</var>\right)</code><p>
+                        </div>
+
+                        <p data-if="F_N.length > 1">
+                            אז <code>\left(<var>F_N.join( "\\times " )</var>\right)^3 = <var>N</var>^3 = <var>Q</var></code>.
+                        </p><p data-else>
+                            אז <code><var>N</var>^3 = <var>Q</var></code>.
+                        </p>
+
+                    </div>
+
+                    <p class="final_answer">אז <code>\sqrt[3]{<var>Q</var>}</code> שווה ל <code><var>N</var></code>.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb spin">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>חלוקת שברים - בעיות מילוליות</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+
+            <div id="candy">
+                <div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1">
+                    <var id="PIECES">(randRange( 1, 5 )*N)</var>
+                    <var id="D">randFromArray([ 5, 8 ])</var>
+                    <var id="N">randRange( 3, D - 1 )</var>
+                    <var id="SOLUTION">PIECES*(D/N) </var>
+                </div>
+
+                <p class="problem">
+                    <span class="spin">
+                        {הרבה|כמה} מ<var>genderize(1,"חבריו","חברותיה")</var> של <var>person(1)</var> רצו לטעום את חטיפי השוקולד החדשים 
+                        ש<var>he(1)</var> הביאה מהנסיעה האחרונה <var>his(1)</var> לארצות הברית, אבל היו <var>tohim(1)</var> רק <var>PIECES</var> חטיפים.
+                    </span>
+                    <var>person(1)</var> <var>genderize(1,"החליט")</var> לחלק את החטיפים לחתיכות כך שכל <var>genderize(1,"חבר יקבל","חברה תקבל")</var>                    
+                    <code>\frac{<var>N</var>}{<var>D</var>}</code> חטיף.
+                </p>
+
+                <p class="question">אחרי ש<var>genderize(1,"חילק")</var> את החטיפים, בין כמה <var>genderize(1,"חברים יוכל","חברות תוכל")</var> <var>person(1)</var> 
+                לשתף את החטיפים?</p>
+
+                <div class="solution"><var>SOLUTION</var></div>
+
+                <div class="hints">
+                    <p>
+                        אנו מחלקים את מספר החטיפים (<code><var>PIECES</var></code>) בכמות שכל <var>genderize(1,"חבר יקבל","חברה תקבל")</var>,
+                        (<code>\frac{<var>N</var>}{<var>D</var>}</code> חטיף) כדי למצוא בין את החטיפים, בין כמה 
+                        <var>genderize(1,"חברים יוכל","חברות תוכל")</var> <var>person(1)</var> לשתף את החטיפים.
+                    </p>
+                    <p><code>
+                        \dfrac{\color{<var>ORANGE</var>}{<var>PIECES</var> }}
+                        {\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>} }} = \color{<var>PINK</var>}{\text{ מספר אנשים}}</code>
+                        <code>\dfrac{\color{<var>ORANGE</var>}{\text{חטיפים}}}
+                        {\color{<var>BLUE</var>}{\text{ חטיף לאדם}}}</code>
+                    </code></p>
+                    <p>נחלק בשבר על ידי הכפלה בשבר ההופכי.</p>
+                    <p>
+                        השבר ההופכי של <span class="hint_blue"><code>\dfrac{<var>N</var>}{<var>D</var>}</code> חטיפים לאדם</span>
+                        הוא <span class="hint_green"><code>\dfrac{<var>D</var>}{<var>N</var>}</code> אנשים לכל חטיף</span>.
+                    </p>
+                    <p>
+                        <span class="hint_orange"><var>PIECES</var> חטיפים</span> <code>\times</code>
+                        <span class="hint_blue"><code>\dfrac{<var>D</var>}{<var>N</var>}</code> אנשים לכל חטיף</span>
+                        =  <span class="hint_pink">מספר אנשים</span>
+                    </p>
+                    <p><code>\color{<var>PINK</var>}{\dfrac{<var>D * PIECES</var>}{<var>N</var>}}</code> אנשים = <var>SOLUTION</var>  אנשים</p>
+                    <strong>אחרי ש<var>genderize(1,"חילק")</var> את החטיפים, <var>person(1)</var> <var>genderize(1,"חברים יוכל","חברות תוכל")</var>
+                     לשתף את החטיפים בין <var>SOLUTION</var> מ<var>genderize(1,"חבריו","חברותיה")</var>.</strong>
+                </div>
+            </div>
+
+
+            <div id="scarves">
+                <div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1">
+                    <var id="YARN">(randRange( 3, 6 )*N)</var>
+                    <var id="D">randFromArray([ 3, 5 ])</var>
+                    <var id="N">randRange( 2, D - 1 )</var>
+                    <var id="SOLUTION">YARN*(D/N) </var>
+                </div>
+
+                <p class="problem">
+                    <span class="spin">
+                        <var>person(1)</var> <var>genderize(1,"מצא")</var> חוט סריגה יפה ב-{<var>randFromArray([5,20])</var> אחוזי הנחה }
+                        בחנות החוטים האהובה <var>onhim(1)</var>.
+                    </span>
+                    <var>He(1)</var> <var>genderize(1,"יכול")</var> להכין צעיף אחד מ-<code>\frac{<var>N</var>}{<var>D</var>}</code> כדור של חוט סריגה.
+                </p>
+
+                <p class="question">אם <var>person(1)</var> <var>genderize(1,"רכש")</var> <var>YARN</var> כדורים, כמה צעיפים <var>he(1)</var> <var>genderize(1,"יכול")</var> להכין?</p>
+
+                <div class="solution"><var>SOLUTION</var></div>
+
+                <div class="hints">
+                    <p>
+                        אנו יכולים לחלק את מספר הכדורים של חוט הסריגה (<var>YARN</var>) בכמות הכדורים הנדרשת להכנת צעיף אחד (<code>\frac{<var>N</var>}{<var>D</var>}</code> 
+                        כדור) כדי למצוא כמה צעיפים ניתן להכין.
+                    </p>
+                    <p><code>
+                        \dfrac{\color{<var>ORANGE</var>}{<var>YARN</var> }}
+                        {\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>} }} = \color{<var>PINK</var>}{\text{ מספר צעיפים}}</code>
+                        <code>\dfrac{\color{<var>ORANGE</var>}{\text{כדורים}}}
+                        {\color{<var>BLUE</var>}{\text{ כדורים לכל צעיף}}}</code>
+                    </p>
+                    <p>חלוקה בשבר היא בדיוק כמו הכפלה במספר ההופכי.</p>
+                    <p>
+                        המספר ההופכי של <span class="hint_blue"><code>\dfrac{<var>N</var>}{<var>D</var>}</code> כדורים לכל צעיף</span>
+                        שווה ל- <span class="hint_green"><code>\dfrac{<var>D</var>}{<var>N</var>} </code> צעיפים לכל כדור</span>.
+                    </p>
+                    <p>
+                        <span class="hint_orange"><var>YARN</var> כדורים</span> <code>\times</code>
+                        <span class="hint_blue"><code>\dfrac{<var>D</var>}{<var>N</var>}</code> צעיפים לכל כדור</span>
+                        =  <span class="hint_pink">מספר צעיפים</span>
+                    </p>
+                    <p><code>\color{<var>PINK</var>}{\dfrac{<var>D * YARN</var>}{<var>N</var>}}</code> צעיפים = <var>SOLUTION</var>  צעיפים</p>
+                    <p><strong><var>person(1)</var> <var>genderize(1,"יכול")</var> להכין <var>SOLUTION</var> צעיפים.</strong></p>
+                </div>
+            </div>
+
+
+            <div id="paint">
+                <div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1">
+                    <var id="PAINT">(randRange( 1, 3 )*N)</var>
+                    <var id="D">randFromArray([ 2, 5 ])</var>
+                    <var id="N">randRange( 2, D - 1 )</var>
+                    <var id="SOLUTION">PAINT*(D/N) </var>
+                    <var id="ROOM">(randRange( 1, 20 )+SOLUTION)</var>
+                </div>
+
+                <p class="problem">
+                    <var>person(1)</var> <var>genderize(1,"החליט")</var> חלק מהחדרים בבית ההארחה <var>his(1)</var> שבו <var>ROOM</var> חדרים.
+                    <var>He(1)</var> <var>genderize(1,"גילה","גילתה")</var> ש<var>he(1)</var> <var>genderize(1,"זקוק")</var> ל-<code>\frac{<var>N</var>}{<var>D</var>}</code>
+                    של פחית צבע כדי לצבוע כל חדר.
+                </p>
+
+                <p class="question">אם ל<var>person(1)</var> יש <var>PAINT</var> פחיות צבע, כמה חדרים <var>he(1)</var> <var>genderize(1,"יכול")</var> לצבוע?</p>
+
+                <div class="solution"><var>SOLUTION</var></div>
+
+                <div class="hints">
+                    <p>
+                        אנו יכולים לחלק את מספר פחיות הצבע (<var>PAINT</var>) בכמות הפחיות שנדרשת לצביעת חדר אחד (<code>\frac{<var>N</var>}{<var>D</var>}</code> 
+                        פחית) כדי למצוא כמה חדרים ניתן לצבוע.
+                    </p>
+                    <p><code>
+                        \dfrac{\color{<var>ORANGE</var>}{<var>PAINT</var> }}
+                        {\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>} }} = \color{<var>PINK</var>}{\text{ מספר חדרים}}</code>
+                        <code>\dfrac{\color{<var>ORANGE</var>}{\text{פחיות}}}
+                        {\color{<var>BLUE</var>}{\text{ פחיות לכל חדר}}}</code>
+                    </p>
+                    <p>חלוקה בשבר היא בדיוק כמו הכפלה במספר ההופכי.</p>
+                    <p>
+                        המספר ההופכי של <span class="hint_blue"><code>\dfrac{<var>N</var>}{<var>D</var>}</code> פחיות לכל חדר</span>
+                        שווה ל- <span class="hint_green"><code>\dfrac{<var>D</var>}{<var>N</var>} </code> חדרים לכל פחית</span>.
+                    </p>
+                    <p>
+                        <span class="hint_orange"><var>PAINT</var> פחיות</span> <code>\times</code>
+                        <span class="hint_blue"><code>\dfrac{<var>D</var>}{<var>N</var>}</code> חדרים לכל פחית</span>
+                        =  <span class="hint_pink">מספר חדרים</span>
+                    </p>
+                    <p><code>\color{<var>PINK</var>}{\dfrac{<var>D * PAINT</var>}{<var>N</var>}}</code> חדרים = <var>SOLUTION</var>  חדרים</p>
+                    <p><strong><var>person(1)</var> <var>genderize(1,"יכול")</var> לצבוע <var>SOLUTION</var> חדרים.</strong></p>
+                </div>
+            </div>
+
+
+            <div id="relay">
+                <div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1 && getGCD ( A, B ) ===1">
+                    <var id="D">randRange( 8, 15 )</var>
+                    <var id="N">randRange( 2, D - 1 )</var>
+                    <var id="B">randRange( 3, 7 )</var>
+                    <var id="A">randRange( 2, B - 1 )</var>
+                    <var id="GCD1">getGCD( N, A )</var>
+                    <var id="SIMP_A">A / GCD1</var>
+                    <var id="SIMP_N">N / GCD1</var>
+                    <var id="GCD2">getGCD( D, B )</var>
+                    <var id="SIMP_B">B / GCD2</var>
+                    <var id="SIMP_D">D / GCD2</var>
+                    <var id="SOLUTION">((A*D)/(B*N)) </var>
+                </div>
+
+                <div class="problem">
+                    <p>כמדריך שחיה בבית הספר <var>school(1)</var>, <var>person(1)</var> בוחר אילו שחיינים ושחייניות ישחו בתחרות הארצית.</p>
+                    <p>
+                        נבחרת השליחים שוחה <code>\frac{<var>A</var>}{<var>B</var>}</code> קילומטרים בסך הכל, כאשר כל חבר
+                        חבר בקבוצה אחראי לשחות <code>\frac{<var>N</var>}{<var>D</var>}</code> קילומטר.
+                        כדי להגיע למקום מכובד על הנבחרת לסיים את המשחה תוך <code>\frac{3}{<var>randRange(4,5)</var>}</code> שעה.
+                    </p>
+                </div>
+
+                <p class="question">כמה שחיינים <var>person(1)</var> <var>genderize(1,"צריך","צריכה")</var> שיהיו בנבחרת השליחים?</p>
+
+                <div class="solution"><var>SOLUTION</var></div>
+
+                <div class="hints">
+                    <p>
+                        כדי למצוא לכמה שחיינים <var>person(1)</var> <var>genderize(1,"זקוק")</var>, נחלק את מרחק הכולל
+                        (<code>\frac{<var>A</var>}{<var>B</var>}</code> קילומטר) במרחק שכל שחיין שוחה
+                        (<code>\frac{<var>N</var>}{<var>D</var>}</code> קילומטר).
+                    </p>
+                    <p>
+                     <code>
+                        \dfrac{\color{<var>ORANGE</var>}{\dfrac{<var>A</var>}{<var>B</var>} }}
+                        {\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>} }} = \color{<var>PINK</var>}{\text{ מספר שחיינים}}
+                     </code> 
+                     <code>
+                        \dfrac{\color{<var>ORANGE</var>}{ \text{ קילומטר}}}
+                        {\color{<var>BLUE</var>}{ \text{ קילומטר לכל שחיין}}}                    
+                     </code> 
+                    </p>
+                    <p>חלוקה בשבר היא בדיוק כמו הכפלה במספר ההופכי.</p>
+                    <p>
+                        המספר ההופכי של <span class="hint_blue"><code>\dfrac{<var>N</var>}{<var>D</var>}</code> קילומטרים לכל שחיין</span>
+                        שווה ל- <span class="hint_green"><code>\dfrac{<var>D</var>}{<var>N</var>} </code> שחיינים לכל קילומטר</span>.
+                    </p>
+                    <p>
+                        <span class="hint_orange"><code>\dfrac{<var>A</var>}{<var>B</var>}</code> קילומטרים</span> <code>\times</code>
+                        <span class="hint_blue"><code>\dfrac{<var>D</var>}{<var>N</var>}</code> שחיינים לכל קילומטר</span>
+                        =  <span class="hint_pink">מספר שחיינים</span>
+                    </p>
+                    <p><code>
+                        \dfrac{\color{<var>ORANGE</var>}{<var>A</var>} \cdot \color{<var>GREEN</var>}{<var>D</var>}}
+                        {\color{<var>ORANGE</var>}{<var>B</var>} \cdot \color{<var>GREEN</var>}{<var>N</var>}}
+                        = \color{<var>PINK</var>}{\text{ מספר שחיינים}}
+                    </code></p>
+                    <div data-if="GCD1 !== 1">
+                        <p>
+                            נצמצם איברים על ידי חלוקה של ה-<code><var>A</var></code> במכנה
+                            ושל ה-<code><var>N</var></code> במונה ב-<code><var>GCD1</var></code>:
+                        </p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{\cancel{<var>A</var>}^{<var>SIMP_A</var>}} \cdot \color{<var>GREEN</var>}{<var>D</var>}}
+                            {\color{<var>ORANGE</var>}{<var>B</var>} \cdot \color{<var>GREEN</var>}{\cancel{<var>N</var>}^{<var>SIMP_N</var>}}}
+                            = \color{<var>PINK</var>}{\text{ מספר שחיינים}}
+                        </code></p>
+                    </div>
+                    <div data-if="GCD2 !== 1">
+                        <p>
+                            נצמצם איברים על ידי חלוקה של ה-<code><var>D</var></code> במכנה
+                            ושל ה-<code><var>B</var></code> במונה ב-<code><var>GCD2</var></code>:
+                        </p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{<var>SIMP_A</var>} \cdot \color{<var>GREEN</var>}{\cancel{<var>D</var>}^{<var>SIMP_D</var>}}}
+                            {\color{<var>ORANGE</var>}{\cancel{<var>B</var>}^{<var>SIMP_B</var>}} \cdot \color{<var>GREEN</var>}{<var>SIMP_N</var>}}
+                            = \color{<var>PINK</var>}{\text{ מספר שחיינים}}
+                        </code></p>
+                    </div>
+                    <div>
+                        <p>נפשט את הביטוי:</p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{<var>SIMP_A</var>} \cdot \color{<var>GREEN</var>}{<var>SIMP_D</var>}}
+                            {\color{<var>ORANGE</var>}{<var>SIMP_B</var>} \cdot \color{<var>GREEN</var>}{<var>SIMP_N</var>}}
+                            = \color{<var>PINK</var>}{<var>SOLUTION</var>}
+                        </code></p>
+                    </div>
+                    <p><strong><var>person(1)</var> <var>genderize(1,"זקוק")</var> ל-<var>SOLUTION</var> שחיינים בנבחרת השליחים.</strong></p>
+                </div>
+            </div>
+
+
+            <div id="gift-bags">
+                <div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1 && getGCD ( A, B ) ===1">
+                    <var id="D">randRange( 6, 30 )</var>
+                    <var id="N">randRange( 2, D - 1 )</var>
+                    <var id="B">randRange( 3, 5 )</var>
+                    <var id="A">randRange( 2, B - 1 )</var>
+                    <var id="GCD1">getGCD( N, A )</var>
+                    <var id="SIMP_A">A / GCD1</var>
+                    <var id="SIMP_N">N / GCD1</var>
+                    <var id="GCD2">getGCD( D, B )</var>
+                    <var id="SIMP_B">B / GCD2</var>
+                    <var id="SIMP_D">D / GCD2</var>
+                    <var id="SOLUTION">((A*D)/(B*N)) </var>
+                </div>
+
+                <p class="problem">
+                    <var>person(1)</var> <var>genderize(1,"חשב")</var> שזה יהיה נחמד אם כל משלוח מנות 
+                    ש<var>he(1)</var> <var>genderize(1,"מכין","מכינה")</var> לכבוד פורים יכיל <code>\frac{<var>N</var>}{<var>D</var>}</code> קילוגרם שוקולד.
+                </p>
+
+                <p class="question">כמה משלוחי מנות <var>person(1)</var> <var>genderize(1,"יכול")</var> להכין
+                מ-<code>\frac{<var>A</var>}{<var>B</var>}</code> קילוגרם שוקולד?</p>
+
+                <div class="solution"><var>SOLUTION</var></div>
+
+                <div class="hints">
+                    <p>
+                        כדי למצוא כמה משלוחי מנות <var>person(1)</var> <var>genderize(1,"יכול")</var> להכין, נחלק את משקל השוקולד הכולל
+                        (<code>\frac{<var>A</var>}{<var>B</var>}</code> קילוגרם) במשקל שכל משלוח מנות מכיל
+                        (<code>\frac{<var>N</var>}{<var>D</var>}</code> קילוגרם).
+                    </p>
+                    <p>
+                     <code>
+                        \dfrac{\color{<var>ORANGE</var>}{\dfrac{<var>A</var>}{<var>B</var>} }}
+                        {\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>} }} = \color{<var>PINK</var>}{\text{ מספר משלוחי מנות}}
+                     </code> 
+                     <code>
+                        \dfrac{\color{<var>ORANGE</var>}{ \text{ קילוגרם}}}
+                        {\color{<var>BLUE</var>}{ \text{ קילוגרם לכל משלוח מנות}}}                    
+                     </code> 
+                    </p>
+                    <p>חלוקה בשבר היא בדיוק כמו הכפלה במספר ההופכי.</p>
+                    <p>
+                        המספר ההופכי של <span class="hint_blue"><code>\dfrac{<var>N</var>}{<var>D</var>}</code> קילוגרמים לכל משלוח מנות</span>
+                        שווה ל- <span class="hint_green"><code>\dfrac{<var>D</var>}{<var>N</var>} </code> משלוחי מנות לכל קילוגרם</span>.
+                    </p>
+                    <p>
+                        <span class="hint_orange"><code>\dfrac{<var>A</var>}{<var>B</var>}</code> קילוגרמים</span> <code>\times</code>
+                        <span class="hint_blue"><code>\dfrac{<var>D</var>}{<var>N</var>}</code> משלוחי מנות לכל קילוגרם</span>
+                        =  <span class="hint_pink">מספר משלוחי מנות</span>
+                    </p>
+                    <p><code>
+                        \dfrac{\color{<var>ORANGE</var>}{<var>A</var>} \cdot \color{<var>GREEN</var>}{<var>D</var>}}
+                        {\color{<var>ORANGE</var>}{<var>B</var>} \cdot \color{<var>GREEN</var>}{<var>N</var>}}
+                        = \color{<var>PINK</var>}{\text{ מספר משלוחי מנות}}
+                    </code></p>
+                    <div data-if="GCD1 !== 1">
+                        <p>
+                            נצמצם איברים על ידי חלוקה של ה-<code><var>A</var></code> במכנה
+                            ושל ה-<code><var>N</var></code> במונה ב-<code><var>GCD1</var></code>:
+                        </p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{\cancel{<var>A</var>}^{<var>SIMP_A</var>}} \cdot \color{<var>GREEN</var>}{<var>D</var>}}
+                            {\color{<var>ORANGE</var>}{<var>B</var>} \cdot \color{<var>GREEN</var>}{\cancel{<var>N</var>}^{<var>SIMP_N</var>}}}
+                            = \color{<var>PINK</var>}{\text{ מספר משלוחי מנות}}
+                        </code></p>
+                    </div>
+                    <div data-if="GCD2 !== 1">
+                        <p>
+                            נצמצם איברים על ידי חלוקה של ה-<code><var>D</var></code> במכנה
+                            ושל ה-<code><var>B</var></code> במונה ב-<code><var>GCD2</var></code>:
+                        </p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{<var>SIMP_A</var>} \cdot \color{<var>GREEN</var>}{\cancel{<var>D</var>}^{<var>SIMP_D</var>}}}
+                            {\color{<var>ORANGE</var>}{\cancel{<var>B</var>}^{<var>SIMP_B</var>}} \cdot \color{<var>GREEN</var>}{<var>SIMP_N</var>}}
+                            = \color{<var>PINK</var>}{\text{ מספר משלוחי מנות}}
+                        </code></p>
+                    </div>
+                    <div>
+                        <p>נפשט את הביטוי:</p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{<var>SIMP_A</var>} \cdot \color{<var>GREEN</var>}{<var>SIMP_D</var>}}
+                            {\color{<var>ORANGE</var>}{<var>SIMP_B</var>} \cdot \color{<var>GREEN</var>}{<var>SIMP_N</var>}}
+                            = \color{<var>PINK</var>}{<var>SOLUTION</var>}
+                        </code></p>
+                    </div>
+                    <p><strong><var>person(1)</var> <var>genderize(1,"יכול")</var> להכין <var>SOLUTION</var> משלוחי מנות.</strong></p>                
+                </div>
+            </div>
+
+
+            <div id="workout">
+                <div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1 && getGCD ( A, B ) ===1">
+                    <var id="D">randRange( 7, 20 )</var>
+                    <var id="N">randRange( 2, D - 1 )</var>
+                    <var id="B">randRange( 3, 6 )</var>
+                    <var id="A">randRange( 2, B - 1 )</var>
+                    <var id="GCD1">getGCD( N, A )</var>
+                    <var id="SIMP_A">A / GCD1</var>
+                    <var id="SIMP_N">N / GCD1</var>
+                    <var id="GCD2">getGCD( D, B )</var>
+                    <var id="SIMP_B">B / GCD2</var>
+                    <var id="SIMP_D">D / GCD2</var>
+                    <var id="SOLUTION">((A*D)/(B*N)) </var>
+                </div>
+
+                <p class="problem">
+                    <var>person(1)</var> מתאמן במשך <code>\frac{<var>A</var>}{<var>B</var>}</code> שעה כל יום. כדי לשמור על שגרת אימונים
+                    מעניינת, <var>he(1)</var> מקפיד לבצע מגוון תרגילים, כמו 
+                    <var>plural(exercise(1))</var> ו-<var>plural(exercise(2))</var>, בכל אימון.
+                </p>
+
+                <p class="question">
+                    אם כל תרגיל אורך <code>\frac{<var>N</var>}{<var>D</var>}</code> שעה, כמה תרגילים שונים
+                    <var>person(1)</var> <var>genderize(1,"מספיק")</var> לעשות בכל אימון?
+                </p>
+
+                <div class="solution"><var>SOLUTION</var></div>
+
+                <div class="hints">
+                    <p>
+                        כדי למצוא כמה תרגילים <var>person(1)</var> <var>genderize(1,"מספיק")</var> לעשות, נחלק את משך האימון הכולל
+                        (<code>\frac{<var>A</var>}{<var>B</var>}</code> שעה) במשכו של כל תרגיל
+                        (<code>\frac{<var>N</var>}{<var>D</var>}</code> שעה).
+                    </p>
+                    <p>
+                     <code>
+                        \dfrac{\color{<var>ORANGE</var>}{\dfrac{<var>A</var>}{<var>B</var>} }}
+                        {\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>} }} = \color{<var>PINK</var>}{\text{ מספר תרגילים}}
+                     </code> 
+                     <code>
+                        \dfrac{\color{<var>ORANGE</var>}{ \text{ שעה}}}
+                        {\color{<var>BLUE</var>}{ \text{ שעה לכל תרגיל}}}                    
+                     </code> 
+                    </p>
+                    <p>חלוקה בשבר היא בדיוק כמו הכפלה במספר ההופכי.</p>
+                    <p>
+                        המספר ההופכי של <span class="hint_blue"><code>\dfrac{<var>N</var>}{<var>D</var>}</code> שעות לכל תרגיל</span>
+                        שווה ל- <span class="hint_green"><code>\dfrac{<var>D</var>}{<var>N</var>} </code> תרגילים לכל שעה</span>.
+                    </p>
+                    <p>
+                        <span class="hint_orange"><code>\dfrac{<var>A</var>}{<var>B</var>}</code> שעות</span> <code>\times</code>
+                        <span class="hint_blue"><code>\dfrac{<var>D</var>}{<var>N</var>}</code> תרגילים לכל שעה</span>
+                        =  <span class="hint_pink">מספר תרגילים</span>
+                    </p>
+                    <p><code>
+                        \dfrac{\color{<var>ORANGE</var>}{<var>A</var>} \cdot \color{<var>GREEN</var>}{<var>D</var>}}
+                        {\color{<var>ORANGE</var>}{<var>B</var>} \cdot \color{<var>GREEN</var>}{<var>N</var>}}
+                        = \color{<var>PINK</var>}{\text{ מספר תרגילים}}
+                    </code></p>
+                    <div data-if="GCD1 !== 1">
+                        <p>
+                            נצמצם איברים על ידי חלוקה של ה-<code><var>A</var></code> במכנה
+                            ושל ה-<code><var>N</var></code> במונה ב-<code><var>GCD1</var></code>:
+                        </p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{\cancel{<var>A</var>}^{<var>SIMP_A</var>}} \cdot \color{<var>GREEN</var>}{<var>D</var>}}
+                            {\color{<var>ORANGE</var>}{<var>B</var>} \cdot \color{<var>GREEN</var>}{\cancel{<var>N</var>}^{<var>SIMP_N</var>}}}
+                            = \color{<var>PINK</var>}{\text{ מספר תרגילים}}
+                        </code></p>
+                    </div>
+                    <div data-if="GCD2 !== 1">
+                        <p>
+                            נצמצם איברים על ידי חלוקה של ה-<code><var>D</var></code> במכנה
+                            ושל ה-<code><var>B</var></code> במונה ב-<code><var>GCD2</var></code>:
+                        </p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{<var>SIMP_A</var>} \cdot \color{<var>GREEN</var>}{\cancel{<var>D</var>}^{<var>SIMP_D</var>}}}
+                            {\color{<var>ORANGE</var>}{\cancel{<var>B</var>}^{<var>SIMP_B</var>}} \cdot \color{<var>GREEN</var>}{<var>SIMP_N</var>}}
+                            = \color{<var>PINK</var>}{\text{ מספר תרגילים}}
+                        </code></p>
+                    </div>
+                    <div>
+                        <p>נפשט את הביטוי:</p>
+                        <p><code>
+                            \dfrac{\color{<var>ORANGE</var>}{<var>SIMP_A</var>} \cdot \color{<var>GREEN</var>}{<var>SIMP_D</var>}}
+                            {\color{<var>ORANGE</var>}{<var>SIMP_B</var>} \cdot \color{<var>GREEN</var>}{<var>SIMP_N</var>}}
+                            = \color{<var>PINK</var>}{<var>SOLUTION</var>}
+                        </code></p>
+                    </div>
+                    <p><strong><var>person(1)</var> <var>genderize(1,"מספיק")</var> לעשות <var>SOLUTION</var> תרגילים בכל אימון.</strong></p>                
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

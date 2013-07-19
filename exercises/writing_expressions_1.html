@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-require="math expressions">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>כתיבת ביטויים 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="A">(random() > 0.5 ? -1 : 1) * (rand(9) + 1)</var>
+			<var id="B">(random() > 0.5 ? -1 : 1) * (rand(9) + 1)</var>
+		</div>
+
+		<div class="problems">
+			<div id="original">
+				<div class="problem">
+					<p>בחרו בביטוי שהכי מתאים למשפט הבא:</p>
+				</div>
+				<p class="question">הסכום של <code><var>B</var></code> ושל המכפלה של <code><var>A</var></code> ו-<code>x</code>.</p>
+				<p class="solution"><code><var>expr(["+", ["*", A, "x"], B])</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li><code><var>expr(["+", ["*", -A, "x"], B])</var></code></li>
+					<li><code><var>expr(["+", ["*", A, "x"], -B])</var></code></li>
+					<li><code><var>expr(["+", ["*", B, "x"], A])</var></code></li>
+					<li><code><var>expr(["+", ["*", -B, "x"], -A])</var></code></li>
+				</ul>
+				<div class="hints" data-apply="appendContents">
+					<p id="hint1">מהי <span class="hint_orange">המכפלה של <code><var>A</var></code> ו-<code>x</code></span>?</p>
+					<p id="hint2">מהו <span class="hint_blue"> הסכום של <code><var>B</var></code></span> ושל-<code class="hint_orange"><var>expr(["*", A, "x"])</var></code>?</p>
+				</div>
+			</div>
+			<div data-type="original">
+				<p class="question">לקחו <code><var>A</var></code> והוסיפו לזה <code>x</code> כפול <code><var>B</var></code>.</p>
+				<div class="hints" data-apply="appendContents">
+					<p id="hint1">כיצד נבטא את <span class="hint_orange"><code><var>A</var></code><code>x</code>פעמים</span>?</p>
+					<p id="hint2">כיצד נבטא את  <span class="hint_blue">ההוספה של <code><var>B</var></code></span>?</p>
+				</div>
+			</div>
+			<div data-type="original">
+				<p class="question"><code><var>B</var></code> ועוד המכפלה של <code><var>A</var></code> ו-<code>x</code>.</p>
+				<div class="hints" data-apply="appendContents">
+					<p id="hint1">כיצד נבטא את <span class="hint_orange">המכפלה של <code><var>A</var></code> ו-<code>x</code></span>?</p>
+					<p id="hint2">כיצד נבטא את <span class="hint_blue"><code><var>B</var></code> </span>ועוד <code class="hint_orange"><var>expr(["*", A, "x"])</var></code>?</p>
+				</div>
+			</div>
+			<div data-type="original">
+				<p class="question">הסכום של <code><var>B</var></code> ושל <code><var>A</var></code> פעמים <code>x</code>.</p>
+				<div class="hints" data-apply="appendContents">
+					<p id="hint1">כיצד נבטא את <span class="hint_orange"><code><var>A</var></code> פעמים <code>x</code></span>?</p>
+					<p id="hint2">כיצד נבטא את <span class="hint_blue">הסכום של <code><var>B</var></code></span> ו-<code class="hint_orange"><var>expr(["*", A, "x"])</var></code>?</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="hints">
+			<p>נפרק את הבעיה לחלקים יותר קטנים וקלים.</p>
+			<p id="hint1"></p>
+			<p>  <code><var>A</var></code> פעמים x  <code> \color{orange}{<var>expr(["*", A, "x"])</var>} =</code></p>
+			<p id="hint2"></p>
+			<p><code class="hint_blue">{} + <var>B</var></code><code class="hint_orange"><var>A</var>x</code></p>
+			<p>אם כן, ניתן לבטא את המשפט המקורי כך: <code><var>expr(["+", ["*", A, "x"], B])</var></code>.</p>
+		</div>
+	</div>
+</body>
+</html>

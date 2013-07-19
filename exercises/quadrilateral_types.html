@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers graphie-geometry math-format">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>סוגי מרובעים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="trapezoid">
+				<div class="vars">
+					<var id="TYPE">"trapezoid"</var>
+					<var id="ANGLES">randomQuadAngles[ TYPE ]()</var>
+					<var id="ANGLE_LABELS">$.map( ANGLES,function( x ){ return x  + "^{\\circ}"; } )</var>
+				</div>
+				<div class="problem">
+					מהו המרובע הנתון למטה? תהיה מדוייק ככל האפשר לפי המידע הנתון.
+				</div>
+				<div class="question">
+					<div class="graphie">
+						init({
+							range: [ [-2, 12 ], [ -8, -1 ] ]
+						})
+						var q = new Quadrilateral( [ 2, -7 ],  ANGLES, randRange( 0, 1 ) + 0.5, 3 );
+						q.boxOut( [ [ [ -1, -10 ], [ -1, 10 ] ] ], [ 0.7, 0 ] );
+						q.boxOut( [ [ [ 11, -10 ], [ 11, 10 ] ] ], [ -0.7, 0 ] );
+						q.draw();
+						q.labels = { "angles" : ANGLE_LABELS, "sides" : $.map( $.map( q.sides, lineLength ), function( x ){ return x.toFixed( 1 ); } ) };
+						q.drawLabels();
+					</div>
+				</div>
+				<div class="solution">טרפז</div>
+				<ul class="choices" data-category="true">
+					<li>דלתון</li>
+					<li>טרפז</li>
+					<li>טרפז שווה שוקיים</li>
+					<li>מקבילית</li>
+					<li>מעויין</li>
+					<li>מלבן</li>
+					<li>ריבוע</li>
+					<li>אף אחד מאפשרויות למעלה</li>
+				</ul>
+				<div class="hints">
+					<p>לצורה יש 2 צלעות מקבילות</p>
+					<p>יש לה גם 2 זוגות של צלעות סמוכות המשלימות זו את זו</p>
+					<p>ולכן, הצור ההינה טרפז.</p>
+				</div>
+			</div>
+			<div id="isoscelesTrap" data-type="trapezoid">
+				<div class="vars">
+					<var id="TYPE">"isoscelesTrapezoid"</var>
+				</div>
+				<div class="solution">טרפז שווה שוקיים</div>
+				<div class="hints">
+					<p>לצורה יש 2 צלעות מקבילות </p>
+					<p>יש לה גם 2 זוגות של צלעות סמוכות המשלימות זו את זו</p>
+					<p>ולכן, הצור ההינה טרפז.</p>
+					<p>אולם, השוקיים של הטרפז שווים. לכן זה טרפז שווה שוקיים.</p>
+				</div>
+			</div>
+			<div id="parallelogram" data-type="trapezoid">
+				<div class="vars">
+					<var id="TYPE">"parallelogram"</var>
+				</div>
+				<div class="solution">מקבילית</div>
+				<div class="hints">
+					<p>הזוויות הנגדיות של המרובע הזה שוות.</p>
+					<p>הזוויות הסמוכות שלו משלימות זו את זו.</p>
+					<p>יש לו 2 זוגות של צלעות מקבילות.</p>
+					<p>יש לו 2 זוגות של צלעות מקבילות שוות.</p>
+					<p>לכן המרובע הינו מקבילית.</p>
+				</div>
+			</div>
+			<div id="rectangle" data-type="trapezoid">
+				<div class="vars">
+					<var id="TYPE">"rectangle"</var>
+				</div>
+				<div class="solution">מלבן</div>
+				<div class="hints">
+					<p>יש לו 2 זוגות של צלעות מקבילות.</p>
+					<p>כל הזוויות שלו שוות ל 90 מעלות.</p>
+					<p>לכן המרובע הינו מלבן.</p>
+				</div>
+			</div>
+			<div id="square" data-type="trapezoid">
+				<div class="vars">
+					<var id="TYPE">"rectangle"</var>
+				</div>
+				<div class="question">
+					<div class="graphie">
+						init({
+							range: [ [-1, 12 ], [ -8, -1 ] ]
+						})
+						var q = new Quadrilateral( [ 2, -7 ],  ANGLES, 1, 3 );
+						q.boxOut( [ [ [ 11, -10 ], [ 11, 10 ] ] ], [ -0.7, 0 ] );
+						q.boxOut( [ [ [ 0, -10 ], [ 0, 10 ] ] ], [ 0.7, 0 ] );
+						q.draw();
+						q.labels = { "angles" : ANGLE_LABELS, "sides" : $.map( $.map( q.sides, lineLength ), function( x ){ return x.toFixed( 1 ); } ) };
+						q.drawLabels();
+					</div>
+				</div>
+				<div class="solution">ריבוע</div>
+				<div class="hints">
+					<p>יש לו 2 זוגות של צלעות מקבילות.</p>
+					<p>כל הזוויות שלו שוות ל 90 מעלות.</p>
+					<p>כל הצלעות שלו שוות.</p>
+					<p>לכן המרובע הינו ריבוע.</p>
+				</div>
+			</div>
+			<div id="kite" data-type="square">
+				<div class="vars">
+					<var id="TYPE">"kite"</var>
+				</div>
+				<div class="solution">דלתון</div>
+				<div class="hints">
+					<p>למרובע הזה יש 2 זוגות של צלעות שוות.</p>
+					<p>הצלעות האלו סמוכות זו לזו.</p>
+					<p>יש לו גם זוג של זוויות שוות, הנמצאות בין הצלעות הלא זהות.</p>
+					<p>המרובע הינו דלתון</p>
+				</div>
+			</div>
+			<div id="rhombus" data-type="square">
+				<div class="vars">
+					<var id="TYPE">"rhombus"</var>
+				</div>
+				<div class="solution">מעויין</div>
+				<div class="hints">
+					<p>כל הצלעות של המרובע שוות.</p>
+					<p>ולכן המרובע הינו מעויין.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

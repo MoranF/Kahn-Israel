@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html data-require="math">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>משוואות תנועה</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="accelerated" data-weight="3">
+				<div class="vars" data-ensure="(OMITTED !== UNKNOWN) && !NO_SOLUTION">
+					<var id="OMITTED">randFromArray(['a', 'd', 't', 'v_i', 'v_f'])</var>
+					<var id="UNKNOWN">randFromArray(['a', 'd', 't', 'v_i', 'v_f'])</var>
+					<var id="ACCEL">randRangeNonZero(-200, 200) / 10</var>
+					<var id="V_INIT">randRange(-400, 400) / 10</var>
+					<var id="TIME">randRange(100, 200) / 10</var>
+					<var id="DISP">roundTo(2, V_INIT * TIME + (1/2) * ACCEL * TIME * TIME)</var>
+					<var id="V_FINAL">roundTo(2, V_INIT + ACCEL * TIME)</var>
+
+					<var id="NO_SOLUTION">
+						/* negative under radical */
+						(OMITTED === 'v_i' && UNKNOWN === 't'   && (V_FINAL * V_FINAL - 2 * ACCEL * DISP &lt; 0.1)) ||
+						(OMITTED === 'v_f' && UNKNOWN === 't'   && (V_INIT  * V_INIT  + 2 * ACCEL * DISP &lt; 0.1)) ||
+						(OMITTED === 't'   && UNKNOWN === 'v_i' && (V_FINAL * V_FINAL - 2 * ACCEL * DISP &lt; 0.1)) ||
+						(OMITTED === 't'   && UNKNOWN === 'v_f' && (V_INIT  * V_INIT  + 2 * ACCEL * DISP &lt; 0.1)) ||
+
+						/* division by 0 */
+						(OMITTED === 'd'   && UNKNOWN === 'a'   && TIME  === 0) ||
+						(OMITTED === 'd'   && UNKNOWN === 't'   && ACCEL === 0) ||
+						(OMITTED === 'v_i' && UNKNOWN === 'v_f' && TIME  === 0) ||
+						(OMITTED === 'v_i' && UNKNOWN === 'a'   && TIME  === 0) ||
+						(OMITTED === 'v_i' && UNKNOWN === 't'   && ACCEL === 0) ||
+						(OMITTED === 'v_f' && UNKNOWN === 'v_i' && TIME  === 0) ||
+						(OMITTED === 'v_f' && UNKNOWN === 'a'   && TIME  === 0) ||
+						(OMITTED === 'v_f' && UNKNOWN === 't'   && ACCEL === 0) ||
+						(OMITTED === 'a'   && UNKNOWN === 'v_i' && TIME  === 0) ||
+						(OMITTED === 'a'   && UNKNOWN === 'v_f' && TIME  === 0) ||
+						(OMITTED === 'a'   && UNKNOWN === 't'   && (-0.1 &lt; V_INIT + V_FINAL) && (V_INIT + V_FINAL &lt; 0.1)) ||
+						(OMITTED === 't'   && UNKNOWN === 'd'   && ACCEL === 0) ||
+						(OMITTED === 't'   && UNKNOWN === 'a'   && DISP  === 0)
+					</var>
+					<var id="PLUS_OR_MINUS_SOLUTION">
+						(OMITTED === 't' && UNKNOWN === 'v_i') ||
+						(OMITTED === 't' && UNKNOWN === 'v_f')
+					</var>
+					<var id="QUADRATIC_TWO_SOLUTION">
+						(OMITTED === 'v_i' && UNKNOWN === 't' && (V_FINAL * V_FINAL - 2 * ACCEL * DISP > 0.1)) ||
+						(OMITTED === 'v_f' && UNKNOWN === 't' && (V_INIT  * V_INIT  + 2 * ACCEL * DISP > 0.1))
+					</var>
+				</div>
+
+				<div class="problem">
+					<p data-if="'d'   !== OMITTED && 'd'   !== UNKNOWN"><code>d =   <var>DISP</var> \text{מטר}</code></p>
+					<p data-if="'v_i' !== OMITTED && 'v_i' !== UNKNOWN"><code>v_i = <var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}}</code></p>
+					<p data-if="'v_f' !== OMITTED && 'v_f' !== UNKNOWN"><code>v_f = <var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}}</code></p>
+					<p data-if="'a'   !== OMITTED && 'a'   !== UNKNOWN"><code>a =   <var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2}</code></p>
+					<p data-if="'t'   !== OMITTED && 't'   !== UNKNOWN"><code>t =   <var>TIME</var> \text{שניה}</code></p>
+					<p><code><var>OMITTED</var> = {?}</code></p>
+					<p><code><var>UNKNOWN</var> = {?}</code></p>
+				</div>
+
+				<div class="question">
+					<p>מצאו את  <code><var>UNKNOWN</var></code>. עגלו לעשירית הקרובה ביותר.</p>
+					<p>ודאו שאתם רושמים את התשובה ביחידות הנכונות. מותר לכם להתשמש במחשבון לצורך הפתרון. אם יש יותר מפתרון נכון אחד, אתם יכולים לרשום את כל אחד מהפתרונות.</p>
+				</div>
+
+				<div class="solution" data-type="set" data-show-unused="true">
+					<div class="set-sol" data-type="multiple" data-if="!QUADRATIC_TWO_SOLUTION">
+						<span class="sol" data-type="decimal" data-inexact data-max-error="0.1">
+							<var data-if="UNKNOWN === 'd'">roundTo(1, DISP)</var>
+							<var data-if="UNKNOWN === 'v_i'">roundTo(1, V_INIT)</var>
+							<var data-if="UNKNOWN === 'v_f'">roundTo(1, V_FINAL)</var>
+							<var data-if="UNKNOWN === 'a'">roundTo(1, ACCEL)</var>
+							<var data-if="UNKNOWN === 't'">roundTo(1, TIME)</var>
+						</span>
+						<span class="sol" data-type="list" data-choices="['', 'מטר', 'מטר/שניה', 'מטר/שניה&sup2;', 'שניה']">
+							<span data-if="UNKNOWN === 'd'">מטר</span>
+							<span data-if="UNKNOWN === 'v_i'">מטר/שניה</span>
+							<span data-if="UNKNOWN === 'v_f'">מטר/שניה</span>
+							<span data-if="UNKNOWN === 'a'">מטר/שניה&sup2;</span>
+							<span data-if="UNKNOWN === 't'">שניה</span>
+						</span>
+					</div>
+
+					<div class="set-sol" data-type="multiple" data-if="PLUS_OR_MINUS_SOLUTION">
+						<span class="sol" data-type="decimal" data-inexact data-max-error="0.1">
+							<var data-if="UNKNOWN === 'v_i'">roundTo(1, -V_INIT)</var>
+							<var data-if="UNKNOWN === 'v_f'">roundTo(1, -V_FINAL)</var>
+						</span>
+						<span class="sol" data-type="list" data-choices="['', 'm', 'm/s', 'm/s&sup2;', 's']">m/s</span>
+					</div>
+
+					<div class="set-sol" data-type="multiple" data-if="QUADRATIC_TWO_SOLUTION">
+						<span class="sol" data-type="decimal" data-inexact data-max-error="0.1">
+							<var data-if="UNKNOWN === 't' && OMITTED === 'v_i'">roundTo(1, ((-V_FINAL) + sqrt(V_FINAL * V_FINAL - 2 * ACCEL * DISP))/(-ACCEL))</var>
+							<var data-if="UNKNOWN === 't' && OMITTED === 'v_f'">roundTo(1, ((-V_INIT) + sqrt(V_INIT * V_INIT + 2 * ACCEL * DISP))/ACCEL)</var>
+						</span>
+						<span class="sol" data-type="list" data-choices="['', 'מטר', 'מטר/שניה', 'מטר/שניה&sup2;', 'שניה']">שניה</span>
+					</div>
+					<div class="set-sol" data-type="multiple" data-if="QUADRATIC_TWO_SOLUTION">
+						<span class="sol" data-type="decimal" data-inexact data-max-error="0.1">
+							<var data-if="UNKNOWN === 't' && OMITTED === 'v_i'">roundTo(1, ((-V_FINAL) - sqrt(V_FINAL * V_FINAL - 2 * ACCEL * DISP))/(-ACCEL))</var>
+							<var data-if="UNKNOWN === 't' && OMITTED === 'v_f'">roundTo(1, ((-V_INIT) - sqrt(V_INIT * V_INIT + 2 * ACCEL * DISP))/ACCEL)</var>
+						</span>
+						<span class="sol" data-type="list" data-choices="['', 'מטר', 'מטר/שניה', 'מטר/שניה&sup2;', 'שניה']">שניה</span>
+					</div>
+
+					<p class="input-format">
+						<span class="entry" data-type="multiple">
+							<code><var>UNKNOWN</var> = </code>
+							<span class="sol" data-type="decimal" data-inexact data-max-error="0.1"></span>
+							<span class="sol" data-type="list" data-choices="['', 'מטר', 'מטר/שניה', 'מטר/שניה&sup2;', 'שניה']"></span>
+						</span>
+					</p>
+
+					<p class="example">שבר עשרוני <em></em> ויחידת מדידה</p>
+				</div>
+			</div>
+
+
+			<div id="freefall" data-type="accelerated" data-weight="2">
+				<div class="vars">
+					<var id="ACCEL">-9.8</var>
+					<var id="V_INIT">rand(2) ? 0 : randRange(-100, 300) / 10</var>
+					<var id="TIME">randRange(3, 200)/10</var>
+					<var id="DISP">roundTo(2, V_INIT * TIME + (1/2) * ACCEL * TIME * TIME)</var>
+					<var id="V_FINAL">roundTo(2, V_INIT + ACCEL * TIME)</var>
+				</div>
+			</div>
+
+
+			<div id="constant" data-type="accelerated" data-weight="1">
+				<div class="vars" data-ensure="!(OMITTED === 'd' && UNKNOWN === 't') && !(OMITTED === 't' && UNKNOWN === 'd')">
+					<var id="ACCEL">0</var>
+					<var id="V_INIT">randRange(5, 25)</var>
+					<var id="V_FINAL">V_INIT</var>
+					<var id="TIME">randRange(1, 25)</var>
+					<var id="DISP">TIME * V_INIT</var>
+
+					<var id="PLUS_OR_MINUS_SOLUTION">false</var>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="hints">
+			<div data-if="OMITTED === 'd'" data-unwrap>
+				<p><code>v_f = v_i + at</code></p>
+
+				<div data-if="UNKNOWN === 'v_f'" data-unwrap>
+					<p><code>v_f = <var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}} + (<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>TIME</var> \text{שניה})</code></p>
+					<p><code>v_f = <var>roundTo(1, V_FINAL)</var> \frac{\text{מטר}}{\text{שניה}}</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'v_i'" data-unwrap>
+					<p><code>v_f - at = v_i</code></p>
+					<p><code><var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}} - (<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>TIME</var> \text{שניה}) = v_i</code></p>
+					<p><code><var>roundTo(1, V_INIT)</var> \frac{\text{מטר}}{\text{שניה}} = v_i</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'a'" data-unwrap>
+					<p><code>\dfrac{v_f - v_i}{t} = a</code></p>
+					<p><code>\dfrac{<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}} - <var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}}}{<var>TIME</var> \text{שניה}} = a</code></p>
+					<p><code><var>roundTo(1, ACCEL)</var> \frac{\text{מטר}}{\text{שניה}^2} = a</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 't'" data-unwrap>
+					<p><code>\dfrac{v_f - v_i}{a} = t</code></p>
+					<p><code>\dfrac{<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}} - <var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}}}{<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2}} = t</code></p>
+					<p><code><var>roundTo(1, TIME)</var> \text{שניה} = t</code></p>
+				</div>
+			</div>
+
+			<div data-if="OMITTED === 'v_i'" data-unwrap>
+				<p><code>d = v_f t - \frac{1}{2}at^2</code></p>
+
+				<div data-if="UNKNOWN === 'd'" data-unwrap>
+					<p><code>d = (<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}})(<var>TIME</var> \text{שניה}) - \frac{1}{2}(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>TIME</var> \text{שניה})^2</code></p>
+					<p><code>d = <var>roundTo(1, DISP)</var> \text{מטר}</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'v_f'" data-unwrap>
+					<p><code>\dfrac{d + \frac{1}{2} at^2}{t} = v_f</code></p>
+					<p><code>\dfrac{<var>DISP</var> \text{מטר} + \frac{1}{2}(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>TIME</var> \text{שניה})^2}{<var>TIME</var> \text{שניה}} = v_f</code></p>
+					<p><code><var>roundTo(1, V_FINAL)</var> \frac{\text{מטר}}{\text{שניה}} = v_f</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'a'" data-unwrap>
+					<p><code>\dfrac{d - v_f*t}{-\frac{1}{2}t^2} = a</code></p>
+					<p><code>\dfrac{<var>DISP</var> \text{מטר} - (<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}})(<var>TIME</var> \text{שניה})}{-\frac{1}{2}(<var>TIME</var> \text{שניה})^2} = a</code></p>
+					<p><code><var>roundTo(1, ACCEL)</var> \frac{\text{מטר}}{\text{שניה}^2} = a</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 't'" data-unwrap>
+					<p><code>0 = -\frac{1}{2}a*t^2 + v_f*t - d</code></p>
+					<div>
+						<p>לפי הפתרון של משוואה ריבועית נקבל:</p>
+						<p><code>t = \dfrac{ -v_f \pm \sqrt{ v_f^2 - 2ad } }{-a}</code></p>
+					</div>
+					<p><code>t = \dfrac{-(<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}}) \pm \sqrt{(<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}})^2 - 2(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>DISP</var> \text{מטר})}}{-(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})}</code></p>
+					<p data-if="QUADRATIC_TWO_SOLUTION">
+						למשוואה הריבועית יש שני פתרונות. בלי שנניח דבר על כיוונה של <code>v_i</code>,
+						כל אחד מהפתרונות יכול להיות נכון. באופן אינטואיטיבי, אתם יכולים לדמיין עצם שנזרק מעלה או מטה בצורה כזו
+						שעבור גובה מסוים, המהירות של העצם כאשר הוא יעבור בה תהיה זהה בשני המקרים. במקרה בו העצם ייזרק מטה הוא פשוט 
+						יגיע לקרקע מהר יותר.
+					</p>
+					<p data-if="QUADRATIC_TWO_SOLUTION">
+						<code>t = <var>roundTo(1, ((-V_FINAL) + sqrt(V_FINAL * V_FINAL - 2 * ACCEL * DISP))/(-ACCEL))</var> \text{שניה}
+						 \text{ או } <var>roundTo(1, ((-V_FINAL) - sqrt(V_FINAL * V_FINAL - 2 * ACCEL * DISP))/(-ACCEL))</var> \text{שניה}</code>
+					</p>
+					<p data-if="!QUADRATIC_TWO_SOLUTION"><code>t = <var>TIME</var> \text{שניה}</code></p>
+				</div>
+			</div>
+
+			<div data-if="OMITTED === 'v_f'" data-unwrap>
+				<p><code>d = v_i t + \frac{1}{2}at^2</code></p>
+
+				<div data-if="UNKNOWN === 'd'" data-unwrap>
+					<p><code>d = (<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}})(<var>TIME</var> \text{שניה}) + \frac{1}{2}(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>TIME</var> \text{שניה})^2</code></p>
+					<p><code>d = <var>roundTo(1, DISP)</var> \text{מטר}</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'v_i'" data-unwrap>
+					<p><code>\dfrac{d - \frac{1}{2}at^2}{t} = v_i</code></p>
+					<p><code>\dfrac{<var>DISP</var> \text{מטר} - \frac{1}{2}(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>TIME</var> \text{שניה})^2}{<var>TIME</var> \text{שניה}} = v_i</code></p>
+					<p><code><var>roundTo(1, V_INIT)</var> \frac{\text{מטר}}{\text{שניה}} = v_i</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'a'" data-unwrap>
+					<p><code>\dfrac{d - v_i t}{\frac{1}{2} t^2} = a</code></p>
+					<p><code>\dfrac{<var>DISP</var> \text{מטר} - (<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}})(<var>TIME</var> \text{שניה})}{\frac{1}{2}(<var>TIME</var> \text{שניה})^2} = a</code></p>
+					<p><code><var>roundTo(1, ACCEL)</var> \frac{\text{מטר}}{\text{שניה}^2} = a</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 't'" data-unwrap>
+					<p><code>0 = \frac{1}{2} at^2 + v_i t - d</code></p>
+					<div>
+						<p>לפי הפתרון של משוואה ריבועית נקבל:</p>
+						<p><code>t = \dfrac{ -v_i \pm \sqrt{v_i^2 + 2ad} }{a}</code></p>
+					</div>
+					<p><code>t = \dfrac{-(<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}}) \pm \sqrt{(<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}})^2 + 2(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>DISP</var> \text{מטר})}}{<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2}}</code></p>
+					<p data-if="QUADRATIC_TWO_SOLUTION">
+						למשוואה הריבועית יש שני פתרונות. בלי שנניח דבר על כיוונה  <code>v_f</code>,
+						כל אחד מהפתרונות יכול להיות נכון. באופן אינטואיטיבי, אתם יכולים לדמיין עצם שנזרק מעלה במהירות  <code>v</code>
+						בנקודה אחד בזמן, בסוף חזרה לנקודה ממנה נזרק ומשם יפול במהירות (<code>-v</code>) בנקודה אחרת בזמן.
+					</p>
+					<p data-if="QUADRATIC_TWO_SOLUTION">
+						<code>t = <var>roundTo(1, ((-V_INIT) + sqrt(V_INIT * V_INIT + 2 * ACCEL * DISP))/ACCEL)</var> \text{שניה}
+						 \text{ או } <var>roundTo(1, ((-V_INIT) - sqrt(V_INIT * V_INIT + 2 * ACCEL * DISP))/ACCEL)</var> \text{שניה}</code>
+					</p>
+					<p data-if="!QUADRATIC_TWO_SOLUTION"><code>t = <var>TIME</var> \text{שניה}</code></p>
+				</div>
+			</div>
+
+			<div data-if="OMITTED === 'a'" data-unwrap>
+				<p><code>d = \frac{1}{2}(v_i + v_f)t</code></p>
+
+				<div data-if="UNKNOWN === 'd'" data-unwrap>
+					<p><code>d = \frac{1}{2}(<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}} + <var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}})(<var>TIME</var> \text{שניה})</code></p>
+					<p><code>d = <var>roundTo(1, DISP)</var> \text{מטר}</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'v_i'" data-unwrap>
+					<p><code>\dfrac{2d}{t} - v_f = v_i</code></p>
+					<p><code>\dfrac{2(<var>DISP</var> \text{מטר})}{<var>TIME</var> \text{שניה}} - <var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}} = v_i</code></p>
+					<p><code><var>roundTo(1, V_INIT)</var> \frac{\text{מטר}}{\text{שניה}} = v_i</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'v_f'" data-unwrap>
+					<p><code>\dfrac{2d}{t} - v_i = v_f</code></p>
+					<p><code>\dfrac{2(<var>DISP</var> \text{מטר})}{<var>TIME</var> \text{שניה}} - <var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}} = v_f</code></p>
+					<p><code><var>roundTo(1, V_FINAL)</var> \frac{\text{מטר}}{\text{שניה}} = v_f</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 't'" data-unwrap>
+					<p><code>\dfrac{2d}{v_i + v_f} = t</code></p>
+					<p><code>\dfrac{2(<var>DISP</var> \text{מטר})}{(<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}}) + (<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}})} = t</code></p>
+					<p><code><var>roundTo(1, TIME)</var> \text{שניה} = t</code></p>
+				</div>
+			</div>
+
+			<div data-if="OMITTED === 't'" data-unwrap>
+				<p><code>v_f^2 = v_i^2 + 2ad</code></p>
+
+				<div data-if="UNKNOWN === 'd'" data-unwrap>
+					<p><code>\dfrac{v_f^2 - v_i^2}{2a} = d</code></p>
+					<p><code>\dfrac{(<var>V_FINAL</var>  \frac{\text{מטר}}{\text{שניה}} )^2 - (<var>V_INIT</var>  \frac{\text{מטר}}{\text{שניה}} )^2}{2(<var>ACCEL</var> \text{שניה})} = d</code></p>
+					<p><code><var>roundTo(1, DISP)</var> \text{מטר} = d</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'v_i'" data-unwrap>
+					<p><code>\pm\sqrt{v_f^2 - 2ad} = v_i</code></p>
+					<p><code>\pm\sqrt{(<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}})^2 - 2(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>DISP</var> \text{מטר})} = v_i</code></p>
+					<p data-if="ACCEL !== 0">
+						בלי שנניח דבר לגבי  <code>t</code>, כל אחד מהכוונים של  <code>v_i</code> יכול להיות נכון.
+						באופן אינטואיטיבי, אתם יכולים לדמיין עצם שנזרק מעלה במהירות <code>v</code> בהשוואה לאותו עצם הנזרק מטה באותה 
+						מהירות (<code>-v</code>). בשני המקרים תהיה להם אותה מהירות סופית <code>v_f</code> באותה נקודה 
+						במרחב; זה רק ייקח להם זמנים שונים להגיע לאותה הנקודה.
+					</p>
+					<p><code>v_i = <var>roundTo(1, V_INIT)</var> \frac{\text{מטר}}{\text{שניה}} \text{ או } <var>roundTo(1, -V_INIT)</var> \frac{\text{מטר}}{\text{שניה}}</code></p>
+					<p data-if="ACCEL === 0">אולם, אנו יודעים גם ש- <code>a = 0 \frac{\text{מטר}}{\text{שניה}^2}</code></p>
+					<p data-if="ACCEL === 0">אנו יודעים באופן אינטואיטיבי שללא תאוצה <code>v_i</code> חייב להיות שווה ל- <code>v_f</code>, ולכן <code>v_i = <var>roundTo(1, V_INIT)</var> \frac{\text{מטר}}{\text{שניה}}</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'v_f'" data-unwrap>
+					<p><code>v_f = \pm\sqrt{v_i^2 + 2ad}</code></p>
+					<p><code>v_f = \pm\sqrt{(<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}})^2 + 2(<var>ACCEL</var> \frac{\text{מטר}}{\text{שניה}^2})(<var>DISP</var> \text{מטר})}</code></p>
+					<p data-if="ACCEL !== 0">
+						בלי שנבצע שום הנחה לגבי  <code>t</code>, כל אחד מהכוונים של  <code>v_f</code> יכול להיות נכון.
+						דמיינו עם שנע מעלה במהירות<code>v_i</code>. הוא יגיע למהירות מסוימת 
+						<code>v</code> בדרך מעלה, ואז יגיע לאותה מהירות עם סימן הפוך באותה נקודה בדרכו חזרה מטה (<code>-v</code>) 
+						; הוא פשוט יהיה באותה הנקודה בזמן אחר.
+					</p>
+					<p><code>v_f = <var>roundTo(1, V_FINAL)</var> \frac{\text{מטר}}{\text{שניה}} \text{ או } <var>roundTo(1, -V_FINAL)</var> \frac{\text{מטר}}{\text{שניה}}</code></p>
+					<p data-if="ACCEL === 0">אולם, אנו יודעים גם ש- <code>a = 0 \frac{\text{מטר}}{\text{שניה}^2}</code></p>
+					<p data-if="ACCEL === 0">אנו יודעים באופן אינטואיטיבי שללא תאוצה <code>v_f</code> שווה בהכרח ל- <code>v_i</code>, ולכן <code>v_f = <var>roundTo(1, V_FINAL)</var> \frac{\text{מטר}}{\text{שניה}}</code></p>
+				</div>
+
+				<div data-if="UNKNOWN === 'a'" data-unwrap>
+					<p><code>\dfrac{v_f^2 - v_i^2}{2d} = a</code></p>
+					<p><code>\dfrac{(<var>V_FINAL</var> \frac{\text{מטר}}{\text{שניה}})^2 - (<var>V_INIT</var> \frac{\text{מטר}}{\text{שניה}})^2}{2(<var>DISP</var> \text{מטר})} = a</code></p>
+					<p><code><var>roundTo(1, ACCEL)</var> \frac{\text{מטר}}{\text{שניה}^2} = a</code></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html data-require="math math-format">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>משוואות ערכים מוחלטים</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="A">randRange(2, 8)</var>
+            <var id="B">randRangeNonZero(-10, 10)</var>
+            <var id="C" data-ensure="C !== A">randRangeNonZero(-6, 6)</var>
+            <var id="D" data-ensure="D !== B">randRange(2, 10)</var>
+            <var id="E">randRangeNonZero(-10, 10)</var>
+            <var id="ABS_A_MINUS_C">abs(A-C)</var>
+            <var id="SIMPLIFIED">fractionReduce(D-B, A-C)</var>
+            <var id="HAS_SOLUTION">(D-B)/(A-C) > 0</var>
+            <var id="SIMPLIFIED_DENOM">abs((A-C)/getGCD(D-B, A-C))</var>
+            <var id="POS_RESULT">
+                (function() {
+                    if ((D-B)/(A-C) > 0) {
+                        return fractionReduce(abs(D-B)-E*abs(A-C), abs(A-C));
+                    } else {
+                        return "אין פתרון";
+                    }
+                })()
+            </var>
+            <var id="NEG_RESULT">
+                (function() {
+                    if ((D-B)/(A-C) > 0) {
+                        return fractionReduce(-1*abs(D-B)-E*abs(A-C), abs(A-C));
+                    } else {
+                        return "אין פתרון";
+                    }
+                })()
+            </var>
+            <var id="SOLUTION">
+            (function() {
+                if ((D-B)/(A-C) > 0) {
+                    return "&lt;code&gt;"
+                       +"x = "
+                       +fractionReduce(-1*abs(D-B)-E*abs(A-C), abs(A-C))
+                       +"\\text{ או }"
+                       +"x = "
+                       +fractionReduce(abs(D-B)-E*abs(A-C), abs(A-C))
+                       +"&lt;/code&gt;";
+                } else {
+                    return "אין פתרון";
+                }
+            })()
+            </var>
+            <var id="CHOICES">
+                (function() {
+                    var choices = [];
+
+                    for (var i = 0; i &lt; 4; i++) {
+                        var choice = "&lt;code&gt;";
+                        var nOffset = randRange(1, 10);
+                        var dOffset = randRangeExclude(1, 10, [ C-A ]);
+                        var tOffset = randRange(1, 10);
+                        if (D-B+nOffset === 0 &amp;&amp; E+tOffset === 0) {
+                            choice += "x = 0";
+                        } else {
+                            choice += "x = "
+                               +fractionReduce(-1*abs(D-B+nOffset)-(E+tOffset)*abs(A-C+dOffset), abs(A-C+dOffset))
+                               +"\\text{ או }"
+                               +"x = "
+                               +fractionReduce(abs(D-B+nOffset)-(E+tOffset)*abs(A-C+dOffset), abs(A-C+dOffset));
+                        }
+                        choice += "&lt;/code&gt;";
+                        choices.unshift(choice);
+                    }
+
+                    if ((D-B)/(A-C) > 0) {
+                        choices.shift();
+                        choices.unshift(SOLUTION);
+                        choices = shuffle(choices);
+                        choices.push("אין פתרון");
+                    } else {
+                        choices = shuffle(choices);
+                        choices.push(SOLUTION);
+                    }
+
+                    return choices;
+                })()</var>
+        </div>
+
+        <div class="problems">
+            <div>
+                <p class="question">
+                    מצאו את <code>x</code>:
+                    <br><br>
+                    <code>
+                        <var>A</var>|x + <var>E</var>| + <var>B</var> =
+                        <var>C</var>|x + <var>E</var>| + <var>D</var>
+                    </code>
+                </p>
+
+                <p class="solution"><var>SOLUTION</var></p>
+
+                <ul class="choices" data-category="true">
+                    <li data-each="CHOICES as choice"><var>choice</var></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="hints">
+            <div data-if="A > C" data-unwrap>
+                <div>
+                    <p><var>C > 0 ? "נפחית" : "נוסיף"</var> <code><var>abs(C)</var>|x + <var>E</var>|</code> <var>C > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                    <p><code>
+                        (<var>A</var>|x + <var>E</var>| + <var>B</var>) - <var>C</var>|x + <var>E</var>| =
+                        (<var>C</var>|x + <var>E</var>| + <var>D</var>) - <var>C</var>|x + <var>E</var>|
+                    </code></p>
+                    <p><code>
+                        <var>A - C</var>|x + <var>E</var>| + <var>B</var> = <var>D</var>
+                    </code></p>
+                </div>
+                <div>
+                    <p><var>B > 0 ? "נפחית" : "נוסיף"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                    <p><code>
+                        (<var>A - C</var>|x + <var>E</var>| + <var>B</var>) - <var>B</var> =
+                        <var>D</var> - <var>B</var>
+                    </code></p>
+                    <p><code>
+                        <var>A - C</var>|x + <var>E</var>| = <var>D - B</var>
+                    </code></p>
+                </div>
+                <div data-if="ABS_A_MINUS_C !== 1">
+                    <p>נחלק את שני צידי המשוואה ב-<code><var>A - C</var></code>.</p>
+                    <p><code>
+                        \dfrac{<var>A - C</var>|x + <var>E</var>|}{<var>A - C</var>} =
+                        <var>fraction(D-B, A-C)</var>
+                    </code></p>
+                </div>
+                <div>
+                    <p>נפשט את הביטוי.</p>
+                    <p><code>|x + <var>E</var>| = <var>SIMPLIFIED</var></code></p>
+                </div>
+                <div data-if="HAS_SOLUTION" data-unwrap>
+                    <div>
+                        <p>מכיוון שערך מוחלט של ביטוי הוא המרחק שלו מ-0, ישנם שני פתרונות, אחד חיובי ואחד שלילי:</p>
+                        <p><code>x + <var>E</var> = - <var>SIMPLIFIED</var></code></p>
+                        <p>או</p>
+                        <p><code>x + <var>E</var> = <var>SIMPLIFIED</var></code></p>
+                    </div>
+                    <div>
+                        <p>נחשב את הפתרון בו <code>x + <var>E</var></code> הוא שלילי.</p>
+                        <p><code>x + <var>E</var> = - <var>SIMPLIFIED</var></code></p>
+                    </div>
+                    <div>
+                        <p><var>E > 0 ? "נפחית" : "נוסיף"</var> <code><var>abs(E)</var></code> <var>E > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                        <p><code>x + <var>E</var> - <var>E</var> = - <var>SIMPLIFIED</var> - <var>E</var></code></p>
+                        <p><code>x = - <var>SIMPLIFIED</var> - <var>E</var></code></p>
+                    </div>
+                    <div data-if="SIMPLIFIED_DENOM !== 1">
+                        <p>נשנה את הביטוי לשבר בעל ערך זהה בו המכנה הוא <code><var>SIMPLIFIED_DENOM</var></code>.</p>
+                        <p><code>x = - <var>SIMPLIFIED</var> - <var>E</var>\cdot <var>fraction(SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var></code></p>
+                        <p><code>x = - <var>SIMPLIFIED</var><var>E > 0 ? "-" : "+"</var> <var>fraction(abs(E)*SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var></code></p>
+                    </div>
+                    <div>
+                        <p><code>x = <var>NEG_RESULT</var></code></p>
+                    </div>
+                    <div>
+                        <p>כעת נמצא את הפתרון בו <code>x + <var>E</var></code> הוא חיובי.</p>
+                        <p><code>x + <var>E</var> = <var>SIMPLIFIED</var></code></p>
+                    </div>
+                    <div>
+                        <p><var>E > 0 ? "נפחית" : "נוסיף"</var> <code><var>abs(E)</var></code> <var>E > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                        <p><code>x + <var>E</var> - <var>E</var> = <var>SIMPLIFIED</var> - <var>E</var></code></p>
+                        <p><code>x = <var>SIMPLIFIED</var> - <var>E</var></code></p>
+                    </div>
+                    <div data-if="SIMPLIFIED_DENOM !== 1">
+                        <p>נשנה את הביטוי לשבר בעל ערך זהה בו המכנה הוא <code><var>SIMPLIFIED_DENOM</var></code>.</p>
+                        <p><code>x = <var>SIMPLIFIED</var> - <var>E</var>\cdot <var>fraction(SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var></code></p>
+                        <p><code>x = <var>SIMPLIFIED</var><var>E > 0 ? "-" : "+"</var> <var>fraction(abs(E)*SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var></code></p>
+                   </div>
+                    <div>
+                        <p><code>x = <var>POS_RESULT</var></code></p>
+                    </div>
+                </div>
+            </div>
+            <div data-else data-unwrap>
+                <div>
+                    <p><var>A > 0 ? "נפחית" : "נוסיף"</var> <code><var>A</var>|x + <var>E</var>|</code> <var>A > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                    <p><code>
+                        (<var>A</var>|x + <var>E</var>| + <var>B</var>) - <var>A</var>|x + <var>E</var>| =
+                        (<var>C</var>|x + <var>E</var>| + <var>D</var>) - <var>A</var>|x + <var>E</var>|
+                    </code></p>
+                    <p><code>
+                        <var>B</var> = <var>C - A</var>|x + <var>E</var>| + <var>D</var>
+                    </code></p>
+                </div>
+                <div>
+                    <p><var>D > 0 ? "נפחית" : "נוסיף"</var> <code><var>abs(D)</var></code> <var>D > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                    <p><code>
+                        <var>B</var> - <var>D</var> = 
+                        (<var>C - A</var>|x + <var>E</var>| + <var>D</var>) - <var>D</var>
+                    </code></p>
+                    <p><code>
+                        <var>B - D</var> = <var>C - A</var>|x + <var>E</var>|
+                    </code></p>
+                </div>
+                <div data-if="ABS_A_MINUS_C !== 1">
+                    <p>נחלק את שני צידי המשוואה ב- <code><var>C - A</var></code>.</p>
+                    <p><code>
+                        <var>fraction(B-D, C-A)</var> =
+                        \dfrac{<var>C - A</var>|x + <var>E</var>|}{<var>C - A</var>}
+                    </code></p>
+                </div>
+                <div>
+                    <p>נפשט את הביטוי.</p>
+                    <p><code><var>SIMPLIFIED</var> = |x + <var>E</var>|</code></p>
+                </div>
+                <div data-if="HAS_SOLUTION" data-unwrap>
+                    <div>
+                        <p>מכיוון שערך מוחלט של ביטוי הוא המרחק שלו מ-0, ישנם שני פתרונות, אחד חיובי ואחד שלילי:</p>
+                        <p><code>- <var>SIMPLIFIED</var> = x + <var>E</var></code></p>
+                        <p>או</p>
+                        <p><code><var>SIMPLIFIED</var> = x + <var>E</var></code></p>
+                    </div>
+                    <div>
+                        <p>נחשב את הפתרון בו <code>x + <var>E</var></code> הוא שלילי.</p>
+                        <p><code> - <var>SIMPLIFIED</var> = x + <var>E</var></code></p>
+                    </div>
+                    <div>
+                        <p><var>E > 0 ? "נפחית" : "נוסיף"</var> <code><var>abs(E)</var></code> <var>E > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                        <p><code> - <var>SIMPLIFIED</var> - <var>E</var> = x + <var>E</var> - <var>E</var></code></p>
+                        <p><code> - <var>SIMPLIFIED</var> - <var>E</var> = x</code></p>
+                    </div>
+                    <div data-if="SIMPLIFIED_DENOM !== 1">
+                        <p>נשנה את הביטוי לשבר בעל ערך זהה בו המכנה הוא <code><var>SIMPLIFIED_DENOM</var></code>.</p>
+                        <p><code>- <var>SIMPLIFIED</var> - <var>E</var>\cdot<var>fraction(SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var> = x</code></p>
+                        <p><code>- <var>SIMPLIFIED</var><var>E > 0 ? "-" : "+"</var> <var>fraction(abs(E)*SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var> = x</code></p>
+                    </div>
+                    <div>
+                        <p><code><var>NEG_RESULT</var> = x</code></p>
+                    </div>
+                    <div>
+                        <p>כעת נמצא את הפתרון בו <code>x + <var>E</var></code> הוא חיובי.</p>                        
+                        <p><code><var>SIMPLIFIED</var> = x + <var>E</var></code></p>
+                    </div>
+                    <div>
+                        <p><var>E > 0 ? "נפחית" : "נוסיף"</var> <code><var>abs(E)</var></code> <var>E > 0 ? "מ" : "ל"</var>שני צידי המשוואה:</p>
+                        <p><code><var>SIMPLIFIED</var> - <var>E</var> = x + <var>E</var> - <var>E</var></code></p>
+                        <p><code><var>SIMPLIFIED</var> - <var>E</var> = x</code></p>
+                    </div>
+                    <div data-if="SIMPLIFIED_DENOM !== 1">
+                        <p>נשנה את הביטוי לשבר בעל ערך זהה בו המכנה הוא <code><var>SIMPLIFIED_DENOM</var></code>.</p>
+                        <p><code><var>SIMPLIFIED</var> - <var>E</var>\cdot <var>fraction(SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var> = x</code></p>
+                        <p><code><var>SIMPLIFIED</var><var>E > 0 ? "-" : "+"</var> <var>fraction(abs(E)*SIMPLIFIED_DENOM,SIMPLIFIED_DENOM)</var> = x</code></p>
+                    </div>
+                    <div>
+                        <p><code><var>POS_RESULT</var> = x</code></p>
+                    </div>
+                </div>
+            </div>
+            <p class="final_answer" data-if="HAS_SOLUTION">
+                אם כך, התשובה הנכונה היא <var>SOLUTION</var>.
+            </p>
+            <p class="final_answer" data-else>
+                ערך מוחלט לא יכול להיות שלילי, ולכן אין פתרון.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

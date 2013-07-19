@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html data-require="math expressions spin word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות אחוזים מילוליות 1</title>
+	<script src="../khan-exercise.js"></script>
+    <style>
+        #workarea { direction: rtl; }
+    </style>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="simple-percentages">
+			<div class="vars">
+				<var id="A_SIMPLE">randRange( 1, 150 )</var>
+				<var id="B_SIMPLE">randRange( 2, 100 )</var>
+			</div>
+			<p class="question">
+				איזה מספר מהווה  <var>A_SIMPLE</var>% מ- <var>B_SIMPLE</var>? (עגלו למספר השלם הקרוב ביותר.)
+			</p>
+			<p class="solution" data-forms="integer"><var>round((A_SIMPLE * B_SIMPLE) / 100)</var></p>
+			<div class="hints">
+				<p>
+				<code><var>A_SIMPLE / 100</var> \times <var>B_SIMPLE</var> \approx <var>round((A_SIMPLE * B_SIMPLE) / 100)</var> </code>
+				</p>
+			</div>
+		</div>
+		<div id="backward-percentages" data-type="simple-percentages">
+			<p class="question">
+				<var>B_SIMPLE</var> הוא <var>A_SIMPLE</var>% מתוך איזה מספר? (עגלו את המספר למאית הקרוב ביותר.)
+			</p>
+			<p class="solution" data-forms="decimal"><var>round(((B_SIMPLE * 100) / A_SIMPLE) * 100) / 100</var></p>
+			<div class="hints">
+				<p>נסמן ב- <code>x</code> את המספר ש- <var>B_SIMPLE</var> מהווה <var>A_SIMPLE</var>% ממנו.</p>
+				<p><code><var>A_SIMPLE / 100</var> \times x = <var>B_SIMPLE</var></code></p>
+				<p><code>x=<var>B_SIMPLE</var>/<var>A_SIMPLE / 100</var></code></p>
+				<p><code>x \approx<var>round((B_SIMPLE * 100/A_SIMPLE * 100))/100</var></code></p>
+			</div>
+		</div>
+		<div id="bank-percentages">
+			<div class="vars">
+				<var id="BANK_FEWER">randRange( 2, 100 )</var>
+				<var id="BANK_MORE">BANK_FEWER + randRange(5, 2 * BANK_FEWER + 10 )</var>
+			</div>
+			<p class="question">
+				ל<var>person(1)</var> יש היום <var>BANK_MORE</var> שקלים בחשבון הבנק. אתמול היו <var>tohim(1)</var> <var>BANK_FEWER</var> שקלים בחשבון הבנק.
+         בכמה אחוזים גדל חשבון הבנק של <var>person(1)</var> בין אתמול להיום? (עגלו למאית האחוז הקרובה ביותר.)</p>
+			<p class="solution" data-forms="percent"><var>round(((BANK_MORE - BANK_FEWER) * 10000) / BANK_FEWER) / 100</var></p>
+			<div class="hints">
+				<p>חשבון הבנק גדל ב- <code><var>BANK_MORE</var> - <var>BANK_FEWER</var> = <var>BANK_MORE - BANK_FEWER</var></code> שקלים </p>
+				<p><code>\frac{<var>BANK_MORE - BANK_FEWER</var>}{<var>BANK_FEWER</var>} \approx <var>round(((BANK_MORE - BANK_FEWER) * 10000) / BANK_FEWER) / 100</var>\%</code></p>
+			</div>
+		</div>
+		<div id="bank-percentages-loss" data-type="bank-percentages">
+			<p class="question">
+				ל<var>person(1)</var> יש היום <var>BANK_FEWER</var> שקלים בחשבון הבנק. אתמול היו <var>tohim(1)</var> <var>BANK_MORE</var> שקלים בחשבון הבנק.
+         בכמה אחוזים הצטמק חשבון הבנק של <var>person(1)</var> בין אתמול להיום? (עגלו למאית האחוז הקרובה ביותר.)</p>
+			<p class="solution" data-forms="percent"><var>round(((BANK_MORE - BANK_FEWER) * 10000) / BANK_MORE) / 100</var></p>
+			<div class="hints">
+				<p>חשבון הבנק קטן ב- <code><var>BANK_MORE</var> - <var>BANK_FEWER</var> = <var>BANK_MORE - BANK_FEWER</var></code> שקלים </p>
+				<p><code>\frac{<var>BANK_MORE - BANK_FEWER</var>}{<var>BANK_MORE</var>} \approx <var>round(((BANK_MORE - BANK_FEWER) * 10000) / BANK_MORE) / 100</var>\%</code></p>
+			</div>
+		</div>
+		<div id="yearly-percentages">
+			<div class="vars">
+				<var id="YEAR_PERCENT_MORE">randRange( 10, 150 )</var>
+				<var id="YEAR_THIS">randRange( 50, 999 )</var>
+				<var id="YEAR_LAST">round(YEAR_THIS * 10000 / (100 + YEAR_PERCENT_MORE)) / 100</var>
+			</div>
+			<p class="question">
+				ל<var>person(1)</var> יש היום כמות כסף הגדולה ב-<var>YEAR_PERCENT_MORE</var>% מאשר הכמות שהיתה <var>tohim(1)</var> באותו התאריך בשנה שעברה.
+         אם ל<var>person(1)</var> יש היום <var>YEAR_THIS</var> שקלים, כמה שקלים היו <var>tohim(1)</var> באותו הזמן בשנה שעברה? (עגלו לאגורה הקרובה, שהיא 1/100 משקל.)</p>
+			<p class="solution" data-forms="dollar"><var>YEAR_LAST</var></p>
+			<div class="hints">                              
+				<p>נסמן ב-<code>x</code> את כמות הכסף שהיה ל<var>person(1)</var> שנה שעברה.</p>
+				<p><code>x + <var>YEAR_PERCENT_MORE / 100</var>x = <var>YEAR_THIS</var></code></p>
+				<p><code><var>(100 + YEAR_PERCENT_MORE) / 100</var>x = <var>YEAR_THIS</var></code></p>
+				<p><code>x = \frac{<var>YEAR_THIS</var>}{<var>(100 + YEAR_PERCENT_MORE) / 100</var>}</code></p>
+				<p><code>x \approx <var>YEAR_LAST</var></code></p>
+			</div>
+		</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

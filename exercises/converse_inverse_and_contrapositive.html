@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ביטוי הופכי, נגדי וקונטרה חיובי</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="TYPE">randFromArray([ 'converse', 'inverse', 'contrapositive' ])</var>
+            <var id="HEB_TYPE"> (TYPE=="converse")? "הופכי":(TYPE=="inverse")? "נגדי":"קונטרה חיובי" </var>
+        </div>
+
+        <div class="problems">
+
+            <div id="rain-and-soccer-practice">
+                <div class="vars">
+                    <var id="CHOICES">{ 
+
+                         "converse" : "אם אימון הכדורגל יתבטל היום, אז ירד גשם.",
+                        "inverse" : "אם לא ירד גשם, אימון הכדורגל לא יתבטל.",
+                        "contrapositive" : "אם אימון הכדורגל לא התבטל, לא ירד גשם.",
+                        "other1" : "אם אני לא אוהב כדורגל, אז אני לא אלך לאימון כדורגל.",
+                        "other2" : "כאשר יורד גשם, אני לא רוצה ללכת לאימון כדורגל." }
+                    </var>
+                    <var id="HYPOTHESIS">"ירד גשם היום"</var>
+                    <var id="NEG_HYPOTHESIS">"לא ירד גשם היום"</var>
+                    <var id="CONCLUSION">"אימון הכדורגל יבוטל"</var>
+                    <var id="NEG_CONCLUSION">"אימון הכדורגל יבוטל"</var>
+                </div>
+
+                <p class="problem">זהה את  ה<strong><var>HEB_TYPE</var></strong> של ביטוי התנאי הנתון.</p>
+
+                <p class="question">"אם ירד גשם היום, אימון הכדורגל יתבטל."</p>
+
+                <p class="solution"><var>CHOICES[TYPE]</var></p>
+                <ul class="choices" data-show="4" data-none="true">
+                    <li data-each="CHOICES as key, value"><var>value</var></li>
+                </ul>
+            </div>
+
+            <div id="sun-and-hat" data-type="rain-and-soccer-practice">
+                <div class="vars">
+                    <var id="CHOICES">{ 
+
+                         "converse" : "אם אני צריך לחבוש כובע, אז השמש חזקה בחוץ.",
+                        "inverse" : "אם השמש אינה חזקה בחוץ, אז לא אחבוש כובע.",
+                        "contrapositive" : "אם אני לא חובש כובע בחוץ, השמש אינה חזקה.",
+                        "other1" : "אני חובש כובעים רק כאשר יורד גשם.",
+                        "other2" : "אם לא אחבוש כובע היום, אוכל להשרף." }
+                    </var>
+                    <var id="HYPOTHESIS">"השמש חזקה בחוץ"</var>
+                    <var id="NEG_HYPOTHESIS">"השמש אינה חזקה בחוץ "</var>
+                    <var id="CONCLUSION">"אני אחבוש כובע"</var>
+                    <var id="NEG_CONCLUSION">"אני לא אחבוש כובע"</var>
+                </div>
+
+                <p class="question">"השמש חזקה בחוץ, אז אחבוש כובע."</p>
+            </div>
+
+            <div id="dessert-and-pie" data-type="rain-and-soccer-practice">
+                <div class="vars">
+                    <var id="CHOICES">{ 
+                        "converse" : "אוכל עוגת תפוחים, אם יהיה קינוח הערב.",
+                        "inverse" : "אם לא יהיה קינוח הערב, לא אוכל עוגת תפוחים.",
+                        "contrapositive" : "אם לא אוכל עוגת תפוחים, לא יהיה קינוח הערב.",
+                        "other1" : "אם לא יהיה קינוח הערב, אהיה מאוכזב.",
+                        "other2" : "אני לא אוהב עוגת תפוחים, אז לא אוכל קינוח הערב." }
+                    </var>
+                    <var id="HYPOTHESIS">"יהיה קינוח הערב"</var>
+                    <var id="NEG_HYPOTHESIS">"לא יהיה קינוח הערב"</var>
+                    <var id="CONCLUSION">"אוכל עוגת תפוחים"</var>
+                    <var id="NEG_CONCLUSION">"לא אוכל עוגת תפוחים"</var>
+                </div>
+
+                <p class="question">"אם יהיה קינוח הערב , אוכל עוגת תפוחים."</p>
+            </div>
+
+            <div id="vertical-and-congruent-angles" data-type="rain-and-soccer-practice">
+                <div class="vars">
+                    <var id="CHOICES">{ 
+                        "converse" : "כל זוג זוויות חופפות הינם קודקודיות.",
+                        "inverse" : "כל זוג זוויות אשר אינן קודקודיות אינן חופפות.",
+                        "contrapositive" : "כל זוג זוויות אשר אינן חופפות אינן קודקודיות.",
+                        "other1" : "זוויות קודקודיות תמיד חופפות.",
+                        "other2" : "זוויות חופפות יכולות להיות קודקודיות והן יכולים להיות גם לא." }
+                    </var>
+                    <var id="HYPOTHESIS">"זוג של זוויות קודקודיות"</var>
+                    <var id="NEG_HYPOTHESIS">"זוג של זוויות לא קודקודיות"</var>
+                    <var id="CONCLUSION">"חופפות"</var>
+                    <var id="NEG_CONCLUSION">"שתי הזוויות אינן חופפות"</var>
+                </div>
+
+                <p class="question">"זוג זוויות קודקודיות חופפות."</p>
+            </div>
+
+            <div id="elephants-and-peanuts" data-type="rain-and-soccer-practice">
+                <div class="vars">
+                    <var id="CHOICES">{ 
+                        "converse" : "אם חיה אוכלת בוטנים, אז החיה הזאת היא פיל.",
+                        "inverse" : "אם החיה אינה פיל, אז היא לא אוכלת בוטנים.",
+                        "contrapositive" : "אם החיה אינה אוכלת בוטנים,אז היא לא פיל.",
+                        "other1" : "פילים אוכלים עם עלים.",
+                        "other2" : "חיות שאוכלות בוטנים יכולות לאכול גם חמאת בוטנים." }
+                    </var>
+                    <var id="HYPOTHESIS">"פיל"</var>
+                    <var id="NEG_HYPOTHESIS">"חיה שאינה פיל"</var>
+                    <var id="CONCLUSION">"חיה שאוכלת בוטנים"</var>
+                    <var id="NEG_CONCLUSION">"חיה שאינה אוכלת בוטנים"</var>
+                </div>
+
+                <p class="question">"פילים אוכלים בוטנים."</p>
+            </div>
+
+            <div id="equations-and-equations" data-type="rain-and-soccer-practice">
+                <p class="question">"אם <code>3x+1=7</code>, אז <code>x=2</code>."</p>
+
+                <p class="solution">
+                    <span data-if="TYPE === 'converse'">אם <code>x=2</code>, אז <code>3x+1=7</code>.</span>
+                    <span data-if="TYPE === 'inverse'">אם <code>3x+1\not=7</code>, אז <code>x\not=2</code>.</span>
+                    <span data-if="TYPE === 'contrapositive'">אם <code>x\not=2</code>, אז <code>3x+1\not=7</code>.</span>
+                </p>
+                <ul class="choices" data-show="4" data-none="true">
+                    <li>אם <code>x=2</code>, אז <code>3x+1=7</code>.</li>
+                    <li>אם <code>3x+1\not=7</code>, אז <code>x\not=2</code>.</li>
+                    <li>אם <code>x\not=2</code>, אז <code>3x+1\not=7</code>.</li>
+                    <li>אם <code>x=4</code>, אז <code>3x+1=13</code>.</li>
+                    <li>אם <code>3x+1=10</code>, אז <code>x=3</code>.</li>
+                </ul>
+
+                <div class="hints">
+                    <p>
+                       במשפט זה, הנתון הוא <strong><span class="hint_green"><code>3x+1=7</code></span></strong> והמסקנה היא <strong><span class="hint_blue"><code>x=2</code></span></strong>
+                    </p>
+                 
+    
+                     <p data-if="TYPE === 'converse'">
+                        לכן כאשר נמיר להופכי, הנתון הופך ל <strong><span class="hint_blue"><code>x=2</code></span></strong> והמסקנה הופכת ל <strong><span class="hint_green"><code>3x+1=7</code></span></strong>.
+                    </p>
+                    <p data-if="TYPE === 'inverse'">
+                        לכן , כאשר נמיר לנגדי, הנתון הופך ל <strong><span class="hint_green"><code>3x+1\not=7</code></span></strong> והמסקנה הופכת ל <strong><span class="hint_blue"><code>x\not=2</code></span></strong>.
+                    </p>
+                    <p data-if="TYPE === 'contrapositive'">
+                        לכן, כאשר נמיר לקונטרה-חיובי, הנתון הופך ל <strong><span class="hint_blue"><code>x\not=2</code></span></strong> והמסקנה הופכת ל <strong><span class="hint_green"><code>3x+1\not=7</code></span></strong>.
+                    </p>
+                    
+                    <p>
+                        נחבר את הנתון והמסקנה ביחד נקבל את ה<var>HEB_TYPE</var> של הביטוי המקורי, <strong>
+                            <span data-if="TYPE === 'converse'">"אם <code>x=2</code>, אז <code>3x+1=7</code>."</span>
+                            <span data-if="TYPE === 'inverse'">"אם <code>3x+1\not=7</code>, אז <code>x\not=2</code>."</span>
+                            <span data-if="TYPE === 'contrapositive'">"אם <code>x\not=2</code>, אז <code>3x+1\not=7</code>."</span>
+                        </strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hints">
+            <p>
+               במשפט זה, הנתון הוא <strong>"<span class="hint_green"><var>HYPOTHESIS</var></span>"</strong> והמסקנה היא <strong>"<span class="hint_blue"><var>CONCLUSION</var></span>"</strong>
+            </p>
+            <p data-if="TYPE === 'converse'">
+                לכן כאשר נמיר להופכי, הנתון הופך ל<strong>"<span class="hint_blue"><var>CONCLUSION</var></span>"</strong> והמסקנה הופכת ל<strong>"<span class="hint_green"><var>HYPOTHESIS</var></span>"</strong>.
+            </p>
+            <p data-if="TYPE === 'inverse'">
+               לכן , כאשר נמיר לנגדי, הנתון הופך ל<strong>"<span class="hint_green"><var>NEG_HYPOTHESIS</var></span>"</strong>והמסקנה הופכת ל<strong>"<span class="hint_blue"><var>NEG_CONCLUSION</var></span>"</strong>.
+            </p>
+            <p data-if="TYPE === 'contrapositive'">
+                  לכן, כאשר נמיר לקונטרה-חיובי, הנתון הופך ל<strong>"<span class="hint_blue"><var>NEG_CONCLUSION</var></span>"</strong> והמסקנה הופכת ל<strong>"<span class="hint_green"><var>NEG_HYPOTHESIS</var></span>"</strong>.
+            </p>
+            <p>
+               נחבר את הנתון והמסקנה ביחד נקבל את ה<var>HEB_TYPE</var> של הביטוי המקורי, <strong>"<var>CHOICES[TYPE]</var>"</strong>
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>

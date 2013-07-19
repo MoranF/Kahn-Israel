@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+	<meta charset="UTF-8" />
+	<title>ציון תקן 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="original">
+				<div class="vars">
+					<var id="MEAN">randRange( 65, 85 )</var>
+					<var id="STDDEV">randRange( 2, 5 ) + randRange( 0, 1 ) * 0.5</var>
+					<var id="GRADE">randRangeWeighted( roundTo( 0, MEAN - STDDEV * 3 ), min( roundTo( 0, MEAN + STDDEV * 3 ), 100 ), MEAN, 0 )</var>
+					<var id="ZSCORE">roundTo( 2, ( GRADE - MEAN ) / STDDEV )</var>
+				</div>
+
+				<div class="problem">
+					הציונים ב <var>course( 1 )</var> בשנת לימודים בבית ספר <var>school( 1 )</var>  מתפלגים עם  <code>\mu = <var>MEAN</var></code> ו <code>\sigma = <var>STDDEV</var></code>.
+					<br /><var>person( 1 )</var> <span data-if="gender(1) == 'f' ">קיבלה</span><span data-else>קיבל</span><span data-if="floorTo( 0, GRADE / 10 ) === 8"></span> <code><var>GRADE</var></code>  בבחינה.
+				</div>
+
+				<p class="question"> מצא את ציון התקן עבור המבחן של  <var>person( 1 )</var>. למאית הקרובה.</p>
+
+				<div class="solution" data-forms="decimal"><var>ZSCORE</var></div>
+
+				<div class="hints">
+					<p>ציון תקן מוגדר כמספר <span class="hint_green">סטיות התקן</span> נקודה ספציפית מה<span class="hint_pink">ממוצע</span>.</p>
+					<div>
+						<p> המבחן אנו יכולים לחשב את ציון התקן עבור המבחן של <var>person( 1 )</var> על ידי חיסור ה<span class="hint_pink">ממוצע <code>(\mu)</code></span>מהציון <var>his( 1 )</var> ונחלק  ב<span class="hint_green">סטיית התקן <code>(\sigma)</code></span>.</p>
+						<p>
+							<code>
+								\large{\quad z \quad = \quad
+								\dfrac{x - \color{<var>PINK</var>}{\mu}}{\color{<var>GREEN</var>}{\sigma}}}
+							</code>
+						</p>
+					</div>
+					<div>
+						<p>
+							<code>
+								\large{\quad z \quad = \quad
+								\dfrac{<var>GRADE</var> - \color{<var>PINK</var>}{<var>MEAN</var>}}{\color{<var>GREEN</var>}{<var>STDDEV</var>}}}
+							</code>
+						</p>
+					</div>
+					<div>
+						<p><code>\large{\quad z \quad = \quad <var>ZSCORE</var>}</code></p>
+						<p class="final_answer">ציון התקן הינו  <code><var>ZSCORE</var></code>. במילים אחרות ,הציון ש<var>person( 1 )</var><span data-if="gender(1) == 'f' "> קיבלה </span><span data-else> קיבל </span> היה  <code><var>abs( ZSCORE )</var></code>
+						סטיות תקן <var>plural( abs( ZSCORE ) )</var> <span data-if="ZSCORE > 0">מעל </span><span data-else>מתחת </span> הממוצע.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

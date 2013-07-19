@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות קצב 2</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="average-speed">
+			<div class="vars">
+				<var id="DISTANCE">randRange( 2, 6 )</var>
+				<var id="FACTORS">shuffle( getPrimeFactorization( 60 ).concat( getPrimeFactorization( DISTANCE ) ) )</var>
+				<var id="MULTIPLY">
+					function( factors ) {
+						var product = 1;
+						for ( var i = 0; i &lt; factors.length; i++ ) {
+							product *= factors[ i ];
+						}
+						return product;
+					}
+				</var>
+				<var id="SPLIT">randRange( 3, FACTORS.length - 2 )</var>
+				<var id="TIME_UP">MULTIPLY( FACTORS.slice( 0, SPLIT ) )</var>
+				<var id="RATE_UP">MULTIPLY( FACTORS.slice( SPLIT ) )</var>
+				<var id="K">
+					(function() {
+						if ( RATE_UP % 3 === 0 ) {
+							return 2;
+						} else {
+							return 3;
+						}
+					})()
+				</var>
+				<var id="RATE_DOWN">K * RATE_UP</var>
+				<var id="TIME_DOWN">60 * DISTANCE / RATE_DOWN</var>
+				<var id="RATE_AVG">60 * 2 * DISTANCE / ( TIME_UP + TIME_DOWN )</var>
+				<var id="WALK" >
+				function ()
+				{
+				if(gender(1) == 'f')
+				{
+				return "הלכה"
+				}
+				else { return "הלך"}
+				}
+			</var>
+			</div>
+			<p class="problem">מתחנת הרכבת, <var>person( 1 )</var> <var> WALK()</var>   אל הגבעה כדי להגיע לחנות  ה<var>store( 1 )</var> האהובה ב<var>TIME_UP</var> דקות בקצב של <var>RATE_UP</var> קמ"ש. לאחר מכן <var>He( 1 )</var> <var> WALK()</var> חזרה במורד הגבעה בקצב של <var>K * RATE_UP</var> קמ"ש.</p>
+			<p class="question">מה הוא הקצב  ההליכה <var>his( 1 )</var> מהרכבת לחנות ה<var>store( 1 )</var> וחזרה?</p>
+
+			<div class="solution" data-type="multiple">
+				<span class="sol" style="padding-right: 5px"><var>RATE_AVG</var></span> mph
+			</div>
+
+			<div class="hints">
+				<p> המהירות הממוצעת אינה פשוט הממוצע של <var>RATE_UP</var> קמ"ש ו <var>RATE_DOWN</var> קמ"ש.</p>
+				<p><var>He( 1 )</var> <var> WALK()</var> יותר זמן במעלה הגבעה (בגלל ש<var>he( 1 )</var> הלכה לאט יותר ), אז אנו יכולים לשער שהמהירות הממוצעת תהיה קרובה יותר ל <var>RATE_UP</var> קמ"ש מאשר <var>RATE_DOWN</var> קמ"ש.</p>
+				<div>
+					<p>כדי לחשב את המהירות הממוצעת, אנו צריכים להשתמש ב:</p>
+					<p><code>\text{מהירות ממוצעת} = \dfrac{\color{<var>KhanUtil.BLUE</var>}{\text{מרחק כולל}}}{\color{<var>KhanUtil.ORANGE</var>}{\text{זמן כולל}}}</code></p>
+					<p><code>\text{מרחק הליכה בעליה} = \text{מרחק הליכה בירידה}</code></p>
+				</div>
+				<p>מה הוא מרחק ההליכה הכולל?</p>
+				<div>
+					<p><code>\color{<var>KhanUtil.BLUE</var>}{\begin{align*}\text{מרחק כולל} &= \text{מרחק במעלה הגבעה} + \text{מרחק במורד הגבעה}\\
+						&= 2 \times \text{מרחק במעלה הגבעה}\end{align*}}</code></p>
+						<br/>
+					<p><code>\begin{align*}\text{מרחק במעלה הגבעה} &= \text{מהירות במעלה הגבעה} \times \text{זמן במעלה הגבעה} \\\
+						&= <var>RATE_UP</var>\text{ קמ"ש} \times <var>TIME_UP</var>\text{ דקות}\times\dfrac{1 \text{ שעות}}{60 \text{ דקות }}\\
+						&= <var>DISTANCE</var>\text{ קילומטר}\end{align*}</code></p>
+				</div>
+				<div>
+					<p>נציב במשוואה הכחולה שלמעלה:</p>
+					<p><code>\color{<var>KhanUtil.BLUE</var>}{\text{מרחק כולל} = <var>2 * DISTANCE</var>\text{ קילומטרים}}</code></p>
+				</div>
+				<p>מה הוא זמן ההליכה הכולל?</p>
+				<div>
+					<p><code>\color{<var>KhanUtil.ORANGE</var>}{\text{זמן כולל} = \text{זמן בעליה} + \text{זמן בירידה}}</code></p>
+					<p><code>\begin{align*}\text{זמן בירידה} &= \dfrac{\text{מרחק בירידה}}{\text{מהירות בירידה}}\\
+						&= \dfrac{<var>DISTANCE</var>\text{ קילומטרים}}{<var>RATE_DOWN</var>\text{ קמ"ש}}\times\dfrac{60 \text{ דקות}}{1 \text{ שעה}}\\
+						&= <var>TIME_DOWN</var>\text{ דקות}\end{align*}</code></p>
+				</div>
+				<p><code>\color{<var>KhanUtil.ORANGE</var>}{\begin{align*}\text{זמן כולל} &= <var>TIME_UP</var>\text{ דקות} + <var>TIME_DOWN</var>\text{ דקות}\\
+					&= <var>TIME_UP + TIME_DOWN</var>\text{ דקות}\end{align*}}</code></p>
+				<p>אנו יודעים את המרחק הכולל והזמן הכולל, עכשיו ניתן לחשב את המהירות הממוצעת.</p>
+				<p><code>\begin{align*}\text{מהירות ממוצעת} &= \dfrac{\color{<var>KhanUtil.BLUE</var>}{\text{מרחק כולל}}}{\color{<var>KhanUtil.ORANGE</var>}{\text{זמן כולל}}}\\
+					&= \dfrac{\color{<var>KhanUtil.BLUE</var>}{<var>2 * DISTANCE</var>\text{ קילומטרים}}}{\color{<var>KhanUtil.ORANGE</var>}{<var>TIME_UP + TIME_DOWN</var>\text{ דקות}}}\times\dfrac{60 \text{ דקות}}{1 \text{ שעה}}\\
+					&= <var>RATE_AVG</var>\text{ קמ"ש}\end{align*}</code></p>
+				<p>המהירות הממוצעת היא <var>RATE_AVG</var> קמ"ש, אשר קרובה יותר ל <var>RATE_UP</var> קמ"ש מאשר ל <var>RATE_DOWN</var> קמ"ש, כמצופה.</p>
+			</div>
+		</div>
+		<div id="collective-action-same">
+			<div class="vars">
+				<var id="PEOPLE_INIT">randRange( 5, 10 )</var>
+				<var id="WALL_INIT">PEOPLE_INIT</var>
+				<var id="TIME_INIT">randRange( 20, 59 )</var>
+				<var id="PEOPLE_FINAL">randRange( PEOPLE_INIT + 3, 20 )</var>
+				<var id="WALL_FINAL">PEOPLE_FINAL</var>
+				<var id="TIME_FINAL">TIME_INIT</var>
+			</div>
+			<p class="problem">לוקח  <var>TIME_INIT</var> דקות ל <var>PEOPLE_INIT</var> אנשים לצבוע <var>WALL_INIT</var> קירות.</p>
+			<p class="question">כמה דקות יקח ל <var>PEOPLE_FINAL</var> אנשים כדי לצבוע <var>WALL_FINAL</var> קירות?</p>
+
+			<div class="solution" data-type="multiple">
+				<span class="sol" style="padding-right: 5px"><var>TIME_FINAL</var></span> דקות
+			</div>
+			<div class="hints">
+				<p> דמיין שלכל איש יש קיר אשר הוא צובע, וכל <var>PEOPLE_INIT</var>האנשים מתחילים לצבוע באותו זמן.</p>
+				<p>בגלל שכולם יסיימו לצבוע את הקיר שלהם ב <var>TIME_INIT</var> דקות, לוקח לאדם אחד <var>TIME_INIT</var> לצבוע את הקיר כולו.</p>
+				<p>אם יש לנו  <var>PEOPLE_FINAL</var> אנשים ו <var>WALL_FINAL</var> קירות, אנו יכולים להשים לכל איש קיר משלו.</p>
+				<p>לכולם יקח <var>TIME_FINAL</var> לצבוע את הקיר המיוחס להם.</p>
+				<p>במילים אחרות , יקח <var>TIME_FINAL</var> דקות בשביל ש <var>PEOPLE_FINAL</var> אנשים יצבעו  <var>WALL_FINAL</var> קירות.</p>
+			</div>
+		</div>
+		<div id="collective-action-calculate">
+			<div class="vars">
+				<var id="PEOPLE_INIT, WALL_INIT">randRangeUnique( 3, 7, 2 )</var>
+				<var id="TIME_INIT">randRange( 30, 50 )</var>
+				<var id="PEOPLE_FINAL">randRange( PEOPLE_INIT + 1, 10 )</var>
+				<var id="WALL_FINAL">randRange( WALL_INIT + 1, 10 )</var>
+				<var id="TIME_FINAL">round( WALL_FINAL * TIME_INIT * PEOPLE_INIT / ( WALL_INIT * PEOPLE_FINAL ) )</var>
+				<var id="NEED_TO_ROUND">getGCD( WALL_FINAL * TIME_INIT * PEOPLE_INIT, WALL_INIT * PEOPLE_FINAL ) !== (WALL_INIT * PEOPLE_FINAL)</var>
+			</div>
+			<p class="problem"><var>PEOPLE_INIT</var> אנשים יכולים לצבוע <var>WALL_INIT</var> קירות ב <var>TIME_INIT</var> דקות.</p>
+			<p class="question">כמה דקות יקח ל <var>PEOPLE_FINAL</var> אנשים לצבוע <var>WALL_FINAL</var> קירות?  עגל לדקה הקרובה.</p>
+			<div class="solution" data-type="multiple">
+				<span class="sol" style="padding-right: 5px" data-forms="integer"><var>TIME_FINAL</var></span> minutes
+				<p class="example">מספר הדקות , מעוגל לדקה הקרובה</p>
+			</div>
+			<div class="hints">
+				<div>
+					<p>אנו יודעים שכמות קירות <code>w</code>  נצבעה על ידי <code>p</code> אנשים  ב<code>t</code> דקות בקצב קבוע <code>r</code>.</p>
+					<p><code>w = r \cdot t \cdot p</code></p>
+					<p><code>\begin{align*}w &= <var>WALL_INIT</var>\text{ קירות}\\
+						p &= <var>PEOPLE_INIT</var>\text{ אנשים}\\
+						t &= <var>TIME_INIT</var>\text{ דקות}\end{align*}</code></p>
+				</div>
+				<div>
+					<p>נציב את הערכים וננסה למצוא את הנעלם  <code>r</code>:</p>
+					<p><code>r = \dfrac{w}{t \cdot p}= \dfrac{<var>WALL_INIT</var>}{<var>TIME_INIT</var> \cdot <var>PEOPLE_INIT</var>} = <var>fractionReduce( WALL_INIT, TIME_INIT * PEOPLE_INIT )</var>\text{ קירות שנצבעו על ידי אדם בדקה}</code></p>
+				</div>
+				<p>אנו יכולים לחשב את כמות הזמן הנדרשת לצביעה של <var>WALL_FINAL</var> קירות על ידי <var>PEOPLE_FINAL</var> אנשים.</p>
+				<p><code>t = \dfrac{w}{r \cdot p} = \dfrac{<var>WALL_FINAL</var>}{<var>fractionReduce( WALL_INIT, TIME_INIT * PEOPLE_INIT )</var> \cdot <var>PEOPLE_FINAL</var>} = \dfrac{<var>WALL_FINAL</var>}{<var>fractionReduce( WALL_INIT * PEOPLE_FINAL, TIME_INIT * PEOPLE_INIT )</var>} = <var>fractionReduce( WALL_FINAL * TIME_INIT * PEOPLE_INIT, WALL_INIT * PEOPLE_FINAL )</var>\text{ דקות}</code><br/><span data-if="NEED_TO_ROUND"><code>= <var>mixedFractionFromImproper( WALL_FINAL * TIME_INIT * PEOPLE_INIT, WALL_INIT * PEOPLE_FINAL, true, true )</var>\text{ דקות}</code></span></p>
+				<div data-if="NEED_TO_ROUND">
+					<p>נעגל לדקה הקרובה:</p>
+					<p><code>t = <var>TIME_FINAL</var>\text{ דקות}</code></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

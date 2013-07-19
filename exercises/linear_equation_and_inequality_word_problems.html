@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb spin">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>משוואות ליניאריות ואי שיוויונים - בעיות מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="skateboarding_camp_tricks">
+				<div class="vars">
+					<var id="Q">randRange( 2, 25 )</var><!-- # of skateboarding tricks -->
+					<var id="P">randRange( 3, 10 )</var><!-- # of tricks learned per week -->
+					<var id="X">randRange( 2, 12 )</var><!-- # of weeks -->
+					<var id="R">P * X + Q</var>
+				</div>
+
+				<p class="problem spin">לפני מחנה הסקייטבורד <var>person( 1 )</var> <var>genderize(1,"ידע")</var> לעשות <var>Q</var> פעלולי סקייטבורד. {<var>person( 1 )</var> מקווה לדעת יום אחד כיצד לעשות <var>randRange( 50, 100 )</var> פעלולים שונים. |}{כל שבוע, ילמדו את <var>person( 1 )</var> <var>P</var> פעלולים.|במחנה, <var>person( 1 )</var> <var>genderize(1,"ילמד","תלמד")</var> <var>P</var> פעלולים כל שבוע.}</p>
+				<p class="question">אם <var>person( 1 )</var> <var>genderize(1,"יבלה","תבלה")</var> <var>X</var> במחנה, כמה פעלולים <var>he( 1 )</var> <var>genderize(1,"ידע","תדע")</var> בסוף המחנה?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>R</var></span> פעלולי סקייטבורד
+				</div>
+
+				<div class="hints">
+					<p>מספר פעלולי סקייטבורד ש<var>he( 1 )</var> <var>genderize(1,"למד")</var> כל שבוע x מספר השבועות שיארך המחנה + מספר הפעלולים <var>he( 1 )</var> כבר <var>genderize(1,"יודע","יודעת")</var> = מספר הפעלולים <var>he( 1 )</var> <var>genderize(1,"ידע","תדע")</var> בסוף המחנה </p>
+					<p>מספר פעלולי סקייטבורד ש<var>he( 1 )</var> <var>genderize(1,"למד")</var> כל שבוע = <code><var>P</var></code></p>
+					<p>מספר השבועות שיארך המחנה = <code><var>X</var></code></p>
+					<p>מספר הפעלולים <var>he( 1 )</var> כבר <var>genderize(1,"יודע","יודעת")</var> = <code><var>Q</var></code></p>
+					<p>מספר הפעלולים <var>he( 1 )</var> <var>genderize(1,"ידע","תדע")</var> בסוף המחנה = <code>r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = <var>R</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"ידע","תדע")</var> <var>R</var> פעלולים בסוף המחנה.</strong></p>
+				</div>
+			</div>
+
+			<div id="number_of_marathons">
+				<div class="vars">
+					<var id="Q">randRange( 1, 50 )</var><!-- # of marathons -->
+					<var id="P">randRange( 2, 12 )</var><!-- # of marathons per year -->
+					<var id="X">randRange( 2, 8 )</var><!-- # of year -->
+					<var id="R">P * X + Q</var>
+				</div>
+
+				<p class="problem spin"><var>person( 1 )</var> <var>genderize(1,"רץ","רצה")</var> בעבר <var>plural_heb( Q, "מרוץ מרתון","מירוצי מרתון", "m" )</var>,{ ו<var>he(1)</var> <var>genderize(1,"מתכנן","מתכננת")</var> לרוץ <var>P</var> מירוצי מרתון כל שנה}.{ <var>person( 1 )</var> <var>genderize(1,"מתאמן","מתאמנת")</var> כבר <var>randRange(3, 5)</var>חודשים כדי להצליח במירוצים.|}</p>
+				<p class="question">בעוד <var>X</var> שנים, בהנחה ש<var>he(1)</var> <var>genderize(1,"יעמוד","תעמוד")</var> בתכנית, 
+        כמה מירוצים סך הכל <var>genderize(1,"יוכל","תוכל")</var> <var>person( 1 )</var> לומר ש<var>he(1)</var> <var>genderize(1,"רץ","רצה")</var> ?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>R</var></span> מירוצי מרתון
+				</div>
+
+				<div class="hints">
+					<p>מספר מירוצי מרתון כל שנה x מספר שנים + מספר מרוצים <var>he( 1 )</var> כבר <var>genderize(1,"רץ","רצה")</var> = מספר כולל של מירוצי מרתון</p>
+					<p>מספר מירוצי מרתון כל שנה = <code><var>P</var></code></p>
+					<p>מספר שנים = <code><var>X</var></code></p>
+					<p>מספר מרוצים <var>he( 1 )</var> כבר <var>genderize(1,"רץ","רצה")</var> = <code><var>Q</var></code></p>
+					<p>מספר כולל של מירוצי מרתון = <code>r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = <var>R</var></code></p>
+					<p><strong><var>person( 1 )</var> ירוץ <var>R</var> מירוצי מרתון בסוף <var>X</var> השנים הבאות.</strong></p>
+				</div>
+			</div>
+
+			<div id="amazon_total">
+				<div class="vars">
+					<var id="Q">randRange( 0, 15 )</var><!-- cost of shipping -->
+					<var id="P">randRange( 5, 30 )</var><!-- cost of each book -->
+					<var id="X">randRange( 2, 20 )</var><!-- # of books bought -->
+					<var id="R">P * X + Q</var>
+				</div>
+
+				<p class="problem spin"><var>person( 1 )</var> <var>genderize(1,"החליט")</var> לרכוש כמה ספרים באינטרנט. {לא משנה כמה ספרים <var>he( 1 )</var> <var>genderize(1,"ירכוש","תרכוש")</var>, עלות המשלוח היא ₪<var>Q</var>.}</p>
+				<p class="question">אם <var>person( 1 )</var> <var>genderize(1,"קנה")</var> <var>X</var> ספרים שכל אחד מהם עלה ₪<var>P</var>, כמה <var>onhim( 1 )</var> לשלם סך הכל?
+
+				<div class="solution" data-forms="dollar"><var>R</var></div>
+
+				<div class="hints">
+					<p>מחיר של כל ספר x מספר הספרים שנקנו + עלות משלוח = סך כל התשלום</p>
+					<p>מחיר של כל ספר = <code><var>P</var></code></p>
+					<p>מספר הספרים שנקנו = <code><var>X</var></code></p>
+					<p>עלות המשלוח = <code><var>Q</var></code></p>
+					<p>סך כל התשלום = <code>r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = <var>R</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"שילם","שילמה")</var> סך הכל ₪<var>R</var> עבור הספרים והמשלוח.</strong></p>
+				</div>
+			</div>
+
+			<div id="new_york_times_articles">
+				<div class="vars">
+					<var id="Q">randRange( 10, 100 )</var><!-- # of articles written -->
+					<var id="P">randRange( 1, 25 )</var><!-- # of articles per month -->
+					<var id="X">randRange( 3, 12 )</var><!-- # of months -->
+					<var id="R">P * X + Q</var>
+				</div>
+
+				<p class="problem spin">{<var>Q</var> מאמרים נכתבו על ידי <var>person( 1 )</var> בעיתון <i>ידיעות אחרונות</i>|<var>person( 1 )</var> <var>genderize(1,"כתב")</var> <var>Q</var> מאמרים עבור העיתון <i>ישראל היום</i>}{ (<var>Q - randRange(2, 8)</var> מהם בשנה שעברה)|}{. יש <var>tohim( 1 )</var> חוזה חדש| ויש<var>tohim( 1 )</var> חוזה חדש} לפיו <var>onhim( 1 )</var> לכתוב <var>plural_heb( P, "מאמר","מאמרים","m" )</var> בכל חודש במהלך <var>X</var> החודשים הבאים.</p>
+				<p class="question">בסוף <var>X</var> החודשים, כמה מאמרים של <var>person( 1 )</var> יפרסם העיתון סך הכל?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>R</var></span> מאמרים
+				</div>
+
+				<div class="hints">
+					<p>מספר מאמרים שיכתבו בכל חודש x מספר חודשים עבור החוזה הנוכחי + מספר מאמרים שנכתבו בשנה שעברה = סך כל המאמרים שיפורסמו בעיתון</p>
+					<p>מספר מאמרים שיכתבו בכל חודש = <code><var>P</var></code></p>
+					<p>מספר חודשים עבור החוזה הנוכחי = <code><var>X</var></code></p>
+					<p>מספר מאמרים שנכתבו בשנה שעברה = <code><var>Q</var></code></p>
+					<p>סך כל המאמרים שיפורסמו בעיתון = <code>r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = <var>R</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"יפרסם","תפרסם")</var> סך הכל <var>R</var> מאמרים בתום <var>X</var> החודשים.</strong></p>
+				</div>
+			</div>
+
+			<div id="khan_academy_exercises">
+				<div class="vars">
+					<var id="Q">randRange( 5, 40 )</var><!-- # of exercises -->
+					<var id="P">randRange( 2, 15 )</var><!-- # of exercises per weeks -->
+					<var id="X">randRange( 2, 6 )</var><!-- # of weeks -->
+					<var id="R">P * X + Q</var>
+				</div>
+
+				<p class="problem spin">אחרי <var>randRange( 2, 5 )</var> חודשי אימון,<var>person( 1 )</var> <var>genderize(1,"הצליח","הצליחה")</var> לפתור <var>Q</var> תרגילים שונים באקדמיה של קאהן.</p>
+				<p class="question">אם <var>person( 1 )</var> <var>genderize(1,"ישלים","תשלים")</var> <var>P</var> כל שבוע במהלך <var>X</var> השבועות הקרובים, כמה תרגילים <var>he( 1 )</var> <var>genderize(1,"יפתור","תפתור")</var> בסך הכל?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>R</var></span> תרגילים
+				</div>
+
+				<div class="hints">
+					<p>מספר תרגילים כל שבוע x מספר שבועות של פתרון תרגילים + מספר תרגילים שכבר נפתרו = סך כל התרגילים ש <var>person( 1 )</var> <var>genderize(1,"ישלים","תשלים")</var></p>
+					<p>מספר תרגילים כל שבוע = <code><var>P</var></code></p>
+					<p>מספר שבועות של פתרון תרגילים = <code><var>X</var></code></p>
+					<p>מספר תרגילים שכבר נפתרו = <code><var>Q</var></code></p>
+					<p>סך כל מספר התרגילים ש<var>person( 1 )</var> <var>genderize(1,"ישלים","תשלים")</var> = <code>r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = r</code></p>
+					<p><code><var>P</var> \cdot <var>X</var> + <var>Q</var> = <var>R</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"ישלים","תשלים")</var> <var>R</var> תרגילים בתום <var>X</var> השבועות.</strong></p>
+				</div>
+			</div>
+
+			<div id="magazine_subscription_selling">
+				<div class="vars" data-ensure="Q < R">
+					<var id="Q">randRange( 20, 40 )</var><!-- $ weekly bonus -->
+					<var id="P">randRange( 2, 10 )</var><!-- $ per subscription -->
+					<var id="R">randRange( 30, 100 )</var><!-- Weekly salary goal -->
+					<var id="X">ceil( (R - Q) / P )</var><!-- # subscriptions needed -->
+				</div>
+
+				<p class="problem spin"><var>person( 1 )</var> <var>genderize(1,"מוכר","מוכרת")</var> מנויים לעיתון ו<var>genderize(1,"מרויח")</var> ₪<var>P</var> עבור כל מנוי חדש ש<var>he( 1 )</var> <var>genderize(1,"מחתים","מחתימה")</var>. <var>person( 1 )</var> <var>genderize(1,"מרויח")</var> בנוסף ₪<var>Q</var> בשבוע כשכר, בלי קשר לכמה מנויים חדשים <var>he( 1 )</var> <var>genderize(1,"החתים","החתימה")</var>.</p>
+				<p class="question">אם <var>person( 1 )</var> רוצה להרוויח יותר מ- ₪<var>R</var> בשבוע הקרוב, מהו מספר המנויים המינימלי ש<var>onhim( 1 )</var> למכור?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>X</var></span> מנויים
+				</div>
+
+				<div class="hints">
+					<p>שקלים עבור כל מנוי x מספר מנויים שיוחתמו + שכר שבועי קבוע > מספר שקלים מינימלי להרוויח השבוע</p>
+					<p>שקלים עבור כל מנוי = <code><var>P</var></code></p>
+					<p>שכר שבועי קבוע = <code><var>Q</var></code></p>
+					<p>מספר שקלים מינימלי להרוויח השבוע = <code><var>R</var></code></p>
+					<p>מספר מנויים שיוחתמו = <code>x</code></p>
+					<p><code><var>P</var>x + <var>Q</var> > <var>R</var></code></p>
+					<p><code><var>P</var>x > <var>R</var> - <var>Q</var></code></p>
+					<p><code>x > \dfrac{<var>R - Q</var>}{<var>P</var>}</code></p>
+					<p><code>x > <var>X</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"צריך","צריכה")</var> למכור <var>X</var> מנויים השבוע.</strong></p>
+				</div>
+			</div>
+
+			<div id="video_game_levels">
+				<div class="vars" data-ensure="Q < R">
+					<var id="Q">10 * randRange( 300 / 10, 3000 / 10 )</var><!-- # of bonus points -->
+					<var id="P">10 * randRange( 500 / 10, 1500 / 10 )</var><!-- # points per level -->
+					<var id="R">10 * randRange( 2000 / 10, 10000 / 10 )</var><!-- # of goal points -->
+					<var id="X">ceil( (R - Q) / P )</var><!-- # levels needed -->
+				</div>
+
+				<p class="problem spin">עבור כל שלב ש<var>person( 1 )</var> <var>genderize(1,"עובר","עוברת")</var> במשחק האהוב <var>onhim( 1 )</var>, <var>he( 1 )</var> <var>genderize(1,"מרויח")</var> <var>P</var> נקודות.
+         אחרי כל שעה של משחק, <var>he( 1 )</var> <var>genderize(1,"מרויח")</var>  <var>Q</var> נקודות בונוס בנוסף לאלו שניתנות בסיום כל שלב. ל<var>person(1)</var> יש כבר <var>10 * randRange( 500 / 10, 5000 / 10 )</var> 
+         נקודות ו<var>he(1)</var> רוצה להרויח לפחות <var>R</var> נקודות נוספות בשעה הקרובה.</p>
+				<p class="question">מהו המספר המינימלי של שלבים שעל <var>person( 1 )</var> להשלים בשעה הקרובה כדי לעמוד ביעד זה ?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>X</var></span> שלבים
+				</div>
+
+				<div class="hints">
+					<p>נקודות שניתנות בכל שלב x מספר שלבים + נקודות בונוס > יעד למספר נקודות</p>
+					<p>נקודות שניתנות בכל שלב = <code><var>P</var></code></p>
+					<p>נקודות בונוס = <code><var>X</var></code></p>
+					<p>יעד למספר נקודות = <code><var>R</var></code></p>
+					<p>מספר שלבים שיש להשלים = <code>x</code></p>
+					<p><code><var>P</var>x + <var>Q</var> > <var>R</var></code></p>
+					<p><code><var>P</var>x > <var>R</var> - <var>Q</var></code></p>
+					<p><code>x > \dfrac{<var>R - Q</var>}{<var>P</var>}</code></p>
+					<p><code>x > <var>X</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"צריך","צריכה")</var> להשלים לפחות <var>X</var> שלבים שעה הקרובה.</strong></p>
+				</div>
+			</div>
+
+			<div id="bear_monthly_energy">
+				<div class="vars">
+					<var id="Q">randRange( 1000, 5000 )</var><!-- Current energy -->
+					<var id="R">randRange( 10000, 25000 )</var><!-- Energy level needed before winter -->
+					<var id="X">randRange( 1, 8 )</var><!-- # of months left -->
+					<var id="P">ceil( ( R - Q ) / X )</var><!-- Energy needed to be stored per month -->
+				</div>
+
+				<p class="problem spin"><var>genderize(1,"דב ששמו","דובה ששמה")</var> <var>person( 1 )</var> <var>genderize(1,"מתכונן","מתכוננת")</var> לשנת החורף. <var>He( 1 )</var> כבר <var>genderize(1,"אגר")</var> <var>Q</var> יחידות של אנרגיה ו<var>genderize(1,"צריך","צריכה")</var> לאגור לפחות  <var>R</var> יחידות אנרגיה  לפני החורף.</p>
+				<p class="question">אם נשארו עוד <var>X</var> חודשים עד תחילת החורף, מהו מספר יחידות האנרגיה המינימלי שעל ה<var>genderize(1,"דב","דובה")</var> לאגור בכל חודש?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>P</var></span> יחידות
+				</div>
+
+				<div class="hints">
+					<p>חודשים שנותרו לתחילת החורף x יחידות אנרגיה שנאגרות כל חודש + יחידות אנרגיה שכבר נאגרו > יחידות אנרגיה שנדרשות</p>
+					<p>חודשים שנותרו לתחילת החורף = <code><var>X</var></code></p>
+					<p>יחידות אנרגיה שכבר נאגרו = <code><var>Q</var></code></p>
+					<p>יחידות אנרגיה שנדרשות = <code><var>R</var></code></p>
+					<p>יחידות אנרגיה שנאגרות כל חודש = <code>p</code></p>
+					<p><code><var>X</var>p + <var>Q</var> > <var>R</var></code></p>
+					<p><code><var>X</var>p > <var>R</var> - <var>Q</var></code></p>
+					<p><code>p > \dfrac{<var>R - Q</var>}{<var>X</var>}</code></p>
+					<p><code>p > <var>P</var></code></p>
+					<p><strong>על <var>person( 1 )</var> לאגור לפחות <var>P</var> של אנרגיה לפני החורף.</strong></p>
+				</div>
+			</div>
+
+			<div id="piano_months">
+				<div class="vars" data-ensure="Q < R">
+					<var id="Q">randRange( 5, 50 )</var><!-- # current songs -->
+					<var id="R">randRange( 50, 200 )</var><!-- # of total songs -->
+					<var id="P">randRange( 1, 10 )</var><!-- # of songs per month -->
+					<var id="X">ceil( ( R - Q ) / P )</var><!-- # of months needed -->
+				</div>
+
+				<p class="problem spin">כדי להגיע לרמת מאסטרו בבית הספר לפסנתר, <var>person( 1 )</var> <var>genderize(1,"צריך","צריכה")</var> להתמחות לפחות ב-<var>R</var> יצירות שונות. <var>person( 1 )</var> כבר <var>genderize(1,"למד")</var> <var>Q</var> יצירות.</p>
+				<p class="question">If <var>person( 1 )</var> <var>genderize(1,"יכול")</var> בממוצע ללמוד <var>P</var> שירים בכל חודש. מהו מספר החודשים המינימלי שייקח <var>tohim( 1 )</var> להגיע לרמת מאסטרו?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>X</var></span> חודשים
+				</div>
+
+				<div class="hints">
+					<p>יצירות בכל חודש x מספר חודשי אימון + יצירות שכבר נלמדו > יצירות דרושות כדי להגיע לרמת מאסטרו</p>
+					<p>יצירות בכל חודש = <code><var>P</var></code></p>
+					<p>יצירות שכבר נלמדו = <code><var>X</var></code></p>
+					<p>יצירות דרושות כדי להגיע לרמת מאסטרו = <code><var>R</var></code></p>
+					<p>מספר חודשי אימון = <code>x</code></p>
+					<p><code><var>P</var>x + <var>Q</var> > <var>R</var></code></p>
+					<p><code><var>P</var>x > <var>R</var> - <var>Q</var></code></p>
+					<p><code>x > \dfrac{<var>R - Q</var>}{<var>P</var>}</code></p>
+					<p><code>x > <var>X</var></code></p>
+					<p><strong>ייקח ל<var>person( 1 )</var> לפחות <var>X</var> חודשים להגיע לרמת מאסטרו.</strong></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות קצב 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="VEHC1">vehicle(1)</var>
+			<var id="VEHC2">vehicle(2)</var>
+
+			<var id="REASONABLESPEED">
+				function(vehicletype) {
+					if (vehicletype === "אופנוע") {
+						return randRange(5, 15);
+					} else if (vehicletype ==="סוס") {
+						return randRange(3, 30);
+					} else if (vehicletype ==="רכבת") {
+						return randRange(30, 70);
+					} else {
+						return randRange(10, 65);
+					}
+				}
+			</var>
+
+			<var id="SPEED1">REASONABLESPEED(VEHC1)</var>
+			<var id="SPEED2" data-ensure="SPEED2 !== SPEED1">REASONABLESPEED(VEHC2)</var>
+			<var id="AVG">SPEED1 &lt; SPEED2 ? randRange(SPEED1 + 1, SPEED2 - 1) : randRange(SPEED2 + 1, SPEED1 - 1)</var>
+			<var id="TIME">randRange(1, 9)</var>
+			<var id="DIST">AVG * TIME</var>
+			<var id="DIST2">(SPEED1 * SPEED2 * TIME - DIST * SPEED2) / (SPEED1 - SPEED2)</var>
+			<var id="DIST1">DIST - DIST2</var>
+			<var id="DRIVE" >
+				function ()
+				{
+				if(gender(1) == 'f')
+				{
+				return "נסעה"
+				}
+				else { return "נסע"}
+				}
+			</var>
+		</div>
+
+		<div class="problems">
+			<div id="original">
+				<div class="problem">
+					<p><var>person(1)</var> <var>DRIVE()</var> ב<var>VEHC1</var> במהירות ממוצעת של <var>SPEED1</var> קילומטר לשעה.</p>
+					<p>לאחר מכן, <var>he(1)</var> <var>DRIVE()</var>  ב<var>VEHC2</var> במהירות ממוצעת של <var>SPEED2</var> קילומטרים לשעה.</p>
+					<p>סך הכל , <var>he(1)</var> <var>DRIVE()</var> מרחק של <var>DIST</var> קילומטר ב<span data-if="TIME == 1 ">שעה אחת</span><span data-else><var>TIME</var> שעות</span>.</p>
+				</div>
+				<p class="question">אם  <var>person(1)</var> <var>DRIVE()</var> על ידי <var>VEHC1</var>? (עגל לקילומטר הקרוב.)</p>
+				<div class="solution" data-type="multiple">
+					<p><span class="sol" style="padding-right: 5px" data-forms="integer"><var>round(DIST1)</var></span> miles</p>
+				</div>
+				<div class="hints" data-apply="appendContents">
+					<p id="final-hint"><code>d_<var>vehicleVar(1)</var> = <var>round(DIST1)</var></code> קילומטרים</p>
+				</div>
+			</div>
+			<div data-type="original">
+				<p class="question"> כמה קילומטרים <var>DRIVE()</var>  <var>person(1)</var> ב<var>vehicle(2)</var>? (עגל לקילומטר הקרוב.)</p>
+				<div class="solution" data-type="multiple">
+					<p><span class="sol" style="padding-right: 5px" data-forms="integer"><var>round(DIST2)</var></span> miles</p>
+				</div>
+				<div class="hints" data-apply="appendContents">
+					<p id="final-hint"><code>d_<var>vehicleVar(2)</var> = <var>round(DIST2)</var></code> קילומטרים</p>
+				</div>
+			</div>
+			<div data-type="original">
+				<p class="question"> כמה דקות <var>DRIVE()</var> <var>person(1)</var> ב<var>vehicle(1)</var>? (עגל לדקה הקרובה.)</p>
+				<div class="solution" data-type="multiple">
+					<p><span class="sol" style="padding-right: 5px" data-forms="integer"><var>round(DIST1 / SPEED1 * 60)</var></span> דקות </p>
+				</div>
+				<div class="hints" data-apply="appendContents">
+					<p id="final-hint"><code>t_<var>vehicleVar(1)</var> = <var>round(DIST1 / SPEED1 * 60)</var></code> דקות</p>
+				</div>
+			</div>
+			<div data-type="original">
+				<p class="question"> כמה דקות <var>DRIVE()</var> <var>person(1)</var>ב<var>vehicle(2)</var>? (עגל לדקה הקרובה.)</p>
+				<div class="solution" data-type="multiple">
+					<p><span class="sol" style="padding-right: 5px" data-forms="integer"><var>round(DIST2 / SPEED2 * 60)</var></span> דקות </p>
+				</div>
+				<div class="hints" data-apply="appendContents">
+					<p id="final-hint"><code>t_<var>vehicleVar(2)</var> = <var>round(DIST2 / SPEED2 * 60)</var></code> דקות</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="hints">
+			<p>זכור ש  <code>d = r * t</code>, או בכתיבה אחרת, <code>t = d / r</code>.</p>
+			<div>
+				<p><code>d_<var>vehicleVar(1)</var> =</code> המרחק ש<var>person(1)</var> <var>DRIVE()</var> ב<var>vehicle(1)</var></p>
+				<p><code>d_<var>vehicleVar(2)</var> =</code> המרחק ש<var>person(1)</var> <var>DRIVE()</var> ב<var>vehicle(2)</var></p>
+				<p>המרחק הכולל: <code class="hint_orange">d_<var>vehicleVar(1)</var> + d_<var>vehicleVar(2)</var> = <var>DIST</var></code></p>
+			</div>
+			<p>זמן כולל : <code class="hint_blue">t_<var>vehicleVar(1)</var> + t_<var>vehicleVar(2)</var> = <var>TIME</var></code></p>
+			<p><code class="hint_blue">t_<var>vehicleVar(1)</var> = (d_<var>vehicleVar(1)</var> / <var>SPEED1</var>)</code> ו
+				<code class="hint_blue">t_<var>vehicleVar(2)</var> = (d_<var>vehicleVar(2)</var> / <var>SPEED2</var>)</code></p>
+			<p>נציב את 2 המשוואות הכחולות למשוואה הכחולה הראשונה:
+				<code>(d_<var>vehicleVar(1)</var> / <var>SPEED1</var>) + (d_<var>vehicleVar(2)</var> / <var>SPEED2</var>) = <var>TIME</var></code></p>
+			<p>נכפיל את המשוואה ב <var>-1 * SPEED1</var>:
+				<code class="hint_orange">-d_<var>vehicleVar(1)</var> - (<var>SPEED1</var> / <var>SPEED2</var>) * d_<var>vehicleVar(2)</var>  = <var>-SPEED1 * TIME</var></code></p>
+			<p>נוסיף את המשוואה הכתומה הראשונה למשוואה הכתומה האחרונה ונחבר:
+				<code>(<var>SPEED2 - SPEED1</var> / <var>SPEED2</var>) * d_<var>vehicleVar(2)</var> = <var>DIST - (SPEED1 * TIME)</var></code></p>
+			<p>נחשב את כל המשתנים (ונעגל למספר השלם הקרוב):<br>
+				<code>d_<var>vehicleVar(2)</var> =</code> <var>roundTo( 4 , DIST2 )</var> <code>(<var>round(DIST2)</var>)</code> קילומטרים<br>
+				<code>d_<var>vehicleVar(1)</var> =</code> <var>roundTo( 4 , DIST1 )</var> <code>(<var>round(DIST1)</var>)</code> קילומטרים<br>
+				<code>t_<var>vehicleVar(1)</var> =</code> <var>roundTo( 4 , DIST1 / SPEED1 * 60 )</var> <code>(<var>round(DIST1 / SPEED1 * 60)</var>)</code> דקות<br>
+				<code>t_<var>vehicleVar(2)</var> =</code> <var>roundTo( 4 , DIST2 / SPEED2 * 60 )</var> <code>(<var>round(DIST2 / SPEED2 * 60)</var>)</code> דקות</p>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html data-require="math math-format exponents">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>סדר פעולות חשבון עם חזקות</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+<div class="exercise">
+<div class="vars">
+
+    <var id="BASE1">randRangeNonZero(-10, 10)</var>
+    <var id="EXP1">randRange(0, 3)</var>
+    <var id="BASE2">randRange(-10, 10)</var>
+    <var id="EXP2">randRange(1, 3)</var>
+    <var id="A">randRange(1, 10)</var>
+    <var id="B">randRange(1, 10)</var>
+    <var id="C">randRange(1, 10)</var>
+    <var id="D">randRange(1, 10)</var>
+    <var id="E">randRange(1, 10)</var>
+
+</div>
+
+<div class="problems">
+<div id="order-of-operations-with-exponents">
+    <p class="question">פשטו את הביטוי החשבוני הבא:</p>
+    <p class="problem"><code>
+        <var> <var>negParens( BASE1 )</var>^{<var>EXP1</var>}</var> + (<var>negParens( BASE2 )</var>^{<var>EXP2</var>}</var> \times <var>C</var>)
+    </code></p>
+
+    <p class="solution" data-forms="integer">
+        <var>pow( BASE1, EXP1 ) + pow( BASE2, EXP2 )*C</var>
+    </p>
+
+    <div class="hints">
+        <div data-if="EXP1 !== 0">
+            <p>קודם כל נחשב את החזקות בתרגיל</p>
+            <p><code><var>negParens( BASE1 )</var>^{<var>EXP1</var>} <span data-each="expandExponent( BASE1, EXP1 ) as v">= <var>v</var></span></code></p>
+            <p><code><var>negParens( BASE2 )</var>^{<var>EXP2</var>} <span data-each="expandExponent( BASE2, EXP2 ) as v">= <var>v</var></span></code></p>
+        </div>
+        <div data-else>
+            <p>קודם כל נחשב את החזקות בתרגיל</p>
+            <p><code><var>negParens( BASE1 )</var>^{<var>EXP1</var>} = <var>1</var></code></p>
+            <p><code><var>negParens( BASE2 )</var>^{<var>EXP2</var>} <span data-each="expandExponent( BASE2, EXP2 ) as v">= <var>v</var></span></code></p>
+        </div>
+        <div data-unwrap>
+            <p>נציב, את החזקות שחישבנו חזרה בתרגיל, ונמשיך לפתור</p>
+            <p><code>
+                <var>negParens( pow( BASE1, EXP1 ) )</var> + (<var>negParens( pow( BASE2, EXP2 ) )</var> \times <var>C</var>)
+            </code></p>
+            <p><code>
+                = <var>pow( BASE1, EXP1 )</var> + <var>pow( BASE2, EXP2 )*C</var>
+            </code></p>
+
+            <p><code>
+                = <var>pow( BASE1, EXP1 )+pow( BASE2, EXP2 )*C</var>
+            </code></p>
+        </div>
+    </div>
+</div>
+<div data-type="order-of-operations-with-exponents">
+    <p class="problem"><code>
+        <var>A</var> + <var>B</var> \times <var><var>negParens( BASE2 )</var>^{<var>EXP2</var>}</var></var>
+    </code></p>
+
+    <p class="solution" data-forms="integer">
+        <var>A+B*pow( BASE2, EXP2 )</var>
+    </p>
+
+    <div class="hints">
+        <div>
+            <p>קודם כל נחשב את החזקות בתרגיל</p>
+            <p><code><var>negParens( BASE2 )</var>^{<var>EXP2</var>} <span data-each="expandExponent( BASE2, EXP2 ) as v">= <var>v</var></span></code></p>
+        </div>
+        <div data-unwrap>
+            <p>נציב, את החזקות שחישבנו חזרה בתרגיל, ונמשיך לפתור</p>
+            <p><code>
+                <var>A</var> + <var>B</var>\times<var>negParens( pow( BASE2, EXP2 ) )</var>
+            </code></p>
+            <p><code>
+                = <var>A</var> + <var>B*pow( BASE2, EXP2 )</var>
+            </code></p>
+            <p><code>
+                = <var>A+B*pow( BASE2, EXP2 )</var>
+            </code></p>
+        </div>
+    </div>
+</div>
+<div data-type="order-of-operations-with-exponents">
+    <p class="problem"><code>
+        <var><var>negParens( BASE1 )</var>^{<var>EXP1</var>}</var></var> \times (<var>negParens( BASE2 )</var>^{<var>EXP2</var>}</var> + <var>C</var>)
+    </code></p>
+
+    <p class="solution" data-forms="integer">
+        <var>pow( BASE1, EXP1 )*(pow( BASE2, EXP2 )+C)</var>
+    </p>
+
+    <div class="hints">
+        <div>
+            <p>קודם כל נחשב את החזקות בתרגיל</p>
+            <p><code><var>negParens( BASE1 )</var>^{<var>EXP1</var>} <span data-each="expandExponent( BASE1, EXP1 ) as v">= <var>v</var></span></code></p>
+            <p><code><var>negParens( BASE2 )</var>^{<var>EXP2</var>} <span data-each="expandExponent( BASE2, EXP2 ) as v">= <var>v</var></span></code></p>
+        </div>
+        <div data-unwrap>
+            <p>נציב, את החזקות שחישבנו חזרה בתרגיל, ונמשיך לפתור</p>
+            <p><code>
+                <var>negParens( pow( BASE1, EXP1 ) )</var> \times (<var>negParens( negParens( pow( BASE2, EXP2 ) ) )</var>+<var>C</var>)
+            </code></p>
+            <p><code>
+                = <var>negParens( pow( BASE1, EXP1 ) )</var> \times<var>negParens( pow( BASE2, EXP2 ) + C )</var>
+            </code></p>
+            <p><code>
+                = <var>pow( BASE1, EXP1 )*(pow( BASE2, EXP2 ) + C)</var>
+            </code></p>
+        </div>
+    </div>
+</div>
+<div data-type="order-of-operations-with-exponents">
+    <p class="problem"><code>
+        <var>A</var> + (\dfrac{<var>B*C</var>\times<var>negParens( BASE1 )</var>^{<var>EXP1</var>} }{<var>C</var>})
+    </code></p>
+
+    <p class="solution" data-forms="integer">
+        <var>A+B*pow( BASE1, EXP1 )</var>
+    </p>
+
+    <div class="hints">
+        <div>
+            <p>קודם כל נחשב את החזקות בתרגיל</p>
+            <p><code><var>negParens( BASE1 )</var>^{<var>EXP1</var>} <span data-each="expandExponent( BASE1, EXP1 ) as v">= <var>v</var></span></code></p>
+        </div>
+        <div data-unwrap>
+            <p>נציב, את החזקות שחישבנו חזרה בתרגיל, ונמשיך לפתור</p>
+            <p><code>
+                <var>A</var> + (\dfrac{<var>B*C</var>\times<var>negParens( pow( BASE1, EXP1 ) )</var>}{<var>C</var>})
+            </code></p>
+            <p><code>
+                = <var>A</var> + (<var>B</var> \times <var>negParens( pow( BASE1, EXP1 ) )</var>)
+            </code></p>
+            <p><code>
+                = <var>A</var> + <var>B*pow( BASE1, EXP1 )</var>
+            </code></p>
+            <p><code>
+                = <var>A+B*pow( BASE1, EXP1 )</var>
+            </code></p>
+        </div>
+    </div>
+</div>
+<div data-type="order-of-operations-with-exponents">
+    <p class="problem"><code>
+        \dfrac{ <var>A*(pow(BASE1, EXP1)+C)</var> }{ <var>negParens( BASE1 )</var>^{<var>EXP1</var>} + <var>C</var> }
+    </code></p>
+
+    <p class="solution" data-forms="integer">
+        <var>A</var>
+    </p>
+
+    <div class="hints">
+        <div>
+            <p>קודם כל נחשב את החזקות בתרגיל</p>
+            <p><code><var>negParens( BASE1 )</var>^{<var>EXP1</var>} <span data-each="expandExponent( BASE1, EXP1 ) as v">= <var>v</var></span></code></p>
+        </div>
+        <div data-unwrap>
+            <p>נציב, את החזקות שחישבנו חזרה בתרגיל, ונמשיך לפתור</p>
+            <p><code>
+                \dfrac{ <var>(A*(pow(BASE1, EXP1)+C))</var> }{ <var>negParens( pow(BASE1, EXP1) )</var> + <var>C</var> }
+            </code></p>
+            <p><code>
+                = \dfrac{ <var>(A*(pow(BASE1, EXP1)+C))</var> }{ <var>pow(BASE1, EXP1)+C</var> }
+            </code></p>
+            <p><code>
+                = <var>A</var>
+            </code></p>
+        </div>
+
+    </div>
+</div>
+<div data-type="order-of-operations-with-exponents">
+    <p class="problem"><code>
+        <var>negParens( BASE2 )</var>^{<var>EXP2</var>} \times <var>B</var> + <var>C</var> \times \dfrac{ <var>(negParens( D * pow( BASE1, EXP1 ) ))</var> }{ <var>negParens( BASE1 )</var>^{<var>EXP1</var>} }
+    </code></p>
+
+    <p class="solution" data-forms="integer">
+        <var>(B*pow( BASE2, EXP2 ))+(C*D)</var>
+    </p>
+
+    <div class="hints">
+        <div>
+            <p>קודם כל נחשב את החזקות בתרגיל</p>
+            <p><code><var>negParens( BASE1 )</var>^{<var>EXP1</var>} <span data-each="expandExponent( BASE1, EXP1 ) as v">= <var>v</var></span></code></p>
+            <p><code><var>negParens( BASE2 )</var>^{<var>EXP2</var>} <span data-each="expandExponent( BASE2, EXP2 ) as v">= <var>v</var></span></code></p>
+        </div>
+        <div data-unwrap>
+            <p>נציב, את החזקות שחישבנו חזרה בתרגיל, ונמשיך לפתור</p>
+            <p><code>
+                <var>negParens( pow( BASE2, EXP2 ) )</var> \times <var>B</var> + <var>C</var> \times \dfrac{ <var>(negParens( D * pow( BASE1, EXP1 ) ))</var> }{ <var>negParens( pow( BASE1, EXP1 ) )</var> }
+            </code></p>
+            <p><code>
+                =<var>pow( BASE2, EXP2 ) * B</var> + <var>C</var> \times <var>D</var>
+            </code></p>
+            <p><code>
+                =<var>pow( BASE2, EXP2 ) * B</var> + <var>C*D</var>
+            </code></p>
+            <p><code>
+                =<var>pow( BASE2, EXP2 ) * B + C*D</var>
+            </code></p>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+</html>

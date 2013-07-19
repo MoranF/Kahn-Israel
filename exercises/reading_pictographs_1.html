@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems word-problems-heb graphie">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>קריאת גרף תמונות 1</title>
+	<script src="../khan-exercise.js"></script>
+	<style>
+		.fake_header span, .fake_row span {
+			width: 40px;
+			height: 40px;
+			vertical-align: top;
+			line-height: 40px;
+		}
+		.fake_row span:first-child {
+			width: 80px;
+		}
+		.fake_header span:first-child {
+			width: 480px;
+		}
+	</style>
+</head>
+<body>
+<div class="exercise">
+	<div class="vars">
+		<var id="DATA">randRangeUnique( 1, 8, 5 )</var>
+		<var id="BADGE">randFromArray([ ["meteorite","מטאוריט"],["moon","ירח"], ["earth","ארץ"]])</var>
+		<var id="FULL_IMAGE">"&lt;img src='" + Khan.urlBase + "images/" + BADGE[0] + "-small.png'&gt;"</var>
+		<var id="VALUE_PER_IMG">1</var>
+	</div>
+
+	<div class="problem">
+		<p>השתמשו בגרף התמונות כדי לענות על השאלה הבאה:</p>
+		<div class="fake_header">
+			<span><span style="text-transform:capitalize">עיטורי <var>BADGE[1]</var></span> בהם זכה כל תלמיד</span>
+		</div>
+		<div class="fake_row" data-each="5 times as n">
+			<span><var>person( n + 1 )</var></span><span data-each="DATA[n] times"><var>FULL_IMAGE</var>
+			</span><span data-each="(8 - DATA[n]) times">&nbsp;</span>
+		</div>
+		<span style="height: 50px; vertical-align: top; line-height: 50px;">
+			<var>FULL_IMAGE</var> = <var>VALUE_PER_IMG</var> עיטורי <var>BADGE[1]</var>
+		</span>
+	</div>
+
+	<div class="problems">
+
+		<div id="most" data-weight="1">
+			<div class="vars">
+				<var id="MOST">_.indexOf( DATA, Math.max.apply( Math, DATA ) )</var>
+			</div>
+			<p class="question">מי מהתלמידים זכה במספרי עיטורי ה<var>BADGE[1]</var> הגדול ביותר?</p>
+			<div class="solution"><var>person( MOST + 1 )</var></div>
+			<ul class="choices" data-category="true">
+				<li><var>person( 1 )</var></li>
+				<li><var>person( 2 )</var></li>
+				<li><var>person( 3 )</var></li>
+				<li><var>person( 4 )</var></li>
+				<li><var>person( 5 )</var></li>
+			</ul>
+
+			<div class="hints">
+				<p>למי מהתלמידים יש את מספר סמלי ה<var>BADGE[1]</var> הגדול ביותר ליד שמו/ה בטבלא?</p>
+				<p>ל<var>person( MOST + 1 )</var> יש את מספר הסמלים הגדול ביותר ליד <var>genderize( MOST + 1,"שמו","שמה")</var>.</p>
+				<p><var>person( MOST + 1 )</var> <var>genderize(MOST+1,"זכה","זכתה")</var> במספר הרב ביותר של עיטורי <var>BADGE</var>.</p>
+			</div>                                  
+		</div>
+
+		<div id="least" data-weight="1">
+			<div class="vars">
+				<var id="LEAST">_.indexOf( DATA, Math.min.apply( Math, DATA ) )</var>
+			</div>
+			<p class="question">מי מהתלמידים זכה במספרי עיטורי ה<var>BADGE[1]</var> הקטן ביותר?</p>
+			<div class="solution"><var>person( LEAST + 1 )</var></div>
+			<ul class="choices" data-category="true">
+				<li><var>person( 1 )</var></li>
+				<li><var>person( 2 )</var></li>
+				<li><var>person( 3 )</var></li>
+				<li><var>person( 4 )</var></li>
+				<li><var>person( 5 )</var></li>
+			</ul>
+
+			<div class="hints">
+				<p>למי מהתלמידים יש את מספר סמלי ה<var>BADGE[1]</var> הקטן ביותר ליד שמו/ה בטבלא?</p>
+				<p>ל<var>person( LEAST + 1 )</var> יש את מספר הסמלים הקטן ביותר ליד <var>genderize( LEAST + 1,"שמו","שמה")</var>.</p>
+				<p><var>person( LEAST + 1 )</var> <var>genderize(LEAST+1,"זכה","זכתה")</var> במספר הנמוך ביותר של עיטורי <var>BADGE[1]</var>.</p>
+			</div>
+		</div>
+
+		<div id="read-chart" data-weight="3">
+			<div class="vars">
+				<var id="PERSON">rand( 5 )</var>
+				<var id="ANSWER">DATA[ PERSON ] * VALUE_PER_IMG</var>
+			</div>
+
+			<p class="question">כמה עיטורי <var>BADGE[1]</var> <var>genderize(PERSON+1,"קיבל")</var> <var>person( PERSON + 1 )</var> ?</p>
+
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>ANSWER</var></span> עיטורי <var>BADGE[1]</var></p>
+			</div>
+
+			<div class="hints">
+				<p>לפי המקרא בתחתית הגרף כל סמל מסמל <var>plural_heb( VALUE_PER_IMG, "עיטור","עיטורים","m" )</var>.</p>
+				<div>
+					מצא את השורה של <var>person( PERSON + 1 )</var> בטבלא:
+					<div class="fake_row">
+						<span><var>person( PERSON + 1 )</var></span><span data-each="DATA[ PERSON ] times"><var>FULL_IMAGE</var>
+						</span><span data-each="(8 - DATA[ PERSON ]) times">&nbsp;</span>
+					</div>
+				</div>
+				<p>
+					היא מכילה <var>plural_heb( DATA[ PERSON ], "סמל","סמלים","m" )</var>.
+				</p>
+
+				<div>
+					<div>
+						<var>DATA[ PERSON ]</var> סמלים 
+						<code> \times </code> <var>VALUE_PER_IMG</var> עיטורים לכל סמל
+						= <var>DATA[ PERSON ] * VALUE_PER_IMG</var> עיטורים.
+					</div>
+				</div>
+				<p><var>person( PERSON + 1 )</var> <var>genderize(PERSON+1,"זכה","זכתה")</var> ב-<code><var>ANSWER</var></code> עיטורי <var>BADGE[1]</var>.</p>
+			</div>
+		</div>
+
+	</div>
+</div>
+</body>
+</html>

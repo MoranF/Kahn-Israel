@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>תמורה וקומבינטוריקה 2</title>
+    <script src="../khan-exercise.js"></script>
+    <script>
+        var permUnique = function(word, repletter, numperms){
+            colorPerms = arrayPerms(["<span class='hint_blue'>", "<span class='hint_orange'>", "<span class='hint_pink'>"]).slice(0,KhanUtil.factorial(numperms));
+            perms = [];
+            _.each(colorPerms, function(cp){
+                cp = cp.slice(0,numperms);
+                p = "";
+                _.each(word.split(""), function(l){
+                    p += (l === repletter ? cp.pop() + l + "</span>" : l);      
+                });
+                perms.push(p);
+            });
+            return perms;
+        }
+
+        var arrayPerms = function(arr){
+            perms = [];
+            perms.push(arr);
+            perms.push([arr[1],arr[0],arr[2]]);
+            perms.push([arr[0],arr[2],arr[1]]);
+            perms.push([arr[1],arr[2],arr[0]]);
+            perms.push([arr[2],arr[0],arr[1]]);
+            perms.push([arr[2],arr[1],arr[0]]);
+            return perms;
+        }
+    </script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="letters" data-weight="0.4">
+                <div class="vars" data-ensure="PERM !== WORD">
+                    <var id="INDEX">randRange(0,7)</var>
+                    <var id="WORD">["מתכת", "לזוז", "תרגילים", "מממנות", "תתתנים", "עששת", "מושתתת", "מילים"][INDEX]</var>
+                    <var id="REPLETTER">["ת","ז","י","מ","ת","ש","ת","י"][INDEX]</var>
+                    <var id="REPTIMES">[2,2,2,3,3,2,3,2][INDEX]</var>
+                    <var id="PERM">shuffle(WORD).join("")</var>
+                    <var id="PERM_UNIQUE">permUnique(PERM, REPLETTER, REPTIMES)</var>
+                    <var id="ANSWER">factorial(WORD.length)/factorial(REPTIMES)</var>
+                </div>
+                <p class="question">בכמה דרכים יחודיות אפשר לארגן את סדר אותיות המילה <var>WORD</var>?</p>
+                <p class="solution" data-forms="integer"><var>ANSWER</var></p>
+                <div class="hints">
+                   <div>
+                        ננסה לבנות את המילים בצורות שורות (תמורות) מילה לאחר מילה. המילה בעלת <var>WORD.length</var> אותיות.
+                        <p><var>_.map(_.range(WORD.length), function(l){ return "_ "; }).join("")</var></p>
+                        <p>עבור האות הראשונה יש לנו <var>WORD.length</var> אפשרויות של מילים להכניס.
+                    </div>
+                    <div>
+                        אחרי שהכנסתי את האות הראשונה, נגיד והיא <var>PERM[0]</var>, יש לנו <var>WORD.length-1</var> אותיות לסדר.
+                        <p><var>PERM[0]+" "+_.map(_.range(WORD.length-1), function(l){ return "_ "; }).join("")</var></p>
+                        <p>עבור האות השניה , יש לנו רק <var>WORD.length-1</var> אותיות שאנו יכולים להכניס
+                            <code><var>WORD.length</var> \cdot <var>WORD.length-1</var></code> בדרך יחודית </p>
+                    </div>
+                    <div>
+                       אנו יכולים להמשיך בדרך זו ולהוסיף את האות השלישית, הרביעית ( אם קיימת), וכך הלאה.  בכל שלב יש לנו אפשרות יחודית אחת פחות, עד שנגיע לאות האחרונה יהיה לנו 
+                       רק אפשרות יחודית אחת.
+                    </br></br>
+                    </div>
+                    <div>
+                        בעזרת הדרך הזאת, מספר הסידורים האפשריים הוא  <code><var>_.map(_.range(WORD.length).reverse(), function(l){ return (++l);}).join("\\cdot")</var> = <var>factorial(WORD.length)</var>.</code> או בדרך כתיבה אחרת  <code>!<var>WORD.length</var></code>, 
+                        או <code><var>WORD.length</var></code> עצרת, אך אין זו התשובה הנכונה.
+                    </br></br>
+                    </div>
+                    <div>
+                      בעזרת השיטה למעלה, הנחו שכל האותיות הינם יחודיות. אך הן לא! ישנם <code><var>REPTIMES</var></code> את האות 
+                        <var>REPLETTER</var>,אז אנו סופרים כל תמורה מספר פעמים. אז כל פעם שיש לנו את  
+                        <code><var>factorial(REPTIMES)</var></code> התמורות האלו :
+                            <p>
+                                <var>PERM_UNIQUE.join("&lt;/br&gt;")</var>
+                            </p>
+                        אמור להיות לנו רק תמורה אחת :
+                            <p>
+                                <var>PERM</var>
+                            </p>
+                    </div>
+                    
+                    <p>
+                        יש להשים לב שאנחנו ספרנו את מספר הפעמים של המילים הזהות ב-<code><var>REPTIMES</var>!</code>. זה אינו צרוף מקרים!
+                        זה בדיוק מספר הדרכים שאפשר יהיה להרכיב  <code><var>REPTIMES</var></code> תמורות, אשר אינם יחודיות. כדי לתקן את השגיאה הזאת, יש לחלק את המספר 
+                        הקודם ב-<code><var>REPTIMES</var>!</code>.
+                    </p>
+                    <div>
+                       כאשר אנחנו מחלקים את מספר התמורות שקבלתנו בהתחלה, במספר השגיאות, אנו נקבל :
+                        <code> \dfrac{<var>WORD.length</var>!}{<var>REPTIMES</var>!} = \dfrac{<var>factorial(WORD.length)</var>}{<var>factorial(REPTIMES)</var>} = <var>ANSWER</var></code>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reindeer" data-weight="0.2">
+                <div class="vars" data-ensure="PAIR[0] != PAIR[1]">
+                    <var id="NAMES">shuffle(["בלופיין", "גלופיין", "פנסר", "לנסר", "קיונטיין", "באלטזר", "משה", "ג'בדיה", "רודי"],
+                        randRange(4,5))</var>
+                    <var id="FIGHTING">random() &gt; 0.5</var>
+                    <var id="PAIR">randFromArray(NAMES, 2)</var>
+                    <var id="ANSWER">FIGHTING ? factorial(NAMES.length) - factorial(NAMES.length-1)*2 : factorial(NAMES.length-1)*2</var>
+                </div>
+                <p>אתה צריך להשים את האיילים שלך,  <var>toSentence(NAMES)</var>, בשורה אחת כדי למשוך את המזחלת שלך. אולם,
+                    <var>PAIR[0]</var> ו<var>PAIR[1]</var>  <var>FIGHTING ? "כל הזמן רבים " : "חברים הכי טובים"</var>, אז אתה חייב
+                    <var>FIGHTING ? "להפריד בניהם " : "להשים אותם אחד ליד השני "</var>, אחרת המזחלת לא תעוף.</p>
+                <p class="question">בכמה דרכים אתה יכול לסדר את האיילים שלך? </p>
+                <p class="solution" data-forms="integer"><var>ANSWER</var></p>
+
+                <div class="hints">
+                    <div>
+                        <p>נשכח לרגע מהאיילים ש-<var>FIGHTING ? "לא יכולים" : "חייבים"</var> להיות ביחד לרגע, וננסה לחשוב כמה איילים אפשר להכניס בשורה</p>
+                        <p>  אנו יכולים לבנות את שורת האיילים שלנו אחד אחר השני:  ישנם <code> <var>NAMES.length</var> </code> מקומות ,
+                        ויש לנו <code> <var>NAMES.length</var> </code> איילים שונים שאנו יכולים להשים בשורה הראשונה.</p>
+                    </div>
+                    <p>
+                        כאשר נמלא את המקום הראשון ישאר לנו רק <code><var>NAMES.length-1</var></code> איילים, אז יהיה לנו  
+                        <code><var>NAMES.length-1</var></code> 
+                       אפשרויות עבור המקום השני. עד עכשיו יש <code><var>NAMES.length</var> \cdot <var>NAMES.length-1</var> = <var>NAMES.length*(NAMES.length-1)</var></code> אפשרויות יחודיות שאנו יכולים להשתמש.
+                    </p>
+                    <p>
+                       אנו יכולים להמשיך בדרך זו עבור האייל השלישי, הרביעי וכן הלאה, עד שנגיע למקום האחרון שנשאר, שם ישאר אייל אחד שאנו יכולים לבחור.
+                    </p>
+                    <p>
+                       אז,  המספר הכולל של האפשרויות היחודיות לסידור השורה הוא  <code><var>_.map(_.range(NAMES.length).reverse(), function(l){ return (++l);}).join("\\cdot")</var> = <var>factorial(NAMES.length)</var>.</code> או בדרך נוספת לכתוב זאת,  <code>!<var>NAMES.length</var></code>, 
+                        או  <code><var>NAMES.length</var></code> עצרת. אך עדין לא הכנסנו לשכלול את האיילים ש<var>FIGHTING ? "לא יכולים" : "have חייבים"</var> להיות ביחד עדין.
+                    </p>
+                    <div data-if="FIGHTING" data-unwrap>
+                        <p>
+                           ישנם <code><var>factorial(NAMES.length)</var></code> אפשרויות שונות,אז אנחנו פשוט צריכים להשמיט את כל האפשרויות בהן  <var>PAIR[0]</var> ו<var>PAIR[1]</var> אחד ליד השני, כמה אפשרויות כאלו קיימות?
+                        </p>
+                        <p>
+                          אנו יכולים לספור את מספר הפעמים בהם הסידורים בהם  <var>PAIR[0]</var> ו<var>PAIR[1]</var> ביחד על ידי התייחסות אליהם כאייל אחד מחובר. עכשיו אנו יכולים להשתמש באותו רעיון כמקודם, כדי להגיע ל-  <code><var>_.map(_.range(NAMES.length-1).reverse(), function(l){ return (++l);}).join("\\cdot")</var> = <var>factorial(NAMES.length-1)</var></code> סידורים שונים . אך גם זה עדין לא בדיוק נכון.
+                        </p>
+                        <p>
+                            למה?  בגלל שאנו יכולים לסדר את <var>PAIR[0]</var> מקדימה, או את 
+                            <var>PAIR[1]</var> מקדימה, ואלו יהיו שני סידורים שונים. ולכן מספר הסידורים האפשריים של <var>PAIR[0]</var>
+                             ו<var>PAIR[1]</var> ביחד הם  <code><var>factorial(NAMES.length-1)</var> \cdot 2 = 
+                            <var>factorial(NAMES.length-1)*2</var></code>
+                        </p>
+                        <p>
+                           לאחר החיסור של מספר הפעמים ש<var>PAIR[0]</var> ו<var>PAIR[1]</var> ביחד, מהמספר המקורי של סידורים שקיבלנו בהתחלה
+                            אנו נקבל  <code><var>ANSWER</var></code> סידורים בהם המזחלת יכולה לעוף.
+                        </p>
+                    </div>
+                    <div data-else data-unwrap>
+                        <p>
+                           אנו יכולים לספור את מספר הסידורים בהם  <var>PAIR[0]</var> ו<var>PAIR[1]</var>  ביחד, על ידי  התייחסות אליהם כאייל אייל אחד מחובר. עכשיו אנו יכולים להשתמש באותו רעיון כמקודם, כדי להגיע ל- <code><var>_.map(_.range(NAMES.length-1).reverse(), function(l){ return (++l);}).join("\\cdot")</var> = <var>factorial(NAMES.length-1)</var></code> סידורים שונים. אף זה עדין לא בדיוק נכון.
+                        </p>
+                        <p>
+                            למה? כי אנחנו יכולים לסדר את  <var>PAIR[0]</var> מקדימה, או את
+                            <var>PAIR[1]</var> מקדימה, ואלו יהיו שני סידורים שונים לגמרי! ולכן המספר המדוייק בהם  <var>PAIR[0]</var>
+                             ו<var>PAIR[1]</var> ביחד הוא  <code><var>factorial(NAMES.length-1)</var> \cdot 2 = 
+                            <var>factorial(NAMES.length-1)*2</var></code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="divisible" data-weight="0.4">
+                <div class="vars" data-ensure="getGCD(FAC1,FAC2) === 1">
+                    <var id="FAC1">randRange(2,10)</var>
+                    <var id="FAC2">randRange(2,10)</var>
+                    <var id="FAC1_TIMES">roundTowardsZero(100/FAC1)</var>
+                    <var id="FAC2_TIMES">roundTowardsZero(100/FAC2)</var>
+                    <var id="BOTH_TIMES">roundTowardsZero(100/(FAC1*FAC2))</var>
+                </div>
+                <p class="question">
+                    כמה מספרים הנמצאים בין 1 ל-100 (כולל) מתחלקים ב-<var>FAC1</var> או  <var>FAC2</var>?
+                </p>
+
+                <p class="solution" data-forms="integer"><var>FAC1_TIMES + FAC2_TIMES - BOTH_TIMES</var>
+                </p>
+
+                <div class="hints">
+                    <div>
+                        <p>
+                            ישנם  <code><var>FAC1_TIMES</var></code> מספרים אפשר אפשר לחלקם ב-<code><var>FAC1</var></code> בין  <code>1</code>  
+                             ו- <code>100</code>, ו- <code><var>FAC2_TIMES</var></code> מתחלקים ב- 
+                            <code><var>FAC2</var></code> בין <code>1</code> ו<code>100</code>. 
+                            [<a href="#" class="show-subhint" data-subhint="divide">מה? למה ?</a>]
+                        </p>
+                        <div class="subhint" id="divide">
+                            <div data-if="100/FAC1 === FAC1_TIMES">
+                                דרך אחת לראות זאת היא לקחת את  <code> \dfrac{100}{<var>FAC1</var>} = <var>FAC1_TIMES</var></code>
+                            </div>
+                            <div data-else>
+                                דרך אחת לראות זאת היא לקחת את <code> \dfrac{100}{<var>FAC1</var>}</code>, אשר הוא בין  <code><var>
+                                FAC1_TIMES</var></code>- ו<code><var>FAC1_TIMES+1</var></code>. אז, נתחיל ב-<code>0</code> ונוסיף <code><var>FAC1</var></code>
+                                בכל שלב, אתה תצטרך לקחת בין <code><var>FAC1_TIMES</var></code> ו-<code><var>FAC1_TIMES+1</var></code> כדי להגיע ל-   <code>100</code>. בגלל שאם תקח שבר הנמצא בין השלבים, הוא לא יתחלק ב-<code><var>FAC1</var></code>,
+                                אתה תגיע ל-<code><var>FAC1_TIMES</var></code> מספרים המתחלקים ב<code><var>FAC1</var></code> לפני שתגיע מעל  <code>100</code>.
+                               אז, ישנם  <code><var>FAC1_TIMES</var></code> מספרים בין <code>1</code> ו-<code>100</code> המתחלקים בין  <code><var>FAC1</var></code>.
+                            </div>
+                            </br></br>
+                            <div data-if="100/FAC2 === FAC2_TIMES">
+                                נשתמש בהגיון דומה עבור הלוגיקה של המספר השני, אנו רואים ש- <code> \dfrac{100}{<var>FAC2</var>} = <var>FAC2_TIMES</var></code>
+                            </div>
+                            <div data-else>
+                                נשתמש בהגיון דומה עבור הלוגיקה של המספר השני, נקח <code> \dfrac{100}{<var>FAC2</var>}</code>, שהוא בין  <code><var>
+                                FAC2_TIMES</var></code> -ו<code><var>FAC2_TIMES+1</var></code>. אז, נתחיל ב<code>0</code> ונוסיף <code><var>FAC2</var></code>
+                                בכל שלב, אתה תצטרך לקחת בין  <code><var>FAC2_TIMES</var></code> ו<code><var>FAC2_TIMES+1</var></code> שלבים כדי להגיע ל- 
+                                 <code>100</code>. בגלל שאם תקח שבר הנמצא בין השלבים, הוא לא יתחלק ב<code><var>FAC2</var></code>,
+                                אתה תגיע ל<code><var>FAC2_TIMES</var></code> מספר המתחלקים ב-<code><var>FAC2</var></code> לפני שתגיע ל- <code>100</code>.
+                               לכן, ישנם  <code><var>FAC2_TIMES</var></code> מספרים בין <code>1</code> ו- <code>100</code> המתחלקים ב- <code><var>FAC2</var></code>.
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                       אתה אולי תחשוב שיש  <code><var>FAC1_TIMES</var> + <var>FAC2_TIMES</var> = <var>FAC1_TIMES+FAC2_TIMES</var></code> 
+                         מספרים המתחלקים על ידי המספר הראשון או השני, אך יש פה קצת יותר מזה.
+                    </p>
+                    <p>
+                       אנו סופרים כל מספר המתחלק ב-<code><var>FAC1</var></code> ו- <code><var>FAC2</var></code> פעמיים.
+                        אז, לדוגמא  <code><var>FAC1*FAC2</var></code> נספר פעם אחת כמספר המתחלק ב-<code><var>FAC1</var></code>, ושנית כמספר המתחלק ב-<code><var>FAC2</var></code>.
+                    </p>
+                    <p>
+                      לכן, אנו צריכים לספור כמה מספרים מתחלקים גם ב-<code><var>FAC1</var></code> וגם ב- <code><var>FAC2</var></code>
+                        ולחסר אותם מהתוצאה שקיבלנו מקודם.
+                    </p>
+                    <p>
+                        להיות מתחלק על ידי  <code><var>FAC1</var></code> וגם <code><var>FAC2</var></code> הינו אותו דבר כמו להיות מתחלק ב- 
+                        <code><var>FAC1*FAC2</var></code>, אז כמות המספרים המתחלקים בשניהם בין 1 ל100 היא  <code><var>BOTH_TIMES</var></code> .
+                    </p>
+                    <p>
+                       נחסר ונראה כי יש <code><var>FAC1_TIMES + FAC2_TIMES</var> - <var>BOTH_TIMES</var> = <var>FAC1_TIMES + FAC2_TIMES - BOTH_TIMES</var></code> מספרים המתחלקים ב-<code><var>FAC1</var></code> או <code><var>FAC2</var></code>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

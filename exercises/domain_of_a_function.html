@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html data-require="math math-format">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>תחום הפונקציות</title>
+	<script src="../khan-exercise.js"></script>
+	<script type="text/javascript">
+		function filter( o, f ) {
+			var n = {};
+			for ( var p in o ) {
+				if ( o.hasOwnProperty( p ) && f( p ) ) n[p] = o[p];
+			}
+			return n;
+		}
+	</script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="A">randRange( 1, 10 )</var>
+			<var id="B" data-ensure="A !== B">randRange( 1, 10 )</var>
+			<var id="C" data-ensure="A !== C && B !== C">randRange( 1, 10 )</var>
+
+			<var id="SET">function() { return "\\{ \\, x \\in \\RR \\mid " + Array.prototype.join.call( arguments, ", \\," ) + "\\, \\}"; }</var>
+			<var id="FN">function( n, sym ) { return "x " + sym + n; }</var>
+			<var id="FN2">function( n, m, sym1, sym2 ) { return n + sym1 + " x " + sym2 + m; }</var>
+			<var id="NEQ">function( n ) { return FN( n, "\\neq" ); }</var>
+			<var id="GEQ">function( n ) { return FN( n, "\\geq" ); }</var>
+			<var id="LEQ">function( n ) { return FN( n, "\\leq" ); }</var>
+			<var id="GE">function( n ) { return FN( n, ">" ); }</var>
+			<var id="LE">function( n ) { return FN( n, "&lt;" ); }</var>
+			<var id="LE_LEQ">function( n, m ) { return FN2( n, m, "&lt;", "\\leq" ); }</var>
+			<var id="LEQ_LEQ">function( n, m ) { return FN2( n, m, "\\leq", "\\leq" ); }</var>
+			<var id="LE_LE">function( n, m ) { return FN2( n, m, "&lt;", "&lt;" ); }</var>
+
+			<var id="CHOICES">{
+				"two-denom-simplify": SET( NEQ( -1*A ), NEQ( B ) ),
+				"two-denom-cond": SET( NEQ( -1*A ) ),
+				"sqrt": SET( GEQ( A ) ),
+				"inverse-sqrt": SET( GE( A ) ),
+				"inverse-sqrt-cond": SET( NEQ( A ) ),
+				"sqrt-frac": SET( LE_LEQ( A, A+B ) ),
+				"two-denom-cond-weird": SET( NEQ( -1*A ), NEQ( C ) ),
+				"sqrt-poly-frac": SET( GEQ( C ) ),
+				"sqrt-abs": SET( LEQ_LEQ( -1*A, A ) ),
+				"inverse-sqrt-abs": SET( LE_LE( -1*A, A ) )
+			}</var>
+
+		</div>
+
+		<div class="problems">
+
+			<div id="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \dfrac{ x + <var>A</var> }{ ( x + <var>A</var> )( x - <var>B</var> ) }</code></p>
+
+				<p class="question">מה הוא התחום של הפונקציה <code>f(x)</code>?</p>
+
+				<p class="solution"><code><var>CHOICES["two-denom-simplify"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'two-denom-simplify'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p><code>f(x)</code> לא מוגדרת כאשר המכנה מתאפס.</p>
+					<p>המכנה מתאפס כאשר <code>x=<var>(-1*A)</var></code> או כאשר <code>x=<var>B</var></code>.</p>
+					<p>לכן אנו יודעים ש- <code>x \neq <var>-1*A</var></code> וכן ש <code>x \neq <var>B</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["two-denom-simplify"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="two-denom-cond" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x)= \begin{cases} \dfrac{ x + <var>A</var> }{ ( x + <var>A</var> )( x - <var>B</var> ) } & \text{if $x \neq <var>B</var>$} \\ <var>C</var> & \text{if $x = <var>B</var>$} \end{cases}</code></p>
+
+				<p class="solution"><code><var>CHOICES["two-denom-cond"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'two-denom-cond'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p><code>f(x)</code> מורכבת מכמה מקטעים, ולכן עלינו לבדוק עבור כל מקטע היכן הפונקציה לא מוגדרת.</p>
+					<p>המקטע הראשון הפונקציה, <code>\frac{ x + <var>A</var> }{ ( x + <var>A</var> )( x - <var>B</var> ) }</code>, לא מוגדר כאשר המכנה שלו מתאפס.</p>
+					<p>המכנה מתאפס כאשר <code>x=<var>-1*A</var></code> או כאשר <code>x=<var>B</var></code>.</p>
+					<p>על כן, מתוך מבחינת המקטע הראשון אנו רואים ש- <code>x \neq <var>-1*A</var></code> וכן <code>x \neq <var>B</var></code>.</p>
+					<p>אולם, המקטע השני מתאר את הפונקציה עבור <code>x = <var>B</var></code>, וצורתו, <code><var>C</var></code>, מוגדרת תמיד ולכן <code>f(x)</code> מוגדרת ב- <code>x = <var>B</var></code>.</p>
+					<p>אם כך, ההגבלה היחידה על הפונקציה נותרת <code>x \neq <var>-1*A</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["two-denom-cond"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="sqrt" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \sqrt{ x - <var>A</var> }</code></p>
+
+				<p class="solution"><code><var>CHOICES.sqrt</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'sqrt'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p><code>f(x)</code> אינה מוגדרת כאשר הביטוי בתוך השורש הריבועי שלילי.</p>
+					<p>לכן הביטוי בתוך השורש הריבועי, <code>x - <var>A</var></code>, חייב להיות גדול מאפס או שווה לאפס.</p>
+					<p>אם כך <code>x - <var>A</var> \geq 0</code>; ומכאן נסיק ש- <code>x \geq <var>A</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES.sqrt</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="inverse-sqrt" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \dfrac{ 1 }{ \sqrt{ x - <var>A</var> } }</code></p>
+
+				<p class="solution"><code><var>CHOICES["inverse-sqrt"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'inverse-sqrt'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p>דבר ראשון נשים לב ש- <code>f(x)</code> אינה מוגדרת כאשר הביטוי בתוך השורש הריבוע שלילי.</p>
+					<p>לכן הביטוי בתוך השורש הריבועי, <code>x - <var>A</var></code>, חייב להיות גדול מאפס או שווה לאפס.</p>
+					<p>אם כך <code>x - <var>A</var> \geq 0</code>; ומכאן נסיק ש- <code>x \geq <var>A</var></code>.</p>
+					<p>בשלב הבא עלינו להבחין ש- <code>f(x)</code> אינה מוגדרת כאשר המכנה, <code>\sqrt{ x - <var>A</var> }</code>, הוא אפס.</p>
+					<p>אם כך <code>\sqrt{ x - <var>A</var> } \neq 0</code>.</p>
+					<p><code>\sqrt{ z } = 0</code> רק כאשר <code>z = 0</code>, ולכן <code>\sqrt{ x - <var>A</var> } \neq 0</code> יתקיים כאשר <code>x - <var>A</var> \neq 0</code>.</p>
+					<p>על כן <code>x \neq <var>A</var></code>.</p>
+					<p>סך הכל יש לנו שתי מגבלות: <code>x \geq <var>A</var></code> ו- <code>x \neq <var>A</var></code>.</p>
+					<p>אם נצרף את שתיהן נקבל פשוט <code>x > <var>A</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["inverse-sqrt"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="inverse-sqrt-cond" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \begin{cases} \dfrac{ 1 }{ \sqrt{ x - <var>A</var> } } & \text{if $x \geq <var>A</var>$} \\ \dfrac{ 1 }{ \sqrt{ <var>A</var> - x } } & \text{if $x &lt; <var>A</var>$} \end{cases}</code></p>
+
+				<p class="solution"><code><var>CHOICES["inverse-sqrt-cond"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'inverse-sqrt-cond'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+
+
+				<div class="hints">
+					<p><code>f(x)</code> מורכבת מכמה מקטעים, ולכן עלינו לבדוק עבור כל מקטע היכן הפונקציה לא מוגדרת.</p>
+					<p>המקטע הראשון הפונקציה, <code>\frac{ 1 }{ \sqrt{ x - <var>A</var> } }</code>, אינו מוגדר בערכי x עבורם המכנה מתאפס ובערכי x עבורם הביטוי בתוך השורש שלילי.</p>
+					<p>המכנה, <code>\sqrt{ x - <var>A</var> }</code>, מתאפס כאשר <code>x - <var>A</var> = 0</code>, ולכן אנו מסיקים ש- <code>x \neq <var>A</var></code>.</p>
+					<p>הביטוי בתוך השורש הריבועי, <code>x - <var>A</var></code>, שלילי כאשר <code>x < <var>A</var></code>, ולכן אנו מסיקים ש- <code>x \geq <var>A</var></code>.</p>
+					<p>אם כך המקטע הראשון של הפונקציה אינו מוגדר כאשר <code>x \neq <var>A</var></code> וכאשר <code>x \geq <var>A</var></code>. אם נשלב את שתי ההגדרות הללו נקבל שהמקטע הראשון מוגדר עבור <code>x > <var>A</var></code>. המקטע הראשון מתאר את הפונקציה עבור <code>x \geq <var>A</var></code>, ולכן הגבלה זו רלוונטית עבורינו.</p>
+					<p>המקטע השני של הפונקציה, <code>\frac{ 1 }{ \sqrt{ <var>A</var> - x } }</code>, מתאר את הפונקציה עבור <code>x < <var>A</var></code> והוא איננו מוגדר בערכי x עבורם המכנה מתאפס ובערכי x עבורם הביטוי בתוך השורש הריבועי שלילי.</p>
+					<p>המכנה, <code>\sqrt{ <var>A</var> - x }</code>, מתאפס כאשר <code><var>A</var> - x = 0</code>, ולכן אנו מסיקים ש- <code>x \neq <var>A</var></code>.</p>
+					<p>הביטוי בתוך השורש, <code><var>A</var> - x</code>, קטן מאפס כאשר <code>x > <var>A</var></code>, ולכן אנו מסיקים ש- <code>x \leq <var>A</var></code>.</p>
+					<p>אם כך המקטע שני של הפונקציה אינו מוגדר כאשר <code>x \neq <var>A</var></code> וכאשר <code>x \leq <var>A</var></code>. אם נשלב את שתי ההגדרות הללו נקבל שהמקטע השני מוגדר עבור <code>x < <var>A</var></code>. אולם המקטע השני מתאר את הפוקנציה, <code>f(x)</code>, רק עבור <code>x < <var>A</var></code>, ולכן מגבלה זו אינה משפיעה על התחום הגדרתה של <code>f(x)</code>.</p>
+					<p>נסכם שהמקטע הראשון מוגדר כאשר <code>x > <var>A</var></code> ומתאר את הפונקציה כאשר <code>x \geq <var>A</var></code>; המקטע השני מוגדר עבור <code>x < <var>A</var></code> ומתאר את הפונקציה כאשר<code>x < <var>A</var></code>. משילוב שתי מסקנות אלו נקבל שהנקודה היחידה עבור הפונקציה אינה מוגדרת היא  <code>x = <var>A</var></code>. על כן, המגבלה היחידה על התחום של <code>f(x)</code> היא <code>x \neq <var>A</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["inverse-sqrt-cond"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="sqrt-frac" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \dfrac{ \sqrt{ <var>A+B</var> - x } }{ \sqrt{ x - <var>A</var> } }</code></p>
+
+				<p class="solution"><code><var>CHOICES["sqrt-frac"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'sqrt-frac'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p>תחילה נשים לב ש- <code>f(x)</code> אינה מוגדרת כאשר הביטוי באחד מהשורשים הריבועיים שלילי.</p>
+					<p>הביטוי בשורש העליון שלילי כאשר <code><var>A+B</var> - x < 0</code>.</p>
+					<p>אם כך, הביטוי בשורש העליון לא מוגדר כאשר  <code>x > <var>A+B</var></code>, ולכן אנו מסיקים ש- <code>x \leq <var>A+B</var></code>.</p>
+					<p>הביטוי בתוך התחתון שלילי כאשר <code>x - <var>A</var> < 0</code>.</p>
+					<p>אם כך השורש הריבועי התחתון לא מוגדר כאשר <code>x < <var>A</var></code>, ולכן אנו מסיקים ש- <code>x \geq <var>A</var></code>.</p>
+					<p>עכשיו נשים לב ש- <code>f(x)</code> אינה מוגדרת גם כאשר המכנה שלה, <code>\sqrt{ x - <var>A</var> }</code>, מתאפס.</p>
+					<p>לכן נדרוש ש- <code>\sqrt{ x - <var>A</var> } \neq 0</code>, ומכאן ש- <code>x - <var>A</var> \neq 0</code>, ולבסוף נקבל ש- <code>x \neq <var>A</var></code>.</p>
+					<p>סך הכל קיבלנו שלוש הגבלות: <code>x \leq <var>A+B</var></code>, <code>x \geq <var>A</var></code>, ו- <code>x \neq <var>A</var></code>.</p>
+					<p>משילוב של שלוש ההגבלות הללו ניתן להסיק ש- <code><var>A</var> < x \leq <var>A+B</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["sqrt-frac"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="two-denom-cond-weird" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \begin{cases} \dfrac{ x + <var>A</var> }{ ( x + <var>A</var> )( x - <var>C</var> ) } & \text{if $x \neq <var>B</var>$} \\ <var>A</var> & \text{if $x = <var>B</var>$} \end{cases}</code></p>
+
+				<p class="solution"><code><var>CHOICES["two-denom-cond-weird"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'two-denom-cond-weird'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p><code>f(x)</code> מורכבת מכמה מקטעים, ולכן עלינו לבדוק עבור כל מקטע היכן הפונקציה לא מוגדרת.</p>
+					<p>החלק הראשון של הפונקציה, <code>\frac{ x + <var>A</var> }{ ( x + <var>A</var> )( x - <var>C</var> ) }</code>, אינו מוגדר כאשר המכנה שלו מתאפס.</p>
+					<p>המכנה, <code>(x + <var>A</var>)(x - <var>C</var>)</code>, מתאפס כאשר <code>x = <var>-1*A</var></code> או כאשר <code>x = <var>C</var></code>.</p>
+					<p>אם כך, המקטע הראשון של הפונקציה מוגדר כאשר <code>x \neq <var>-1*A</var></code> ו- <code>x \neq <var>C</var></code>. המקטע הראשון מתאר את הפונקציה עבור <code>x = <var>-1*A</var></code> ו- <code>x = <var>C</var></code>, ולכן המגבלות שמצאנו רלוונטיות עבור התחום של <code>f(x)</code>.</p>
+					<p>המקטע השני של <code>f(x)</code>, <code><var>A</var></code>, הוא פשוט קו אופקי פשוט ולכן מוגדר תמיד.</p>
+					<p>אם כך, המקטע הראשון מוגדר עבור <code>x \neq <var>-1*A</var></code> ו- <code>x \neq <var>C</var></code> ומתאר את הפונקציה עבור <code>x \neq <var>B</var></code>; המקטע השני מוגדר תמיד ומתאר את הפונקציה עבור <code>x = <var>B</var></code>. אם נסכם את את המסקנות הללו, נקבל שהמקום היחיד בו המגבלות על תחום הפונקציה רלוונטיות הוא <code>x = <var>-1*A</var></code> ן- <code>x = <var>C</var></code>. לכן, המגבלות על התחום של <code>f(x)</code> הם ש- <code>x \neq <var>-1*A</var></code> וש- <code>x \neq <var>C</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["two-denom-cond-weird"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="sqrt-poly-frac" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \dfrac{ \sqrt{ x - <var>C</var> } }{ x^2 + <var>A+B</var> x + <var>A*B</var> }</code></p>
+
+				<p class="solution"><code><var>CHOICES["sqrt-poly-frac"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'sqrt-poly-frac'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p><code>f(x) = \dfrac{ \sqrt{ x - <var>C</var> } }{ x^2 + <var>A+B</var> x + <var>A*B</var> } = \dfrac{ \sqrt{ x - <var>C</var> } }{ ( x + <var>A</var> )( x + <var>B</var> ) }</code></p>
+					<p>תחילה נשים לב ש- <code>f(x)</code> אינה מוגדרת כאשר ביטוי בתוך השורש הריבועי שלילי.</p>
+					<p>מכאן ש- <code>x - <var>C</var> \geq 0</code>, שגורר <code>x \geq <var>C</var></code>.</p>
+					<p>עכשיום נשים לב ש- <code>f(x)</code> גם איננה מוגדרת כאשר המכנה שלה מתאפס.</p>
+					<p>מכאן ש- <code>x \neq <var>-1*A</var></code> וכן <code>x \neq <var>-1*B</var></code>.</p>
+					<p>אולם שתי המגבלות הללו אינן רלוונטיות משום ש- <code><var>C</var> > <var>-1*A</var></code> ו- <code><var>C</var> > <var>-1*B</var></code> ולכן <code>x \geq <var>C</var></code> מבטיח לנו ש- <code>x \neq <var>-1*A</var></code> ו- <code>x \neq <var>-1*B</var></code>.</p>
+					<p>משילוב המגבלות יחד נקבל סך הכל רק ש- <code>x \geq <var>C</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["sqrt-poly-frac"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="sqrt-abs" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \sqrt{ <var>A</var> - \lvert x \rvert }</code></p>
+
+				<p class="solution"><code><var>CHOICES["sqrt-abs"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'sqrt-abs'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p><code>f(x)</code> אינה מוגדרת כאשר הביטוי בתוך השורש הריבועי שלילי.</p>
+					<p>לכן אנו מסיקים ש- <code><var>A</var> - \lvert x \rvert \geq 0</code>.</p>
+					<p>ומכאן ש- <code>\lvert x \rvert \leq <var>A</var></code>.</p>
+					<p>אם כך, <code>x \leq <var>A</var></code> ו- <code>x \geq <var>-1*A</var></code>; או באותה מידה ניתן לרשום ש- <code><var>-1*A</var> \leq x \leq <var>A</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["sqrt-abs"]</var></code>.</p>
+				</div>
+
+			</div>
+
+			<div id="inverse-sqrt-abs" data-type="two-denom-simplify">
+
+				<p class="problem"><code>f(x) = \dfrac{ <var>B</var> }{ \sqrt{ <var>A</var> - \lvert x \rvert } }</code></p>
+
+				<p class="solution"><code><var>CHOICES["inverse-sqrt-abs"]</var></code></p>
+				<ul class="choices" data-show="5" data-none="true">
+					<li data-each="filter( CHOICES, function( c ) { return c !== 'inverse-sqrt-abs'; } ) as c"><code><var>c</var></code></li>
+				</ul>
+
+				<div class="hints">
+					<p>תחילה נשים לב שהפונקציהף, <code>f(x)</code>, אינה מוגדרת כאשר הביטוי בתוך השורש הריבועי שלילי.</p>
+					<p>לכן אנו מסיקים ש- <code><var>A</var> - \lvert x \rvert \geq 0</code>.</p>
+					<p>משמעות מגבלה זו ש- <code>\lvert x \rvert \leq <var>A</var></code>, ומכאן <code><var>-1*A</var> \leq x \leq <var>A</var></code>.</p>
+					<p>עכשיו נשים לב שהפונקציה, <code>f(x)</code>, אינה מוגדרת גם כאשר המכנה שלה מתאפס.</p>
+					<p>לכן אנו מסיקים ש- <code>\sqrt{ <var>A</var> - \lvert x \rvert } \neq 0</code>, ומכאן נקבל ש- <code>\lvert x \rvert \neq <var>A</var></code>.</p>
+					<p>משמעות מגבלה זו היא ש- <code>x \neq <var>A</var></code> ו- <code>x \neq <var>-1*A</var></code>.</p>
+					<p>סך הכל יש לנו ארבע מגבלות: <code>x \geq <var>-1*A</var></code>, <code>x \leq <var>A</var></code>, <code>x \neq <var>-1*A</var></code>, ו- <code>x \neq <var>A</var></code>.</p>
+					<p>משילוב ארבע המגבלות נקבל ש- <code>x > <var>-1*A</var></code> ו- <code>x < <var>A</var></code>; באותה מידה, ניתן לרשום ש- <code><var>-1*A</var> < x < <var>A</var></code>.</p>
+					<p>ניתן לרשום את התחום בצורה מתמטית כ- <code><var>CHOICES["inverse-sqrt-abs"]</var></code>.</p>
+				</div>
+
+			</div>
+
+
+
+		</div>
+	</div>
+</body>
+</html>

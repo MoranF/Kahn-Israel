@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html data-require="math angles">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>המרת מעלות לרדיאנים</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="ANGLE">randFromArray(commonAngles)</var>
+        </div>
+
+        <div class="problems">
+            <div id="degrees-to-radians">
+                <p class="question">
+                    המר את הזוית <var>ANGLE.deg</var>&deg; לרדיאנים.
+                </p>
+
+                <div class="solution" data-type="multiple">
+                    <span class="sol" data-forms="pi">
+                        <var>ANGLE.deg / 180 * PI</var>
+                    </span> רדיאנים
+                </div>
+
+                <div class="hints">
+                    <p>
+                        ישנן  <code>360</code> מעלות במעגל. כמו כן, 
+                        ישנם <code>2\pi</code> רדיאנים במעגל.
+                    </p>
+                    <p>
+                        במילים אחרות, כל  <code>\pi</code> רדיאנים שווים ל-
+                        <code>180</code> מעלות. לכן, אנו יכולים להמיר
+                        ממעלות לרדיאנים על ידי הכפלה ב- <code>\pi</code>,
+                        וחלוקה ב- <code>180^\circ</code>.
+                    </p>
+                    <p><code>
+                        <var>ANGLE.deg</var>^\circ
+                        \times \dfrac{\pi}{180^\circ}
+                    </code></p>
+                    <p>
+                        <code>\displaystyle = <var>ANGLE.rad</var></code>
+                        רדיאנים
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>הסתברות עם תמורה וקומבינטוריקה</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="students">
+                <div class="vars" data-ensure="GROUP &lt; (ARE_B ? BOYS : GIRLS)">
+                    <var id="STUDENTS">randRange(7,10)</var>
+                    <var id="GROUP">randRange(3,6)</var>
+                    <var id="BOYS">randRange(2,STUDENTS-2)</var>
+                    <var id="GIRLS">STUDENTS-BOYS</var>
+                    <var id="ARE_B">random() &lt; 0.5</var>
+                    <var id="NUM_B">ARE_B ? BOYS : GIRLS</var>
+                    <var id="ANSWER">(factorial(NUM_B)*factorial(STUDENTS-GROUP))/(factorial(STUDENTS)*factorial(NUM_B-GROUP))</var>
+                    <var id="GCD">getGCD(factorial(NUM_B)*factorial(STUDENTS-GROUP),factorial(STUDENTS)*factorial(NUM_B-GROUP))</var>
+                    <var id="PRETTY_NUM">factorial(NUM_B)*factorial(STUDENTS-GROUP)/GCD</var>
+                    <var id="PRETTY_DEM">factorial(STUDENTS)*factorial(NUM_B-GROUP)/GCD</var>
+                </div>
+                <p>
+                   ישנם <code><var>STUDENTS</var></code> תלמידים בכיתה : <code><var>BOYS</var></code> בנים ו<code><var>GIRLS</var></code> בנות.
+                </p>
+                <p class="question"> 
+                    אם מורה בוחרת קבוצה של  <code><var>GROUP</var></code> תלמידים באופן רנדומלי,מה הסיכוי  
+                    שכולם בקבוצה  <var>ARE_B ? "בנים" : "בנות"</var>?
+                </p>
+                <div class="solution" data-forms="proper"><var>ANSWER</var></div>
+                <div class="hints">
+                    <p>
+                        דרך אחת לפתור זאת היא לחשוב כמה קבוצות שונות קיימות של רק  <var>ARE_B ? "בנים" : "בנות"</var>, ואז לחלק זאת במספר הכולל של קבוצות אפשרויות. בגלל שלכל קבוצה יש הסתברות זהה להתקיים זה יהיה ההסתברות שקבוצה של רק
+                        <var>ARE_B ? "בנים" : "בנות"</var> תבחר.
+                    </p>
+                    <p>
+                       אנו יודעים שתי דרכים לספור את המספר של קבוצות אשר אפשר לבחור. אנו משתמשים בתמורה אם הסדר משנה, ובקומבינציות אם לא. האם הסדר שנבחרים התלמידים משנה?
+                    </p>
+                    <div>
+                        <p>
+                            זה לא משנה אם נבחר <var>ARE_B ? "יוסי" : "לינור"</var> ואז את 
+                            <var>ARE_B ? "אלון" : "הילה"</var> או  <var>ARE_B ? "אלון" : "הילה"</var> ואז 
+                            <var>ARE_B ? "יוסי" : "לינור"</var>, 
+                            אז הסדר אינו משנה. מספר הדרכים לבחור קבוצה של <code><var>GROUP</var></code> תלמידים מתוך <code><var>STUDENTS</var></code> הוא 
+                            <code> \dfrac{<var>STUDENTS</var>!}{(<var>STUDENTS</var>-<var>GROUP</var>)!<var>GROUP</var>!} = 
+                            \binom{<var>STUDENTS</var>}{<var>GROUP</var>}</code>.
+                            [<a href="#" class="show-subhint" data-subhint="binomial">הראה לי למה </a>]
+                        </p>
+                        <div class="subhint" id="binomial">
+                            <p>
+                                תזכור שה<code><var>STUDENTS</var>! \;</code> ו<code>(<var>STUDENTS</var>-<var>GROUP</var>)! \;</code> באים מהשלב שאנו ממלאים את הקבוצה, כאשר יש <code><var>STUDENTS</var></code>
+                                אפשרויות עבור המקום הראשון, ואז <code><var>STUDENTS-1</var></code> אפשרויות עבור המקום השני, וכן הלאה. בדרך זו, אנו מגיעים ל- 
+                                <code><var>_.map(_.range(GROUP), function(l){ return (STUDENTS-l);}).join("\\cdot")</var> 
+                                = \dfrac{<var>STUDENTS</var>!}{(<var>STUDENTS</var>-<var>GROUP</var>)!} \;</code>.
+                                ה <code><var>GROUP</var>! \;</code> מגיע ממספר הפעים שספרנו קבוצה כקבוצה שונה בגלל שבחרנו שם את התלמידים בסדר שונה.
+                                ישנם <code><var>GROUP</var>! \;</code> 
+                                דרכים לסדר קבוצה, אז עבור כל קבוצה, ספרנו יתר על המידה בדיוק את המספר הזה.
+                            </p>
+                        </div>
+                    </div>
+                    <p>
+                        אנו יכולים להשתמש בהגיון דומה  לספור את מספר הקבוצות שיש בה<var>ARE_B ? "ם" : "ן"</var> רק <var>ARE_B ? "בנים" : "בנות"</var>.
+                    </p>
+                    <p>
+                        באופן ספציפי, מספר הדרכים שאפשר לבחור  <code><var>GROUP</var></code> תלמידים מתוך 
+                        <code><var>NUM_B</var></code> הוא 
+                        <code> \dfrac{<var>NUM_B</var>!}{(<var>NUM_B</var>-<var>GROUP</var>)!<var>GROUP</var>!} = 
+                        \binom{<var>NUM_B</var>}{<var>GROUP</var>}</code>.
+                    </p>
+                    <p>
+                        אז, ההסתברות שהמורה תבחר קבוצה שכולה מורכבת מ<var>ARE_B ? "בנים" : "בנות"</var> הוא המספר של הקבוצות שם יהיו רק  
+                        <var>ARE_B ? "בנים" : "בנות"</var> חלקי המספר של כל הקבוצות האפשרויות להבחר.
+                    </p>
+                    <p>
+                        כלומר: <code> \displaystyle \frac{\frac{<var>NUM_B</var>!}{(<var>NUM_B</var>-<var>GROUP</var>)!\cancel{<var>GROUP</var>!}}}
+                        {\frac{<var>STUDENTS</var>!}{(<var>STUDENTS</var>-<var>GROUP</var>)!\cancel{<var>GROUP</var>!}}} = 
+                        \frac{\frac{<var>NUM_B</var>!}{<var>NUM_B-GROUP</var>!}}{\frac{<var>STUDENTS</var>!}{<var>STUDENTS-GROUP</var>!}}</code>
+                    </p>
+                    <p>
+                        אנו יכולים לסדר מחדש את הביטויים כדי להפוך הפישוט קל יותר
+                        <code>\left(\dfrac{<var>NUM_B</var>!}{<var>NUM_B-GROUP</var>!}\right)
+                        \left(\dfrac{<var>STUDENTS-GROUP</var>!}{<var>STUDENTS</var>!}\right) =
+                        \left(\dfrac{<var>NUM_B</var>!}{<var>STUDENTS</var>!}\right)
+                        \left(\dfrac{<var>STUDENTS-GROUP</var>!}{<var>NUM_B-GROUP</var>!}\right)</code>
+                    <p>
+                        לאחר הפישוט נקבל : <code> 
+                        \left(\dfrac{\cancel{<var>NUM_B</var>!}}{<var>_.map(_.range(STUDENTS-NUM_B), function(l){ return (STUDENTS-l); }).join("\\cdot")
+                        </var> \cdot \cancel{<var>NUM_B</var>!}}\right)
+                        \left(\dfrac{<var>_.map(_.range(STUDENTS-NUM_B), function(l){ return (STUDENTS-GROUP-l); }).join("\\cdot")
+                        </var> \cdot \cancel{<var>(NUM_B-GROUP)</var>!}}{\cancel{<var>NUM_B-GROUP</var>!}}\right) = 
+                        \left(\dfrac{1}{<var>factorial(STUDENTS)/factorial(NUM_B)</var>}\right)
+                        \left(<var>factorial(STUDENTS-GROUP)/factorial(NUM_B-GROUP)</var>\right) =
+                        \dfrac{<var>PRETTY_NUM</var>}{<var>PRETTY_DEM</var>}</code>
+                    </p>
+                </div>
+            </div>
+
+            <div id="coins">
+                <div class="vars">
+                    <var id="COINS">randRange(4,7)</var>
+                    <var id="NUM">randRange(2,COINS-2)</var>
+                    <var id="IS_H">random &lt; 0.5</var>
+                    <var id="NAME">IS_H ? "עץ" : "פלי"</var>
+                    <var id="NUM_RIGHT">factorial(COINS)/(factorial(NUM)*factorial(COINS-NUM))</var>
+                    <var id="NUM_ALL">Math.pow(2,COINS)</var>
+                    <var id="GCD">getGCD(NUM_RIGHT,NUM_ALL)</var>
+                    <var id="PRETTY_NUMER">NUM_RIGHT/GCD</var>
+                    <var id="PRETTY_DENOM">NUM_ALL/GCD</var>
+                </div>
+
+                <p class="question">
+                    אם תטיל מטבע תאורטי <code><var>COINS</var></code> פעמים, מה ההסתברות שתקבל בדיוק <code><var>NUM</var></code> פעמים <var>NAME</var>?
+                </p>
+                <p class="solution" data-forms="proper"><var>PRETTY_NUMER/PRETTY_DENOM</var></p>
+
+                <div class="hints">
+                    <p>
+                       דרך אחת לפתור את זה היא לחשב כמה פעמים אתה יכול לקבל <code><var>NUM</var></code> פעמים <var>NAME</var>, ואז
+                        לחלק את המספר הזה במספר הכולל של אפשרויות שיכולות להיות.בגלל שעבור כל אפשרות ההסתברות זהה, זה יהיה ההסתברות שנקבל בדיוק  
+                        <code><var>NUM</var></code> פעמים <var>NAME</var>. 
+                    </p>
+                    <p>
+                      כמה אפשרויות קיימות אשר בהן נקבל בדיוק  <code><var>NUM</var></code> פעמים <var>NAME</var>? נסה לחשוב על כל אפשרות כעל מילה בעלת <code><var>COINS</var></code> אותיות, אשר האות הראשונה היא 'ע' אם ההטלה הראשונה יצאה כעץ, ו'פ' אם יצא פלי, ככה כן הלאה.
+                    </p>
+                    <p>
+                        מספר האפשרויות עם בדיוק  <code><var>NUM</var></code> פעמים <var>NAME</var> 
+הוא אותו מספר המילים אשר יש בהן
+                        <code><var>NUM</var></code> פעמים <var>IS_H ? "'ע'" : "'פ'"</var> ו<code><var>COINS-NUM</var></code> פעמים <var>IS_H ? "'פ'" : "'ע'"</var>.
+                    </p>
+                    <div>
+                        <p>
+                           כמה מהמילים האלו קיימות? אם נתחייס לכל המילים האלו כיחודיות, אנו נמצא שיש  <code><var>COINS</var>!</code> אפשרויות שונות , אשר <code><var>NUM</var>!</code> פעמים ספרנו יתר על המידה
+                           עבור כל פעם שאנחנו פשוט מחליפים  <var>IS_H ? "'ע'" : "'פ'"</var> ו<code><var>COINS-NUM</var>!</code> פעמים
+                            עבור כל פעם שאנחנו מחליפים רק את ה<var>IS_H ? "'פ'" : "'ע'"</var>.
+                            [<a href="#" class="show-subhint" data-subhint="letters">הראה לי מדוע</a>]
+                        </p>
+                        <div class="subhint" id="letters">
+                            נניח שהטלנו מטבע 5 פעמים, וקבלנו 3 פעמים פלי. כמה פעמים שונות אנחנו יכולים לארגן מחדש את את אותיות המילה "עעפפפ"? ובכן, יש לנו 5 אפשרויות  עבור המקום הראשון, 4 עבור השני, וכן הלאה, מה שיתן לנו את התוצאה של 
+                            <code>5\cdot4\cdot3\cdot2\cdot1 = 5! = 120 \;</code> סידורים שונים. אבל, התייחסנו לאותיות האלו כיחודיות, כאשר  </br>
+                            ע<span class="hint_blue">פ</span>ע<span class="hint_orange">פ</span><span class="hint_green">פ</span> 
+                           הינו זהה כמו </br>
+                            ע<span class="hint_orange">פ</span>ע<span class="hint_blue">פ</span><span class="hint_green">פ</span>,
+                            וגם  </br>
+                            ע<span class="hint_orange">פ</span>ע<span class="hint_green">פ</span><span class="hint_blue">פ</span>,
+                            </br>
+                            וכן הלאה. אז אנו צריכים להחליף את כל הסידורים השונים האלו רק כאשר אנו מזיזים את הפלי במקום עם סידור שונה, 'עפעפפ'. ישנם <code>3!</code> גרסאות צבעוניות שונות עבור כל מילה נורמלית אחת. זה אמר שיש לחלק קודם את הניחוש הראשון שלנו <code>5!</code> ב<code>3!</code>. עם אותו הגיון יש לחלק ב <code>2!</code> כדי להמנע מלספור כפול כל תמורה  אשר שם הזזנו את העץ. לכן, מספר הסידורים האפשרי האמיתי הוא:
+                            <code>\dfrac{5!}{3!2!} = \binom{5}{3}</code>.
+                        </div>
+                    </div>
+                    <div>
+                        <p>
+                           אז, ישנם  <code>\dfrac{<var>COINS</var>!}{<var>NUM</var>!<var>COINS-NUM</var>!} = <var>NUM_RIGHT</var></code>  
+                            אפשרויות שונות לקבל בדיוק  <code><var>NUM</var></code> פעמים <var>NAME</var>.
+                            [<a href="#" class="show-subhint" data-subhint="total"> כמה אפשרויות יש באופן כללי?</a>]
+                        </p>
+                        <div class="subhint" id="total">
+                           ובכן, אם רק נטיל מטבע אחד, יכולות להיות רק 2 אפשרויות. או נתיל פעמים, 4. 3 פעמים - 8 אפשרויות. כל פעם שאנחנו מטילים למעלה אנו מכפילים ב2 את מספר האפשרויות.
+                        </div>
+                    </div>
+                    <p>
+                       בסך הכל יש לנו  <code>2^{<var>COINS</var>} = <var>NUM_ALL</var></code>  אפשרויות אפשריות.
+                    </p>
+                    <p data-if="NUM_RIGHT != PRETTY_NUMER">
+                       אז, הסיכוי שנקבל בדיוק  <var>NUM</var> פעמים <var>NAME</var> הוא
+                        <code>\dfrac{<var>NUM_RIGHT</var>}{<var>NUM_ALL</var>} = \dfrac{<var>PRETTY_NUMER</var>}{<var>PRETTY_DENOM</var>}</code>.
+                    </p>
+                    <p data-else>
+                        אז, הסיכוי שנקבל בדיוק  <var>NUM</var> פעמים <var>NAME</var> הוא 
+                        <code>\dfrac{<var>NUM_RIGHT</var>}{<var>NUM_ALL</var>}</code>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

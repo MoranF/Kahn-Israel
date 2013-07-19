@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-polygon interactive">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>זווית היקפית 3</title>
+	<script src="../khan-exercise.js"></script>
+	<script>
+		/**
+		 * Computes arc start and end angles that will guarantee an
+		 * "inner arc" so that the arc is always less than 180 degrees.
+		 */
+		function innerArc( start, end ) {
+			var delta = ( end - start + 360 ) % 360;
+			if ( delta >= 180 ) {
+				return {
+					start: end,
+					end: start
+				};
+			}
+			return {
+				start: start,
+				end: end
+			};
+		}
+	</script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="find-inscribed-outside">
+			<div class="vars">
+				<var id="START">randRange( 0, 360 )</var>
+				<var id="CENTRAL">randRange( 10, 80 ) * 2</var>
+				<var id="SUBTENDED_POINT">randFromArray([
+						randRange( START + CENTRAL + 5, START + 180 - 5 ),
+						randRange( START + CENTRAL + 180 + 5, START + 360 - 5 )
+						]) % 360</var>
+				<var id="RADIUS">4</var>
+
+				<var id="GIVEN">CENTRAL</var>
+				<var id="GIVEN_LABEL">"הכחולה"</var>
+				<var id="ASKED_LABEL">"הכתומה"</var>
+			</div>
+			<p class="question" dir=rtl>אם הזוית <var>GIVEN_LABEL</var> הינה <var>GIVEN</var> מעלות, כמה מעלות הזווית <var>ASKED_LABEL</var> ?</p>
+			<p dir=rtl>מדובר במקרה מיוחד בו מרכז המעגל נמצא מחוץ לזווית ההיקפית הכתומה. הזווית הכחולה נקראת זווית מרכזית.</p>
+			<div class="graphie" id="circle">
+				init({
+					range: [ [ -RADIUS - 1, RADIUS + 1 ], [ -RADIUS - 1, RADIUS + 1 ] ]
+				});
+				addMouseLayer();
+				graph.circle = new Circle( RADIUS );
+
+				style({ stroke: BLUE, fill: BLUE });
+				graph.circle.drawCenter();
+				graph.circle.drawPoint( START );
+				graph.circle.drawPoint( START + CENTRAL );
+
+				graph.circle.drawCentralAngle( START, START + CENTRAL );
+
+				style({ stroke: ORANGE, fill: ORANGE });
+				graph.circle.drawInscribedAngle( SUBTENDED_POINT, START, START + CENTRAL );
+
+				graph.circle.drawMovablePoint( SUBTENDED_POINT, START + CENTRAL, START );
+			</div>
+			<div class="solution" data-type="multiple">
+				<span class="sol"><var>CENTRAL / 2</var></span> :מעלות
+			</div>
+			<div class="hints">
+				<div>
+					<p dir=rtl>מה אנו יודעים על הזווית שנוצרה על ידי הקוטר המקווקו שמוצג למעלה?</p>
+					<div class="graphie" data-update="circle">
+						style({stroke: BLUE, "stroke-dasharray": "-"}, function() {
+							graph.circle.drawChord( SUBTENDED_POINT, SUBTENDED_POINT + 180 );
+						});
+					</div>
+				</div>
+				<div>
+					<p>מתרגילי זוויות היקפיות הקודמים, אנו יודעים את הדברים הבאים על הזווית הירוקה והזווית הורודה:</p>
+					<p><code>\color{<var>GREEN</var>}{\text{זווית ירוקה}} = \dfrac{1}{2} \cdot \color{<var>PINK</var>}{\text{זווית ורודה}}</code></p>
+					<div class="graphie" data-update="circle">
+						style({stroke: BLUE, fill: BLUE}, function() {
+							graph.circle.drawPoint( SUBTENDED_POINT + 180 );
+						});
+						style({stroke: PINK});
+						var arc = innerArc( START, ( SUBTENDED_POINT + 180 ) % 360 );
+
+						graph.central = graph.circle.drawCentralAngle( arc.start, arc.end, 0.7 );
+						style({stroke: GREEN});
+						graph.inscribed = graph.circle.drawInscribedAngle( SUBTENDED_POINT, arc.start, arc.end, 0.7 );
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>אנו יכולים לראות עוד זוג זוויות במצב המיוחד של זווית היקפית וזווית מרכזית, עם אותו הקשר בין הזווית הירוקה לזווית הורודה.</p>
+					<div class="graphie" data-update="circle">
+						graph.central.arc.animate({opacity: 0.4});
+						graph.central.radii[0].remove();
+						graph.central.radii[1].remove();
+						graph.inscribed.arc.animate({opacity: 0.4});
+						graph.inscribed.chords[0].remove();
+						graph.inscribed.chords[1].remove();
+
+						var arc = innerArc( START + CENTRAL, ( SUBTENDED_POINT + 180 ) % 360 );
+
+						style({stroke: PINK});
+						graph.central = graph.circle.drawCentralAngle( arc.start, arc.end, 0.9 );
+						style({stroke: GREEN});
+						graph.inscribed = graph.circle.drawInscribedAngle( SUBTENDED_POINT, arc.start, arc.end, 0.9 );
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>הסתכלו בתמונה, אנו יכולים לראות שהנתון הבא הוא נכון:</p>
+					<p><code> \color{<var>GREEN</var>}{\text{זווית ירוקה גדולה}}= \color{<var>GREEN</var>}{\text{זווית ירוקה קטנה}} + \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>
+					<div class="graphie" data-update="circle">
+						graph.central.arc.animate({opacity: 0.4});
+						graph.central.radii[0].remove();
+						graph.central.radii[1].remove();
+						graph.inscribed.arc.animate({opacity: 0.4});
+						graph.inscribed.chords[0].remove();
+						graph.inscribed.chords[1].remove();
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>נציב מה שאנו יודעים על הזווית הירוקה והזווית הורודה, אנו מקבלים את הנתונים הבאים:</p>
+					<p><code>\dfrac{1}{2} \cdot \color{<var>PINK</var>}{\text{זווית ורודה קטנה}} + \color{<var>ORANGE</var>}{\text{זווית כתומה}} = \dfrac{1}{2} \cdot \color{<var>PINK</var>}{\text{זווית ורודה גדולה}}</code></p>
+				</div>
+				<p><code> (\color{<var>ORANGE</var>}{\text{זווית כתומה}} = \dfrac{1}{2}( \color{<var>PINK</var>}{\text{זווית ורודה גדולה}} - \color{<var>PINK</var>}{\text{זווית ורודה קטנה}}</code></p>
+				<div>
+					<p>אנו יכולים לראות מהתמונה שהנתון הבא גם הוא נכון:</p>
+					<p><code>\color{<var>PINK</var>}{\text{זווית ורודה גדולה}} =\color{<var>PINK</var>}{\text{זווית ורודה קטנה}} + \color{<var>BLUE</var>}{\text{זווית כחולה}} </code></p>
+					<p><code>\color{<var>BLUE</var>}{\text{זווית כחולה}} = \color{<var>PINK</var>}{\text{זווית ורודה גדולה}} - \color{<var>PINK</var>}{\text{זווית ורודה קטנה}}</code></p>
+				</div>
+				<div>
+					<p>שילוב של מה שאנו יודעים על הזווית הכחולה והזווית הכתומה:</p>
+					<p><code>\color{<var>ORANGE</var>}{\text{זווית כתומה}} = \dfrac{1}{2} \cdot \color{<var>BLUE</var>}{\text{זווית כחולה}}</code></p>
+				</div>
+				<p><code>\dfrac{1}{2} \cdot \color{<var>BLUE</var>}{<var>CENTRAL</var>^{\circ}} = \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>
+				<p><code>\color{<var>ORANGE</var>}{<var>CENTRAL / 2</var>^{\circ}} = \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>
+			</div>
+		</div>
+		<div id="find-central" data-type="find-inscribed-outside">
+			<div class="vars">
+				<var id="GIVEN">CENTRAL / 2</var>
+				<var id="GIVEN_LABEL">"הכתומה"</var>
+				<var id="ASKED_LABEL">"הכחולה"</var>
+			</div>
+			<div class="solution" data-type="multiple">
+				<span class="sol"><var>CENTRAL</var></span> :מעלות
+			</div>
+			<div class="hints">
+				<div>
+					<p dir=rtl>מה אנו יודעים על הזווית שנוצרה על ידי הקוטר המקווקו שמוצג למעלה?</p>
+					<div class="graphie" data-update="circle">
+						style({stroke: BLUE, "stroke-dasharray": "-"}, function() {
+							graph.circle.drawChord( SUBTENDED_POINT, SUBTENDED_POINT + 180 );
+						});
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>מתרגילי זוויות היקפיות הקודמים, אנו יודעים את הדברים הבאים על הזווית הירוקה והזווית הורודה:</p>
+					<p><code>\color{<var>PINK</var>}{\text{זווית ורודה}} = 2 \cdot \color{<var>GREEN</var>}{\text{זווית ירוקה}}</code></p>
+					<div class="graphie" data-update="circle">
+						style({stroke: BLUE, fill: BLUE}, function() {
+							graph.circle.drawPoint( SUBTENDED_POINT + 180 );
+						});
+						style({stroke: PINK});
+
+						var arc = innerArc( START, ( SUBTENDED_POINT + 180 ) % 360 );
+
+						graph.central = graph.circle.drawCentralAngle( arc.start, arc.end, 0.7 );
+						style({stroke: GREEN});
+						graph.inscribed = graph.circle.drawInscribedAngle( SUBTENDED_POINT, arc.start, arc.end, 0.7 );
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>אנו יכולים לראות עוד זוג זוויות במצב המיוחד של זווית היקפית וזווית מרכזית, עם אותו הקשר בין הזווית הירוקה לזווית הורודה.</p>
+					<div class="graphie" data-update="circle">
+						graph.central.arc.animate({opacity: 0.4});
+						graph.central.radii[0].remove();
+						graph.central.radii[1].remove();
+						graph.inscribed.arc.animate({opacity: 0.4});
+						graph.inscribed.chords[0].remove();
+						graph.inscribed.chords[1].remove();
+
+						var arc = innerArc( START + CENTRAL, ( SUBTENDED_POINT + 180 ) % 360 );
+
+						style({stroke: PINK});
+						graph.central = graph.circle.drawCentralAngle( arc.start, arc.end, 0.9 );
+						style({stroke: GREEN});
+						graph.inscribed = graph.circle.drawInscribedAngle( SUBTENDED_POINT, arc.start, arc.end, 0.9 );
+					</div>
+				</div>
+				<div>
+					<p>הסתכלו בתמונה, אנו יכולים לראות שהנתון הבא הוא נכון:</p>
+					<p><code>\color{<var>PINK</var>}{\text{זווית ורודה גדולה}} = \color{<var>PINK</var>}{\text{זווית ורודה קטנה}} + \color{<var>BLUE</var>}{\text{זווית כחולה}} </code></p>
+					<div class="graphie" data-update="circle">
+						graph.central.arc.animate({opacity: 0.4});
+						graph.central.radii[0].remove();
+						graph.central.radii[1].remove();
+						graph.inscribed.arc.animate({opacity: 0.4});
+						graph.inscribed.chords[0].remove();
+						graph.inscribed.chords[1].remove();
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>נציב מה שאנו יודעים על הזווית הירוקה והזווית הורודה, אנו מקבלים את הנתונים הבאים:</p>
+					<p><code>2 \cdot \color{<var>GREEN</var>}{\text{זווית ירוקה קטנה}} + \color{<var>BLUE</var>}{\text{זווית כחולה}} = 2 \cdot \color{<var>GREEN</var>}{\text{זווית ירוקה גדולה}}</code></p>
+				</div>
+				<p><code>(\color{<var>BLUE</var>}{\text{זווית כחולה}} = 2( \color{<var>GREEN</var>}{\text{זווית ירוקה גדולה}} - \color{<var>GREEN</var>}{\text{זווית ירוקה קטנה}}</code></p>
+				<div>
+					<p>אנו יכולים לראות מהתמונה שהנתון הבא גם הוא נכון:</p>
+					<p><code>\color{<var>GREEN</var>}{\text{זווית ירוקה גדולה}} = \color{<var>GREEN</var>}{\text{זווית ירוקה קטנה}} + \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>
+					<p><code>\color{<var>ORANGE</var>}{\text{זווית כתומה}} = \color{<var>GREEN</var>}{\text{זווית ירוקה גדולה}} - \color{<var>GREEN</var>}{\text{זווית ירוקה קטנה}}</code></p>
+				</div>
+				<div>
+					<p dir=rtl>שילוב של מה שאנו יודעים על הזווית הכחולה והזווית הכתומה:</p>
+					<p><code>\color{<var>BLUE</var>}{\text{זווית כחולה}} = 2 \cdot \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>
+				</div>
+				<p><code>\color{<var>BLUE</var>}{\text{זווית כחולה}} = 2 \cdot \color{<var>ORANGE</var>}{<var>CENTRAL / 2</var>^{\circ}}</code></p>
+				<p><code>\color{<var>BLUE</var>}{<var>CENTRAL</var>^{\circ}} = \color{<var>BLUE</var>}{\text{זווית כחולה}}</code></p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

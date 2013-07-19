@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html data-require="math math-format graphie graphie-helpers">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>אי-שיוויונים בצעד אחד</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<!--
+		Solving one-step inequalities with positive and negative coefficients.
+	-->
+	<div class="exercise">
+		<div class="problems">
+			<div>
+				<div class="vars">
+					<var id="NUM, DEN" data-ensure="NUM > 2 || NUM < -2">reduce( randRange( -20, 20 ), rand( 3 ) &gt; 0 ? 1 : randRange( 2, 20 ) )</var>
+					<var id="COEF">fractionReduce( NUM, DEN )</var>
+					<var id="ONE_OVER_COEF">fractionReduce( DEN, NUM )</var>
+					<var id="RIGHT_INT">randRangeNonZero( -20, 20 )</var>
+					<var id="COMP">randFromArray([ "&lt;", "&gt;", "&le;", "&ge;" ])</var>
+					<var id="COMP_SOLUTION">(function() {
+						if ( NUM &gt; 0 ) {
+							return COMP;
+						}
+
+						switch ( COMP ) {
+							case "&lt;":
+								return "&gt;";
+							case "&gt;":
+								return "&lt;";
+							case "&le;":
+								return "&ge;";
+							case "&ge;":
+								return "&le;";
+						}
+					})()</var>
+					<var id="SOLUTION_NOT_REDUCED">fraction( RIGHT_INT * DEN, NUM )</var>
+					<var id="SOLUTION">fractionReduce( RIGHT_INT * DEN, NUM )</var>
+					<var id="SOLUTION_REAL">RIGHT_INT * DEN / NUM</var>
+				</div>
+
+				<p class="question">מיצאו את  <code>x</code>:</p>
+				<div><code><var>COEF</var>x <var>COMP</var> <var>RIGHT_INT</var></code></div>
+
+				<p class="solution" data-type="multiple">
+					<code>x</code>
+					<span class="sol" data-type="list" data-choices="[ '', '&lt;', '&gt;', '&le;', '&ge;' ]">
+						<var>COMP_SOLUTION</var>
+					</span>
+					<span class="sol"><var>SOLUTION_REAL</var></span>
+					<span class="example">מספר שלם, כמו <code>6</code></span>
+					<span class="example">a <em>שבר פשוט</em> , כמו <code>1/2</code> או <code>6/10</code></span>
+					<span class="example">an <em>שבר מדומה</em> , כמו <code>10/7</code> או <code>14/8</code></span>
+					<span class="example">מספר מעובר, כמו <code>1\ 3/4</code></span>
+					<span class="example">an <em>שבר עשרוני מדויק</em> , כמו <code>0.75</code></span>
+				</p>
+
+				<div class="hints">
+					<p data-if ="NUM < 0">כאשר מכפילים או מחלקים את שני צידי אי השוויון במספר שלילי עלינו להפוך את כיוון אי השוויון. לכן  <code><var>COMP</var></code> הופך ל- <code><var>COMP_SOLUTION</var></code>.</p>
+					<div>
+						<p>נכפיל את שני צידי אי השוויון ב- <code><var>ONE_OVER_COEF</var></code>.</p>
+						<p><code>(<var>ONE_OVER_COEF</var>) \cdot (<var>COEF</var>x) <var>COMP_SOLUTION</var> (<var>ONE_OVER_COEF</var>) \cdot (<var>RIGHT_INT</var>)</code></p>
+					</div>
+					<div>
+						<p>נפשט את הביטוי שקיבלנו:</p>
+						<p><code>x <var>COMP_SOLUTION</var> <var>SOLUTION_NOT_REDUCED</var></code></p>
+					</div>
+					<div data-if="SOLUTION_NOT_REDUCED !== SOLUTION">
+						<p>נצמצם:</p>
+						<p><code>x <var>COMP_SOLUTION</var> <var>SOLUTION</var></code></p>
+					</div>
+					<div>
+						<p>אנו רואים שכל הערכים שמקיימים <code>x <var>COMP_SOLUTION</var> <var>SOLUTION</var></code> מקיימים את אי השוויון המקורי.</p>
+						<div class="graphie">
+							init({
+								range: [ [-1, 11], [-1, 1] ],
+							});
+							var start = SOLUTION_REAL - 4.5;
+							var end = SOLUTION_REAL + 4.5;
+
+							numberLine( start, end );
+
+							var offset;
+							var fill;
+							var startOffset = 0.12;
+							switch ( COMP_SOLUTION ) {
+								case "&gt;":
+									fill = null;
+									offset = 5;
+									break;
+								case "&ge;":
+									fill = "#6495ED";
+									offset = 5;
+									break;
+								case "&lt;":
+									fill = null;
+									offset = -5;
+									startOffset *= -1;
+									break;
+								case "&le;":
+									fill = "#6495ED";
+									offset = -5;
+									startOffset *= -1;
+									break;
+							}
+
+							var x = SOLUTION_REAL - start;
+
+							style({ stroke: "#FFA500", fill: "#FFA500", strokeWidth: 3.5, arrows: "-&gt;" });
+							path([ [ x + startOffset, 0 ], [ x + offset, 0 ]]);
+							style({ stroke: "#6495ED", strokeWidth: 2.0, fill: fill });
+							circle([ x, 0 ], 0.15 );
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

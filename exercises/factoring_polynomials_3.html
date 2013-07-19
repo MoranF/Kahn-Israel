@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html data-require="math graphie math-model simplify">
+<head>
+    <meta charset="UTF-8" />
+    <title>פירוק פולינום לגורמים 3</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div>
+                <div class="vars">
+                    <var id="a">randRange(2, 9)</var>
+                    <var id="b_sign">randFromArray([-1, 1])</var>
+                    <var id="b_abs">randFromArrayExclude([3, 5, 7, 9], [a])</var>
+                    <var id="b">b_sign*b_abs</var>
+                    <var id="A">randFromArrayExclude(getFactors(a * b_abs), [1])</var>
+                    <var id="B">a + b</var>
+                    <var id="C">a * b / A</var>
+                    <var id="F1">getGCD(A, a)</var>
+                    <var id="F2">b_sign * getGCD(b_abs, C)</var>
+                    <var id="PROBLEM">simplify(polynomial([A, B, C], "x"), simplifyOptions.basic)</var>
+                    <!-- use parse so that the ast matches the parsed user input -->
+                    <var id="SOLUTION">parse("(" + F1 + "x+" + F2 + ")(" + A / F1 + "x+" + a / F1 + ")")</var>
+                    <var id="HINT1">parse(F1 + "x(" + A / F1 + "x+" + a / F1 + ")+" + F2 + "(" + b / F2 + "x+" + C / F2 + ")}")</var>
+                    <var id="GROUP1">[parse("#{ab} &=& #{A}*#{C} &=& " + (A*C), [GREEN, BLUE, ORANGE]),
+                        parse("#{a}+#{b} &=& #{B} &=& #{" + B, [GREEN, GREEN, PINK])]</var>
+
+                </div>
+                <div>
+                    <p class="question">
+                        פרקו לגורמים את הביטוי הבא:
+                    </p>
+                    <p>
+                        <code><var>format(PROBLEM, "large")</var></code>
+                    </p>
+                </div>
+                <div class="solution" data-type="custom">
+                    <div class="instruction">
+                        <input name="response" type="text">
+                    </div>
+                    <div class="guess">jQuery("div.instruction input").val()</div>
+                    <div class="validator-function">
+                        return isEqual(parse(guess), SOLUTION);
+                    </div>
+                    <div class="show-guess">
+                    </div>
+                    <div class="show-guess-solutionarea">
+                        jQuery("div.instruction input").val(guess);
+                    </div>
+                    <div class="example">a factored expression, like <b>(x+1)(x+2)</b></div>
+                </div>
+                <div class="hints">
+                    <div>
+                        <p>הביטוי הוא מהצורה 
+                        <code><var>parseFormat("#{A}x^2+#{B}x+#{C}}", [BLUE, PINK, ORANGE])</var></code>.
+                        אפשר לפרק את הטרינום הזה לגרומים על ידי קיבוץ איברים. במקרה זה,
+                        <code>\blue{A}=\blue{<var>A</var>}</code>, <code>\pink{B}=\pink{<var>B</var>}</code>,
+                        <code>\orange{C}=\orange{<var>C</var>}</code>
+                        </p>
+                    </div>
+                    <div>
+                        <p>על מנת לעשות זאת, הצעד הראשון הוא למצוא את הערכים של 
+                        <code>\green{a}</code> ושל
+                        <code>\green{b}</code>, כך ש-</p>
+                        <p><code><var>parseFormat("#{ab} = #{A}*#{C}", [GREEN, BLUE, ORANGE])</var></code></p>
+                        <p><code><var>parseFormat("#{a}+#{b} = #{B}", [GREEN, GREEN, PINK])</var></code></p>
+                        <p>השלב הבא הוא לכתוב את 
+                        ההביטוי בצורה  <code><var>parseFormat("#{A}x^2 + #{a}x + #{b}x + #{C}", [BLUE, GREEN, GREEN, ORANGE])</var></code> or 
+                        <code><var>parseFormat("(#{A}x^2 + #{a}x) + (#{b}x + #{C})", [BLUE, GREEN, GREEN, ORANGE])</var></code>, ולפרק כל איבר לגורמים על מנת
+                        למצוא את הגורם המשותף.</p>
+                    </div>
+                    <div>
+                        <p>בשביל השלב הראשון עליכם למצוא את  
+                        <code>\green{a}</code> ואת <code>\green{b}</code> כך ש-</p>
+                        <p><code><var>formatGroup(GROUP1, [0,1])</var></code></p>
+                    </div>
+                    <div>
+                        <p>ניתן להתשמש בערכים אלו כך:</p>
+                        <p><code><var>parseFormat("#{a}=#{" + a + "}", [GREEN, GREEN])</var></code><br>
+                        <code><var>parseFormat("#{b}=#{" + b + "}", [GREEN, GREEN])</var></code></p>
+                    </div>
+                    <div>
+                        <p>בשביל השלב השני, כתבו מחדש את הביטוי בצורה:</p>
+                        <p><code><var>parseFormat("#{" + A + "}x^2+#{" + a + "}x+#{" + b + "}x+#{" + C + "}}", [BLUE, GREEN, GREEN, ORANGE])</var></code></p>
+                        <p>או</p><p><code><var>parseFormat("(#{" + A + "}x^2+#{" + a + "}x)+(#{" + b + "}x+#{" + C + "})", [BLUE, GREEN, GREEN, ORANGE])</var></code></p>
+                        <p>השלב הבא הוא לפרק לגורמים את שני האיברים בביטוי שלמעלה:</p>
+                    </div>
+                    <div>
+                        <p>
+                            <code><var>format(HINT1, {del1factors:true, evalBasicNumOps:true})</var></code>
+                        </p>
+                    </div>
+                    <div class="final_answer">
+                        <p>
+                            נוציא גורם משותף ונקבל את התשובה:
+                        </p>
+                        <p>
+                            <code><var>format(SOLUTION, simplifyOptions.basic, false, "large")</var></code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

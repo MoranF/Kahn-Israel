@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html data-require="math math-format graphie">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>פירוק פולינום לגורמים על ידי קיבוץ איברים 1</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="problems">
+        <div>
+            <div class="vars" data-ensure="B !== 0 && getGCD(A, E) === 1">
+                <var id="A" data-ensure="abs(A) !== 1">randRangeNonZero(-9, 9)</var>
+                <var id="E">randRangeNonZero(-9, 9)</var>
+                <var id="F">randRangeNonZero(-5, 5)</var>
+                <var id="B">E + A * F</var>
+                <var id="C">E * F</var>
+            </div>
+
+            <p class="problem">פרקו את הביטוי הבא לגורמים:</p>
+            <p class="question">
+                <span id="question-a"><code><var>A</var></code></span><code>x^2<span data-if="B > 0">+</span></code>
+                <span id="question-b"><code><var>B</var></code></span><code>x<span data-if="C > 0">+</span></code>
+                <span id="question-c"><code><var>C</var></code></span>
+            </p>
+
+            <div class="solution" data-type="set">
+                <div class="set-sol" data-type="regex">^\s*\(\s*<var>A &lt; 0 ? "[-\u2212]" : ""</var><var>abs(A)</var>[xX]\s*<var>E &lt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(E)</var>\s*\)\s*\(\s*[xX]\s*<var>F &lt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(F)</var>\s*\)\s*$</div>
+                <div class="set-sol" data-type="regex">^\s*\(\s*[xX]\s*<var>F &lt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(F)</var>\s*\)\s*\(\s*<var>A &lt; 0 ? "[-\u2212]" : ""</var><var>abs(A)</var>[xX]\s*<var>E &lt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(E)</var>\s*\)\s*$</div>
+                <div class="set-sol" data-type="regex">^\s*\(\s*<var>A &gt; 0 ? "[-\u2212]" : ""</var><var>abs(A)</var>[xX]\s*<var>E &gt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(E)</var>\s*\)\s*\(\s*[-\u2212][xX]\s*<var>F &gt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(F)</var>\s*\)\s*$</div>
+                <div class="set-sol" data-type="regex">^\s*\(\s*[-\u2212][xX]\s*<var>F &gt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(F)</var>\s*\)\s*\(\s*<var>A &gt; 0 ? "[-\u2212]" : ""</var><var>abs(A)</var>[xX]\s*<var>E &gt; 0 ? "[-\u2212]" : "\\+"</var>\s*<var>abs(E)</var>\s*\)\s*$</div>
+                <div class="input-format"><span class="entry"></span></div>
+                <div class="example">a factored expression, like <b>(2x+1)(x+2)</b></div>
+            </div>
+
+            <div class="hints">
+                <div>
+                    <p>
+                        הביטוי הוא מהצורה <code>\blue{A}x^2 + \green{B}x + \pink{C}</code>.
+                        ניתן לפרק אותו לגורמים על ידי קיבוץ.
+                    </p>
+                    <div class="graphie" style="outline: none;">
+                        $("#question-a").addClass("hint_blue");
+                        $("#question-b").addClass("hint_green");
+                        $("#question-c").addClass("hint_pink");
+                    </div>
+                </div>
+
+                <div>
+                    <p>
+                        תחילה נמצא את הערכים של  <code class="hint_purple">a</code> ושל
+                        <code class="hint_purple">b</code>, כך ש:
+                    </p>
+                    <code>
+                        \qquad \begin{eqnarray}
+                            \purple{ab} &amp;=&amp; \blue{A}\pink{C} \\
+                            \purple{a} + \purple{b} &amp;=&amp; \green{B}
+                        \end{eqnarray}
+                    </code>
+                </div>
+                <div>
+                    <p>במקרה זה:</p>
+                    <code>
+                        \qquad \begin{eqnarray}
+                            \purple{ab} &amp;=&amp;
+                                \blue{(<var>A</var>)}\pink{(<var>C</var>)} &amp;=&amp; <var>A * C</var> \\
+                            \purple{a} + \purple{b} &amp;=&amp; &amp;=&amp;
+                                \green{<var>B</var>}
+                        \end{eqnarray}
+                    </code>
+                </div>
+                <p>
+                    על מנת למצוא את  <code>\purple{a}</code> ואת <code>\purple{b}</code>, רשמו את הגורמים של 
+                    <code><var>A * C</var></code> וחברו אותם יחד.
+                    <span data-if="A * C < 0">
+                        זכרו, מכיוון ש- <code><var>A * C</var></code> שלילי, אחד הגורמים חייב להיות
+                        שלילי.
+                    </span>
+                    הגורמים שסכומם הוא   <code>\green{<var>B</var>}</code> הם ה-
+                    <code>\purple{a}</code> וה- <code>\purple{b}</code> שלנו.
+                </p>
+                <div>
+                    <p>
+                        כאשר  <code>\purple{a}</code> הוא <code>\purple{<var>E</var>}</code> ו-
+                        <code>\purple{b}</code> הוא <code>\purple{<var>A * F</var>}</code>:
+                    </p>
+                    <code>
+                        \qquad \begin{eqnarray}
+                            \purple{ab} &amp;=&amp; (\purple{<var>E</var>})(\purple{<var>A * F</var>})
+                                &amp;=&amp; <var>E * A * F</var> \\
+                            \purple{a} + \purple{b} &amp;=&amp; \purple{<var>E</var>} + \purple{<var>A * F</var>}
+                                &amp;=&amp; <var>E + A * F</var>
+                        \end{eqnarray}
+                    </code>
+                </div>
+                <div>
+                    <p>
+                        כעת, נכתוב מחדש את הביטוי בצרוה  <code>\blue{A}x^2 + \purple{a}x + \purple{b}x + \pink{C}</code>:
+                    </p>
+                    <code>
+                        \qquad \blue{<var>A</var>}x^2
+                        <span data-if="E > 0">+</span>\purple{<var>E</var>}x
+                        <span data-if="A * F > 0">+</span>\purple{<var>A * F</var>}x
+                        <span data-if="C > 0">+</span>\pink{<var>C</var>}
+                    </code>
+                </div>
+                <div>
+                    <p>
+                        קבצו את האיברים כך שיהיה גורם משותף בכל קבוצה:
+                    </p>
+                    <code>
+                        \qquad (\blue{<var>A</var>}x^2 <span data-if="E > 0">+</span>\purple{<var>E</var>}x)
+                        + (\purple{<var>A * F</var>}x <span data-if="C > 0">+</span>\pink{<var>C</var>})
+                    </code>
+                </div>
+                <div>
+                    <p>
+                        הוציאו את הגורם המשותף מחוץ לסוגריים:
+                    </p>
+                    <code>
+                        \qquad x(<var>A</var>x + <var>E</var>) + <var>F</var>(<var>A</var>x + <var>E</var>)
+                    </code>
+                </div>
+                <p>
+                    שימו לב כיצד  <code>(<var>A</var>x + <var>E</var>)</code> הפך להיות גורם משותף.
+                    הוציאו גורם משותף זה על מנת למצוא את התשובה הסופית.
+                </p>
+                <p><code>(<var>A</var>x + <var>E</var>)(x + <var>F</var>)</code></p>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

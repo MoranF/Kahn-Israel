@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות אחוזים מילוליות 2</title>
+	<script src="../khan-exercise.js"></script>
+    <style>
+        #workarea { direction: rtl; }
+    </style>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="yearly-percentages-2">
+			<div class="vars">
+				<var id="YEAR_PERCENT_MORE">randRange( 10, 150 )</var>
+				<var id="YEAR_THIS">randRange( 50, 999 )</var>
+				<var id="YEAR_LAST">round(YEAR_THIS * 10000 / (100 + YEAR_PERCENT_MORE)) / 100</var>
+			</div>
+			<p class="question">
+				ל<var>person(1)</var> יש היום כמות כסף הגדולה ב-<var>YEAR_PERCENT_MORE</var>% מהכמות שהיתה <var>tohim(1)</var> באותו התאריך בשנה שעברה.
+         אם ל<var>person(1)</var> יש היום <var>YEAR_THIS</var> שקלים, כמה כסף <var>he(1)</var> <var>genderize(1,"הרוויח","הרוויחה")</var> במהלך השנה האחרונה? (עגלו לאגורה הקרובה, שהיא 1/100 משקל)</p>
+			<p class="solution" data-forms="dollar" data-max-error="0.01"><var>round((YEAR_THIS - YEAR_LAST) * 100) / 100</var></p>
+			<div class="hints">
+				<p>נסמן ב-<code>x</code> את כמות הכסף שהיתה <var>tohim(1)</var> בשנה שעברה.</p>
+				<p><code>x + <var>YEAR_PERCENT_MORE / 100</var>x = ₪<var>YEAR_THIS</var></code></p>
+				<p><code><var>(100 + YEAR_PERCENT_MORE) / 100</var>x = ₪<var>YEAR_THIS</var></code></p>
+				<p><code>x = \dfrac{₪<var>YEAR_THIS</var>}{<var>(100 + YEAR_PERCENT_MORE) / 100</var>}</code></p>
+				<p><code>x = ₪<var>YEAR_LAST</var></code> (בשלב זה עיגלנו לאגורה הקרובה ביותר)</p>
+				<p>לכן, היו <var>tohim(1)</var> <var>YEAR_LAST</var> שקלים בשנה שעברה, אבל אנו מעוניינים לדעת כמה כסף <var>genderize(1,"הרוויח","הרוויחה")</var> במהלך השנה שחלפה!</b></p>
+				<p><code>\text{כמות הכסף שהיתה שנה שעברה} - \text{כמות הכסף היום} = \text{רווח במהלך השנה שחלפה}</code></p>
+				<p><code>\qquad =₪<var>YEAR_THIS</var>-₪<var>YEAR_LAST</var></code></p>
+				<p><code>\qquad \approx ₪<var>round((YEAR_THIS - YEAR_LAST) * 100) / 100</var></code>
+				<p>לכן, התשובה היא <var>round((YEAR_THIS - YEAR_LAST) * 100) / 100</var> שקלים.</p>
+			</div>
+		</div>
+		<div id="store-percentages">
+			<div class="vars">
+				<var id="PERCENT_OFF">randRange( 10, 25 )</var>
+				<var id="DOLLARS">randRange( 5, 100 )</var>
+				<var id="HIGHEST_PRICE">round(DOLLARS * 100 * 100 / (100 - PERCENT_OFF)) / 100 </var>
+			</div>
+			<div class="problem">
+				<p class="question"> ל<var>person(1)</var> יש <var>DOLLARS</var> שקלים שמיועדים לקניות בחנות.
+         בחנות יש כרגע מבצע בו המחירים שיש לשלם בקופה נמוכים ב-<var>PERCENT_OFF</var>% מהמחירים שמופיעים על המדף. מהו מחיר המדף של המוצר היקר ביותר ש<var>person(1)</var> <var>genderize(1,"יכול","יכולה")</var> לקנות?
+          (עגלו לאגורה הקרובה, שהיא 1/100 משקל)</p>
+				<p class="solution" data-forms="dollar"><var>HIGHEST_PRICE</var></p>
+			</div>
+			<div class="hints">
+				<p>נסמן ב-<code>x</code> את מחיר המדף של המוצר היקר ביותר ש<var>person(1)</var> <var>genderize(1,"יכול","יכולה")</var> לקנות.</p>
+				<p><code>x-<var>(PERCENT_OFF/100)</var>x = \text{כמות הכסף שיש ל<var>person( 1 )</var>} =\text{המחיר בקופה}</code></p>
+				<p><code><var>((100-PERCENT_OFF)/100)</var>x = ₪<var>DOLLARS</var></code></p>
+				<p><code>x = ₪<var>HIGHEST_PRICE</var></code></p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

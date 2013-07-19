@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ביטוי יחסים כשברים </title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="vars">
+		<var id="FACTOR">randRange( 1, 5 )</var>
+		<var id="NUM">randRange( 1, 10 ) * FACTOR</var>
+		<var id="DENOM">randRange( 1, 10 ) * FACTOR</var>
+		<var id="GCD">getGCD( NUM, DENOM )</var>
+	</div>
+
+	<div class="problems">
+		<div>
+			<p class="question">ל<var>person(1)</var> יש <var>plural_heb( NUM, fruit(0), fruit_plural( 0) )</var> על כל <var>plural_heb( DENOM, fruit( 1 ), fruit_plural(1) )</var>.
+      בטא את היחס בין <var>fruit_plural( 0 )</var> ל<var>fruit_plural( 1 )</var> בתור שבר פשוט.</p>
+			<p class="solution" data-type="improper" data-ratio="true"><var>NUM / DENOM</var></p>
+		</div>
+	</div>
+
+	<div class="hints">
+		<p>יחסים ניתן לבטא במספר דרכים שונות שיש להן אותה משמעות.</p>
+		<div>
+			<p>ניתן לבטא יחס כשני מספרים וביניהם נקודתיים:</p>
+			<p><code><var>NUM</var>:<var>DENOM</var></code></p>
+		</div>
+		<div>
+			<p>כמו כן, ניתן לבטא יחס במילים כך:</p>
+			<p><code><var>NUM</var></code> ל-<code><var>DENOM</var></code></p>
+		</div>
+		<div>
+			<p>לבסוף, ניתן לבטא יחס כשבר פשוט.</p>
+			<p><code>\dfrac{<var>NUM</var>}{<var>DENOM</var>}<span data-if="GCD !== 1">=<var>fractionReduce( NUM, DENOM )</var></span></code></p>
+		</div>
+		<p>כלומר, <code><var>fractionReduce( NUM, DENOM )</var></code> הוא היחס בין <var>fruit_plural( 0 )</var> ל<var>fruit_plural( 1 )</var> כאשר הוא מבוטא כשבר פשוט</p>
+	</div>
+	</div>
+</body>
+</html>

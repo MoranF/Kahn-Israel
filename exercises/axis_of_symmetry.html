@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html data-require="math angles graphie graphie-geometry graphie-helpers">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ציר הסימטריה</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+			<div class="vars">
+				<var id="SYM">randRange( 0, 1 )</var>
+				<var id="SIDES">randRange( 3, 8 )</var>
+				<var id="SIDE">randRange( 0, SIDES - 1 )</var>
+				<var id="ANSWER">SYM ? "כן" : "לא"</var>
+			</div>
+
+	<div class="problems">
+		<div>
+			<p class="question">האם הקו הכחול מייצג ציר סימטריה?</p>
+			<div class="graphie" id="main">
+				init({
+					 range: [ [ -5, 5 ], [ -5, 5 ] ]
+				});
+				graph.polygon = new RegularPolygon( [ 0, 0 ] , SIDES , 3 );
+
+				if ( SYM ){
+					graph.split = graph.polygon.drawLineOfSymmetry( SIDE );
+				} else {
+					graph.split = graph.polygon.drawFakeLineOfSymmetry( SIDE );
+				}
+			</div>
+			<div class="solution"><var>ANSWER</var></div>
+			<ul class="choices" data-category="true">
+				<li>כן</li>
+				<li>לא</li>
+			</ul>
+			<div class="hints">
+				<p>האם הקו הכחול מפצל את הצורה לשני חלקים אשר נראים כמו השתקפות אחת של השני?</p>
+				<div>
+					<p>הקו הכתום הינו חלק  אחד מהחלקים הנוצרו על ידי הקו הכחול.</p>
+					<div class="graphie" data-update="main">
+						graph.half = graph.polygon.splitPath( graph.split ).graphiePath;
+					</div>
+				</div>
+				<p>אם הקו הכחול היה מראה, איך השתקפות הקו הכתום תהיה?</p>
+				<div>
+					<p>הקו הורוד הינו ההשתקפות של הקו הכתום.</p>
+					<div class="graphie" data-update="main">
+						var temp = [];
+						var i = 0;
+						for( i = 0; i != graph.half.length; i++ ){
+							temp.push( reflectPoint( graph.split.graphiePath, graph.half[ i ] ) );
+						}
+						path( temp, { "stroke-width": 5, stroke: KhanUtil.PINK } )
+					</div>
+				</div>
+				<p data-if="SYM">הקו הכחול מפצל את הצורה לשני חלקים שווים, לכן זה הוא ציר הסימטריה.</p>
+				<p data-else>הקו הכחול לא חילק את הצורה לשני חלקים שווים, לכן זה הוא אינו ציר הסימטריה.</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

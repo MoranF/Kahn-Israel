@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html data-require="word-problems interactive graphie">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ביטוי עם תנאי 2</title>
+    <script src="../khan-exercise.js"></script>
+    <script>
+        var addColor = function(color, element) {
+            if (color === 1) {
+                element.addClass("set-blue");
+            } else if (color === 2) {
+                element.addClass("set-green");
+            }
+        }
+
+        var makeDisplay = function(str) {
+            var color = 0;
+            if ($.isArray(str)) {
+                color = str[1];
+                str = str[0];
+            }
+
+            var s = str.split(" ");
+            var disp = $("<div>");
+            if (s.length > 2) {
+                // add a linebreak after the middle word
+                s.splice(((s.length + 1) / 2) | 0, 0, "<br>");
+            } else {
+                // otherwise, increase the line height
+                disp.addClass("single-line");
+            }
+            addColor(color, disp);
+            disp.html(s.join(" "));
+
+            var sort = $("<span>").addClass("sort-key")
+                                  .html(str);
+
+            return $("<div>").append(disp.get(0)).append(sort.get(0)).html();
+        }
+
+        var makeStatement = function(str) {
+            if ($.isArray(str)) {
+                var color = str[1];
+                str = str[0];
+
+                var disp = $("<span>").html(str);
+
+                addColor(color, disp);
+
+                return $("<div>").append(disp.get(0)).html();
+            } else {
+                return str;
+            }
+        }
+
+        var makeSoln = function(str) {
+            if (typeof(str) === "string") {
+                return str;
+            } else {
+                return str[0];
+            }
+        }
+
+    </script>
+    <style type="text/css">
+        .sortable > ul > li {
+            height: 50px;
+            width: auto;
+            max-width: 105px;
+            padding: 0 10px;
+            font-size: 11pt;
+            display: table-cell;
+            vertical-align: middle;
+            line-height: 24px;
+        }
+
+        .sort-key {
+            display: none;
+        }
+
+        .single-line {
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="exercise">
+    <div class="vars">
+        <var id="SORTER">createSorter()</var>
+    </div>
+    <div class="problem">
+        <p>כתוב ביטוי תנאי לפי צורת " אם -אז".</p>
+        <p><var>capitalize(STATEMENT)</var></p>
+    </div>
+    <div class="question">
+        <ul id="sortable">
+            <li data-each="shuffle(SOLUTION) as SOL">
+                <var>makeDisplay(SOL)</var>
+            </li>
+        </ul>
+        <p><var>SORTER.init("sortable")</var></p>
+    </div>
+    <div class="solution" data-type="custom">
+        <div class="instruction">
+           גרור את חלקי המשפט כדי ליצור ביטוי מתאים לפי צורת "אם-אז", מימין לשמאל
+        </div>
+        <div class="guess">SORTER.getContent()</div>
+        <div class="validator-function">
+            return guess.join(" ") === _.map(SOLUTION, makeSoln).join(" ");
+        </div>
+        <div class="show-guess">
+            SORTER.setContent(guess);
+        </div>
+    </div>
+    <div class="problems">
+        <div id="adjective">
+            <div class="vars">
+                <var id="QUESTIONS">
+                    <!-- noun, adjective, conclusion, adjective-noun or noun-adjective-->
+                    [["בלון", "ישן", "לא מרחף",true,"הוא"],
+                     ["עץ", "ירוק", "אינו מת", true,"הוא"],
+                     ["ילד", "קטן", "לא יכול לנהוג", true,"הוא"],
+                     ["עגבניה", "לא בשלה", "אינה בריאה", true,"היא"],
+                     ["בטריה", "ישנה", "לא עובדת",true,"היא"],
+                     ["מכונית", "חדשה", "מריחה טוב", true,"היא"],
+                     ["ספר", "קרוע", "לא שימושי", false,"הוא"],
+                     ["מצולע", "ריבוע", "מלבן", false,"הוא"],
+                     ["מצולע", "מלבן", "מקבילית", false,"הוא"],
+                     ["מלבן", "ריבוע", "מעויין", false,"הוא"],
+                     ["מלבן", "מעויין", "ריבוע", false,"הוא"]]
+                </var>
+                <var id="NOUN,ADJECTIVE,CONCLUSION,ADJ_NOUN,MALE">randFromArray(QUESTIONS)</var>
+
+                <var id="SOLUTION">["אם", ["ה"+NOUN, 1], [ADJECTIVE, 1], "אז", [MALE, 2], [CONCLUSION, 2]]</var>
+
+                <var id="STATEMENT_LIST">
+                    ADJ_NOUN ? [[NOUN, 1], " ",[ADJECTIVE, 1], " ", [CONCLUSION, 2], "."] :
+                               [[NOUN, 1], " שהוא ",[ADJECTIVE, 1] , " הוא ", [CONCLUSION, 2], "."]
+                </var>
+                <var id="STATEMENT">_.map(STATEMENT_LIST, makeStatement).join("")</var>
+            </div>
+            <div class="hints">
+                <p>  במשפט "אם אז", ישנו את חלק הניתן ואת חלק המסקנה. המשפט במקרה זה מורכב מ: "אם ה<span class="hint_blue"><strong>חלק ניתן</strong></span>, אז <span class="hint_green"><strong>חלק המסקנה</strong></span>."</p>
+                <p>המסקנה היא תמיד נכונה אם הניתן נכון. אך הניתן לא תמיד נכון אם המסקנה נכונה.</p>
+                <p>החלק הניתן עומד בפני עצמו. לפעמים הוא מתאר משהו אחר, ולפעמים  מתאר את עצמו.</p>
+                <div>
+                    <p>במשפט הזה, החלק הניתן הוא "<span class="hint_blue"><var>ADJ_NOUN ? NOUN+" "+ADJECTIVE : NOUN+" שהוא "+ADJECTIVE</var></span>", אשר מתאר את סוג ה<var>NOUN</var>.</p>
+                    <div class="graphie">
+                        $(".set-blue").addClass("hint_blue");
+                    </div>
+                </div>
+                <p>חלק המסקנה הינו משהו שתמיד תלוי בחלק הנתון, והוא תמיד נכון אם החלק הנתון נכון.</p>
+                <div>
+                    <p>במשפט זה, חלק המסקנה הוא "<span class="hint_green"><var>CONCLUSION</var></span>", שאומר שה<var>NOUN</var> <var>CONCLUSION</var> כאשר החלק הנתון נכון.</p>
+                    <div class="graphie">
+                        $(".set-green").addClass("hint_green");
+                    </div>
+                </div>
+                <div>
+                    <p>כדי למצוא את התשובה, אנו צריכים לחבר את החלק הנתון עם חלק המסקנה כדי לקבל :"<var>_.map(SOLUTION, makeStatement).join(" ")</var>".</p>
+                    <div class="graphie">
+                        $(".set-blue").addClass("hint_blue");
+                        $(".set-green").addClass("hint_green");
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="category">
+            <div class="vars">
+                <var id="QUESTIONS">
+                    <!-- category, noun, singular, plural verb, singular, plural adjective -->
+                    [["חיה", "נמלה", "היא בעלת","שש רגליים","היא"],
+                     ["יצור", "ברנש","הינו","הולך באופן מכובד","הוא"],
+                     ["יצור", "בחור", "הינו", "הולך","הוא"],
+                     ["יצור", "ברנש", "הינו", "בחור","הוא"],
+                     ["יצור", "בחור", "הינו", "ברנש","הוא"],
+                     ["חיה", "ג'ירפה", "היא בעלת", "צוואר ארוך","היא"],
+                     ["חיה", "ג'ירפה", "היא בעלת", "ארבע רגליים","היא"],
+                     ["חיה", "חתולה", "היא בעלת", "ארבע רגליים","היא"],
+                     ["חיה", "כלבה", "היא בעלת", "ארבע רגליים","היא"]]
+                </var>
+                <var id="CATEGORY,TYPE,VERB_S,CONCLUSION_S,MALE">randFromArray(QUESTIONS)</var>
+
+                <var id="SOLUTION">["אם", ["ה"+CATEGORY, 1], [MALE, 1], [TYPE, 1], "אז", [VERB_S,2],[CONCLUSION_S, 2]]</var>
+
+                <var id="STATEMENT_LIST">[["ה" +TYPE, 1], " ", [VERB_S, 2], " ", [CONCLUSION_S, 2], "."]</var>
+                <var id="STATEMENT">_.map(STATEMENT_LIST, makeStatement).join("")</var>
+            </div>
+            <div class="hints">
+             <p>  במשפט "אם אז", ישנו את חלק הניתן ואת חלק המסקנה. המשפט במקרה זה מורכב מ: "אם ה<span class="hint_blue"><strong>חלק ניתן</strong></span>, אז <span class="hint_green"><strong>חלק המסקנה</strong></span>."</p>
+                <p>המסקנה היא תמיד נכונה אם הניתן נכון. אך הניתן לא תמיד נכון אם המסקנה נכונה.</p>
+                <p>החלק הניתן עומד בפני עצמו. לפעמים הוא מתאר משהו אחר, ולפעמים  מתאר את עצמו.</p>
+                <div>
+                    <p>במשפט הזה, החלק הניתן הוא "<span class="hint_blue"><var>TYPE</var></span>", אשר מתאר את סוג ה<var>CATEGORY</var>.</p>
+                    <div class="graphie">
+                        $(".set-blue").addClass("hint_blue");
+                    </div>
+                </div>
+                <p>חלק המסקנה הינו משהו שתמיד תלוי בחלק הנתון, והוא תמיד נכון אם החלק הנתון נכון.</p>
+                <div>
+                    <p>במשפט זה, חלק המסקנה הוא "<span class="hint_green"><var>VERB_S+" "+CONCLUSION_S</var></span>", שאומר שה<var>CATEGORY</var> <var>VERB_S+" "+CONCLUSION_S</var> כאשר החלק הנתון נכון.</p>
+                    <div class="graphie">
+                        $(".set-green").addClass("hint_green");
+                    </div>
+                </div>
+                <div>
+                    <p>כדי למצוא את התשובה, אנו צריכים לחבר את החלק הנתון עם חלק המסקנה כדי לקבל :"<var>_.map(SOLUTION, makeStatement).join(" ")</var>".</p>
+                    <div class="graphie">
+                        $(".set-blue").addClass("hint_blue");
+                        $(".set-green").addClass("hint_green");
+                    </div>
+                    
+                    
+               
+                
+               
+               
+                </div>
+            </div>
+        </div>
+        <div id="event">
+            <div class="vars">
+                <var id="QUESTIONS">
+                    <!-- event verb, event noun, conclusion verb, conclusion noun -->
+                    [["אלך", "למסיבת יום הולדת", "אוכל", "עוגה"],
+                     ["אוכל", "אורניום מעושר", "אהיה", "גיבור על"],
+                     ["ההפוך", "לגיבור על", "אוכל", "אורניום מעושר"],
+                     ["אראה", "סרט", "אוכל", "פופקורן"],
+                     ["אחמיץ", "את האוטובוס", "אסע", "עם אבא שלי"],
+                     ["הולך", "בגשם", "אקח", "איתי מטריה"],
+                     ["אענה", "לטלפון", "אומר", "שלום"],
+                     ["אוכל", "גלידה", "אתחיל", "להרגיש לא טוב"],
+                     ["אתחיל", "להרגיש לא טוב", "אוכל", "גלידה"],
+                     ["לא אדליק", "את השעון המעורר", "אקום", "מאוחר"],
+                     ["אלך", "לחדר כושר", "אעבוד", "קשה"],
+                     ["אשחק", "כדורסל", "אנסה", "לקלוע לסל"],
+                     ["אלך", "לאולימפידה", "אזכה", "במדליית זהב"],
+                     ["אשחק", "כדורגל", "אכניס", "5 גולים"],
+                     ["אסיים", "את שיעורי הבית", "אוכל לשחק", "במחשב"],
+                     ["אזכה", "במדליית זהב", "אלך", "לאליפות הבין לאומית"]]
+                </var>
+                <var id="EVENT_V,EVENT_N,CONC_V,CONC_N">randFromArray(QUESTIONS)</var>
+
+                <var id="SOLUTION">["אם", ["אני", 1], [EVENT_V, 1], [EVENT_N, 1], "אז",  ["אני "+CONC_V, 2], [CONC_N, 2]]</var>
+
+                <var id="STATEMENT_LIST">
+                    randFromArray([
+                        [[" אני ", 2], [CONC_V, 2], " ", [CONC_N, 2], " אם", [" אני ", 1], [EVENT_V, 1], " ", [EVENT_N, 1], "."],
+                        ["אם ", ["אני ", 1], [EVENT_V, 1], " ", [EVENT_N, 1], [", אני ", 2], [CONC_V, 2], " ", [CONC_N, 2], "."]
+                    ])
+                </var>
+                <var id="STATEMENT">_.map(STATEMENT_LIST, makeStatement).join("")</var>
+            </div>
+            <div class="hints">
+             <p>  במשפט "אם אז", ישנו את חלק הניתן ואת חלק המסקנה. המשפט במקרה זה מורכב מ: "אם ה<span class="hint_blue"><strong>חלק ניתן</strong></span>, אז <span class="hint_green"><strong>חלק המסקנה</strong></span>."</p>
+                <p>המסקנה היא תמיד נכונה אם הניתן נכון. אך הניתן לא תמיד נכון אם המסקנה נכונה.</p>
+                <p>החלק הניתן עומד בפני עצמו. לפעמים הוא מתאר משהו אחר, ולפעמים  מתאר אירוע שיכול לקרות.</p>
+                <div>
+                    <p>במשפט הזה, החלק הניתן הוא "<span class="hint_green"><var>"אני "+ CONC_V+" "+CONC_N</var></span>", אשר מתאר את סוג ה<var>NOUN</var>.</p>
+                    <div class="graphie">
+                        $(".set-blue").addClass("hint_blue");
+                    </div>
+                </div>
+                <p>חלק המסקנה הינו משהו שיקרה כאשר החלק הנכון יקרה.</p>
+                <div>
+                    <p>במשפט זה, חלק המסקנה הוא "<span class="hint_blue"><var>"אני "+EVENT_V+" "+EVENT_N</var></span>", המתאר איזה אירוע יכול   לקרות  <var>EVENT_V+" "+EVENT_N</var> כאשר אני .</p>
+                    <div class="graphie">
+                        $(".set-green").addClass("hint_green");
+                    </div>
+                </div>
+                <div>
+                    <p>כדי למצוא את התשובה, אנו צריכים לחבר את החלק הנתון עם חלק המסקנה כדי לקבל :"<var>_.map(SOLUTION, makeStatement).join(" ")</var>".</p>
+                    <div class="graphie">
+                        $(".set-blue").addClass("hint_blue");
+                        $(".set-green").addClass("hint_green");
+                    </div>
+                    
+              
+               
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

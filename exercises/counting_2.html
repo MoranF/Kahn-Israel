@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ספירה 2</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="every-n">
+				<div class="vars">
+					<var id="INCR">randRange( 3, 5 )</var>
+					<var id="START">randRange( 20, 50 )</var>
+					<var id="NTH">randRange( 7, 15 )</var>
+					<var id="ANSWER">START + ( NTH - 1 ) * INCR</var>
+					<var id="COUNTS">genderize( 1,"יספור","תספור")</var>
+				</div>
+				<p><var>person( 1 )</var> <var>genderize( 1,"מתחיל","מתחילה")</var> לספור מ-<var>START</var>, במרווחים של <var>cardinalHeb( INCR )</var>.</p>
+				<p class="question">אם <var>START</var> הוא המספר הראשון ש<var>person( 1 )</var> <var>COUNTS</var>. מהו המספר ה-<var>NTH</var> ש<var>he( 1 )</var> <var>COUNTS</var>?</p>
+				<p class="solution" data-forms="integer"><var>ANSWER</var></p>
+				<div class="hints">
+					<p>מהו המספר הראשון ש<var>he( 1 )</var> <var>COUNTS</var>?</p>
+					<p><code><var>START</var></code></p>
+					<p>מהו המספר השני ש<var>he( 1 )</var> <var>COUNTS</var>?</p>
+					<p><code>\begin{align*}&<var>START</var> + <var>INCR</var> \\
+						&= <var>START + INCR</var>\end{align*}</code></p>
+					<p>מהו המספר השלישי ש<var>he( 1 )</var> <var>COUNTS</var>?</p>
+					<p><code>\begin{align*}&<var>START</var> + <var>INCR</var> + <var>INCR</var> \\
+						&= <var>START</var> + (2 \times <var>INCR</var>) \\
+						&= <var>START + 2 * INCR</var>\end{align*}</code></p>
+					<p>מהו המספר ה-<var>NTH</var> ש<var>he( 1 )</var> <var>COUNTS</var>?</p>
+					<p><code>\begin{align*}&<var>START</var> + (<var>NTH - 1</var>\times<var>INCR</var>) \\
+						&= <var>START</var> + <var>( NTH - 1 ) * INCR</var> \\
+						&= <var>ANSWER</var>\end{align*}</code></p>
+				</div>
+			</div>
+
+			<div id="handshakes">
+				<div class="vars">
+					<var id="NUM">randRange( 5, 10 )</var>
+					<var id="ANSWER">( NUM * ( NUM - 1 ) ) / 2</var>
+				</div>
+				<p>ישנם <var>NUM</var> אנשים בחדר.</p>
+				<p class="question">אם כל אחד לוחץ פעם אחת את ידו של כל אחד אחר, כמה לחיצות יד יתרחשו סך הכל?</p>
+				<p class="solution" data-forms="integer"><var>ANSWER</var></p>
+
+				<div class="hints">
+					<p>אנו יודעים שישנם <var>NUM</var> אנשים, וכל איש לוחץ את ידו של <var>NUM - 1</var> אנשים אחרים.</p>
+					<div>
+   					<p><code><var>NUM</var> \times <var>NUM - 1</var> = <var>NUM * ( NUM - 1 )</var></code></p>
+						<p>אבל זוהי לא בדיוק התשובה</p>
+					</div>
+					<p>ספרנו למעשה כל לחיצת יד פעמים. זאת משום שכאשר <var>person( 1 )</var> <var>genderize(1,"לוחץ","לוחצת")</var> את <var>genderize(2,"ידו","ידה")</var> של <var>person( 2 )</var> זה בדיוק אותו אירוע כמו <var>person( 2 )</var> <var>genderize(2,"לוחץ","לוחצת")</var> את <var>genderize(1,"ידו","ידה")</var> של <var>person( 1 )</var>.</p>
+					<div>
+						<p>לכן, התשובה הנכונה היא</p>
+						<p><code>\dfrac{<var>NUM</var> \times <var>NUM - 1</var>}{2} = <var>ANSWER</var></code></p>
+					</div>
+				</div>
+			</div>
+
+			<div id="potted-plants">
+				<div class="vars">
+					<var id="NUM_COLORS, NUM_POTS">randRangeUnique( 2, 6, 2 )</var>
+					<var id="ANSWER">NUM_COLORS * NUM_POTS</var>
+				</div>
+				<p><var>person( 1 )</var> רוצה לקנות לחבר <var>his( 1 )</var> פרח בכד. במשתלה הקרובה ישנם פרחים מ-<var>NUM_COLORS</var> צבעים שונים, וכדים מ-<var>NUM_POTS</var> סוגים שונים.</p>
+				<p class="question">אם <var>he( 1 )</var>  <var>genderize(1,"יכול","יכולה")</var> לבחור כל פרח וכל כד, כמה סוגי עציצים <var>genderize(1,"יכול","יכולה")</var> <var>person( 1 )</var> לקנות?</p>
+				<p class="solution" data-forms="integer"><var>ANSWER</var></p>
+				<div class="hints">
+					<p>אם <var>person( 1 )</var> <var>genderize(1,"החליט","החליטה")</var> על צבע הפרח, כמה אפשרויות נותרו <var>tohim(1)</var>?</p>
+					<p><var>He( 1 )</var> <var>genderize(1,"יכול","יכולה")</var> לבחור אחד מ-<var>NUM_POTS</var> סוגי כדים, ולכן ישנן <var>NUM_POTS</var> אפשרויות נוספות.</p>
+					<p>מכיוון שישנם <var>NUM_COLORS</var> צבעיי פרחים, ישנן סך הכל <code><var>NUM_COLORS</var> \times <var>NUM_POTS</var> = <var>ANSWER</var></code> סוגי עציצים.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

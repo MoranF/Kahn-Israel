@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html data-require="math graphie expressions">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>מציאת נקודות 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="M">randRangeNonZero( -3, 3 )</var>
+            <var id="B">randRangeNonZero( -2, 2)</var>
+            <var id="CORRECT">randRange( 0, 4 )</var>
+            <var id="POINTS">
+                (function() {
+                    var points = [];
+
+                    for ( var x = -2, i = 0; x &lt;= 2; x++, i++ ) {
+                        var y = x * M + B,
+                            jitter = randRangeNonZero( -2, 2 );
+
+                        if ( i === CORRECT ) {
+                            jitter = 0;
+                        }
+
+                        points.push( [ x, y + jitter ] );
+                    }
+                    return points;
+                })()
+            </var>
+
+            <var id="PAIR">function( arr ) {
+                return "(" + arr.join( ", " ) + ")";
+            }</var>
+        </div>
+
+        <div class="problems">
+            <div id="equation">
+                <p class="question">איזה מבין הזוגות הסדורים מייצג את הפתרון למשוואה שלהלן?</p>
+                <p><code><var>$.map( POINTS, PAIR ).join( "\\qquad" )</var></code></p>
+                <p><code>y = <var>expr(["+", ["*", M, "x"], B])</var></code></p>
+                <p class="solution"><code><var>PAIR( POINTS[CORRECT] )</var></code></p>
+                <ul class="choices" data-category="true">
+                    <li data-each="POINTS as i, point"><code><var>PAIR( point )</var></code></li>
+                </ul>
+                <div class="hints">
+                    <p dir=rtl>אנו יכולים לנסות להציב במשוואה את הערך של x מכל סוג סדור.</p>
+                    <p dir=rtl>אם הצבנו את x וקיבלנו y כמו בזוג הסדור, אז זוג זה הוא הפיתרון!</p>
+                    <div data-each="POINTS as i, point" data-unwrap>
+                        <div>
+                            <p>בואו נחשב <code><var>PAIR( point )</var></code>.</p>
+                            <p>אם נציב <code><var>point[ 0 ]</var></code> במקום <code>x</code> , האם נקבל <code><var>point[ 1 ]</var></code>?</p>
+                        </div>
+                        <p><code>y = <span data-if="M !== 1">(<var>M</var>)</span>(<var>point[ 0 ]</var>) + <var>B</var> = <span data-if="M !== 1"><var>M * point[ 0 ]</var> + <var>B</var> = </span><var>M * point[ 0 ] + B</var></code></p>
+                    </div>
+                    <p>לפיכך, הזוג היחיד שהוא הפתרון למשוואה הוא <code><var>PAIR( POINTS[ CORRECT ] )</var></code>.</p>
+                    <div>
+                        <p>נגיע לאותה התשובה אם נמקם את הנקודות והמשוואה על גבי מערכת הצירים.</p>
+                        <div class="graphie" id="grid">
+                            graphInit({
+                                range: 10,
+                                scale: 20,
+                                axisArrows: "<->",
+                                tickStep: 1,
+                                labelStep: 2
+                            });
+
+                            style({ stroke: BLUE, fill: BLUE });
+
+                            plot(function( x ) {
+                                return x * M + B;
+                            }, [ -10, 10 ]);
+
+                            $.each( POINTS, function( i, point ) {
+                                if ( i === CORRECT ) {
+                                    style({ stroke: ORANGE, fill: ORANGE }, function() {
+                                        circle( point, 0.3 );
+                                    });
+                                } else {
+                                    circle( point, 0.15 );
+                                }
+                            });
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <p class="question">איזה מבין הזוגות הסדורים מייצג את הפתרון למשוואה שלהלן?</p>
+            <div id="graphed">
+                <p><code><var>$.map( POINTS, PAIR ).join( "\\qquad" )</var></code></p>
+
+                <div class="graphie" id="grid">
+                    graphInit({
+                        range: 10,
+                        scale: 20,
+                        axisArrows: "<->",
+                        tickStep: 1,
+                        labelStep: 2
+                    });
+
+                    style({ stroke: BLUE, fill: BLUE });
+
+                    plot(function( x ) {
+                        return x * M + B;
+                    }, [ -10, 10 ]);
+                </div>
+                <p class="solution"><code><var>PAIR( POINTS[CORRECT] )</var></code></p>
+                <ul class="choices" data-category="true">
+                    <li data-each="POINTS as i, point"><code><var>PAIR( point )</var></code></li>
+                </ul>
+                <div class="hints">
+                    <p>ננסה להציב כל אחד מהזוגות</p>
+                    <div class="graphie" data-update="grid" data-each="POINTS as i, point">
+                        circle( point, 0.15 );
+                    </div>
+                    <div>
+                        <p>הנקודה היחידה שנמצאת על הקו היא <code><var>PAIR( POINTS[ CORRECT ] )</var></code>.</p>
+                        <div class="graphie" data-update="grid">
+                            style({ stroke: ORANGE, fill: ORANGE });
+                            circle( POINTS[ CORRECT ], 0.3);
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

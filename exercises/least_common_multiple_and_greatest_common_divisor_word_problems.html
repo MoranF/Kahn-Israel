@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html data-require="math word-problems spin word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>מכפלה משותפת ומחלק משותף - בעיות מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+	<style>
+		.gcd-column {
+			position: relative;
+			float: left;
+			margin-left: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+
+		<div id="lcm-hot-dog-count">
+			<div class="vars" data-ensure="LCM !== A && LCM !== B">
+				<var id="C">randRange( 2, 6 )</var>
+				<var id="START_A">randRange( 1, 10 )</var>
+				<var id="START_B">randRangeExclude( 1, 10, [ START_A ] )</var>
+				<var id="A">START_A * C</var>
+				<var id="B">START_B * C</var>
+				<var id="PRODUCT">A * B</var>
+				<var id="GCD">getGCD( A, B )</var>
+				<var id="LCM">PRODUCT / GCD</var>
+			</div>
+
+			<p class="problem spin">
+				{שבוע הבא|ביום שישי}, <var>person(1)</var> <var>genderize(1,"מארגן","מארגנת")</var> מסיבה{ והתכנית <var>his(1)</var> היא להשמיע את
+				<var>randRange(2,30)</var> השירים האהובים <var>onhim(1)</var> ביותר. <var>He(1)</var> גם|. <var>He(1)</var>} רוצה לקנות כמה נקניקיות עבור המסיבה. כאשר <var>he(1)</var>
+				<var>genderize(1,"הלך","הלכה")</var> לחנות, <var>he(1)</var> <var>genderize(1,"גילה","גילתה")</var> שנקניקיות באות בחבילות של <var>A</var> 
+        ואילו לחמניות באות בחבילות של <var>B</var>.
+			</p>
+
+			<p class="question">
+				אם <var>person(1)</var> רוצה לקנות את אותו מספר לחמניות ונקניקיות,
+				מהו המספר המינימלי של נקניקיות ש<var>onhim(1)</var> לקנות?
+			</p>
+
+			<p class="solution" data-forms="integer"><var>LCM</var></p>
+
+			<div class="hints">
+				<div>
+					<p>
+						אנו יודעים שנקניקיות באות בחבילות של <code><var>A</var></code>.
+            נכתוב כמה מהמכפלות הראשונות של <code><var>A</var></code> כדי להבין איזה מספרים אפשריים של נקניקיות <var>person(1)</var> <var>genderize(1,"יכול")</var> לקנות:
+					</p>
+					<p>
+						נקניקיות:  <br>
+						<span data-each="getMultiples( A, min( LCM * 2 + A * 2, max( A * 14, LCM ) ) ) as M"><code><var>M</var>,</code> </span>
+						<code>...</code>
+					</p>
+				</div>
+				<div>
+					<p>
+						אנו יודעים שלחמניות באות בחבילות של <code><var>B</var></code>. נכתוב כמה מהמכפלות הראשונות של
+						<code><var>B</var></code> כדי להבין איזה מספרים אפשריים של לחמניות <var>person(1)</var> <var>genderize(1,"יכול")</var> לקנות:
+					</p>
+					<p>
+						לחמניות: <br>
+						<span data-each="getMultiples( B, min( LCM * 2 + B * 2, max( B * 14, LCM ) ) ) as M"><code><var>M</var>,</code> </span>
+						<code>...</code>
+					</p>
+				</div>
+				<div>
+					<p>
+						מכיוון ש<var>person(1)</var> רוצה לקנות את אותו מספר לחמניות ונקניקיות, עלינו למצוא את <em>המכפלה המשותפת</em> שתאפשר זאת:
+					</p>
+					<p>
+						נקניקיות:<br>
+						<span data-each="getMultiples( A, min( LCM * 2 + A * 2, max( A * 14, LCM ) ) ) as M">
+							<span data-if="M % LCM === 0 && M / LCM === 1">
+								<code>\color{<var>PINK</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 2">
+								<code>\color{<var>BLUE</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 3">
+								<code>\color{<var>GREEN</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else>
+								<code><var>M</var>,</code>
+							</span>
+						</span>
+						<code>...</code>
+					</p>
+					<p>
+						לחמניות:<br>
+						<span data-each="getMultiples( B, min( LCM * 2 + B * 2, max( B * 14, LCM ) ) ) as M">
+							<span data-if="M % LCM === 0 && M / LCM === 1">
+								<code>\color{<var>PINK</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 2">
+								<code>\color{<var>BLUE</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 3">
+								<code>\color{<var>GREEN</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else>
+								<code><var>M</var>,</code>
+							</span>
+						</span>
+						<code>...</code>
+					</p>
+				</div>
+
+				<p>
+					המכפלה המשותפת <em>הקטנה ביותר</em> הוא המספר המינימלי של נקניקיות ש<var>person(1)</var> <var>genderize(1,"צריך","צריכה")</var>
+					לקנות כדי להיות <var>genderize(1,"מסוגל","מסוגלת")</var> לקנות את אותו מספר לחמניות.
+				</p>
+				<p><code class="hint_pink"><var>LCM</var></code> הוא המכפלה המשותפת הקטנה ביותר של <code><var>A</var></code> ו- <code><var>B</var></code>.</p>
+				<p>
+					כדי לקבל את אותו מספר לחמניות ונקניקיות, <strong>המספר המינימלי של כל אחד ש<var>person(1)</var> <var>genderize(1,"יכול")</var>
+           לקנות הוא <var>LCM</var></strong>,
+					או <var>plural_heb(LCM/A,"חבילה","חבילות","f")</var> של נקניקיות <var>plural_heb(LCM/B,"חבילה","חבילות","f","ו")</var> של לחמניות.
+				</p>
+			</div>
+		</div>
+
+		<div id="lcm-uniforms">
+			<div class="vars" data-ensure="LCM !== A && LCM !== B">
+				<var id="C">randRange( 2, 6 )</var>
+				<var id="START_A">randRange( 1, 10 )</var>
+				<var id="START_B">randRangeExclude( 1, 10, [ START_A ] )</var>
+				<var id="A">START_A * C</var>
+				<var id="B">START_B * C</var>
+				<var id="PRODUCT">A * B</var>
+				<var id="GCD">getGCD( A, B )</var>
+				<var id="LCM">PRODUCT / GCD</var>
+			</div>
+
+			<p class="problem spin">
+				<var>person(1)</var> <var>genderize(1,"מארגן","מארגנת")</var> ליגת {כדורסל|כדורגל}, ו<var>he(1)</var> <var>genderize(1,"צריך","צריכה")</var>
+				לקנות חולצות וכובעים לשחקנים. חולצות באות בחבילות של <var>A</var>, ואילו כובעים מגיעים בחבילות של <var>B</var>.
+			</p>
+			<p class="question">
+				אם <var>person(1)</var> רוצה לקנות את אותו מספר כובעים וחולצות,
+				מהו המספר המינימלי של כובעים ש<var>onhim(1)</var> לקנות?
+			</p>
+			<p class="solution" data-forms="integer"><var>LCM</var></p>
+
+			<div class="hints">
+				<div>
+					<p>
+						אנו יודעים שחולצות באות בחבילות של <code><var>A</var></code>.
+            נכתוב כמה מהמכפלות הראשונות של <code><var>A</var></code> כדי להבין איזה מספרים אפשריים של חולצות <var>person(1)</var> <var>genderize(1,"יכול")</var> לקנות:
+					</p>
+					<p>
+						חולצות:  <br>
+						<span data-each="getMultiples( A, min( LCM * 2 + A * 2, max( A * 14, LCM ) ) ) as M"><code><var>M</var>,</code> </span>
+						<code>...</code>
+					</p>
+				</div>
+				<div>
+					<p>
+						אנו יודעים שכובעים באים בחבילות של <code><var>B</var></code>. נכתוב כמה מהמכפלות הראשונות של
+						<code><var>B</var></code> כדי להבין איזה מספרים אפשריים של כובעים <var>person(1)</var> <var>genderize(1,"יכול")</var> לקנות:
+					</p>
+					<p>
+						כובעים: <br>
+						<span data-each="getMultiples( B, min( LCM * 2 + B * 2, max( B * 14, LCM ) ) ) as M"><code><var>M</var>,</code> </span>
+						<code>...</code>
+					</p>
+				</div>
+				<div>
+					<p>
+						מכיוון ש<var>person(1)</var> רוצה לקנות את אותו מספר כובעים וחולצות, עלינו למצוא את <em>המכפלה המשותפת</em> שתאפשר זאת:
+					</p>
+					<p>
+						חולצות:<br>
+						<span data-each="getMultiples( A, min( LCM * 2 + A * 2, max( A * 14, LCM ) ) ) as M">
+							<span data-if="M % LCM === 0 && M / LCM === 1">
+								<code>\color{<var>PINK</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 2">
+								<code>\color{<var>BLUE</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 3">
+								<code>\color{<var>GREEN</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else>
+								<code><var>M</var>,</code>
+							</span>
+						</span>
+						<code>...</code>
+					</p>
+					<p>
+						כובעים:<br>
+						<span data-each="getMultiples( B, min( LCM * 2 + B * 2, max( B * 14, LCM ) ) ) as M">
+							<span data-if="M % LCM === 0 && M / LCM === 1">
+								<code>\color{<var>PINK</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 2">
+								<code>\color{<var>BLUE</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 3">
+								<code>\color{<var>GREEN</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else>
+								<code><var>M</var>,</code>
+							</span>
+						</span>
+						<code>...</code>
+					</p>
+				</div>
+
+				<p>
+					המכפלה המשותפת <em>הקטנה ביותר</em> הוא המספר המינימלי של חולצות ש<var>person(1)</var> <var>genderize(1,"צריך","צריכה")</var>
+					לקנות כדי להיות <var>genderize(1,"מסוגל","מסוגלת")</var> לקנות את אותו מספר כובעים.
+				</p>
+				<p><code class="hint_pink"><var>LCM</var></code> הוא המכפלה המשותפת הקטנה ביותר של <code><var>A</var></code> ו- <code><var>B</var></code>.</p>
+				<p>
+					כדי לקבל את אותו מספר כובעים וחולצות, <strong>המספר המינימלי של כל אחד ש<var>person(1)</var> <var>genderize(1,"יכול")</var>
+           לקנות הוא <var>LCM</var></strong>,
+					או <var>plural_heb(LCM/A,"חבילה","חבילות","f")</var> של חולצות <var>plural_heb(LCM/B,"חבילה","חבילות","f","ו")</var> של כובעים.
+				</p>
+			</div>
+		</div>
+
+		<div id="lcm-test-questions">
+			<div class="vars" data-ensure="LCM !== A && LCM !== B">
+				<var id="C">randRange( 2, 6 )</var>
+				<var id="START_A">randRange( 1, 10 )</var>
+				<var id="START_B">randRangeExclude( 1, 10, [ START_A ] )</var>
+				<var id="A">START_A * C</var>
+				<var id="B">START_B * C</var>
+				<var id="PRODUCT">A * B</var>
+				<var id="GCD">getGCD( A, B )</var>
+				<var id="LCM">PRODUCT / GCD</var>
+			</div>
+
+			<div class="problem">
+				<p class="spin">
+					<var>person(1)</var> ו<var>person(2)</var> <var>genderize_plural(1,2,"לומדים","לומדות")</var> <var>course(1)</var> עם מורים שונים.
+					<span data-if="A > B">
+						המורה של <var>person(1)</var> תמיד <var>genderize(3,"נותן","נותנת")</var> מבחנים עם <var>A</var> שאלות בעוד 
+						שהמורה של <var>person(2)</var> <var>genderize(4,"נותן","נותנת")</var> בחנים לעיתים יותר תכופות שבכל אחד רק <var>B</var> שאלות.
+					</span>
+					<span data-else>
+						המורה של <var>person(2)</var> תמיד <var>genderize(4,"נותן","נותנת")</var> מבחנים עם <var>B</var> שאלות בעוד 
+						שהמורה של <var>person(1)</var> <var>genderize(3,"נותן","נותנת")</var> בחנים לעיתים יותר תכופות שבכל אחד רק <var>A</var> שאלות.
+					</span>
+					{בכיתה של <var>person(1)</var> ישנם <var>randRange(15,40)</var> תלמידים נוספים חוץ <var>genderize(1,"ממנו","ממנה")</var>.
+					|המורה של <var>person(2)</var> גם <var>genderize(4,"נותן","נותנת")</var> <var>randRange(3,10)</var> פרוקטים כל שנה.}
+				</p>
+				<p>
+					למרות ששתי הכיתות מקבלות מספר שונה של בחינות, <var>genderize_plural(3,4,"המורים","המורות")</var>
+          נתבקשו לתת בסך הכל אותו מספר שאלות בכל שנה.
+				</p>
+			</div>
+
+			<p class="question">
+				מהו המספר המינימלי של שאלות שהכיתה של <var>person(1)</var> או של <var>person(2)</var>
+				יכולות לצפות לקבל במהלך השנה?
+			</p>
+
+			<p class="solution" data-forms="integer"><var>LCM</var></p>
+
+			<div class="hints">
+				<div>
+					<p>
+						אנו יודעים שבכיתה של <var>person(1)</var>, כל הבחינות מורכבות מ-<code><var>A</var></code> שאלות. 
+            נכתוב כמה מהמכפלות הראשונות של <code><var>A</var></code> כדי להבין איזה מספרים אפשריים של שאלות <var>person(1)</var> <var>genderize(1,"יכול")</var> לקבל במהלך השנה:
+					</p>
+					<p>
+						<span data-each="getMultiples( A, min( LCM * 2 + A * 2, max( A * 15, LCM ) ) ) as M"><code><var>M</var>,</code> </span>
+						<code>...</code>
+					</p>
+				</div>
+				<div>
+					<p>
+						אנו יודעים שבכיתה של <var>person(2)</var>, כל הבחינות מורכבות מ-<code><var>A</var></code> שאלות. 
+            נכתוב כמה מהמכפלות הראשונות של <code><var>B</var></code> כדי להבין איזה מספרים אפשריים של שאלות <var>person(2)</var> <var>genderize(2,"יכול")</var> לקבל במהלך השנה:
+					</p>
+					<p>
+						<span data-each="getMultiples( B, min( LCM * 2 + B * 2, max( B * 15, LCM ) ) ) as M"><code><var>M</var>,</code> </span>
+						<code>...</code>
+					</p>
+				</div>
+				<div>
+					<p>
+						מכיוון המורה של <var>person(1)</var> והמורה של <var>person(2)</var> נתבקשו לתת במהלך השנה אותו מספר שאלות
+						עלינו לחפש <em>מכפלות משותפות</em> של <code><var>A</var></code> ו-<code><var>B</var></code>.
+					</p>
+					<p>
+						<code>\qquad</code>
+						<span data-each="getMultiples( A, min( LCM * 2 + A * 2, max( A * 15, LCM ) ) ) as M">
+							<span data-if="M % LCM === 0 && M / LCM === 1">
+								<code>\color{<var>PINK</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 2">
+								<code>\color{<var>BLUE</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 3">
+								<code>\color{<var>GREEN</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else>
+								<code><var>M</var>,</code>
+							</span>
+						</span>
+						<code>...</code>
+					</p>
+					<p>
+						<code>\qquad</code>
+						<span data-each="getMultiples( B, min( LCM * 2 + B * 2, max( B * 15, LCM ) ) ) as M">
+							<span data-if="M % LCM === 0 && M / LCM === 1">
+								<code>\color{<var>PINK</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 2">
+								<code>\color{<var>BLUE</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else-if="M % LCM === 0 && M / LCM === 3">
+								<code>\color{<var>GREEN</var>}{<var>M</var>},</code>
+							</span>
+							<span data-else>
+								<code><var>M</var>,</code>
+							</span>
+						</span>
+						<code>...</code>
+					</p>
+				</div>
+
+				<p>
+					המכפלה המשותפת <em>המינימלית</em> היא מספר השאלות המינימלי של <var>person(1)</var> ו<var>person(2)</var> יצטרכו
+					לפתור במהלך כל השנה.
+				</p>
+				<p><code class="hint_pink"><var>LCM</var></code> הוא המכפלה המשותפת המינימלית של <code><var>A</var></code> ו-<code><var>B</var></code>.</p>
+				<p>
+					אם הכיתות של <var>person(1)</var> ושל <var>person(2)</var> מקבלים אותו מספר שאלות,
+					<strong>מהספר המינימלי של שאלות שהם יכולים לצפות לקבל הוא <var>LCM</var> </strong>,
+					או <var>plural_heb( LCM / A, "בחינה","בחינות","f" )</var> בכיתה של <var>person(1)</var> <var>plural_heb( LCM / B, "בחינה","בחינות","f","ו" )</var> בכיתה של <var>person(2)</var>.
+				</p>
+			</div>
+		</div>
+
+		<div id="gcd-teams">
+			<div class="vars" data-ensure="A_START !== B_START">
+				<var id="A_START">randRange( 1, 10 )</var>
+				<var id="B_START">randRange( 1, 10 )</var>
+				<var id="FACTOR">randRange( 2, 5 )</var>
+
+				<var id="A">A_START * FACTOR</var>
+				<var id="B">B_START * FACTOR</var>
+				<var id="GCD">getGCD( A, B )</var>
+				<var id="A_FACTORS">getFactors( A )</var>
+				<var id="B_FACTORS">getFactors( B )</var>
+			</div>
+
+			<div class="question spin">
+				<p>
+					במסלול הריצה ישנם <var>A</var> רצים למרחק קצר ו-<var>B</var> רצים למרחק ארוך
+					{ ו-<var>randRange(5,100)</var> מעודדים|}. <var>person(1)</var> <var>genderize(1,"צריך","צריכה")</var>
+          לחלק את כל האצנים לקבוצות. <var>He(1)</var> רוצה לוודא שבכל קבוצה יש אותו מספר רצים למרחק קצר ובכל קבוצה גם אותו מספר
+          רצים למרחק ארוך.
+				</p>
+				<p><strong>מהו המספר הגדול ביותר של קבוצות ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור?</strong></p>
+			</div>
+
+			<p class="solution" data-forms="integer"><var>GCD</var></p>
+
+			<div class="hints">
+				<p>
+          בואו תחילה נסתכל על הרצים למרחק קצר. אנו יכולים לחשוב על כל הדברים לחלק 				
+					<var>A</var> רצים לקבוצות בגודל שווה על ידי מציאת הגורמים של <var>A</var>.
+				</p>
+
+				<div>
+					<p>
+						הגורמים של <var>A</var> הם <span class="hint_blue"><var>toSentence( getFactors( A ),"ו-" )</var></span> משום
+            שאלו כל המספרים שמחלקים את <var>A</var> באופן שווה.
+            זה אומר שאנו יכולים לחלק את הרצים למרחק קצר לקבוצות בגודל שווה בדרכים הבאות:  
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="getFactors( A ) as F" class="hint_blue">
+							<var>plural_heb( F, "קבוצה","קבוצות","f" )</var> עם <var>plural_heb( A / F, "אצן","אצנים" )</var> <var>plural_heb( "", "בכל אחת", F )</var><br />
+						</span>
+					</p>
+				</div>
+
+				<p>
+          כעת נסתכל על הרצים למרחק ארוך. אנו יכולים לחשוב על כל הדברים לחלק 				
+					<var>B</var> רצים לקבוצות בגודל שווה על ידי מציאת הגורמים של <var>B</var>.
+				</p>
+
+				<div>
+					<p>
+						הגורמים של <var>A</var> הם <span class="hint_green"><var>toSentence( getFactors( B ),"ו-" )</var></span> משום
+            שאלו כל המספרים שמחלקים את <var>B</var> באופן שווה.
+            זה אומר שאנו יכולים לחלק את הרצים למרחק ארוך לקבוצות בגודל שווה בדרכים הבאות:  
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="getFactors( B ) as F" class="hint_green">
+							<var>plural_heb( F, "קבוצה","קבוצות","f" )</var> עם <var>plural_heb( B / F, "אצן","אצנים" )</var> <var>plural_heb( "", "בכל אחת", F )</var><br />
+						</span>
+					</p>
+				</div>
+
+
+				<div>
+					<p>
+            מכיוון שבכל קבוצה יהיו רצים למרחק קצר ומרחק ארוך, נשווה את מספר הקבוצות שאפשר לחלק
+            על ידי מציאת <em> המחלק המשותף</em>:
+					</p>
+					<div class="gcd-column">
+						<span data-each="max( A, B ) times as N">
+							<span data-if="$.inArray( N + 1, A_FACTORS ) !== -1" class="hint_blue">
+								<var>plural_heb( N + 1,  "קבוצה","קבוצות","f" )</var> עם <var>plural_heb( A / ( N + 1 ), "אצן","אצנים" )</var> למרחק קצר<br />
+							</span>
+							<span data-else-if="$.inArray( N + 1, B_FACTORS ) !== -1">
+								<br />
+							</span>
+						</span>
+					</div>
+					<div class="gcd-column">
+						<span data-each="max( A, B ) times as N">
+							<span data-if="$.inArray( N + 1, B_FACTORS ) !== -1" class="hint_green">
+								<var>plural_heb( N + 1, "קבוצה","קבוצות","f" )</var> עם <var>plural_heb( B / ( N + 1 ), "אצן","אצנים" )</var> למרחק ארוך<br />
+							</span>
+							<span data-else-if="$.inArray( N + 1, A_FACTORS ) !== -1">
+								<br />
+							</span>
+						</span>
+					</div>
+					<div class="ui-helper-clearfix"></div>
+				</div>
+
+				<div>
+					<p>
+						המחלקים המשותפים של <var>A</var> ו-<var>B</var> הם <span class="hint_pink"><var>toSentence( _.intersection( A_FACTORS, B_FACTORS ),"ו-" )</var></span>.
+						במילים אחרות עם<var>A</var> רצים למרחק קצר ו-<var>B</var> רצים למרחק ארוך,
+						<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור את הקבוצות הבאות:
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="_.intersection( A_FACTORS, B_FACTORS ) as F" class="hint_pink">
+							<var>plural_heb( F,"קבוצה","קבוצות","f" )</var> עם <var>plural_heb( A / F,  "אצן","אצנים" )</var> למרחק קצר 
+							ו-<var>plural_heb( B / F,  "אצן","אצנים" )</var> למרחק ארוך
+							<br />
+						</span>
+					</p>
+				</div>
+
+				<p>
+					אנו רוצים למצוא את המספר <em>הגדול ביותר</em> של קבוצות שוות ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור, ולכן מהמחלקים המשותפים שלמעלה,
+					נבחר את ה<em>מחלק המשותף המקסימלי</em>.
+				</p>
+
+				<p>
+					<strong>המספר הגדול ביותר של קבוצות שוות ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור הוא <var>GCD</var></strong>,
+					עם <var>plural_heb( A / GCD, "אצן","אצנים" )</var> למרחק קצר ו-<var>plural_heb( B / GCD, "אצן","אצנים" )</var> למרחק ארוך בכל קבוצה.
+				</p>
+
+			</div>
+		</div>
+
+		<div id="gcd-restaurant">
+			<div class="vars" data-ensure="A_START !== B_START">
+				<var id="A_START">randRange( 1, 10 )</var>
+				<var id="B_START">randRange( 1, 10 )</var>
+				<var id="FACTOR">randRange( 2, 5 )</var>
+
+				<var id="A">A_START * FACTOR</var>
+				<var id="B">B_START * FACTOR</var>
+				<var id="GCD">getGCD( A, B )</var>
+				<var id="A_FACTORS">getFactors( A )</var>
+				<var id="B_FACTORS">getFactors( B )</var>
+			</div>
+
+			<div class="problem spin">
+				<p>
+					במאפיה <var>his(1)</var>, <var>person(1)</var> אופה כל יום מנה אחת של <var>A</var> עוגיות שוקולד
+					ומנה אחת של <var>B</var> עוגיות גרנולה. <var>person(1)</var> <var>genderize(1,"מוכר")</var> 
+          את כל העוגיות <var>his(1)</var>  באותו יום באריזות מתנה יפות.
+				</p>
+				<p>
+					{משום שהלקוחות <var>his(1)</var> מצפים לקנות כל אריזה באותו מחיר|כדי לשמור על מחיר קבוע של כל אריזה}, <var>person(1)</var> רוצה
+          לוודא בכל אריזת מתנה יש אותו מספר עוגיות.
+				</p>
+			</div>
+
+			<p class="question">
+        מהו מספר אריזות המתנה הגדול ביותר ש<var>person(1)</var> <var>genderize(1,"יכול")</var> למכור בכל יום? 
+			</p>
+
+			<p class="solution" data-forms="integer"><var>GCD</var></p>
+
+			<div class="hints">
+				<p>
+          בואו תחילה נסתכל על עוגיות השוקולד. אנו יכולים לחשוב על כל הדברים לחלק 				
+					<var>A</var> עוגיות לאריזות בגודל שווה על ידי מציאת הגורמים של <var>A</var>.        
+				</p>
+				<div>
+					<p>
+            הגורמים של <var>A</var> הם <span class="hint_green"><var>toSentence( getFactors( A ),"ו-" )</var></span> משום
+            שאלו כל המספרים שמחלקים את <var>A</var> באופן שווה.
+            זה אומר שאנו יכולים לחלק את עוגיות השוקולד לאריזות בגודל שווה בדרכים הבאות:  
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="getFactors( A ) as F" class="hint_blue">
+							<var>plural_heb( F,  "אריזה","אריזות","f" )</var> עם <var>plural_heb( A / F, "עוגיות שוקולד","עוגיות שוקולד","f" )</var> <var>plural_heb( "", "בכל אחת", F )</var><br />
+						</span>
+					</p>
+				</div>
+
+				<p>
+          בואו תחילה נסתכל על עוגיות השוקולד. אנו יכולים לחשוב על כל הדברים לחלק 				
+					<var>B</var> עוגיות לאריזות בגודל שווה על ידי מציאת הגורמים של <var>B</var>.        
+				</p>
+
+				<div>
+					<p>
+            הגורמים של <var>A</var> הם <span class="hint_green"><var>toSentence( getFactors( B ),"ו-" )</var></span> משום
+            שאלו כל המספרים שמחלקים את <var>A</var> באופן שווה.
+            זה אומר שאנו יכולים לחלק את עוגיות הגרנולה לאריזות בגודל שווה בדרכים הבאות:  
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="getFactors( A ) as F" class="hint_blue">
+							<var>plural_heb( F,  "אריזה","אריזות","f" )</var> עם <var>plural_heb( B / F, "עוגיות גרנולה","עוגיות גרנולה","f" )</var> <var>plural_heb( "", "בכל אחת", F )</var><br />
+						</span>
+					</p>          
+				</div>
+
+				<div>
+					<p>
+            מכיוון שבכל אריזה יהיו גם עוגיות שוקולד וגם עוגיות גרנולה, עלינו להשוות את מספר הדרכים לחלק כל אחד מסוגי העוגיות לאריזות
+            על ידי מציאת  <em>המחלקים המשותפים</em>:
+					</p>
+					<div class="gcd-column">
+						<span data-each="max( A, B ) times as N">
+							<span data-if="$.inArray( N + 1, A_FACTORS ) !== -1" class="hint_blue">
+								<var>plural_heb( N + 1, "אריזה","אריזות","f" )</var> עם <var>plural_heb( A / ( N + 1 ), "עוגיות שוקולד","עוגיות שוקולד","f" )</var><br />
+							</span>
+							<span data-else-if="$.inArray( N + 1, B_FACTORS ) !== -1">
+								<br />
+							</span>
+						</span>
+					</div>
+					<div class="gcd-column">
+						<span data-each="max( A, B ) times as N">
+							<span data-if="$.inArray( N + 1, B_FACTORS ) !== -1" class="hint_green">
+								<var>plural_heb( N + 1, "אריזה","אריזות","f" )</var> עם <var>plural_heb( B / ( N + 1 ), "עוגיות גרנולה","עוגיות גרנולה","f" )</var><br />
+							</span>
+							<span data-else-if="$.inArray( N + 1, A_FACTORS ) !== -1">
+								<br />
+							</span>
+						</span>
+					</div>
+					<div class="ui-helper-clearfix"></div>
+				</div>
+
+				<div>
+					<p>
+          	המחלקים המשותפים של <var>A</var> ו-<var>B</var> הם <span class="hint_pink"><var>toSentence( _.intersection( A_FACTORS, B_FACTORS ),"ו-" )</var></span>.
+						במילים אחרות עם<var>A</var> עוגיות שוקולד ו-<var>B</var> עוגיות גרנולה,
+						<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור את האריזות הבאות:
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="_.intersection( A_FACTORS, B_FACTORS ) as F" class="hint_pink">
+							<var>plural_heb( F, "אריזה","אריזות","f" )</var> with <var>plural_heb( A / F, "עוגיות שוקולד","עוגיות שוקולד","f" )</var> ו-
+							<var>plural_heb( B / F, "עוגיות גרנולה","עוגיות גרנולה","f" )</var>
+							<br />
+						</span>
+					</p>
+				</div>
+				</p>
+
+				<p>
+
+				<p>
+					אנו רוצים למצוא את המספר <em>הגדול ביותר</em> של קבוצות שוות ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור, ולכן מהמחלקים המשותפים שלמעלה,
+					נבחר את ה<em>מחלק המשותף המקסימלי</em>.
+				</p>
+
+				<p>
+					<strong>המספר הגדול ביותר של אריזות שוות ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור הוא <var>GCD</var></strong>,
+					עם <var>plural_heb( A / GCD, "עוגיות שוקולד","עוגיות שוקולד","f" )</var> ועם <var>plural_heb( B / GCD, "עוגיות גרנולה","עוגיות גרנולה","f" )</var> בכל אריזה.
+				</p>
+			</div>
+		</div>
+
+		<div id="gcd-office-supplies">
+			<div class="vars" data-ensure="A_START !== B_START">
+				<var id="A_START">randRange( 1, 10 )</var>
+				<var id="B_START">randRange( 1, 10 )</var>
+				<var id="FACTOR">randRange( 2, 5 )</var>
+
+				<var id="A">A_START * FACTOR</var>
+				<var id="B">B_START * FACTOR</var>
+				<var id="GCD">getGCD( A, B )</var>
+				<var id="A_FACTORS">getFactors( A )</var>
+				<var id="B_FACTORS">getFactors( B )</var>
+			</div>
+
+			<div class="problem spin">
+				<p>
+					<var>person(1)</var> <var>genderize(1,"קנה","קנתה")</var> חבילה אחת של <var>plural_heb( A, deskItem(1) )</var> וחבילה אחת של 
+					<var>plural_heb( B, deskItem(2),deskItem_plural(2),deskItem_gender(2) )</var>. <var>He(1)</var> רוצה להשתמש בכל ה<var>deskItem_plural(1)</var>
+					וה<var>deskItem_plural(2)</var> כדי ליצור סטים של כלי כתיבה עבור החברים <var>his(1)</var>.
+				</p>
+			</div>
+			<p class="question">
+				מהו המספר הגדול ביותר של סטים שווים של כלי כתיבה ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור?
+			</p>
+
+			<p class="solution" data-forms="integer"><var>GCD</var></p>
+
+			<div class="hints">
+				<p>       
+					בואו תחילה נסתכל על ה<var>deskItem_plural(1)</var>. אנו יכולים לחשוב על כל הדברים לחלק
+					באופן שווה <var>plural_heb( A, deskItem(1),deskItem_plural(1),deskItem_gender(1) )</var> לסטים על ידי מציאת הגורמים של <var>A</var>.
+				</p>
+
+				<div>
+					<p>
+						הגורמים של <var>A</var> הם <span class="hint_blue"><var>toSentence( getFactors( A ),"ו-" )</var></span> משום
+            שאלו כל המספרים שמחלקים את <var>A</var> באופן שווה.
+            זה אומר שאנו יכולים לחלק את ה<var>deskItem_plural(1)</var>
+            לסטים בגודל שווה בדרכים הבאות:  
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="getFactors( A ) as F" class="hint_blue">
+							<var>plural_heb( F, "סט","סטים","m")</var> עם <var>plural_heb( A / F, deskItem(1),deskItem_plural(1),deskItem_gender(1) )</var> <var>plural_heb( "", "בכל אחד", F )</var><br />
+						</span>
+					</p>
+				</div>
+
+				<p>
+					כעת נסתכל על ה<var>deskItem_plural(2)</var>. אנו יכולים לחשוב על כל הדברים לחלק
+					באופן שווה <var>plural_heb( B, deskItem(2),deskItem_plural(2),deskItem_gender(2) )</var> לסטים על ידי מציאת הגורמים של <var>B</var>.
+				</p>
+
+				<div>
+					<p>
+						הגורמים של <var>B</var> הם <span class="hint_blue"><var>toSentence( getFactors( B ),"ו-" )</var></span> משום
+            שאלו כל המספרים שמחלקים את <var>B</var> באופן שווה.
+            זה אומר שאנו יכולים לחלק את ה<var>deskItem_plural(2)</var>
+            לסטים בגודל שווה בדרכים הבאות:  
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="getFactors( B ) as F" class="hint_green">
+							<var>plural_heb( F, "סט","סטים","m")</var> עם <var>plural_heb( B / F, deskItem(2),deskItem_plural(2),deskItem_gender(2) )</var> <var>plural_heb( "", "בכל אחד", F )</var><br />
+						</span>
+					</p>
+				</div>
+
+				<div>
+					<p>
+						משום שעל כל סט להכיל מספר שווה <var>deskItem_plural(1)</var> ומספר שווה של <var>deskItem_plural(2)</var>, נשווה 
+						את הדרכים לחלק את ה<var>deskItem_plural(1)</var> ואת הדרכים לחלק את           
+						ה<var>deskItem_plural(2)</var> על ידי מציאת  <em>המחלקים המשותפים</em>:
+					</p>
+					<div class="gcd-column">
+						<span data-each="max( A, B ) times as N">
+							<span data-if="$.inArray( N + 1, A_FACTORS ) !== -1" class="hint_blue">
+								<var>plural_heb( N + 1, "סט","סטים","m")</var> עם <var>plural_heb( A / ( N + 1 ), deskItem(1),deskItem_plural(1),deskItem_gender(1) )</var><br />
+							</span>
+							<span data-else-if="$.inArray( N + 1, B_FACTORS ) !== -1">
+								<br />
+							</span>
+						</span>
+					</div>
+					<div class="gcd-column">
+						<span data-each="max( A, B ) times as N">
+							<span data-if="$.inArray( N + 1, B_FACTORS ) !== -1" class="hint_green">
+								<var>plural_heb( N + 1, "סט","סטים","m")</var> עם <var>plural_heb( B / ( N + 1 ), deskItem(2),deskItem_plural(2),deskItem_gender(2) )</var><br />
+							</span>
+							<span data-else-if="$.inArray( N + 1, A_FACTORS ) !== -1">
+								<br />
+							</span>
+						</span>
+					</div>
+					<div class="ui-helper-clearfix"></div>
+				</div>
+
+				<div>
+					<p>
+          	המחלקים המשותפים של <var>A</var> ו-<var>B</var> הם <span class="hint_pink"><var>toSentence( _.intersection( A_FACTORS, B_FACTORS ),"ו-" )</var></span>.
+						במילים אחרות עם <var>plural_heb( A, deskItem(1),deskItem_plural(1),deskItem_gender(1) )</var> ו- <var>plural_heb( B, deskItem(2),deskItem_plural(2),deskItem_gender(2) )</var>,
+						<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור את הסטים הבאים:
+					</p>
+					<p style="margin-left: 20px">
+						<span data-each="_.intersection( A_FACTORS, B_FACTORS ) as F" class="hint_pink">
+							<var>plural_heb( F, "סט","סטים","m")</var> עם <var>plural_heb( A / F, deskItem(1),deskItem_plural(1),deskItem_gender(1) )</var> ו-
+							<var>plural_heb( B / F, deskItem(2),deskItem_plural(2),deskItem_gender(2) )</var>
+							<br />
+						</span>
+					</p>
+				</div>
+				</p>
+
+				<p>
+
+				<p>
+					אנו רוצים למצוא את המספר <em>הגדול ביותר</em> של סטים שווים ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור, ולכן מהמחלקים המשותפים שלמעלה,
+					נבחר את ה<em>מחלק המשותף המקסימלי</em>.
+				</p>
+
+				<p>
+					<strong>המספר הגדול ביותר של סטים שווים ש<var>person(1)</var> <var>genderize(1,"יכול")</var> ליצור הוא <var>GCD</var></strong>,        
+					עם <var>plural_heb( A / GCD, deskItem(1),deskItem_plural(1),deskItem_gender(1) )</var> ו- <var>plural_heb( B / GCD, deskItem(2),deskItem_plural(2),deskItem_gender(2) )</var> בכל סט.
+				</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

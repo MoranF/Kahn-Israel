@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems word-problems-heb spin">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות גיל מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+    <style>
+        #workarea { direction: rtl; }
+    </style>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="solve-older-1">
+			<div class="vars">
+				<var id="C">randRange(3, 5)</var>
+				<var id="B">randRange(2, 20)</var>
+				<var id="A">randRange(1, 10) * (C - 1)</var>
+			</div>
+
+			<div class="question">
+				<p class="spin">	        			
+				{<var>person(1)</var> <var>big(1)</var> ב-<var>A</var> שנים מ<var>person(2)</var>|<var>person(2)</var> <var>young(2)</var> ב-<var>A</var> שנים מ<var>person(1)</var>}.
+				{במשך {ארבע השנים|שלוש השנים|השנתיים} האחרונות <var>person(1)</var> ו<var>person(2)</var> למדו באותו בית ספר.|<var>person(1)</var> ו<var>person(2)</var> נפגשו לראשונה לפני 3 שנים.|}
+				לפני <var>years_heb(B)</var>, <var>person(1)</var> <var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>.</p>
+
+				<p><var>son(1)</var> כמה <var>person(1)</var> כעת?</p>
+			</div>
+			<div class="solution"><var>(C * (B + A) - B) / (C - 1)</var></div>
+
+			<div class="hints">
+				<p>נסמן את גיל הנוכחי של <var>person(1)</var> ב-<code><var>personVar(1)</var></code>.</p>
+				<p>לפני <var>years_heb(B)</var>, <var>person(1)</var> <var>was(1)</var> <var>son(1)</var> <code><var>personVar(1)</var> - <var>B</var></code>.</p>
+				<p><var>person(2)</var> <var>son(2)</var> <code><var>personVar(1)</var> - <var>A</var></code> כרגע, ולכן לפני <var>years_heb(B)</var>, <var>he(2)</var> <var>was(2)</var> <var>son(2)</var> <code>(<var>personVar(1)</var> - <var>A</var>) - <var>B</var> = <var>personVar(1)</var> - <var>A + B</var></code>.</p>
+				<p><var>person(1)</var> <var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>, ומכאן נובע ש- <code><var>personVar(1)</var> - <var>B</var> = <var>C</var> (<var>personVar(1)</var> - <var>A + B</var>)</code>.</p>
+				<p>נפתח את הסוגריים: <code><var>personVar(1)</var> - <var>B</var> = <var>C</var> <var>personVar(1)</var> - <var>C * (A + B)</var></code>.</p>
+        <p>כעת עלינו לבטא את <code><var>personVar(1)</var></code>. סך הכל נקבל <code><var>C - 1</var> <var>personVar(1)</var> = <var>C * (A + B) - B</var></code>.</p>
+				<p><code><var>personVar(1)</var> = <var>(C * (B + A) - B) / (C - 1)</var></code>.</p>
+			</div>
+		</div>
+
+		<div id="solve-younger-1" data-type="solve-older-1">
+			<div class="question">
+				<p><var>person(1)</var> <var>big(1)</var> ב-<var>A</var> שנים מ<var>person(2)</var>.
+        לפני <var>years_heb(B)</var>, <var>person(1)</var>
+				<var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>.</p>
+
+				<p><var>son(2)</var> כמה <var>person(2)</var> כעת?</p>
+			</div>
+			<div class="solution"><var>(A - B + C * B) / (C - 1)</var></div>
+
+			<div class="hints">
+				<p>נסמן את הגיל הנוכחי של <var>person(2)</var> ב-<code><var>personVar(2)</var></code>.</p>
+				<p>משמע ש<var>person(1)</var> <var>he(1)</var> <var>son(1)</var> <code><var>personVar(2)</var> + <var>A</var></code>, ולפני <var>years_heb(B)</var>, <var>person(1)</var> <var>was(1)</var> <var>son(1)</var> <code>(<var>personVar(2)</var> + <var>A</var>) - <var>B</var> = <var>personVar(2)</var> + <var>A - B</var></code>.</p>
+				<p>לפני <var>years_heb(B)</var>, <var>person(2)</var> <var>was(2)</var> <var>son(2)</var> <code><var>personVar(2)</var> - <var>B</var></code>.</p>
+				<p><var>person(1)</var> <var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>, ומכאן ש-<code><var>personVar(2)</var> + <var>A - B</var> = <var>C</var> (<var>personVar(2)</var> - <var>B</var>)</code>.</p>
+				<p>נפתח את הסוגריים: <code><var>personVar(2)</var> + <var>A - B</var> = <var>C</var> <var>personVar(2)</var> - <var>C * B</var></code>.</p>
+        <p>כעת עלינו לבטא את <code><var>personVar(2)</var></code>. סך הכל נקבל <code><var>C - 1</var> <var>personVar(2)</var> = <var>A - B + C * B</var></code>.</p>
+				<p><code><var>personVar(2)</var> = <var>(A - B + C * B) / (C - 1)</var></code>.</p>
+			</div>
+		</div>
+
+		<div id="solve-older-2">
+			<div class="vars">
+				<var id="C">randRange(3, 5)</var>
+				<var id="A">randRange(2, 10) * (C - 1)</var>
+			</div>
+
+			<div class="question">
+				<p><var>person(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var> וגם <var>big(1)</var> ב-<var>A</var> שנים מ<var>person(2)</var>.</p>
+				<p><var>son(1)</var> כמה <var>person(1)</var>?</p>
+			</div>
+			<div class="solution"><var>A * C / (C - 1)</var></div>
+
+			<div class="hints">
+				<p>נסמן את הגיל הנוכחי של <var>person(1)</var> ב-<code><var>personVar(1)</var></code>.</p>
+				<p>אנו יודעים ש<var>person(2)</var> <var>young(2)</var> פי <code>1/<var>C</var></code> מ<var>person(1)</var>, ולכן ניתן לרשום את הגיל של <var>person(2)</var> כ-<code><var>personVar(1)</var> / <var>C</var></code>.</p>
+				<p>הגיל <var>His(2)</var> גם שווה ל-<code><var>personVar(1)</var> - <var>A</var></code>.</p>
+				<p>כעת נדרוש ששני הביטויים לגיל של <var>person(2)</var> יהיו שווים זה לזה: <code><var>personVar(1)</var> / <var>C</var> = <var>personVar(1)</var> - <var>A</var></code>.</p>
+				<p>נכפיל את שני הצדדים ב-<code><var>C</var></code> ונקבל <code><var>personVar(1)</var> = <var>C</var> <var>personVar(1)</var> - <var>A * C</var></code>.</p>
+        <p>כעת עלינו לבטא את <code><var>personVar(1)</var></code>. סך הכל נקבל <code><var>C - 1</var> <var>personVar(1)</var> = <var>A * C</var></code>.</p>
+				<p><code><var>personVar(1)</var> = <var>A * C / (C - 1)</var></code>.</p>
+			</div>
+		</div>
+
+		<div id="solve-younger-2" data-type="solve-older-2">
+			<div class="question">
+				<p><var>person(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var> וגם <var>big(1)</var> ב-<var>A</var> שנים מ<var>person(2)</var>.</p>
+				<p><var>son(2)</var> כמה <var>person(2)</var>?</p>
+			</div>
+			<div class="solution"><var>A / (C - 1)</var></div>
+
+			<div class="hints">
+				<p>נסמן את הגיל הנוכחי של <var>person(2)</var> ב-<code><var>personVar(2)</var></code>.</p>
+				<p>אנו יודעים ש<var>person(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>, ולכן ניתן לרשום את הגיל של <var>person(1)</var> כ-<code><var>C</var> <var>personVar(2)</var></code>.</p>
+				<p>הגיל <var>His(1)</var> גם שווה ל- <code><var>personVar(2)</var> + <var>A</var></code>.</p>
+				<p>כעת נדרוש ששני הביטויים לגיל של <var>person(1)</var> יהיו שווים זה לזה: <code><var>C</var> <var>personVar(2)</var> = <var>personVar(2)</var> + <var>A</var></code>.</p>
+        <p>כעת עלינו לבטא את <code><var>personVar(2)</var></code>. סך הכל נקבל <code><var>C - 1</var> <var>personVar(2)</var> = <var>A</var></code>.</p>
+				<p><code><var>personVar(2)</var> = <var>A / (C - 1)</var></code>.</p>
+			</div>
+		</div>
+
+		<div id="solve-older-3">
+			<div class="vars" data-ensure="C - A !== A && A * B * (C - 1) < 100 * (C - A)">
+				<var id="A">randRange(2, 5)</var>
+				<var id="C">randRange(A + 2, 9)</var>
+				<var id="B">randRange(2, 7) * (C - A)</var>
+			</div>
+
+			<div class="question">
+				<p><var>person(1)</var> <var>old(1)</var> פי <var>A</var> מ<var>person(2)</var>. לפני <var>years_heb(B)</var>, <var>person(1)</var> <var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>.</p>
+				<p><var>son(1)</var> כמה <var>person(1)</var> כעת?</p>
+			</div>
+			<div class="solution"><var>A * B * (C - 1) / (C - A)</var></div>
+
+			<div class="hints">
+				<p>נסמן את הגיל הנוכחי של <var>person(1)</var> ב-<code><var>personVar(1)</var></code>.</p>
+				<p>אנו יודעים ש<var>person(2)</var> <var>young(2)</var> פי <code>1/<var>A</var></code> מ<var>person(1)</var>, ולכן ניתן לרשום את הגיל של <var>person(2)</var> כ- <code><var>personVar(1)</var> / <var>A</var></code>.</p>
+				<p>לפני <var>years_heb(B)</var>, <var>person(1)</var> <var>was(1)</var> <var>son(1)</var> <code><var>personVar(1)</var> - <var>B</var></code> ו<var>person(2)</var> <var>was(2)</var> <var>son(2)</var> <code><var>personVar(1)</var> / <var>A</var> - <var>B</var></code>.</p>
+				<p>באותו הזמן, <var>person(1)</var> <var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>, ולכן ניתן לרשום ש- <code><var>personVar(1)</var> - <var>B</var> = <var>C</var> (<var>personVar(1)</var> / <var>A</var> - <var>B</var>)</code>.</p>
+				<p>נפתח את הסוגריים: <code><var>personVar(1)</var> - <var>B</var> = <var>fractionReduce(C, A)</var> <var>personVar(1)</var> - <var>C * B</var></code>.</p>
+        <p>כעת עלינו לבטא את <code><var>personVar(1)</var></code>. סך הכל נקבל <code><var>fractionReduce(C - A, A)</var> <var>personVar(1)</var> = <var>B * (C - 1)</var></code>.</p>
+				<p><code><var>personVar(1)</var> = <var>fractionReduce(A, C - A)</var> \cdot <var>B * (C - 1)</var> = <var>A * B * (C - 1) / (C - A)</var></code>.</p>
+			</div>
+		</div>
+
+		<div id="solve-younger-3" data-type="solve-older-3">
+			<div class="question">
+				<p><var>person(1)</var> <var>old(1)</var> פי <var>A</var> מ<var>person(2)</var>. לפני <var>years_heb(B)</var>, <var>person(1)</var> <var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>.</p>
+				<p><var>son(2)</var> כמה <var>person(2)</var> כעת?</p>
+			</div>
+			<div class="solution"><var>B * (C - 1) / (C - A)</var></div>
+
+			<div class="hints">
+				<p>נסמן את הגיל הנוכחי של <var>person(2)</var> ב-<code><var>personVar(2)</var></code>.</p>
+				<p>אנו יודעים ש<var>person(1)</var> <var>old(1)</var> פי <var>A</var> מ<var>person(2)</var>, ולכן ניתן לרשום את הגיל של <var>person(1)</var> כ- <code><var>A</var> <var>personVar(2)</var></code>.</p>
+				<p>לפני <var>years_heb(B)</var>, <var>person(1)</var> <var>was(1)</var> <var>son(1)</var> <code><var>A</var> <var>personVar(2)</var> - <var>B</var></code> ו<var>person(2)</var> <var>was(2)</var> <var>son(2)</var> <code><var>personVar(2)</var> - <var>B</var></code>.</p>
+				<p>באותו הזמן, <var>person(1)</var> <var>was(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>, ולכן ניתן לרשום ש- <code><var>A</var> <var>personVar(2)</var> - <var>B</var> = <var>C</var> (<var>personVar(2)</var> - <var>B</var>)</code>.</p>
+				<p>נפתח את הסוגריים: <code><var>A</var> <var>personVar(2)</var> - <var>B</var> = <var>C</var> <var>personVar(2)</var> - <var>B * C</var></code>.</p>
+        <p>כעת עלינו לבטא את <code><var>personVar(2)</var></code>. סך הכל נקבל <code><var>C - A</var> <var>personVar(2)</var> = <var>B * (C - 1)</var></code>
+				<p><code><var>personVar(2)</var> = <var>B * (C - 1) / (C - A)</var></code>.</p>
+			</div>
+		</div>
+
+		<div id="solve-single-4" data-weight="2">
+			<div class="vars" data-ensure="B <= 60">
+				<var id="A">randRange(3, 20)</var>
+				<var id="B">randRange(7, 24) * (A - 1)</var>
+			</div>
+
+			<div class="question">
+				<p>בעוד <var>years_heb(B)</var> <var>person(1)</var> <var>willbe(1)</var> <var>old(1)</var> פי <var>A</var> ממה ש<var>he(1)</var> היום.</p>
+				<p><var>son(1)</var> כמה <var>he(1)</var> כעת?</p>
+			</div>
+			<div class="solution"><var>B / (A - 1)</var></div>
+                                                                      
+			<div class="hints">
+				<p>נסמן את הגיל הנוכחי של <var>person(1)</var> ב-<code><var>personVar(1)</var></code>.</p>
+				<p>עוד <var>years_heb(B)</var>, <var>he(1)</var> <var>willbe(1)</var> <var>son(1)</var> <code><var>personVar(1)</var> + <var>B</var></code>.</p>
+				<p>באותו הזמן, <var>he(1)</var> <var>willbe(1)</var> גם <var>son(1)</var> <code><var>A</var> <var>personVar(1)</var></code>.</p>
+				<p>נשווה את שני הביטויים: <code><var>personVar(1)</var> + <var>B</var> = <var>A</var> <var>personVar(1)</var></code>.</p>
+        <p>כעת עלינו לבטא את <code><var>personVar(1)</var></code>. סך הכל נקבל <code><var>A - 1</var> <var>personVar(1)</var> = <var>B</var></code></p>
+				<p><code><var>personVar(1)</var> = <var>B / (A - 1)</var></code>.</p>
+			</div>
+		</div>
+
+		<div id="solve-single-5" data-weight="2">
+			<div class="vars" data-ensure="A <= 80 && B >= 2 && (A - B * C) > (C - 1)">
+				<var id="C">randRange(3, 5)</var>
+				<var id="B">randRange(1, 10) * (C - 1)</var>
+				<var id="A">randRange(C * B + 1, 15) * (C - 1)</var>
+			</div>
+
+			<div class="question">
+				<p><var>person(1)</var> <var>son(1)</var> <var>A</var> ו<var>person(2)</var> <var>son(2)</var> <var>B</var>.</p>
+				<p>בעוד כמה שנים <var>person(1)</var> <var>willbe(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>?</p>
+			</div>
+			<div class="solution"><var>(A - B * C) / (C - 1)</var></div>
+
+			<div class="hints">
+				<p>נסמן ב- <code>y</code> את מספר השנים שידרשו.</p>
+				<p>בעוד <code>y</code> שנים, <var>person(1)</var> <var>willbe(1)</var> <var>son(1)</var> <code><var>A</var> + y</code> ו<var>person(2)</var> <var>willbe(2)</var> <var>son(2)</var> <code><var>B</var> + y</code>.</p>
+				<p>באותו הזמן, <var>person(1)</var> <var>willbe(1)</var> <var>old(1)</var> פי <var>C</var> מ<var>person(2)</var>.</p>
+				<p>נשווה את שני הביטויים: <code><var>A</var> + y = <var>C</var> (<var>B</var> + y)</code>.</p>
+				<p>נפתח את הסוגריים: <code><var>A</var> + y = <var>C * B</var> + <var>C</var> y</code>.</p>
+        <p>כעת עלינו לבטא את <code>y</code>. סך הכל נקבל <code><var>C - 1</var> y = <var>A - C * B</var></code></p>
+				<p><code>y = <var>(A - C * B) / (C - 1)</var></code>.</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

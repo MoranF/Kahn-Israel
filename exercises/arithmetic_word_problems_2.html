@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>בעיות חשבון מילוליות 2</title>
+    <script src="../khan-exercise.js"></script>
+    <style>
+        #workarea { direction: rtl; }
+    </style>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="NUM1">randRange( 1, 12 )</var>
+            <var id="NUM2">randRange( 2, 12 )</var>
+            <var id="TOTAL">NUM1 * NUM2</var>
+        </div>
+
+        <div class="problems">
+
+            <div id="compare-product">
+                <p class="problem">
+                <var>clothing(1)</var> <var>clothing_color(1)</var> עולה <code>₪<var>NUM1</var></code>,
+                ואילו <var>clothing(2)</var> <var>clothing_color(2)</var> <var>clothing_popular(2)</var> עולה פי <code><var>NUM2</var></code>.
+                </p>
+                <p class="question">
+                כמה עולה <var>clothing(2)</var> <var>clothing_color(2)</var> ?
+                </p>
+                <div class="solution" data-forms="dollar"><var>TOTAL</var></div>
+
+                <div class="hints">
+                    <p>
+                    המחיר של <var>clothing(2)</var> <var>clothing_color(2)</var>
+                    הינו מכפלה של המחיר של <var>clothing(1)</var> <var>clothing_color(1)</var>.
+                    אם כך, חשבו את המכפלה.
+                    </p>
+                    <p>
+                    המכפלה היא <code><var>NUM2</var> \times ₪<var>NUM1</var></code>.
+                    </p>
+                    <p>
+                    <code><var>NUM2</var> \times ₪<var>NUM1</var> = ₪<var>TOTAL</var></code>
+                    </p>
+                    <p>
+                    <var>clothing(2)</var> <var>clothing_color(2)</var> עולה <code>₪<var>TOTAL</var></code>.
+                    </p>
+                </div>
+            </div>
+
+            <div id="compare-groupsize">
+                <p class="problem">
+                <var>clothing(1)</var> <var>clothing_color(1)</var> עולה ₪<var>TOTAL</var>,
+                וכמו כן הוא עולה פי <var>NUM2</var> יותר מאשר <var>clothing(2)</var> <var>clothing_color(2)</var>.
+                </p>
+                <p class="question">
+                כמה עולה <var>clothing(2)</var> <var>clothing_color(2)</var>?
+                </p>
+                <div class="solution" data-forms="dollar"><var>NUM1</var></div>
+                <div class="hints">
+                    <p>
+                    המחיר של <var>clothing(1)</var> <var>clothing_color(1)</var>
+                    הוא מכפלה של המחיר של <var>clothing(2)</var> <var>clothing_color(2)</var>.
+                    אם כך, מצאו את תוצאת החילוק של שני המחירים.
+                    </p>
+                    <p>
+                    את התוצאה, שנקראת 'מנה', ניתן לקבל על ידי חישוב <code>₪<var>TOTAL</var> \div <var>NUM2</var></code>.
+                    </p>
+                    <p>
+                    <code>₪<var>TOTAL</var> \div <var>NUM2</var> = ₪<var>NUM1</var></code>
+                    </p>
+                    <p><var>clothing(2)</var> <var>clothing_color( 2 )</var> עולה <code>₪<var>NUM1</var></code>.
+                </div>
+            </div>
+
+            <div id="compare-number">
+                <p class="problem">
+                <var>clothing(1)</var> <var>clothing_color(1)</var> עולה ₪<var>TOTAL</var>,
+                ואילו <var>clothing(2)</var> <var>clothing_color(2)</var> עולה ₪<var>NUM2</var>.
+                </p>
+                <p class="question">
+                פי כמה עולה <var>clothing( 1 )</var> <var>clothing_color( 1 )</var> ביחס ל<var>clothing( 2 )</var> <var>clothing_color( 2 )</var>?
+                </p>
+                <p class="solution" data-forms="integer">
+                    <var>NUM1</var>
+                </p>
+                <div class="hints">
+                    <p>
+                    המחיר של <var>clothing(1)</var> <var>clothing_color(1)</var>
+                    הינו מכפלה של המחיר של <var>clothing(2)</var> <var>clothing_color(2)</var>.
+                    אם כך, מצאו את תוצאת החילוק של שני המחירים.
+                    </p>
+                    <p>
+                    את התוצאה, שנקראת 'מנה', ניתן לקבל על ידי חישוב <code>₪<var>TOTAL</var> \div ₪<var>NUM2</var></code>.
+                    </p>
+                    <p>
+                    <code>₪<var>TOTAL</var> \div ₪<var>NUM2</var> = <var>NUM1</var></code>
+                    </p>
+                    <p>
+                    <var>clothing( 1 )</var> <var>clothing_color( 1 )</var> עולה פי <code><var>NUM1</var></code> יותר מאשר
+                    <var>clothing( 2 )</var> <var>clothing_color( 2 )</var>.
+                    </p>
+                </div>
+            </div>
+
+            <div id="groups-product">
+                <p class="problem">
+                <var>person(1)</var> <var>rode(1)</var> <var>bike_part(1)</var> <var>his(1)</var> מרחק של <var>plural_heb( NUM1, distance(1))</var> בכל אחד מ-<var>NUM2</var> הימים האחרונים.
+                </p>
+                <p class="question">
+                כמה <var>plural_heb( distance(1) )</var> <var>rode(1)</var> <var>person(1)</var> <var>bike_part(1)</var> <var>his(1)</var> בסך הכל?
+                </p>
+                <div class="solution" data-type="multiple">
+                    <span style="padding-right: 5px" class="sol" data-forms="integer"><var>TOTAL</var></span> <var>plural_heb( distance(1) )</var>
+                </div>
+                <div class="hints">
+                    <p>
+              			הסכום הכולל של ה<var>plural_heb( distance(1) )</var>
+              			הוא המכפלה של מספר ה<var>plural_heb( distance(1) )</var> בכל יום
+              			ומספר הימים ש<var>person(1)</var> <var>biked(1)</var>.
+                    </p>
+                    <p>
+                    
+                    ניתן לרשום מכפלה זו כ- <var>NUM1</var> <code>\text{ <var>plural_heb( distance( 1 ) )</var> כל יום} \times <var>NUM2</var>\text{ ימים}</code>.
+                    </p>
+                    <p>
+                    <var>NUM1</var> <code>\text{ <var>plural_heb( distance( 1 ) )</var> כל יום} \times <var>NUM2</var>\text{ ימים}= <var>TOTAL</var>\text{ <var>plural_heb( distance(1) )</var>}</code>
+                    </p>
+                    <p>
+                    <var>person( 1 )</var> <var>biked( 1 )</var> סך הכל <var>plural_heb( TOTAL, distance( 1 ) )</var>.
+                    </p>
+                </div>
+            </div>
+
+            <div id="groups-groupsize">
+                <p class="problem">
+                <var>person(1)</var> <var>rode(1)</var> <var>bike_part(1)</var> <var>his(1)</var> מרחק של <var>plural_heb( TOTAL, distance(1))</var> סך הכל במהלך <var>NUM2</var> הימים האחרונים.
+                כמו כן, אנו יודעים ש<var>he( 1 )</var> <var>rode( 1 )</var> מרחק שווה בכל יום.
+                </p>
+                <p class="question">
+                כמה <var>plural_heb( distance(1) )</var> <var>rode(1)</var> <var>person(1)</var> <var>bike_part(1)</var> <var>his(1)</var> בכל יום?
+                </p>
+                <div class="solution" data-type="multiple">
+                    <span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> <var>plural_heb( distance(1) )</var>
+                </div>
+                <div class="hints">
+                    <p>
+              			מספר ה<var>plural_heb( distance(1) )</var> ש<var>person(1)</var> <var>rode(1)</var> בכל יום
+              			הוא סך כל ה<var>plural_heb( distance(1) )</var>
+              			לחלק במספר הימים שבהם
+              			<var>he(1)</var> <var>rode(1)</var>.                    
+                    </p>
+                    <p>
+                    אם נרשום את המנה נקבל <var>TOTAL</var> <code>\text{ <var>plural_heb( distance( 1 ) )</var>} \div <var>NUM2</var>\text{ ימים}</code>.
+                    </p>
+                    <p>
+                     <code> <var>TOTAL</var> \div <var>NUM2</var> = <var>NUM1</var></code>
+                    </p>
+                    <p><var>person( 1 )</var> <var>biked( 1 )</var> <var>NUM1</var> <var>plural_heb( distance(1) )</var> בכל יום.</p>
+                </div>
+            </div>
+
+            <div id="groups-number">
+                <p class="problem">
+                <var>person(1)</var> <var>rode(1)</var> <var>bike_part(1)</var> <var>his(1)</var> מרחק כולל של <var>plural_heb( TOTAL, distance(1))</var> במהלך הימים האחרונים.
+                <var>he(1)</var> <var>rode(1)</var>  <var>plural_heb( NUM2, distance(1) )</var> בכל יום.                                    
+                </p>
+                <p class="question">
+                כמה ימים <var>rode(1)</var> <var>person(1)</var> ?
+                </p>
+                <div class="solution" data-type="multiple">
+                    <span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM1</var></span> ימים
+                </div>
+                <div class="hints">
+                    <p>
+                    מספר הימים ש<var>person(1)</var> <var>rode(1)</var>
+                    הוא סך כל ה<var>plural_heb( distance(1) )</var> ש<var>biked(1)</var> לחלק
+                    במספר ה<var>plural_heb( distance(1) )</var> ש<var>biked(1)</var> בכל יום.
+                    </p>
+                    <p>
+                    מספר הימים שווה ל- <var>TOTAL</var> <code>\text{ <var>plural_heb( distance( 1 ) )</var>} \div <var>NUM2</var>\text{ <var>plural_heb( distance( 1 ))</var> בכל יום}</code>
+                    </p>
+                    <p>
+                    <code><var>TOTAL</var> \div <var>NUM2</var> = <var>NUM1</var></code>
+                    </p>
+                </div>
+            </div>
+
+            <div id="array-product">
+                <p class="problem">
+            		<var>person(1)</var> <var>he(1)</var> <var>farmer(1)</var>.
+            		<var>He(1)</var> <var>plant(1)</var> <var>plural_heb( NUM1, 'שורה' , 'שורות', 'f')</var> של <var> crop(1) </var> ב<var>field(1)</var>
+            		ובכל שורה היו
+            		 <var>plural_heb( NUM2, 'שתיל', 'שתילים', 'm')</var>.              
+                </p>
+                <p class="question">
+            		כמה
+            		 <var>plural_heb('שתיל')</var> <var>plant(1)</var> <var>person(1)</var> ב<var>field(1)</var>?
+                </p>
+                <div class="solution" data-type="multiple">
+                    <span style="padding-right: 5px" class="sol" data-forms="integer"><var>TOTAL</var></span> שתילי <var> crop(1)</var>
+                </div>
+                <div class="hints">
+                    <p>
+              			מספר שתילי ה<var>crop(1)</var> ש<var>person(1)</var> <var>plant(1)</var>
+              			 הוא מכפלה של מספר השורות ש<var>he(1)</var> <var>plant(1)</var> ומספר	
+              			השתילים בכל שורה.
+                    </p>
+                    <p>
+               			 המכפלה היא
+              			<var>plural_heb( NUM1, 'שורה' , 'שורות', 'f')</var> של <var>crop( 1 )</var> <code> \times </code> <var>plural_heb( NUM2, 'שתיל', 'שתילים', 'm' )</var> בשורה.
+                    </p>
+                    <p>
+              			<var>NUM1</var> <code>\text{ שורות של <var>crop( 1 )</var>} \times  <var>plural_heb( NUM2, 'שתיל', 'שתילים' )</var>\text{ בשורה} = <var>TOTAL</var></code> שתילים של <var>crop(1)</var>
+                    </p>
+                </div>
+            </div>
+
+            <div id="array-groupsize">
+                <p class="problem">
+              		<var>person(1)</var> <var>he(1)</var> <var>farmer(1)</var>.
+              		<var>He(1)</var> <var>plant(1)</var> <var>plural_heb( NUM1, 'שורה', 'שורות', 'f' )</var> של שתילי <var>crop(1)</var> ב<var>field(1)</var>,
+              		ובכל שורה אותו מספר של שתילים.
+              		<var>He(1)</var> <var>plant(1)</var> סך הכל <var>TOTAL</var> שתילי <var>crop(1)</var> ב<var>field(1)</var>.
+                </p>
+                <p class="question">
+              		כמה שתילי
+              		<var>crop(1)</var> <var>person(1)</var> <var>plant(1)</var> בכל שורה?
+                </p>
+                <div class="solution" data-type="multiple">
+                    <span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM2</var></span> שתילי <var> crop(1)</var>
+                </div>
+                <div class="hints">
+                    <p>
+                			מספר שתילי ה<var>crop(1)</var> ש<var>person(1)</var> <var>plant(1)</var>
+                			בכל שורה הוא סך כל שתילי ה<var>crop(1)</var> ש<var>he(1)</var> <var>plant(1)</var>
+                			לחלק במספר השורות.
+                    </p>
+                    <p>
+             			  התוצאה, שנקראת 'מנה', היא
+            			  <var>TOTAL</var> <code>\text{שתילי <var>crop( 1 )</var>} \div <var>NUM1</var>\text{ שורות }</code>.
+                    </p>
+                    <p>
+              			<code><var>TOTAL</var> \div <var>NUM1</var> = <var>NUM2</var></code>
+                    </p>
+                </div>
+            </div>
+
+            <div id="array-number">
+                <p class="problem">
+              		<var>person(1)</var> <var>he(1)</var> <var>farmer(1)</var>.
+              		<var>He(1)</var> <var>plant(1)</var> <var>plural_heb( TOTAL, 'שתיל','שתילים','m' )</var> של <var>crop(1)</var> ב<var>field(1)</var>,
+              		ובכל שורה היו
+              		 <var>NUM1</var> שתילים.
+                </p>
+                <p class="question">
+            		כמה שורות של שתלי
+            		  <var>crop(1)</var> <var>plant(1)</var> <var>person(1)</var>  ב<var>field(1)</var>?
+                </p>
+                <div class="solution" data-type="multiple">
+                    <span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM2</var></span> שורות
+                </div>
+                <div class="hints">
+              			<p>
+              			מספר שורות ה<var>crop(1)</var> ש<var>person(1)</var> <var>plant(1)</var>
+              			 הוא סך כל שתילי ה<var>crop(1)</var> ש<var>he(1)</var> <var>plant(1)</var>
+              			 לחלק במספר השתילים בכל שורה.
+              			</p>
+              			<p>
+              			התוצאה, שנקראת 'מנה' היא
+              			<var>TOTAL</var> <code>\text{שתילי <var>crop( 1 )</var>} \div <var>NUM1</var>\text{שתילים בשורה}</code>.
+              			</p>
+              			<p>
+              			<code><var>TOTAL</var> \div <var>NUM1</var> = <var>NUM2</var></code>
+              			</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

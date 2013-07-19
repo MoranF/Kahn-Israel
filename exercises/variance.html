@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems stat">
+<head>
+	<meta charset="UTF-8" />
+	<title>שונות</title>
+	<script src="../khan-exercise.js"></script>
+	<style>
+		#answer_area .short input[type=text] {
+			width: 40px;
+		}
+	</style>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="DATA_POINTS">randRange( 4, 6 )</var>
+			<var id="POPULATION">randRange( 20, 50 )</var>
+			<var id="TGT_MEAN">animalAvgLifespan( 1 )</var>
+			<var id="TGT_STDDEV">animalStddevLifespan( 1 )</var>
+			<var id="DATA">$.map( randGaussian( TGT_MEAN, TGT_STDDEV, DATA_POINTS ), function( lifespan ) {
+				lifespan = lifespan &lt; 1 ? 1 : round( lifespan );
+				return randRange( 1, lifespan );
+			} )</var>
+			<var id="MEAN">roundTo( 1, mean( DATA ) )</var>
+			<var id="SQR_DEV">$.map( DATA, function( x ) { return roundTo( 2, ( x - MEAN ) * ( x - MEAN ) ); })</var>
+			<var id="VARIANCE">roundTo( 2, sum( SQR_DEV ) / ( DATA_POINTS - 1 ) )</var>
+			<var id="VARIANCE_POP">roundTo( 2, sum( SQR_DEV ) /  DATA_POINTS )</var>
+		</div> <!-- vars -->
+
+		<div class="problems">
+
+			<div id="population">
+				<div class="problem" data-else>
+					<p>קבלנו את כל הגילאים של <var>DATA_POINTS</var> ה<var>animal( 1 )</var>ים בגן החיות הקרוב:</p>
+					<p><code>\qquad<var>DATA.join( ",\\enspace " )</var></code></p>
+				</div>
+
+				<p class="question">
+					מה הוא הגיל הממוצע של ה<var> animal( 1 ) </var>ים בגן החיות? מה היא השונות ?
+					עגל תשובתך לעשירית הקרובה.
+				</p>
+
+				<div class="solution" data-type="multiple">
+					<p>
+						גיל ממוצע:
+						<span class="sol short" data-type="decimal" data-inexact data-max-error="0.15"><var>mean( DATA )</var></span> שנים
+					</p>
+					<p>
+						שונות:
+						<span class="sol short" data-type="decimal" data-inexact data-max-error="0.15"><var>sum( SQR_DEV ) / DATA_POINTS</var></span><code>^2</code> שנים
+					</p>
+					<div class="example">מספר עשרוני כמו  <code>7.5</code></div>
+					<div class="example"> תשובות בסטייה של<code>\pm 0.15</code>  מקבלות</div>
+				</div> <!-- solution -->
+
+				<div class="hints">
+					<p>
+						בגלל שיש לנו את כל המידע על <var>DATA_POINTS</var> ה<var>animal( 1 )</var>ים בגן החיות, אנו יכולים לחשב את
+						 <span class="hint_blue">ממוצע האוכלוסיה</span>
+						<code>(\color{<var>BLUE</var>}{\mu})</code> וגם 
+						<span class="hint_pink">שונות האוכלוסיה</span> <code>(\color{<var>PINK</var>}{\sigma^2})</code>.
+					</p>
+
+					<div>
+						<p>
+							כדי למצוא את <span class="hint_blue">ממוצע האוכלוסיה</span>, נחבר את כל <code class="hint_green"><var>DATA_POINTS</var></code>
+							הגילאים ונחלק במספר הגילאים -<code class="hint_green"><var>DATA_POINTS</var></code>.
+						</p>
+						<p>
+							<code>
+								\color{<var>BLUE</var>}{\mu} \quad = \quad
+								\dfrac{\sum\limits_{i=1}^{\color{<var>GREEN</var>}{N}} x_i}{\color{<var>GREEN</var>}{N}} \quad = \quad
+								\dfrac{\sum\limits_{i=1}^{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}} x_i}{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}}
+							</code>
+						</p>
+					</div>
+
+					<p>
+						<code>
+								\color{<var>BLUE</var>}{\mu} \quad = \quad
+								\dfrac{<var>plus.apply( KhanUtil, DATA )</var>}{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}} \quad = \quad
+								\color{<var>BLUE</var>}{<var>MEAN</var>\text{ שנים }}
+						</code>
+					</p>
+
+					<div>
+						<p>
+							מצא את <span class="hint_purple">ריבוע הסטיה מהממוצע</span> עבור כל <var>animal(1)</var>.
+						</p>
+						<div class="fake_header">
+							<span style="width: 100px;">
+								גיל <br/>
+								<code>x_i</code>
+							</span><span style="width: 150px;">
+								<span class="hint_gray">מרחק מהממוצע</span>
+								<code>(x_i - \color{<var>BLUE</var>}{\mu})</code>
+							</span><span style="width: 150px;">
+								<code>(x_i - \color{<var>BLUE</var>}{\mu})^2</code>
+							</span>
+						</div>
+						<div class="fake_row" data-each="DATA as i, POINT">
+							<span style="width: 100px;">
+								<code><var>POINT</var></code> שנים
+							</span><span style="width: 150px;" class="hint_gray">
+								<code><var>roundTo( 2, POINT - MEAN )</var></code> שנים
+							</span><span style="width: 150px;" class="hint_purple">
+								<code><var>SQR_DEV[ i ]</var></code> שנים<code>^2</code>
+							</span>
+						</div>
+					</div>
+
+					<div>
+						<p>
+							בגלל שאנו משתמשים <span class="hint_blue">בממוצע האוכלוסיה</span><code>(\color{<var>BLUE</var>}{\mu})</code> אנו יכולים לחשב את
+							<span class="hint_purple">ריבועי הסטייה מהממוצע</span>, אנו יכולים לחשב את <span class="hint_red">השונות</span>
+							<code>(\color{red}{\sigma^2})</code>, מבלי להציג כל הטיה, פשוט על ידי מיצוע
+							<span class="hint_purple">ריבוע השונות מהממוצע</span>:
+						</p>
+						<p>
+							<code>
+								\color{red}{\sigma^2} \quad = \quad
+								\dfrac{\sum\limits_{i=1}^{\color{<var>GREEN</var>}{N}} (x_i - \color{<var>BLUE</var>}{\mu})^2}{\color{<var>GREEN</var>}{N}}
+							</code>
+						</p>
+					</div>
+
+					<p>
+						<code>
+							\color{red}{\sigma^2} \quad = \quad
+							\dfrac{<var>plus.apply( KhanUtil, $.map( SQR_DEV, function( x ) { return "\\color{purple}{" + x + "}"; }) )</var>}
+							{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}}
+						</code>
+					</p>
+
+					<p>
+						<code>
+							\color{red}{\sigma^2} \quad = \quad
+							\dfrac{\color{purple}{<var>roundTo( 2, sum( SQR_DEV ) )</var>}}{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}} \quad = \quad
+							\color{red}{<var>VARIANCE_POP</var>\text{ שנים}^2}
+						</code>
+					</p>
+
+					<p><strong>
+						ממוצע הגילאים של ה<var>animal( 1 )</var> בגן החיות הוא <var>MEAN</var>  שנים ושונות האוכלוסיה היא
+						 <var>VARIANCE_POP</var> <code>^2</code>שנים.
+					</strong></p>
+
+				</div> <!-- hints -->
+			</div> <!-- population -->
+
+			<div id="sample">
+				<div class="problem" data-else>
+					<p>
+						קיבלנו גילאים של <var>DATA_POINTS</var> ה<var>animal( 1 )</var>ים
+						אשר נבחרו ברנדומליות מ <var>POPULATION</var> ה<var>animal( 1 )</var>ים  בגן החיות הקרוב:
+					</p>
+					<p><code>\qquad<var>DATA.join( ",\\enspace " )</var></code></p>
+				</div>
+
+				<p class="question">
+					בהתבססות על הדוגמית, מה ממוצע הגילאים של  ה<var>animal( 1 )</var>ים?מה היא השונות?
+					עגל תשובתך לעשירית הקרובה.
+				</p>
+
+				<div class="solution" data-type="multiple">
+					<p>
+						גיל ממוצע:
+						<span class="sol short" data-type="decimal" data-inexact data-max-error="0.15"><var>mean( DATA )</var></span> שנים
+					</p>
+					<p>
+						שונות:
+						<span class="sol short" data-type="decimal" data-inexact data-max-error="0.15"><var>sum( SQR_DEV ) / DATA_POINTS</var></span><code>^2</code> שנים
+					</p>
+					<div class="example">מספר עשרוני כמו  <code>7.5</code></div>
+					<div class="example"> תשובות בסטייה של<code>\pm 0.15</code>  מקבלות</div>
+				</div> <!-- solution -->
+
+				<div class="hints">
+					<p>
+						בגלל שיש לנו מידע על כמות קטנה מכל האוכלוסיה  של ה<var>animal( 1 )</var>ים, אנו יכולים רק
+						לשאר את ממוצע האוכלוסיה והשונות על ידי <span class="hint_blue">ממוצע פשוט</span>
+						<code>(\color{<var>BLUE</var>}{\overline{x}})</code>ו
+						<span class="hint_pink">שונות פשוטה</span> <code>(\color{<var>PINK</var>}{s^2})</code>.
+					</p>
+
+					<div>
+						<p>
+							כדי למצוא את  ה<span class="hint_blue">ממוצע הפשוט</span>, נחבר את כל הגילאים
+							ונחלק במספר הגילאים - <code class="hint_green"><var>DATA_POINTS</var></code>.
+						</p>
+						<p>
+							<code>
+								\color{<var>BLUE</var>}{\overline{x}} \quad = \quad
+								\dfrac{\sum\limits_{i=1}^{\color{<var>GREEN</var>}{n}} x_i}{\color{<var>GREEN</var>}{n}} \quad = \quad
+								\dfrac{\sum\limits_{i=1}^{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}} x_i}{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}}
+							</code>
+						</p>
+					</div>
+
+					<p>
+						<code>
+								\color{<var>BLUE</var>}{\overline{x}} \quad = \quad
+								\dfrac{<var>plus.apply( KhanUtil, DATA )</var>}{\color{<var>GREEN</var>}{<var>DATA_POINTS</var>}} \quad = \quad
+								\color{<var>BLUE</var>}{<var>MEAN</var>\text{ שנים}}
+						</code>
+					</p>
+
+					<p>
+						מצא את  <span class="hint_purple">ריבוע הסטיה ממוצע</span> עבור כל דוגמא. 
+						ממוצא האוכלוסיה אנו נשאר בעזרת ה<span class="hint_blue">הממוצע הפשוט</span>אשר כרגע חישבנו 
+						<code>(\color{<var>BLUE</var>}{\overline{x}} = \color{<var>BLUE</var>}{<var>MEAN</var>\text{ שנים}})</code>.
+					</p>
+
+					<div>
+						<div class="fake_header">
+							<span style="width: 100px;">
+								גיל <br/>
+								<code>x_i</code>
+							</span><span style="width: 150px;">
+								<span class="hint_gray">מרחק מהממוצע</span>
+								<code>(x_i - \color{<var>BLUE</var>}{\overline{x}})</code>
+							</span><span style="width: 150px;">
+								<code>(x_i - \color{<var>BLUE</var>}{\overline{x}})^2</code>
+							</span>
+						</div>
+						<div class="fake_row" data-each="DATA as i, POINT">
+							<span style="width: 100px;">
+								<code><var>POINT</var></code> שנים
+							</span><span style="width: 150px;" class="hint_gray">
+								<code><var>roundTo( 2, POINT - MEAN )</var></code> שנים
+							</span><span style="width: 150px;" class="hint_purple">
+								<code><var>SQR_DEV[ i ]</var></code> שנים<code>^2</code>
+							</span>
+						</div>
+					</div>
+
+					<div>
+						<p>
+							באופן כללי הינו יכולים למצוא את השונות ( וריאנס) <code>(\color{red}{s^2})</code> על ידי ממוצע
+							<span class="hint_purple">רבועי הסטיה מהממוצע</span>.  אך זכרו שאיננו יודעים את ממוצע האוכלוסיה האמיתי &mdash;אנו שיערנו בעזרת  <span class="hint_blue">ממוצע פשוט</span>.
+						</p>
+						<p>
+							הגיל של כל <var>animal( 1 )</var> בדוגמתינו סביר להניח יהיה לממוצע <var> DATA_POINTS</var> ה<var>plural_heb(animal( 1 ) )</var> אשר דגמנו, ולכן הוא יהיה ממוצע שנות המחיה של <var>plural_heb( POPULATION, animal( 1 ) )</var> בגן החיות.
+							בגלל זה , <span class="hint_purple">ריבועי הסטויות מהממוצע</span> אשר חישבנו כנראה יהיה הסטיות האמיתיות ממוצע האוכלוסיה.
+						</p>
+						<p>
+							כדי לפצות על ההנחה הזאת , במקום להשתמש בממוצע פשוט של  <span class="hint_purple">ריבועי הסטייה מהממוצע</span>,
+							אנו ונחבר אותם ונחלק ב <code class="hint_green">n - 1</code>.
+						</p>
+						<p>
+							<code>
+								\color{red}{s^2} \quad = \quad
+								\dfrac{\sum\limits_{i=1}^{\color{<var>GREEN</var>}{n}} (x_i - \color{<var>BLUE</var>}{\overline{x}})^2}{\color{<var>GREEN</var>}{n - 1}}
+							</code>
+						</p>
+					</div>
+
+					<p>
+						<code>
+							\color{red}{s^2} \quad = \quad
+							\dfrac{<var>plus.apply( KhanUtil, $.map( SQR_DEV, function( x ) { return "\\color{purple}{" + x + "}"; }) )</var>}
+							{\color{<var>GREEN</var>}{<var>DATA_POINTS</var> - 1}}
+						</code>
+					</p>
+
+					<p>
+						<code>
+							\color{red}{s^2} \quad = \quad
+							\dfrac{\color{purple}{<var>roundTo( 2, sum( SQR_DEV ) )</var>}}{\color{<var>GREEN</var>}{<var>DATA_POINTS - 1</var>}} \quad = \quad
+							\color{red}{<var>VARIANCE</var>\text{ שנים}^2}
+						</code>
+					</p>
+
+					<p><strong>
+						אנו יכולים לשאר שממוצע הגילאים אצל ה<var>animal( 1 )</var>ים בגן החיות הוא <var>MEAN</var> שנים ועם שונות של 
+						<var>VARIANCE</var> שנים<code>^2</code>.
+					</strong></p>
+
+				</div> <!-- hints -->
+			</div> <!-- sample -->
+
+		</div> <!-- problems -->
+	</div> <!-- exercise -->
+</body>
+</html>

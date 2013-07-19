@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html data-require="math graphie math-format">
+<head>
+	<meta charset="UTF-8" />
+	<title>ערך מוחלט של מספר מרוכב</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="vars">
+		<var id="REAL">randRangeExclude( -8, 8, [ -1, 0, 1, 2 ] )</var>
+		<var id="IMAG">randRangeExclude( -8, 8, [ -1, 0, 1, 2 ] )</var>
+		<var id="ABS_SQUARE">REAL * REAL + IMAG * IMAG</var>
+		<var id="REPRESENTATION">complexNumber( REAL, IMAG )</var>
+	</div>
+
+	<div class="problems">
+		<div>
+			<p class="question">
+				קבע את הערך המוחלט של המספר המרוכב הבא:
+			</p>
+			<p>
+				<code><var>REPRESENTATION</var></code>
+			</p>
+			<div class="solution" data-type="radical">
+				<var>ABS_SQUARE</var>
+			</div>
+			<div class="hints">
+				<p>
+					 הערך המוחלט של כל מספר הוא המרחק שלו מנקודת האפס. מספר מרוכב יכול להיות מסורטט על המישור המורכב, ככה שהערך המוחלט נקבע על ידי נוסחת המרחק.
+				</p>
+				<div>
+					<div class="graphie" id="graph">
+						graphInit({
+						range: [[-10, 10], [-10, 10]],
+							scale: 20,
+							tickStep: 1,
+							labelStep: 1,
+						});
+						label( [10, 0.5], "Re", "left" );
+						label( [0.5, 9], "Im", "right" );
+						circle( [REAL, IMAG], 3 / 20, {
+							fill: KhanUtil.BLUE,
+							stroke: "none"
+						});
+						label( [REAL, IMAG], REPRESENTATION, "left", {
+							color: KhanUtil.BLUE,
+							labelDistance: 10
+						} );
+					</div>
+					<p>
+						<code><var>REPRESENTATION</var></code> מסורטט כעיגול  <strong class="hint_blue">כחול</strong>למעלה .
+					</p>
+				</div>
+				<div>
+					<div class="graphie" data-update="graph">
+						path([ [0,0], [REAL, IMAG]], {
+							stroke: KhanUtil.ORANGE 
+						});
+					</div>
+					<p>
+						הערך המוחלט שאנו צריכים הוא האורך של הקו <strong class="hint_orange">הכתום</strong>.
+					</p>
+				</div>
+				<div>
+					<div class="graphie" data-update="graph">
+						path([ [0,0], [REAL, 0], [REAL, IMAG]], {
+							stroke: KhanUtil.BLUE
+						});
+					</div>
+					<p>
+						 הקו <strong class="hint_orange">הכתום </strong> הוא היתר של המשולש ישר הזווית הנוצר.
+						שתי רגליו (המסורטטות בצבע <strong class="hint_blue">כחול</strong>) בעלי הגדלים <code><var>abs( REAL )</var></code> וגם  <code><var>abs( IMAG )</var></code>, אשר תואם
+						לערכים המוחלטים של החלק הממשי והחלק המדומה של המספר המרוכב <code><var>REPRESENTATION</var></code>.
+					</p>
+				</div>
+				<p>
+					נסדר על פי משפט פיתרוגס:<br />
+					<code>\qquad |<var>REPRESENTATION</var>|^2 = <var>abs( REAL )</var>^2 + <var>abs( IMAG )</var>^2</code>, אז <br />
+					<code>\qquad |<var>REPRESENTATION</var>| = \sqrt{<var>abs( REAL )</var>^2 + <var>abs( IMAG )</var>^2}</code>.
+				</p>
+				<p>
+					<code>\qquad \sqrt{<var>abs(REAL)</var>^2 + <var>abs(IMAG)</var>^2} = \sqrt{<var>REAL * REAL</var> + <var>IMAG * IMAG</var>} = \sqrt{<var>ABS_SQUARE</var>}</code>
+				</p>
+				<p data-if="squareRootCanSimplify( ABS_SQUARE )">
+					נפשט את השבר ונקבל<code><var>formattedSquareRootOf( ABS_SQUARE )</var></code>. שהערך המוחלט הינו  <code><var>REPRESENTATION</var></code>.
+				</p>
+				<p data-else>
+					לא ניתן לפשט עוד את השבר, לכן הערך המוחלט של <code><var>REPRESENTATION</var></code> הוא <code>\sqrt{<var>ABS_SQUARE</var>}</code>.
+				</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+

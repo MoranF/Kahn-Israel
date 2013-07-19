@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות ממוצע מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div>
+			<div class="vars" data-ensure="SUM % LENGTH === 0">
+				<var id="LENGTH">randRange(4, 6)</var>
+				<var id="SCORES">randRange(75, 98, LENGTH)</var>
+				<var id="SUM">(function() {
+					var sum = 0;
+
+					$.each(SCORES, function( i, elem ) {
+						sum += elem;
+					});
+
+					return sum;
+				})()</var>
+			</div>
+
+			<div class="question">
+				<p>במסגרת שיעורי <var>course(1)</var>, <var>person(1)</var> <var>genderize(1,"עבר")</var> <var>LENGTH</var> בחינות. הציונים <var>his(1)</var> היו <var>toSentence(SCORES)</var>.</p>
+
+				<p>מה היה הציון הממוצע <var>his(1)</var> במקצוע?</p>
+			</div>
+			<div class="solution"><var>SUM / LENGTH</var></div>
+
+			<div class="hints">
+				<p>הממוצע הוא סכום הציונים <var>his(1)</var> חלקי מספר הבחינות.</p>
+				<p>ישנם <var>LENGTH</var> ציונים וסכומם הוא <code><var>SCORES.join(" + ")</var> = <var>SUM</var></code>.</p>
+				<p>הציון הממוצע <var>His(1)</var> הוא <code><var>SUM</var> \div <var>LENGTH</var> = <var>SUM / LENGTH</var></code>.</p>
+			</div>
+		</div>
+
+		<div>
+			<div class="vars" data-ensure="NEW_AVG + COUNT * (NEW_AVG - OLD_AVG) <= 100">
+				<var id="COUNT">randRange(3, 7)</var>
+				<var id="OLD_AVG">randRange(77, 88)</var>
+				<var id="NEW_AVG">randRange(OLD_AVG + 2, 99)</var>
+			</div>
+
+			<div class="question">
+				<p>ב-<var>COUNT</var> הבחינות שהתקיימו עד כה ב<var>course(1)</var>, <var>person(1)</var> <var>genderize(1,"קיבל")</var> ציון ממוצע של <var>OLD_AVG</var>.</p>
+
+				<p>כמה <var>he(1)</var> <var>genderize(1,"צריך","צריכה")</var> לקבל בבחינה הבאה כדי שיהיה <var>tohim(1)</var> ממוצע כולל של <var>NEW_AVG</var>?</p>
+			</div>
+			<div class="solution"><var>NEW_AVG + COUNT * (NEW_AVG - OLD_AVG)</var></div>
+
+			<div class="hints">
+				<p>נסמן את הציון <var>his(1)</var> בבחינה הבאה ב-<code>x</code>.</p>
+				<p>סכום כל הציונים הוא <code><var>COUNT</var> \cdot <var>OLD_AVG</var> + x</code>.</p>
+				<p>הסכום צריך להיות שווה ל- <code><var>COUNT + 1</var> \cdot <var>NEW_AVG</var></code>.</p>
+				<p>כעת פשוט נשווה ונמצא את x: <br>
+        <code>x = <var>COUNT + 1</var> \cdot <var>NEW_AVG</var> - <var>COUNT</var> \cdot <var>OLD_AVG</var> = <var>(COUNT + 1) * NEW_AVG - COUNT * OLD_AVG</var></code>.</p>
+			</div>
+		</div>
+
+		<div>
+			<div class="vars" data-ensure="(OLD_AVG * COUNT + 100 * REMAINING) % (COUNT + REMAINING) === 0">
+				<var id="COUNT">randRange(3, 6)</var>
+				<var id="REMAINING">randRange(2, COUNT - 2)</var>
+				<var id="OLD_AVG">randRange(77, 88)</var>
+				<var id="NEW_AVG">(OLD_AVG * COUNT + 100 * REMAINING) / (COUNT + REMAINING)</var>
+			</div>
+
+			<div class="question">
+				<p><var>person(1)</var> <var>genderize(1,"עבר")</var> <var>COUNT</var> בחינות עד כה וממוצע הציונים <var>his(1)</var> לעת עת הוא <var>OLD_AVG</var>.</p>
+
+				<p>אם <var>he(1)</var> <var>genderize(1,"יקבל","תקבל")</var> 100 במהלך <var>REMAINING</var> הבחינות שנותרו <var>tohim(1)</var> לעבור עד סוף השנה, 
+        מה יהיה ממוצע הציונים הסופי <var>his(1)</var>?</p>
+			</div>
+			<div class="solution"><var>NEW_AVG</var></div>
+
+			<div class="hints">
+				<p>אם <var>person(1)</var> <var>genderize(1,"יקבל","תקבל")</var> 100 במהלך <var>REMAINING</var> הבחינות שנותרו, סכום הציונים <var>his(1)</var> יהיה <br>
+        <code><var>COUNT</var> \cdot <var>OLD_AVG</var> + <var>REMAINING</var> \cdot <var>100</var> = <var>COUNT * OLD_AVG + 100 * REMAINING</var></code>.</p>
+				<p>ממוצע הציונים הכולל <var>His(1)</var> יהיה אם כך <br>
+        <code><var>COUNT * OLD_AVG + 100 * REMAINING</var> \div <var>COUNT + REMAINING</var> = <var>NEW_AVG</var></code>.</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>קריאת גרף עמודות 2</title>
+	<script src="../khan-exercise.js"></script>
+	<style>
+		span.rotate  {
+			-moz-transform: rotate(-90deg);
+			-o-transform: rotate(-90deg);
+			-webkit-transform: rotate(-90deg);
+			-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+		}
+		body.ie span.rotate {
+			left: 60px !important;
+			top: 140px !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<div data-ensure="( NUM_IMPROVED >= 3 && !IMPROVE_TIE ) || UNBIASED">
+				<var id="MIDTERM">$.map( new Array( 5 ), function() { return randRange( 12, 20 ) * 5; } )</var>
+				<var id="FINAL">$.map( new Array( 5 ), function() { return randRange( 12, 20 ) * 5; } )</var>
+				<var id="IMPROVEMENT">$.map( new Array( 5 ), function( e, n ) { return FINAL[ n ] - MIDTERM[ n ]; } )</var>
+				<var id="NUM_IMPROVED">$.map( IMPROVEMENT, function( x ) { return x &gt; 0 ? 1 : null; }).length</var>
+				<var id="IMPROVE_TIE">IMPROVEMENT.slice().sort(function(a,b){return a - b;})[4] === IMPROVEMENT.slice().sort(function(a,b){return a - b;})[3]</var>
+				<var id="UNBIASED">false</var>
+			</div>
+		</div>
+		<div class="problem">
+			<p>השתמשו בגרף העמודות שלמטה כדי לענות על השאלה:</p>
+			<div class="graphie" id="barchart">
+				init({
+					range: [ [ -2, 17 ], [ -3, 11 ] ],
+					scale: [ 30, 30 ]
+				});
+
+				for ( var y = 1; y &lt;= 10; ++y ) {
+					label( [ 0, y ], y * 10, "left", false );
+					style({ stroke: "#000", strokeWidth: 1, opacity: 0.2 }, function() {
+						line( [ 0, y ], [ 16, y ] )
+					});
+				}
+				for ( var index = 0; index &lt; 5; ++index ) {
+					style({ stroke: "none", fill: "#9ab8ed", opacity: 1.0 });
+					path([ [ index * 3 + 1, 0 ], [ index * 3 + 1, MIDTERM[ index ] / 10 ], [ index * 3 + 2, MIDTERM[ index ] / 10 ], [ index * 3 + 2, 0 ], [ index * 3 + 1, 0 ] ]);
+					style({ stroke: "none", fill: "#ffc966", opacity: 1.0 });
+					path([ [ index * 3 + 2, 0 ], [ index * 3 + 2, FINAL[ index ] / 10 ], [ index * 3 + 3, FINAL[ index ] / 10 ], [ index * 3 + 3, 0 ], [ index * 3 + 2, 0 ] ]);
+					style({ opacity: 1.0 });
+					label( [ index * 3 + 2, 0 ], person( index + 1 ), "below", false );
+				}
+				style({ stroke: "#000", strokeWidth: 2, opacity: 1.0 });
+				line( [ 0, 0 ], [ 16, 0 ] );
+				line( [ 0, 0 ], [ 0, 10 ] );
+
+				label( [ 8, -0.8 ], "&lt;b&gt;תלמידים&lt;/b&gt;", "below", false );
+				$( label( [ -1.5, 5 ], "&lt;b&gt;ציונים (נקודות)&lt;/b&gt;", "center", false ) ).addClass( "rotate" );
+				label( [ 8, 10.5 ], "&lt;b&gt;ציונים בבוחן האמצע ובמבחן&lt;/b&gt;", "above", false );
+
+				style({ stroke: "none", fill: "#9ab8ed", opacity: 1.0 });
+				path([ [ 0, -2 ], [ 0.5, -2  ], [ 0.5, -2.5  ], [ 0, -2.5 ], [ 0, -2 ] ]);
+				style({ stroke: "#000", strokeWidth: 2, opacity: 1.0 });
+				label( [ 0.5, -2.25 ], "בוחן אמצע", "right", false );
+				style({ stroke: "none", fill: "#ffc966", opacity: 1.0 });
+				path([ [ 3, -2 ], [ 3.5, -2  ], [ 3.5, -2.5  ], [ 3, -2.5 ], [ 3, -2 ] ]);
+				style({ stroke: "#000", strokeWidth: 2, opacity: 1.0 });
+				label( [ 3.5, -2.25 ], "מבחן", "right", false );
+			</div>
+		</div>
+
+		<div class="problems">
+			<div id="most-improved">
+				<div class="vars">
+					<var id="BEST_IMPROVEMENT">Math.max.apply( Math, IMPROVEMENT )</var>
+					<var id="MOST_IMPROVED_IDX">_.indexOf( IMPROVEMENT, BEST_IMPROVEMENT )</var>
+					<var id="MOST_IMPROVED">person( MOST_IMPROVED_IDX + 1 )</var>
+				</div>
+				<p class="question">מי מהתלמידים השיג את השיפור המירבי בציון בין בוחן האמצע למבחן?</p>
+
+				<div class="solution"><var>MOST_IMPROVED</var></div>
+				<ul class="choices" data-category="true">
+					<li><var>person( 1 )</var></li>
+					<li><var>person( 2 )</var></li>
+					<li><var>person( 3 )</var></li>
+					<li><var>person( 4 )</var></li>
+					<li><var>person( 5 )</var></li>
+				</ul>
+
+				<div class="hints">
+					<div data-each="5 times as INDEX">
+						<div data-if="IMPROVEMENT[ INDEX ] > 0">
+							<p>עמודת ציון המבחן של <var>person( INDEX + 1 )</var> גבוהה יותר מעמודת ציון בוחן האמצע <var>his( INDEX + 1 )</var>,
+							ולכן <var>person( INDEX + 1 )</var> <var>genderize(INDEX+1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var>. ציון בוחן האמצע <var>His( INDEX + 1 )</var> הוא 
+							<code><var>MIDTERM[ INDEX ]</var></code> וציון המבחן <var>his( INDEX + 1 )</var> הוא <code><var>FINAL[ INDEX ]</var></code>, ולכן
+							<var>he( INDEX + 1 )</var> <var>genderize(INDEX+1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var> ב-<code><var>IMPROVEMENT[ INDEX ]</var></code> נקודות.</p>
+							<div class="graphie" data-update="barchart">
+								style({ stroke: GREEN, strokeWidth: 2, arrows: "-&gt;" });
+								line( [ INDEX * 3 + 1.5, MIDTERM[ INDEX ] / 10 ], [ INDEX * 3 + 2.5, FINAL[ INDEX ] / 10 ] );
+								label( [ INDEX * 3 + 1.5, MIDTERM[ INDEX ] / 10 + 0.2 ], MIDTERM[ INDEX ], "below", false ).css({ fontWeight: "bold" });
+								label( [ INDEX * 3 + 2.5, FINAL[ INDEX ] / 10 - 0.2 ], FINAL[ INDEX ], "above", false ).css({ fontWeight: "bold" });
+							</div>
+						</div>
+						<div data-else-if="IMPROVEMENT[ INDEX ] < 0">
+							<p>עמודת ציון המבחן של <var>person( INDEX + 1 )</var> נמוכה יותר מעמודת ציון בוחן האמצע <var>his( INDEX + 1 )</var>,
+							 ולכן <var>person( INDEX + 1 )</var> לא <var>genderize(INDEX + 1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var>.</p>
+							<div class="graphie" data-update="barchart">
+								style({ stroke: "grey", strokeWidth: 2, arrows: "-&gt;" });
+								line( [ INDEX * 3 + 1.5, MIDTERM[ INDEX ] / 10 ], [ INDEX * 3 + 2.5, FINAL[ INDEX ] / 10 ] );
+							</div>
+						</div>
+						<div data-else>
+							<p>עמודת ציון המבחן של <var>person( INDEX + 1 )</var> היא באותו גובה כמו זה של עמודת ציון בוחן האמצע <var>his( INDEX + 1 )</var>,
+							 ולכן <var>person( INDEX + 1 )</var> לא <var>genderize(INDEX + 1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var>.</p>
+						</div>
+					</div>
+					<p>
+						<var>MOST_IMPROVED</var> <var>genderize(MOST_IMPROVED_IDX + 1,"השיג")</var> את השיפור המירבי בציון <var>his( MOST_IMPROVED_IDX + 1 )</var>. 
+            <var>he(MOST_IMPROVED_IDX + 1)</var> <var>genderize(MOST_IMPROVED_IDX + 1,"קיבל")</var> 
+            <code><var>BEST_IMPROVEMENT</var></code> נקודות יותר
+						במבחן <var>his( MOST_IMPROVED_IDX + 1 )</var> מאשר בבוחן האמצע <var>his( MOST_IMPROVED_IDX + 1 )</var> .
+					</p>
+				</div>
+			</div>
+
+			<div id="difference">
+				<div class="vars">
+					<var id="INDEX" data-ensure="IMPROVEMENT[ INDEX ] > 0">randRange( 0, 4 )</var>
+					<var id="STUDENT">person( INDEX + 1 )</var>
+				</div>
+				<p class="question">בכמה נקודות <var>genderize(INDEX+1,"שיפר")</var> <var>STUDENT</var> את <var>genderize(INDEX+1,"ציונו","ציונה")</var> בין בוחן האמצע למבחן?</p>
+
+				<div class="solution" data-type="multiple">
+					<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>IMPROVEMENT[ INDEX ]</var></span> נקודות</p>
+				</div>
+				<div class="hints">
+					<div>
+						<p>תחילה נמצא את שתי העמודות שמתארות את הציונים של <var>STUDENT</var>.</p>
+						<div class="graphie" data-update="barchart">
+							style({ stroke: PINK, fill: "none", strokeWidth: 2 });
+							ellipse( [ INDEX * 3 + 2, -0.6 ], [ 1.2, 0.5 ] );
+						</div>
+					</div>
+
+					<div>
+						<p>
+							נשווה את הגובה של העמודה הכחולה של <var>STUDENT</var>לציר המספרים משמאל כדי למצוא את ציון בוחן האמצע <var>his( INDEX + 1 )</var>.
+							<span data-if="MIDTERM[ INDEX ] % 10 === 5">
+								גובה העמודה נמצא בדיוק באמצע הגובה בין <code><var>MIDTERM[ INDEX ] - 5</var></code> ובין <code><var>MIDTERM[ INDEX ] + 5</var></code>, ולכן
+							</span>
+							<var>STUDENT</var> <var>genderize(INDEX+1,"קיבל")</var> <code class="hint_blue"><var>MIDTERM[ INDEX ]</var></code> בבוחן האמצע.
+						</p>
+						<div class="graphie" data-update="barchart">
+							style({ stroke: BLUE, strokeWidth: 2, arrows: "-&gt;", strokeDasharray: "-" });
+							line( [ INDEX * 3 + 1, MIDTERM[ INDEX ] / 10 ], [ 0, MIDTERM[ INDEX ] / 10 ] );
+						</div>
+					</div>
+
+					<div>
+						<p>
+							נשווה את הגובה של העמודה הכתומה של <var>STUDENT</var>לציר המספרים משמאל כדי למצוא את ציון המבחן <var>his( INDEX + 1 )</var>.
+							<span data-if="FINAL[ INDEX ] % 10 === 5">
+								גובה העמודה נמצא בדיוק באמצע הגובה בין <code><var>FINAL[ INDEX ] - 5</var></code> ובין <code><var>FINAL[ INDEX ] + 5</var></code>, ולכן
+							</span>
+							<var>STUDENT</var> <var>genderize(INDEX+1,"קיבל")</var> <code class="hint_orange"><var>FINAL[ INDEX ]</var></code> במבחן.
+						</p>
+						<div class="graphie" data-update="barchart">
+							style({ stroke: ORANGE, strokeWidth: 2, arrows: "-&gt;", strokeDasharray: "-" });
+							line( [ INDEX * 3 + 2, FINAL[ INDEX ] / 10 ], [ 0, FINAL[ INDEX ] / 10 ] );
+						</div>
+					</div>
+
+					<p>
+						נפחית את ציון בוחן האמצע מציון המבחן כדי למצוא בכמה <var>STUDENT</var> <var>genderize(INDEX+1,"שיפר את ציונו","שיפרה את ציונה")</var>.
+					</p>
+
+					<p>
+						<code>\color{ORANGE}{<var>FINAL[ INDEX ]</var>} - \color{#6495ED}{<var>MIDTERM[ INDEX ]</var>} = <var>IMPROVEMENT[ INDEX ]</var></code>, ולכן
+						<var>STUDENT</var> <var>genderize(INDEX+1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var> ב-<code><var>IMPROVEMENT[ INDEX ]</var></code> בין בוחן האמצע למבחן.
+					</p>
+
+				</div>
+			</div>
+
+			<div id="reading">
+				<div class="vars">
+					<var id="INDEX">randRange( 0, 4 )</var>
+					<var id="STUDENT">person( INDEX + 1 )</var>
+					<var id="COLUMN">randRange( 0, 1 )</var>
+					<var id="TEST">[ "בוחן אמצע", "מבחן" ][ COLUMN ]</var>
+					<var id="TEST1">[ "בוחן האמצע", "מבחן" ][ COLUMN ]</var>
+					<var id="TEST1">[ "בוחן האמצע", "המבחן" ][ COLUMN ]</var>
+					<var id="ANSWER">COLUMN === 0 ? MIDTERM[ INDEX ] : FINAL[ INDEX ]</var>
+				</div>
+				<p class="question">כמה נקודות <var>genderize(INDEX+1,"קיבל")</var> <var>STUDENT</var> ב<var>TEST1</var>?</p>
+
+				<div class="solution" data-type="multiple">
+					<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>ANSWER</var></span> נקודות</p>
+				</div>
+				<div class="hints">
+					<div>
+						<p>תחילה נמצא את שתי העמודות שמתארות את הציונים של <var>STUDENT</var>.</p>
+						<div class="graphie" data-update="barchart">
+							style({ stroke: PINK, fill: "none", strokeWidth: 2 });
+							ellipse( [ INDEX * 3 + 2, -0.6 ], [ 1.2, 0.5 ] );
+						</div>
+					</div>
+					<div>
+						<p>השתמשו במקרא את הגרף כדי למצוא את העמודה שמייצגת את ציון <var>TEST2</var>.</p>
+						<div class="graphie" data-update="barchart">
+							style({ stroke: PINK, fill: "none", strokeWidth: 2 });
+							ellipse( [ COLUMN * 3 + 1.2, -2.25 ], [ 1.5, 0.5 ] );
+						</div>
+					</div>
+					<div>
+						<p>נשווה את הגובה של העמודה <span data-if="COLUMN === 0">הכחולה</span><span data-else>הכתומה</span> של  <var>STUDENT</var> לציר המספרים משמאל.</p>
+						<div class="graphie" data-update="barchart">
+							style({ stroke: PINK, strokeWidth: 2, arrows: "-&gt;", strokeDasharray: "-" });
+							line( [ INDEX * 3 + 1 + COLUMN, ANSWER / 10 ], [ 0, ANSWER / 10 ] );
+						</div>
+					</div>
+					<p data-if="ANSWER % 10 === 5">
+						גובה העמודה נמצא בדיוק באמצע הגובה בין <code><var>ANSWER - 5</var></code> ובין <code><var>ANSWER + 5</var></code>, ולכן
+						<var>STUDENT</var> <var>genderize(INDEX+1,"קיבל")</var> <code><var>ANSWER</var></code> נקודות ב<var>TEST1</var>.
+					</p>
+					<p data-else>
+						<var>STUDENT</var> <var>genderize(INDEX+1,"קיבל")</var> <code><var>ANSWER</var></code> נקודות ב<var>TEST1</var>.
+					</p>
+				</div>
+			</div>
+
+			<div id="num-improved">
+				<p class="question">כמה תלמידים שיפרו את ציונם בין בוחן האמצע למבחן?</p>
+			
+				<div class="solution" data-type="multiple">
+					<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM_IMPROVED</var></span> תלמידים</p>
+				</div>
+
+				<div class="hints">
+					<div data-each="5 times as INDEX">
+						<div data-if="IMPROVEMENT[ INDEX ] > 0">
+							<p>עמודת ציון המבחן של <var>person( INDEX + 1 )</var> גבוהה יותר מעמודת ציון בוחן האמצע <var>his( INDEX + 1 )</var>,
+							ולכן <var>person( INDEX + 1 )</var> <var>genderize(INDEX+1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var>.</p>
+							<div class="graphie" data-update="barchart">
+								style({ stroke: "grey", strokeWidth: 2, arrows: "-&gt;" });
+								line( [ INDEX * 3 + 1.5, MIDTERM[ INDEX ] / 10 ], [ INDEX * 3 + 2.5, FINAL[ INDEX ] / 10 ] );
+							</div>
+						</div>
+						<div data-else-if="IMPROVEMENT[ INDEX ] < 0">
+							<p>עמודת ציון המבחן של <var>person( INDEX + 1 )</var> נמוכה יותר מעמודת ציון בוחן האמצע <var>his( INDEX + 1 )</var>,
+							ולכן <var>person( INDEX + 1 )</var> לא <var>genderize(INDEX + 1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var>.</p>
+						</div>
+						<div data-else>
+							<p>עמודת ציון המבחן של <var>person( INDEX + 1 )</var> היא באותו גובה כמו זה של עמודת ציון בוחן האמצע <var>his( INDEX + 1 )</var>,
+							ולכן <var>person( INDEX + 1 )</var> לא <var>genderize(INDEX + 1,"שיפר")</var> את הציון <var>his( INDEX + 1 )</var>.</p>
+						</div>
+					</div>
+					<p>כעת נספור את מספר התלמידים ששיפרו את ציונם.</p>
+					<p><code><var>NUM_IMPROVED</var></code> תלמידים שיפרו את ציונם בין בוחן האמצע למבחן.</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

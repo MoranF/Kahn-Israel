@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html data-require="math">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>כפל וחילוק של מספרים שליליים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars" data-ensure="(A < 0 || B < 0) && B !== 0">
+			<var id="A">rand( 18 ) - 9</var>
+			<var id="B">rand( 18 ) - 9</var>
+			<var id="C">A * B</var>
+		</div>
+
+		<div class="problems">
+			<div id="multiplying">
+				<p class="question"><code><var>A</var> \times <var>B</var> = </code> ?</p>
+				<div class="solution"><var>C</var></div>
+				<div class="hints">
+					<p data-if="A < 0 && B < 0">שלילי כפול שלילי שווה חיובי.</p>
+					<p data-else data-if="A < 0">שלילי כפול חיובי שווה שלילי.</p>
+					<p data-else>מכפלה של כל מספר עם 0 שווה ל-0.</p>
+					<p><code><var>A</var> \times <var>B</var> = <var>C</var></code></p>
+				</div>
+			</div>
+
+			<div id="dividing">
+				<p class="question"><code><var>C</var> \div <var>B</var> = </code> ?</p>
+				<div class="solution"><var>A</var></div>
+				<div class="hints">
+					<p data-if="C < 0 && B < 0">שלילי חלקי שלילי שווה חיובי.</p>
+					<p data-else data-if="C < 0">שלילי חלקי חיובי שווה שלילי.</p>
+					<p data-else>אפס חלקי כל מספר שונה מ-0 שווה ל-0.</p>
+					<p><code><var>C</var> \div <var>B</var> = <var>A</var></code></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

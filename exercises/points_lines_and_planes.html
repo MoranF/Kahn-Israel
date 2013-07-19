@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html data-require="math graphie word-problems subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>נקודות, קווים ומישורים</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+<div class="exercise">
+
+    <div class="vars">
+        <var id="TILT">randRange(-100, 100) / 150</var>
+        <var id="TILT2">randRange(-100, 100) / 500</var>
+        <var id="A">randFromArray(["A", "F", "K", "U"])</var>
+        <var id="B">randFromArray(["B", "G", "L", "V"])</var>
+        <var id="C">randFromArray(["C", "H", "M", "W"])</var>
+        <var id="D">randFromArray(["D", "I", "N", "X"])</var>
+        <var id="E">randFromArray(["E", "J", "O", "Y"])</var>
+        <var id="R">randFromArray(["R", "S", "T", "P"])</var>
+    </div>
+
+    <p class="question"></p>
+
+    <div class="problem">
+        <div class="graphie">
+            init({
+                range: [ [-1, 15], [-5, 8] ],
+                scale: [ 30, 30 ]
+            });
+            // plane
+            path([
+                [6 + (0 - 6) * cos(TILT) - (0 - 2) * sin(TILT), 2 + (0 - 6) * sin(TILT) + (0 - 2) * cos(TILT)],
+                [6 + (10 - 6) * cos(TILT) - (0 - 2) * sin(TILT), 2 + (10 - 6) * sin(TILT) + (0 - 2) * cos(TILT)],
+                [6 + (12 - 6) * cos(TILT) - (4 - 2) * sin(TILT), 2 + (12 - 6) * sin(TILT) + (4 - 2) * cos(TILT)],
+                [6 + (2 - 6) * cos(TILT) - (4 - 2) * sin(TILT), 2 + (2 - 6) * sin(TILT) + (4 - 2) * cos(TILT)],
+                true
+            ]);
+
+            style({ arrows: "-&gt;" }, function() {
+
+                // line in the plane
+                line([6 + (3 - 6)* cos(TILT+TILT2) - (3 - 2)* sin(TILT+TILT2), 2 + ( 3 - 6 ) * sin(TILT+TILT2) + ( 3 - 2 ) * cos(TILT+TILT2)],
+                     [6 + (9 - 6)* cos(TILT+TILT2) - (1 - 2)* sin(TILT+TILT2), 2 + ( 9 - 6 ) * sin(TILT+TILT2) + ( 1 - 2 ) * cos(TILT+TILT2)]);
+
+                // line in the plane (opposite direction hack to get double-headed arrow)
+                line([6 + (9 - 6)* cos(TILT+TILT2) - (1 - 2)* sin(TILT+TILT2), 2 + ( 9 - 6 ) * sin(TILT+TILT2) + ( 1 - 2 ) * cos(TILT+TILT2)],
+                     [6 + (3 - 6)* cos(TILT+TILT2) - (3 - 2)* sin(TILT+TILT2), 2 + ( 3 - 6 ) * sin(TILT+TILT2) + ( 3 - 2 ) * cos(TILT+TILT2)]);
+
+                // perpendicular line (top)
+                line([6 + (6 - 6)* cos(TILT) - (2 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( 2 - 2 ) * cos(TILT)],
+                     [6 + (6 - 6)* cos(TILT) - (6 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( 6 - 2 ) * cos(TILT)]);
+
+                // Perpendicular line (bottom)
+                line([6 + (6 - 6)* cos(TILT) - (0 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( 0 - 2 ) * cos(TILT)],
+                     [6 + (6 - 6)* cos(TILT) - (-3 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( -3 - 2 ) * cos(TILT)]);
+            });
+
+            // dashed line behind the plane
+            style({ strokeDasharray: "- " }, function() {
+                line([6 + (6 - 6)* cos(TILT) - (2 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( 2 - 2 ) * cos(TILT)],
+                     [6 + (6 - 6)* cos(TILT) - (0 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( 0 - 2 ) * cos(TILT)]);
+            });
+
+            var r = randRange(0, 100) / 150;
+            var theta = randRange(-314, 314) / 100;
+
+            // points
+            style({ r: 0.15, stroke: "none" }, function() {
+                circle([6 + (4 - 6)* cos(TILT+TILT2) - (8/3 - 2)* sin(TILT+TILT2), 2 + ( 4 - 6 ) * sin(TILT+TILT2) + ( 8/3 - 2 ) * cos(TILT+TILT2)], { fill: PINK });
+                circle([6, 2], { fill: BLUE });
+                circle([6 + (8 - 6)* cos(TILT+TILT2) - (4/3 - 2)* sin(TILT+TILT2), 2 + ( 8 - 6 ) * sin(TILT+TILT2) + ( 4/3 - 2 ) * cos(TILT+TILT2)], { fill: GREEN });
+                circle([6 + (6 - 6)* cos(TILT) - (-2 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( -2 - 2 ) * cos(TILT)], { fill: ORANGE });
+                circle([6 + (17/6 + r*cos(theta) - 6)* cos(TILT) - (1.4 + r*sin(theta) - 2)* sin(TILT), 2 + ( 17/6 + r*cos(theta) - 6 ) * sin(TILT) + ( 1.4 + r*sin(theta) - 2 ) * cos(TILT)], { fill: "purple" });
+            });
+
+            label([6 + (4 - 6)* cos(TILT+TILT2) - (8/3 - 2)* sin(TILT+TILT2), 2 + ( 4 - 6 ) * sin(TILT+TILT2) + ( 8/3 - 2 ) * cos(TILT+TILT2)], A, "above right" );
+            label([6.1, 2], B, "above right");
+            label([6 + (8 - 6)* cos(TILT+TILT2) - (4/3 - 2)* sin(TILT+TILT2), 2 + ( 8 - 6 ) * sin(TILT+TILT2) + ( 4/3 - 2 ) * cos(TILT+TILT2)], C, "above right" );
+            label([6 + (6 - 6)* cos(TILT) - (-2 - 2)* sin(TILT), 2 + ( 6 - 6 ) * sin(TILT) + ( -2 - 2 ) * cos(TILT)], D, "right" );
+            label([6 + (17/6 + r*cos(theta) - 6)* cos(TILT) - (1.4 + r*sin(theta) - 2)* sin(TILT), 2 + ( 17/6 + r*cos(theta) - 6 ) * sin(TILT) + ( 1.4 + r*sin(theta) - 2 ) * cos(TILT)], E, "below" );
+
+            label([6 + (9.2 - 6)* cos(TILT+TILT2) - (1 - 2)* sin(TILT+TILT2), 2 + ( 9.2 - 6 ) * sin(TILT+TILT2) + ( 1 - 2 ) * cos(TILT+TILT2)], "\\ell", "right");
+            label([6 + (12.1 - 6)* cos(TILT) - (4 - 2)* sin(TILT), 2 + ( 12.1 - 6 ) * sin(TILT) + ( 4 - 2 ) * cos(TILT)], "\\mathcal{" + R + "}", "right");
+        </div>
+    </div>
+
+    <div class="problems">
+        <div id="name-plane">
+            <p class="question">
+               באיזו דרך אחרת אפשר לקרוא למישור <code>\mathcal{<var>R</var>}</code>?
+            </p>
+
+            <div class="solution" data-type="set">
+                <div class="set-sol" data-type="text"><var>A + B + E</var></div>
+                <div class="set-sol" data-type="text"><var>A + C + E</var></div>
+                <div class="set-sol" data-type="text"><var>A + E + B</var></div>
+                <div class="set-sol" data-type="text"><var>A + E + C</var></div>
+                <div class="set-sol" data-type="text"><var>B + A + E</var></div>
+                <div class="set-sol" data-type="text"><var>B + C + E</var></div>
+                <div class="set-sol" data-type="text"><var>B + E + A</var></div>
+                <div class="set-sol" data-type="text"><var>B + E + C</var></div>
+                <div class="set-sol" data-type="text"><var>C + A + E</var></div>
+                <div class="set-sol" data-type="text"><var>C + B + E</var></div>
+                <div class="set-sol" data-type="text"><var>C + E + A</var></div>
+                <div class="set-sol" data-type="text"><var>C + E + B</var></div>
+                <div class="set-sol" data-type="text"><var>E + A + B</var></div>
+                <div class="set-sol" data-type="text"><var>E + A + C</var></div>
+                <div class="set-sol" data-type="text"><var>E + B + A</var></div>
+                <div class="set-sol" data-type="text"><var>E + B + C</var></div>
+                <div class="set-sol" data-type="text"><var>E + C + A</var></div>
+                <div class="set-sol" data-type="text"><var>E + C + B</var></div>
+
+                <div class="input-format">
+                    <p><span class="entry"></span> מישור </p>
+                </div>
+            </div>
+            <div class="hints">
+                <div>
+                    <p>מישורים יכולים להקרא על ידי שלושה נקודות<a href="#" class="show-definition" data-definition="noncollinear"> לא קוליניאריות </a>.</p>
+                    <div class="definition" id="noncollinear">
+                        נקודות לא קוליניאריות הינם נקודות אשר אינם על אותו קו.
+                    </div>
+                </div>
+                <p>
+                   מצא כל 3 נקודות במישור  <code>\mathcal{<var>R</var>}</code>  שאינם על אותו קו וכתוב אותם כרצונך
+                </p>
+                <p>
+                    לדוגמא אנו יכולים לכתוב את  <code>\mathcal{<var>R</var>}</code> כמישור 
+                    <code><var>A + B + E</var></code>, מישור <code><var>A + C + E</var></code>,
+                     או מישור  <code><var>B + E + C</var></code>.
+                </p>
+            </div>
+        </div>
+
+        <div id="line-name">
+            <div class="vars">
+                <var id="SOLUTION">randFromArray([
+                    "\\overleftrightarrow{" + A + B + "}",
+                    "\\overleftrightarrow{" + A + C + "}",
+                    "\\overleftrightarrow{" + B + A + "}",
+                    "\\overleftrightarrow{" + B + C + "}",
+                    "\\overleftrightarrow{" + C + A + "}",
+                    "\\overleftrightarrow{" + C + B + "}"
+                ])</var>
+                <var id="INCORRECT_1">randFromArray([
+                    "\\overleftrightarrow{" + A + "}",
+                    "\\overleftrightarrow{" + B + "}",
+                    "\\overleftrightarrow{" + C + "}"
+                ])</var>
+                <var id="INCORRECT_2">randFromArray([
+                    "\\overline{" + A + B + "}",
+                    "\\overline{" + B + A + "}",
+                    "\\overline{" + C + B + "}",
+                    "\\overline{" + B + C + "}",
+                    "\\overline{" + C + A + "}",
+                    "\\overline{" + A + C + "}"
+                ])</var>
+                <var id="INCORRECT_3">randFromArray([
+                    "\\overleftrightarrow{" + E + C + "}",
+                    "\\overleftrightarrow{" + C + E + "}",
+                    "\\overleftrightarrow{" + D + A + "}",
+                    "\\overleftrightarrow{" + D + B + "}",
+                    "\\overleftrightarrow{" + D + C + "}",
+                    "\\overleftrightarrow{" + A + D + "}"
+                ])</var>
+            </div>
+
+            <p class="question"> באיזה עוד דרך אפשר לקרוא לקו <code>\ell</code>?</p>
+
+            <div class="solution"><code><var>SOLUTION</var></code></div>
+
+            <ul class="choices">
+                <li><code><var>INCORRECT_1</var></code></li>
+                <li><code><var>INCORRECT_2</var></code></li>
+                <li><code><var>INCORRECT_3</var></code></li>
+                <li><code>\overleftrightarrow{<var>A + B + C</var>}</code></li>
+            </ul>
+
+            <div class="hints">
+                <p>קווים נקבעים על ידי שתי נקודות הנמצאות על אותו קו. הסדר אינו משנה.</p>
+                <p>לנקודות חייב להיות את ה- <code>\leftrightarrow</code>מעל כי אנו  מתארים  קו, ולא קרן או צלע. </p>
+                <p>דרך נוספת לקרוא לקו <code>\ell</code> היא <code><var>SOLUTION</var></code>.</p>
+            </div>
+        </div>
+
+
+        <div id="collinear-3">
+            <div class="vars">
+                <var id="POINTS,SOLUTION">randFromArray([
+                    [[A, B, C], "כן"],
+                    [[A, B, D], "לא"],
+                    [[A, C, B], "כן"],
+                    [[A, C, E], "לא"],
+                    [[B, A, C], "כן"],
+                    [[B, C, A], "כן"],
+                    [[B, E, C], "לא"],
+                    [[C, A, B], "כן"],
+                    [[C, A, D], "לא"],
+                    [[C, B, A], "כן"],
+                    [[C, B, E], "לא"],
+                    [[E, C, A], "לא"]
+                ])</var>
+            </div>
+
+            <p class="question">האם הנקודות <var>toSentence(POINTS)</var> קוליניאריות? </p>
+
+            <div class="solution"><var>SOLUTION</var></div>
+            <ul class="choices" data-category="true">
+                <li>כן</li>
+                <li>לא</li>
+            </ul>
+
+            <div class="hints">
+                <p>קוליניאריות אומר שהנקודות נמצאות על אותו קו.</p>
+                <p>האם אתה יכול לצייר קו ישר בין שתי הנקודות <var>toSentence(POINTS)</var>?</p>
+                <p data-if="SOLUTION === 'Yes'"> כן, ולכן הנקודות <var>toSentence(POINTS)</var> קוליניאריות. </p>
+                <p data-else>לא, הנקודות  <var>toSentence(POINTS)</var> אינם קוליניאריות. </p>
+                
+                
+            </div>
+        </div>
+
+
+        <div id="collinear-2">
+            <div class="vars">
+                <var id="POINTS">shuffle([A, B, C, D, E], 2)</var>
+            </div>
+
+            <p class="question"> האם הנקודות <var>toSentence(POINTS)</var> קוליניאריות? </p>
+
+            <div class="solution">Yes</div>
+            <ul class="choices" data-category="true">
+                <li>כן</li>
+                <li>לא</li>
+            </ul>
+
+            <div class="hints">
+                <p>דרך כל שני נקודות, יעבור תמיד ורק קו אחד. </p>
+                <p> הנקודות יכולות להיות קוליניאריות  גם אם אין קו המסורטט בתרשים. </p>
+                <p>האם אתה יכול לשרטט קו ישר בין שתי הנקודות <var>toSentence(POINTS)</var>?
+                האם אתה יכול לשרטט קו דרך כל שתי נקודות? </p>
+                <p>כן, ולכן הנקודות <var>toSentence(POINTS)</var> קוליניאריות. </p>
+            </div>
+        </div>
+
+
+        <div id="coplanar">
+            <div class="vars">
+                <var id="POINTS,SOLUTION,COPLANAR">randFromArray([
+                    [[A, B, C, E], "כן", []],
+                    [[A, B, D, E], "לא",  [A, B, E]],
+                    [[A, C, D],    "כן", []],
+                    [[A, C, D, E], "לא",  [A, C, E]],
+                    [[B, A, C],    "כן", []],
+                    [[B, C, A, E], "כן", []],
+                    [[E, C, D, A], "לא",  [E, C, A]],
+                    [[B, E, D, C], "לא",  [B, E, C]],
+                    [[C, B, D, E], "לא",  [C, B, E]],
+                    [[C, D, A],    "כן", []],
+                    [[E, D, A],    "כן", []]
+                ])</var>
+            </div>
+
+            <p class="question">האם הנקודות <var>toSentence(POINTS)</var> באותו מישור? </p>
+
+            <p class="solution"><var>SOLUTION</var></p>
+
+            <ul class="choices" data-category="true">
+                <li>כן</li>
+                <li>לא</li>
+            </ul>
+
+            <div class="hints">
+                <p>האם משטח ישר יכול לעבור דרך הנקודות המצויינות, ללא להתעקם? </p>
+                <p data-if="SOLUTION === 'לא'">
+                   לא, כל מישור משטח שטוח אשר כולל את שלושת הנקודות לא יוכל לכלול את הנקודה הרביעית. לדוגמה הנקודות   <var>toSentence(COPLANAR)</var> הינם במישור  
+                    <code>\mathcal{<var>R</var>}</code> אך הנקודה <var>D</var> לא. 
+                </p>
+                <p data-else-if="POINTS.length === 4">
+                    כן , הנקודות <var>toSentence(POINTS)</var> נמצאות  כולן בתוך משטח ישר אחר . במקרה זה, מישור 
+                    <code>\mathcal{<var>R</var>}</code>.
+                </p>
+                <p data-else>
+                    כן, תמיד יהיה לפחות משטח שטוח אחד שיעבור דרך כל 3 נקודות.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

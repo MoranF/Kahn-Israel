@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>מבחני חלוקה</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+<div class="exercise">
+    <div class="vars">
+        <var id="FACTOR">0</var>
+        <!-- ensure equal probability of yes or no -->
+        <var id="DIVISIBLE">randFromArray([true, false])</var>
+        <var id="NUMBER"
+            data-ensure="!DIVISIBLE ^ (NUMBER % FACTOR === 0)">
+            randRange(10000, 1000000)
+        </var>
+    </div>
+
+    <p class="question">
+        האם <code>\large{<var>NUMBER</var>}</code> ניתן לחלוקה ב-
+        <code><var>FACTOR</var></code>?
+    </p>
+
+    <p class="solution"><var>DIVISIBLE ? "כן" : "לא"</var></p>
+    <ul class="choices" data-category="true">
+        <li>כן</li>
+        <li>לא</li>
+    </ul>
+
+    <div class="problems">
+        <div id="two" data-weight="1">
+            <div class="vars" data-apply="appendVars">
+                <var id="FACTOR">2</var>
+            </div>
+
+            <div class="hints">
+                <p>כל מספר זוגי ניתן לחלוקה ב- <code>2</code>.</p>
+                <p class="final_answer" data-if="DIVISIBLE">
+                    <code><var>NUMBER</var></code> זוגי, ולכן כן, הוא 
+                    ניתן חלוקה ב- <code>2</code>.
+                </p>
+                <p class="final_answer" data-else>
+                    <code><var>NUMBER</var></code> הוא אי-זוגי, ולכן 
+                    לא ניתן לחלוקה ב- <code>2</code>.
+                </p>
+            </div>
+        </div>
+
+        <div id="three" data-weight="2">
+            <div class="vars" data-apply="appendVars">
+                <var id="FACTOR">3</var>
+                <var id="STEPS">(function(){
+                    var steps = [];
+                    var colors = [PINK, PURPLE, GREEN, BLUE];
+                    var num = NUMBER;
+                    var numColor = colors.pop();
+                    while (num &gt; FACTOR * 11) {
+                        var sumColor = colors.pop();
+                        var digits = integerToDigits(num);
+                        var sum = _.reduce(digits,
+                            function(m, v) { return m + v; }, 0);
+                        steps.push({
+                            num: "\\color{" + numColor + "}{" + num + "}",
+                            digits: _.map(digits, function(digit) {
+                                return "\\color{" + numColor + "}{" +
+                                    digit + "}";
+                            }),
+                            sum: "\\color{" + sumColor + "}{" + sum + "}",
+                        });
+                        num = sum;
+                        numColor = sumColor;
+                    }
+                    return steps;
+                })()</var>
+            </div>
+
+            <div class="hints">
+                <div>
+                    <p>
+                        ניתן חלק מספר ב- <code><var>FACTOR</var></code>
+                        אם סכום הספרות שלו מתחלק ב-
+                        <code><var>FACTOR</var></code>.
+                        [<a href="#" class="show-subhint"
+                        data-subhint="explain-three">מדוע?</a>]
+                    </p>
+                    <div class="subhint" id="explain-three">
+                        <p>
+                            תחילה, נפרק את המספר לספרות:
+                        </p>
+                        <code>
+                            \qquad\begin{eqnarray}
+                            \blue{<var>NUMBER</var>}=
+                            <var>integerToDigits(NUMBER).map(function(v, p) {
+                                var placeValue = pow(10,
+                                    integerToDigits(NUMBER).length - p - 1);
+                                return "&amp;&amp;\\blue{" + v + "}\\cdot" +
+                                    placeValue;
+                            }).join("+ \\\\")</var>
+                            \end{eqnarray}
+                        </code>
+                        <p>
+                            כעת, נכתוב כל מספר כ-
+                            <code>1</code> ועוד מספר במורכב מהספרות  <code>9</code>:
+                        </p>
+                        <code>
+                            \qquad\begin{eqnarray}
+                            \blue{<var>NUMBER</var>}=
+                            <var>integerToDigits(NUMBER).map(function(v, p) {
+                                var placeValue = pow(10,
+                                    integerToDigits(NUMBER).length - p - 1);
+                                if (placeValue === 1) {
+                                    return "&amp;&amp;\\blue{" + v + "}";
+                                }
+                                return "&amp;&amp;\\blue{" + v + "}(" +
+                                    (placeValue - 1) + "+1)";
+                            }).join("+ \\\\")</var>
+                            \end{eqnarray}
+                        </code>
+                        <p>
+                            כעת אם נקבץ איברים ונסדר מחדש, נקבל:
+                        </p>
+                        <code>
+                            \qquad\begin{eqnarray}
+                            \blue{<var>NUMBER</var>}=
+                            <var>integerToDigits(NUMBER).map(function(v, p) {
+                                var placeValue = pow(10,
+                                    integerToDigits(NUMBER).length - p - 1);
+                                if (placeValue === 1) {
+                                    return "";
+                                }
+                                return "&amp;&amp;\\gray{" + v + "\\cdot" +
+                                    (placeValue - 1) + "}";
+                            }).join("+ \\\\")</var>&amp;&amp;
+                            \blue{<var>integerToDigits(NUMBER)
+                                .join("}+\\blue{")</var>}
+                            \end{eqnarray}
+                        </code>
+                        <p>
+                            כל מספר שמורכב מהספרות  <code>9</code>בלבד הוא  
+                            מכפלה של  <code><var>FACTOR</var></code>, לכן
+                             <var>integerToDigits(NUMBER)
+                            .length - 1</var> הגורמים הראשונים חייבים להיות כפולות של 
+                            <code><var>FACTOR</var></code>.
+                        </p>
+                        <p>
+                            אם כך, כדי להבין אם המספר המקורי
+                            מתחלק ב- <code><var>FACTOR</var>
+                            </code>, כל שעלינו לעשות הוא לחבר את הספרות
+                            ולבדוק אם הסכום מתחלק ב-
+                            <code><var>FACTOR</var></code>. במילים אחרות,
+                            <code>\blue{<var>NUMBER</var>}</code> מתחלק 
+                            ב- <code><var>FACTOR</var></code> אם <code>\blue{
+                            <var>integerToDigits(NUMBER).join("}+\\blue{")
+                            </var>}</code> מתחלק ב-
+                            <code><var>FACTOR</var></code>!
+                        </p>
+                    </div>
+                </div>
+                <div data-each="STEPS as N, STEP">
+                    <p>נחבר את הספרות <code><var>STEP.num</var></code>:</p>
+                    <p style="margin-left: 20px;"><code>
+                        <var>STEP.digits.join("+")</var> =
+                        <var>STEP.sum</var>
+                    </code></p>
+                    <p style="margin-left: 20px;">
+                        אם <code><var>STEP.sum</var></code> 
+                        מתחלק ב- <code><var>FACTOR</var></code>, אזי
+                        <code><var>STEP.num</var></code> בהכרח
+                        מתחלק גם ב- <code><var>FACTOR</var></code>.
+                    </p>
+                </div>
+                <p class="final_answer" data-if="DIVISIBLE">
+                    <code><var>_.last(STEPS).sum</var></code> מתחלק 
+                    ב- <code><var>FACTOR</var></code>, ולכן
+                    <code>\blue{<var>NUMBER</var>}</code>
+                    בהכרח מתחלק ב- <code><var>FACTOR</var></code>.
+                </p>
+                <p class="final_answer" data-else>
+                    <code><var>_.last(STEPS).sum</var></code> לא מתחלק
+                    ב- <code><var>FACTOR</var></code>, ולכן
+                    <code>\blue{<var>NUMBER</var>}</code>
+                    איננו מתחלק ב- <code><var>FACTOR</var></code>.
+                </p>
+            </div>
+        </div>
+
+        <div id="four" data-weight="3">
+            <div class="vars" data-apply="appendVars">
+                <var id="FACTOR">4</var>
+            </div>
+
+            <div class="hints">
+                <div>
+                    <p>
+                        כל מספר שמתחלק ב- <code>4</code> אם שתי 
+                        הספרות האחרונות שלו מתחלקות ב- <code>4</code>.
+                        [<a href="#" class="show-subhint"
+                        data-subhint="explain-four">מדוע?</a>]
+                    </p>
+                    <div class="subhint" id="explain-four">
+                        <p>
+                            ניתן לרשום את המספר כמכפלה של 
+                            <code>100</code> עוד שתי הספרות האחרונות:
+                        </p>
+                        <code>\qquad
+                        \gray{<var>NUMBER.toString().slice(0, -2)</var>}
+                        \blue{<var>("00" + (NUMBER % 100)).slice(-2)</var>} =
+                        \gray{<var>NUMBER.toString().slice(0, -2)</var>}
+                        \gray{00} +
+                        \blue{<var>("00" + (NUMBER % 100)).slice(-2)</var>}
+                        </code>
+                        <p>
+                            מכיוון ש- <code><var>NUMBER.toString().slice(0, -2)
+                            </var>00</code> הוא מכפלה של  <code>100</code>,
+                            הוא גם מכפלה של  <code>4</code>.
+                        </p>
+                        <p>
+                            לכן, כל עוד שתי הספרות האחרונות,
+                            <code>\blue{<var>NUMBER % 100</var>}</code>,
+                            מתחלקות ב- <code>4</code>, המספר המקורי
+                            חייב גם כן להתחלק ב- <code>4</code>!
+                        </p>
+                    </div>
+                </div>
+                <p>
+                    האם ערכן של שתי הספרות האחרונות,
+                    <code><var>NUMBER % 100</var></code>,
+                    מתחלק ב- <code>4</code>?
+                </p>
+                <p class="final_answer" data-if="DIVISIBLE">
+                    כן,
+                    <code>\blue{<var>NUMBER % 100</var> \div 4 =
+                    <var>NUMBER % 100 / 4</var>}</code>, לכן
+                    <code><var>NUMBER</var></code> מתחלק גם הוא ב-
+                    <code>4</code>.
+                </p>
+                <p class="final_answer" data-else>
+                    לא, <code><var>NUMBER % 100</var></code> לא 
+                    מתחלק ב- <code>4</code>, ולכן
+                    <code><var>NUMBER</var></code> גם הוא איננו מתחלק ב-
+                    <code>4</code>.
+                </p>
+            </div>
+        </div>
+
+        <div id="five" data-weight="1">
+            <div class="vars" data-apply="appendVars">
+                <var id="FACTOR">5</var>
+            </div>
+
+            <div class="hints">
+                <p>
+                    מספר ניתן לחלוקה ב- <code>5</code> אם הספרה האחרונה
+                    שלו היא <code>0</code> או  <code>5</code>.
+                </p>
+                <p class="final_answer" data-if="DIVISIBLE">
+                    הספרה האחרונה של  <code><var>NUMBER</var></code> היא
+                    <code><var>NUMBER % 10</var></code>, ולכן 
+                    <code><var>NUMBER</var></code> מתחלק ב-
+                    <code>5</code>.
+                </p>
+                <p class="final_answer" data-else>
+                    הספרה האחרונה של  <code><var>NUMBER</var></code> היא 
+                    <code><var>NUMBER % 10</var></code>, ולכן 
+                    <code><var>NUMBER</var></code> איננו מתחלק ב-
+                    <code>5</code>.
+                </p>
+            </div>
+        </div>
+
+        <div id="nine" data-type="three" data-weight="2">
+            <div class="vars" data-apply="appendVars">
+                <var id="FACTOR">9</var>
+            </div>
+        </div>
+
+        <div id="ten" data-weight="1">
+            <div class="vars" data-apply="appendVars">
+                <var id="FACTOR">10</var>
+            </div>
+
+            <div class="hints">
+                <p>
+                    מספר ניתן לחלוקה ב- <code>10</code> אם הסיפרה האחרונה
+                    שלו היא  <code>0</code>.
+                </p>
+                <p class="final_answer" data-if="DIVISIBLE">
+                    הספרה האחרונה של  <code><var>NUMBER</var></code> היא
+                    <code><var>NUMBER % 10</var></code>, ולכן 
+                    <code><var>NUMBER</var></code> מתחלק ב-
+                    <code>10</code>.
+                </p>
+                <p class="final_answer" data-else>
+                    הספרה האחרונה של  <code><var>NUMBER</var></code> היא
+                    <code><var>NUMBER % 10</var></code>, ולכן 
+                    <code><var>NUMBER</var></code> איננו מתחלק ב-
+                    <code>10</code>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html data-require="math math-format expressions graphie interactive">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>שרטוט אי שוויונים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+<div class="exercise">
+	<div class="problems">
+		<div>
+			<div class="vars">
+				<var id="SLOPE_FRAC">reduce( randRangeNonZero( -5, 5 ), randRange( 1, 5 ) )</var>
+				<var id="YINT">randRangeNonZero( max( -10, -10 - SLOPE_FRAC[0] ), min( 10, 10 - SLOPE_FRAC[0] ) )</var>
+				<var id="SLOPE">SLOPE_FRAC[0] / SLOPE_FRAC[1]</var>
+				<var id="PRETTY_SLOPE">SLOPE === 1 ? "" : ( SLOPE === -1 ? "-" : fraction( SLOPE_FRAC[0], SLOPE_FRAC[1], true, true ) )</var>
+				<var id="MULT">randRangeNonZero( -3, 3 )</var>
+				<var id="A">SLOPE_FRAC[0] * -MULT</var>
+				<var id="B">SLOPE_FRAC[1] * MULT</var>
+				<var id="C">SLOPE_FRAC[1] * YINT * MULT</var>
+				<var id="STD_FORM">randFromArray([ true, false ])</var>
+				<var id="COMP">randFromArray([ "&lt;", "&gt;", "&le;", "&ge;" ])</var>
+				<var id="STD_FORM_COMP">B &lt; 0 ? { "&lt;": "&gt;", "&gt;": "&lt;", "&le;": "&ge;", "&ge;": "&le;" }[ COMP ] : COMP</var>
+				<var id="LESS_THAN">COMP === "&lt;" || COMP === "&le;"</var>
+				<var id="INCLUSIVE">COMP === "&ge;" || COMP === "&le;"</var>
+
+			</div>
+
+			<p class="question">שרטטו את האי שוויון הבא:</p>
+
+			<div class="problem">
+				<p class="hint_blue" data-if="STD_FORM">
+					<code><var>expr([ "+", [ "*", A, "x" ], [ "*", B, "y" ] ])</var> <var>STD_FORM_COMP</var> <var>C</var></code>
+				</p>
+				<p class="hint_blue" data-else>
+					<code>y <var>COMP</var> <var>PRETTY_SLOPE</var> x + <var>YINT</var></code>
+				</p>
+
+				<form>
+          <span class="hint_blue" style="width: 40px">שרטוט אי השוויון:</span>        
+					<input type="button" value="צבע את הצד השני" onClick="javascript:
+						KhanUtil.currentGraph.graph.shadetop = !KhanUtil.currentGraph.graph.shadetop;
+						KhanUtil.currentGraph.graph.update();
+					" />
+					<label>
+						<input name="dashradio" type="radio" value="solid" checked onClick="javascript:
+							KhanUtil.currentGraph.graph.dasharray = '';
+							KhanUtil.currentGraph.graph.update();
+						" />
+						ישר מלא
+					</label>
+					<label>
+						<input name="dashradio" type="radio" value="dashed" onClick="javascript:
+							KhanUtil.currentGraph.graph.dasharray = '- ';
+							KhanUtil.currentGraph.graph.update();
+						" />
+						ישר מקווקו
+					</label>
+				</form>
+				<div class="graphie" id="grid">
+					graphInit({
+						range: 11,
+						scale: 20,
+						axisArrows: "&lt;-&gt;",
+						tickStep: 1,
+						labelStep: 1,
+						gridOpacity: 0.05,
+						axisOpacity: 0.2,
+						tickOpacity: 0.4,
+						labelOpacity: 0.5
+					});
+
+					label( [ 0, -11 ], "y", "below" );
+					label( [ 11, 0 ], "x", "right" );
+
+					addMouseLayer();
+					graph.pointA = addMovablePoint({
+						coord: [ -5, 5 ],
+						snapX: 0.5,
+						snapY: 0.5,
+						normalStyle: {
+							stroke: KhanUtil.BLUE,
+							fill: KhanUtil.BLUE
+						}
+					});
+					graph.pointB = addMovablePoint({
+						coord: [ 5, 5 ],
+						snapX: 0.5,
+						snapY: 0.5,
+						normalStyle: {
+							stroke: KhanUtil.BLUE,
+							fill: KhanUtil.BLUE
+						}
+					});
+					graph.line1 = bogusShape;
+					graph.shading = bogusShape;
+
+					graph.update = function() {
+						graph.line1.remove();
+						graph.shading.remove();
+						if ( abs( graph.pointB.coord[0] - graph.pointA.coord[0] ) &gt; 0.001 ) {
+							var slope = ( graph.pointB.coord[1] - graph.pointA.coord[1] ) / ( graph.pointB.coord[0] - graph.pointA.coord[0] );
+							var yint = slope * ( 0 - graph.pointA.coord[0] ) + graph.pointA.coord[1];
+							var shadeEdge = ( ( graph.pointA.coord[0] &lt; graph.pointB.coord[0] ) ? graph.shadetop : !graph.shadetop ) ? 11 : -11;
+							style({ stroke: BLUE, strokeWidth: 2, strokeDasharray: graph.dasharray }, function() {
+								graph.line1 = line( [ -11, -11 * slope + yint ], [ 11, 11 * slope + yint ] ).toBack();
+							});
+							style({ fill: BLUE, stroke: null, opacity: KhanUtil.FILL_OPACITY }, function() {
+								graph.shading = path([ [ 11, shadeEdge ], [ 11, 11 * slope + yint ], [ -11, -11 * slope + yint ], [ -11, shadeEdge ] ]);
+							});
+
+						} else {
+							// vertical line
+							var x = graph.pointA.coord[0];
+							var shadeEdge = ( ( graph.pointB.coord[1] &lt; graph.pointA.coord[1] ) ? graph.shadetop : !graph.shadetop ) ? 11 : -11;
+							style({ stroke: BLUE, strokeWidth: 2, strokeDasharray: graph.dasharray }, function() {
+								graph.line1 = line( [ x, -11 ], [ x, 11 ] ).toBack();
+							});
+							style({ fill: BLUE, stroke: null, opacity: KhanUtil.FILL_OPACITY }, function() {
+								graph.shading = path([ [ x, -11 ], [ x, 11 ], [ shadeEdge, 11 ], [ shadeEdge, -11 ] ]);
+							});
+						}
+					};
+
+					// A and B can't be in the same place
+					graph.pointA.onMove = function( x, y ) {
+						if ( x != graph.pointB.coord[0] || y != graph.pointB.coord[1] ) {
+							graph.pointA.setCoord([ x, y ]);
+							graph.update();
+							return true;
+						} else {
+							return false;
+						}
+					}
+					graph.pointB.onMove = function( x, y ) {
+						if ( x != graph.pointA.coord[0] || y != graph.pointA.coord[1] ) {
+							graph.pointB.setCoord([ x, y, ]);
+							graph.update();
+							return true;
+						} else {
+							return false;
+						}
+					}
+
+					graph.dasharray = "";
+					graph.shadetop = true;
+					graph.update();
+					graph.pointA.toFront();
+					graph.pointB.toFront();
+
+				</div>
+
+			</div>
+			<div class="solution" data-type="custom">
+				<div class="instruction">
+					גררו את שתי הנקודות והזיזו בכך את הישר למיקום הנכון.
+				</div>
+				<div class="guess">[ graph.pointA.coord, graph.pointB.coord,
+					graph.pointA.coord[0] &gt; graph.pointB.coord[0] ? graph.shadetop : !graph.shadetop,
+					graph.dasharray === "- " ? false : true ]
+				</div>
+				<div class="validator-function">
+					var slope = ( guess[1][1] - guess[0][1] ) / ( guess[1][0] - guess[0][0] );
+					var yint = slope * ( 0 - guess[0][0] ) + guess[0][1];
+					return abs( SLOPE - slope ) &lt; 0.001
+						&amp;&amp; abs( YINT - yint ) &lt; 0.001
+						&amp;&amp; guess[2] === LESS_THAN
+						&amp;&amp; guess[3] === INCLUSIVE;
+				</div>
+				<div class="show-guess">
+					graph.pointA.setCoord( guess[0] );
+					graph.pointB.setCoord( guess[1] );
+					graph.shadetop = graph.pointA.coord[0] &gt; graph.pointB.coord[0] ? guess[2] : !guess[2];
+					if ( guess[3] ) {
+						graph.dasharray = "";
+						$( "input[name=dashradio][value=solid]" ).attr( "checked", true );
+					} else {
+						graph.dasharray = "- ";
+						$( "input[name=dashradio][value=dashed]" ).attr( "checked", true );
+					}
+					graph.update();
+				</div>
+				<div class="example">שרטטו את אי השוויון</div>
+				<div class="example">ודאו שהצד שנכון של המרחב צבוע</div>
+				<div class="example">ודאו שהישר הוא מקווקו או מלא בהתאם למשוואה</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hints">
+		<div data-if="STD_FORM" data-unwrap>
+			<p>
+				המירו את <code><var>expr([ "+", [ "*", A, "x" ], [ "*", B, "y" ] ])</var> <var>STD_FORM_COMP</var> <var>C</var></code>
+				לצורת שיפוע-לכיד על ידי מציאת  <code>y</code>.
+			</p>
+			<div>
+				<p>
+					<var>A &lt; 0 ? "הוסיפו" : "הפחיתו"</var> <code><var>abs( A )</var>x</code> <var>A &lt; 0 ? "מ" : "ל"</var>שני צידי המשוואה:
+				</p><p>
+					<code>\qquad <var>expr( [ "*", B, "y" ] )</var> <var>STD_FORM_COMP</var> <var>expr([ "+", [ "*", -A, "x" ], C ])</var></code>
+				</p>
+			</div>
+			<div data-if="B !== 1">
+				<p>
+					חלקו את שני צידי המשוואה <code><var>B</var></code><span data-if="B < 0">. מכיוון שאתם מכפילים או מחלקים במספר שלילי, <strong>אל תשכחו</strong> להפוך את סימן אי השוויון</span>:
+				</p><p>
+					<code>\qquad y <var>COMP</var> <var>expr([ "+", "\\dfrac{" + expr([ "*", -A, "x" ]) + "}{" + B + "}", "\\dfrac{" + C + "}{" + B + "}" ])</var></code>
+				</p>
+			</div>
+		</div>
+		<div>
+			<p>
+				<code>\qquad y <var>COMP</var> \color{purple}{<var>PRETTY_SLOPE</var>} x \color{<var>GREEN</var>}{+ <var>YINT</var>}</code>
+			</p><p>
+				לכיד ה-y הוא <code class="hint_green"><var>YINT</var></code> ואילו השיפוע הוא <code class="hint_purple"><var>decimalFraction( SLOPE, true, true )</var></code>.
+				מכיוון שלכיד ה-y הוא <code class="hint_green"><var>YINT</var></code>, הישר חייב לעבור דרך הנקודה <code class="hint_green">(0, <var>YINT</var>)</code>.
+			</p>
+			<div class="graphie" data-update="grid">
+				style({ stroke: GREEN, fill: GREEN }, function() {
+					graph.yint = circle( [ 0, YINT ], 0.2 ).toBack();
+				});
+			</div>
+		</div>
+		<div>
+			<p>
+				השיפוע הוא  <code class="hint_purple"><var>decimalFraction( SLOPE, true, true )</var></code>. 
+        זיכרו שהשיפוע אומר לנו אם הישר עולה או יורד. במקרה שלנו עבור כל  
+				<code><var>abs( SLOPE_FRAC[0] )</var></code>
+				<var>"נקוד" + ( abs( SLOPE_FRAC[0] ) !== 1 ? "ות" : "ה" ) </var>
+				שנזוז 
+				<span data-if="SLOPE_FRAC[0] < 0"><em>למטה</em> (משום שהשיפוע שלילי)</span>
+				<span data-else>למעלה</span>
+				מצטרך גם לזוז 
+				<code><var>SLOPE_FRAC[1]</var></code>
+				<var>"נקוד" + ( abs( SLOPE_FRAC[1] ) !== 1 ? "ות" : "ה" ) </var>
+				ימינה. לכן הישר חייב לעבור גם דרך  <code class="hint_purple">(<var>SLOPE_FRAC[1]</var>, <var>YINT + SLOPE_FRAC[0]</var>)</code>
+			</p>
+			<div class="graphie" data-update="grid">
+				style({
+					stroke: "purple",
+					strokeWidth: 2,
+					arrows: "-&gt;"
+				}, function() {
+					path([ [ 0, YINT ], [ 0, YINT + SLOPE_FRAC[0] ] ]).toBack();
+					path([ [ 0, YINT + SLOPE_FRAC[0] ], [ SLOPE_FRAC[1], YINT + SLOPE_FRAC[0] ] ]).toBack();
+				});
+				label( [ 0, YINT + SLOPE_FRAC[0] / 2 ], abs( SLOPE_FRAC[0] ) + " \\text{ " + ( SLOPE_FRAC[0] &lt; 0 ? "למטה" : "למעלה" ) + "} \\quad", "left", { color: "purple" } );
+				label( [ 0, YINT + SLOPE_FRAC[0] ], SLOPE_FRAC[1] + " \\text{ ימינה}", ( SLOPE_FRAC[0] &lt; 0 ? "below right" : "above right" ), { color: "purple" } );
+				graph.yint.toBack();
+			</div>
+		</div>
+		<p>
+			מכיוון שלאי השוויון שלנו יש סימן <var>LESS_THAN ? "קטן" : "גדול"</var> <var>INCLUSIVE ? "או שווה ל" : " מ"</var> , כל נקודה שהיא
+			<strong><var>LESS_THAN ? "מתחת" : "מעל"</var></strong> הישר היא פתרון של אי השוויון, כך השטח <var>LESS_THAN ? "מתחת" : "מעל"</var>
+			הישר צריך להיות מקווקו.
+		</p>
+		<div>
+			<p data-if="INCLUSIVE">
+				שימו לב שאם הסימן של אי השוויון הוא <var>LESS_THAN ? "קטן" : "גדול"</var> או <strong>שווה</strong>, כל נקודה על הישר היא גם פתרון, ולכן
+				הישר צריך להיות מסומן כקו מלא.
+			</p>
+			<p data-else>
+				שימו לב שאם הסימן של אי השוויון הוא <var>LESS_THAN ? "קטן" : "גדול"</var> (ולא שווה), ולכן הנקודות על הישר <strong>אינן</strong> חלק מהפתרון.
+				על כן עלינו לסמן את הישר כקו מקווקו.
+			</p>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

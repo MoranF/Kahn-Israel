@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-require="math graphie angles interactive">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>מדידת זוויות</title>
+        <script src="../khan-exercise.js"></script>
+    </head>
+    <body>
+        <div class="exercise">
+            <div class="vars">
+                <var id="ANGLE_ONE">randRange(0, 359)</var>
+                <var id="DIFF">10 * randRange(1, 18)</var>
+            </div>
+
+            <div class="problems">
+                <div>
+                    <div class="problem">
+                        מדוד כמה מעלות לזווית זו.
+                    </div>
+                    <div class="question">
+                        <div class="graphie" id="angle">
+                            var ANGLE_TWO = ANGLE_ONE + DIFF;
+                            var ANGLE_ONE_R = ANGLE_ONE * PI / 180;
+                            var ANGLE_TWO_R = ANGLE_TWO * PI / 180;
+
+                            init({
+                                range: [ [-11, 31], [-10, 10] ],
+                                scale: 20
+                            });
+                            path([ [5 * cos( ANGLE_ONE_R ), 5 * sin( ANGLE_ONE_R )], [0, 0], [5 * cos( ANGLE_TWO_R ), 5 * sin( ANGLE_TWO_R )] ]);
+                            arc( [0, 0], 1, ANGLE_ONE, ANGLE_TWO );
+
+                            addMouseLayer();
+                            graph.protractor = new Protractor([ 14, -8 ]);
+                        </div>
+                    </div>
+                    <div class="solution" data-type="multiple">
+                        <span class="sol" data-type="rational" data-inexact data-max-error="5"><var>DIFF</var></span><code>{}^{\circ}</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hints">
+                <p>
+					ראשית, מקם את מד הזווית בקודקוד הזווית.
+                    <button onClick="javascript: KhanUtil.currentGraph.graph.protractor.moveTo( 0, 0 ); ">הראה לי</button>
+                </p>
+                <p>
+                    בשלב הבא, סובב את מד הזווית כך ש <code>0^{\circ}</code> יהיה על אחד מצידי הזווית.
+                    <button onClick="javascript:
+                        KhanUtil.currentGraph.graph.protractor.moveTo( 0, 0 );
+                        KhanUtil.currentGraph.graph.protractor.rotateTo( 360 - KhanUtil.tmpl.getVAR('ANGLE_ONE') );
+                    ">הראה לי</button>
+                </p>
+                <div>
+                    <div class="graphie" data-update="angle">
+                        graph.protractor.moveTo( 0, 0 );
+                        graph.protractor.rotateTo( 360 - ANGLE_ONE );
+                        label( [ 9 * cos( toRadians( ANGLE_ONE + DIFF ) ), 9 * sin( toRadians( ANGLE_ONE + DIFF ) ) ], "\\color{" + PINK + "}{" + DIFF + "^{\\circ}}" );
+                    </div>
+                    <p>הזווית הינה <code><var>DIFF</var></code> מעלות.</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

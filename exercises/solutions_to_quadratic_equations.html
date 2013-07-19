@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie khanscript">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>תשובות למשוואה ריבועית</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="one-rational">
+                <div class="vars">
+                    <var id="ANSWER">"פיתרון אחד רציונלי"</var>
+                    <var id="B">randRangeNonZero(-6, 6) * 2</var>
+                    <var id="A">randFromArray(getFactors(B * B / 4))</var>
+                    <var id="C">(B * B) / (4 * A)</var>
+                    <var id="DISCRIMINANT">B * B - 4 * A * C</var>
+                </div>
+
+                <p class="question">
+                   תאר את הפרונות של המשוואה הריבועית הבאה:
+                </p>
+                <div class="problem">
+                    <code><var>
+                        expr(["+",
+                            ["*", A, ["^", "x", 2]],
+                            ["*", B, "x"],
+                            C])
+                    </var> = 0</code>
+                </div>
+
+                <div class="solution"><var>ANSWER</var></div>
+                <ul class="choices" data-category="true">
+                    <li>פיתרון אחד רציונלי</li>
+                    <li>שני פיתרונות רציונלים</li>
+                    <li>שני פיתרונות אי רציונלים</li>
+                    <li>פיתרון מרוכב יחיד</li>
+                    <li>שני פיתרונות מרוכבים</li>
+                </ul>
+
+                <div class="hints">
+                    <div>
+                        <p>
+                           אנו יכולים להשתמש בכל הנוסחא הריבועית כדי לפתור בעיה זו, אך יש קיצור דרך
+                        </p>
+                        <p><code id="quadratic">\qquad
+                            x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+                        </code>
+                    </div>
+                    <div>
+                        <script type="text/khanscript">
+                            $("#quadratic").text("\\qquad x = \\dfrac{-b \\pm" +
+                                " \\sqrt{\\blue{b^2 - 4ac}}}{2a}");
+                            MathJax.Hub.Queue(["Reprocess", MathJax.Hub,
+                                $("#quadratic")[0]]);
+                        </script>
+                        <div>
+                            חשוב מה הביטוי  <span class="hint_blue">מתחת לשורש</span> אומר לנו על הפיתרונות.
+                        </div>
+                    </div>
+                    <div>
+                        <p>
+                            הצב את <code>a</code>, <code>b</code>, ו
+                            <code>c</code> מהמשוואה הריבועית:
+                        </p>
+                        <p>
+                            <code>\qquad\begin{array}
+                                &amp;&amp; b^2-4ac \\ \\
+                                =&amp; <var>B</var>^2 - 4 (
+                                <var>A</var>)(<var>C</var>) \\ \\
+                                =&amp; <var>DISCRIMINANT</var>
+                                \end{array}
+                            </code>
+                        </p>
+                    </div>
+                    <p data-if="ANSWER === 'פיתרון אחד רציונלי'">
+                        בגלל <code>\blue{b^2 - 4ac} = 0</code>, אז המשוואה הריבועית מצטמצמת ל
+                        <code>\dfrac{-b}{2a}</code>, מה שאומר שיש רק פיתרון רציונלי אחד.
+                    </p>
+                    <p data-else-if="ANSWER === 'שני פיתרונות מרוכבים'">
+                        בגלל <code>\blue{b^2 - 4ac}</code> הינו שלילי , זה אומר שהשורש הינו מספר דמיוני, כלומר המשוואה מצטמצמת ל
+                        <code>\dfrac{-b \pm \sqrt{<var>DISCRIMINANT</var>}}{2a}
+                        </code>, מה שאומר שיש 2 פתרונות מרוכבים.
+                    </p>
+                    <p data-else-if="ANSWER === 'שני פיתרונות רציונלים'">
+                        בגלל <code>\blue{b^2 - 4ac}</code> הינו ריבוע של מספר שלם כלשהו, המשוואה תצטמצם ל
+                        <code>\dfrac{-b \pm <var>sqrt(DISCRIMINANT)</var>}{2a}
+                        </code>, מה שאומר שיש לנו שני פתרונות רציונלים.
+                    </p>
+                    <p data-else>
+                        בגלל <code>\blue{b^2 - 4ac}</code> אינו ריבוע של מספר שלם כלשהו, השורש הריבוע יהיה לא רציונלי והפיתרון יצטמצם ל
+                        <code>\dfrac{-b \pm \sqrt{<var>DISCRIMINANT</var>}}{2a}
+                        </code>, מה שאומר שיש לנו 2 פתרונות אי רציונלים.
+                    </p>
+                </div>
+            </div>
+
+            <div id="two-rational" data-type="one-rational">
+                <div class="vars" data-apply="replace">
+                    <var id="ANSWER">"שני פיתרונות רציונלים"</var>
+                    <div data-ensure="DISCRIMINANT > 0 &&
+                        sqrt(DISCRIMINANT) - floor(sqrt(DISCRIMINANT)) < 0.001
+                        && DISCRIMINANT <= 144">
+                        <var id="A">randRangeNonZero(-9, 9)</var>
+                        <var id="B">randRangeNonZero(-9, 9)</var>
+                        <var id="C">randRangeNonZero(-9, 9)</var>
+                        <var id="DISCRIMINANT">B * B - 4 * A * C</var>
+                    </div>
+                </div>
+            </div>
+
+            <div id="two-irrational" data-type="one-rational">
+                <div class="vars" data-apply="replace">
+                    <var id="ANSWER">"שני פיתרונות אי רציונלים"</var>
+                    <div data-ensure="DISCRIMINANT > 0 &&
+                        sqrt(DISCRIMINANT) - floor(sqrt(DISCRIMINANT)) > 0.001">
+                        <var id="A">randRangeNonZero(-9, 9)</var>
+                        <var id="B">randRangeNonZero(-9, 9)</var>
+                        <var id="C">randRangeNonZero(-9, 9)</var>
+                        <var id="DISCRIMINANT">B * B - 4 * A * C</var>
+                    </div>
+                </div>
+            </div>
+
+            <div id="two-complex" data-type="one-rational">
+                <div class="vars" data-apply="replace">
+                    <var id="ANSWER">"שני פיתרונות מרוכבים"</var>
+                    <div data-ensure="DISCRIMINANT < 0">
+                        <var id="A">randRangeNonZero(-9, 9)</var>
+                        <var id="B">randRangeNonZero(-9, 9)</var>
+                        <var id="C">randRangeNonZero(-9, 9)</var>
+                        <var id="DISCRIMINANT">B * B - 4 * A * C</var>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

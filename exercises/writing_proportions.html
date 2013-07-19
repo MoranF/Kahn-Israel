@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>כתיבת יחסים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div>
+			<div class="vars">
+				<var id="N1">randRange( 2, 10 )</var>
+				<var id="N2">randRangeExclude( 2, 15, [ N1 ] )</var>
+				<var id="C">( N1 * randRange( 80, 199 ) / 100 ).toFixed( 2 )</var>
+				<var id="SOLUTIONS">
+					(function() {
+						var solutions = [
+							"\\dfrac{" + N1 + "}{\₪" + C + "} = \\dfrac{" + N2 + "}{x}",
+							"\\dfrac{" + N2 + "}{x} = \\dfrac{" + N1 + "}{\₪" + C + "}",
+							"\\dfrac{" + N1 + "}{" + N2 + "} = \\dfrac{\₪" + C + "}{x}",
+							"\\dfrac{x}{" + N2 + "} = \\dfrac{\₪" + C + "}{" + N1 + "}"
+						];
+						return solutions;
+					})()
+				</var>
+				<var id="IDX">randRange( 0, SOLUTIONS.length - 1 )</var>
+				<var id="SOLUTION">SOLUTIONS[ IDX ]</var>
+			</div>
+			<p class="problem">המחיר של <var>plural_heb( N1, deskItem( 0 ), deskItem_plural( 0 ) )</var> הוא <var>C</var> ₪.</p>
+			<p class="question">איזו משוואה מגדירה את המחיר של  <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var>?</p>
+			<p class="solution"><code><var>SOLUTION</var></code></p>
+			<ul class="choices" data-none="true" data-show="5">
+				<li><code>\dfrac{<var>N2</var>}{₪<var>C</var>} = \dfrac{x}{<var>N1</var>}</code></li>
+				<li><code>\dfrac{<var>N2</var>}{<var>N1</var>} = \dfrac{₪<var>C</var>}{x}</code></li>
+				<li><code>\dfrac{<var>N1</var>}{<var>N2</var>} = \dfrac{x}{₪<var>C</var>}</code></li>
+				<li><code>\dfrac{x}{<var>N2</var>} = \dfrac{<var>N1</var>}{₪<var>C</var>}</code></li>
+				<li><code>\dfrac{<var>N2</var>}{x} = \dfrac{₪<var>C</var>}{<var>N1</var>}</code></li>
+			</ul>
+
+			<div class="hints">
+				<p>יש כמה משוואות בעזרתן נוכל לקבוע את המחיר, כל אחת מייצגת גישה מעט שונה.</p>
+				<div data-if="IDX === 0" data-unwrap>
+					<p>אפשר לרשום את העובדה שהמחיר של   <var>plural_heb( N1, deskItem( 0 ), deskItem_plural( 0 ) )</var> הוא <var>C</var> ₪ בתור היחס הבא :</p>
+					<p><code>\dfrac{<var>N1</var>}{₪<var>C</var>}</code></p>
+					<p>נסמן ב- <code>x</code> את המחיר הלא ידוע של  <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var>. מכיוון שהמחיר של  <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var> הוא  <code>x</code> ₪, ניתן לרשום את היחס הבא:</p>
+					<p><code>\dfrac{<var>N2</var>}{x}</code></p>
+					<p>המחיר משתנה ביחס שווה למספר ה<var>deskItem_plural( 0 )</var> שהחלטנו לקנות, ולכן שני היחסים צריכים להיות שווים.</p>
+				</div>
+
+				<div data-if="IDX === 1" data-unwrap>
+					<p>נסמן ב- <code>x</code> את המחיר הלא ידוע של  <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var>. מכיוון שהמחיר של  <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var> הוא <code>x</code> ₪, אנו יכולים לרשום את היחס הבא:</p>
+					<p><code>\dfrac{<var>N2</var>}{x}</code></p>
+					<p>אפשר לרשום את העבודה שהמחיר של  המחיר של <var>plural_heb( N1, deskItem( 0 ), deskItem_plural( 0 ) )</var> הוא <var>C</var> ₪ בתור היחס הבא:</p>
+					<p><code>\dfrac{<var>N1</var>}{₪<var>C</var>}</code></p>
+					<p>המחיר משתנה ביחס ישר למספר ה<var>deskItem_plural( 0 )</var> שהחלטנו לקנות, ולכן שני היחסים שווים.</p>
+				</div>
+
+				<div data-if="IDX === 2" data-unwrap>
+					<p>אנו יודעים את המחיר של  המחיר של <var>plural_heb( N1, deskItem( 0 ), deskItem_plural( 0 ) )</var>, ואנו רוצים לדעת את המחיר של  <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var>. אפשר לרשום את מספר ה<var>deskItem_plural( 0 )</var> בתור יחס:</p>
+					<p><code>\dfrac{<var>N1</var>}{<var>N2</var>}</code></p>
+					<p>אנו יודעים שהמחיר של  המחיר של <var>plural_heb( N1, deskItem( 0 ), deskItem_plural( 0 ) )</var> הוא <var>C</var>₪, ואנו יכולים לסמן ב- <code>x</code> את המחיר הלא ידוע של  <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var>. את היחס בין שני המחירים ניתן לבטא בצורה הבאה:</p>
+					<p><code>\dfrac{₪<var>C</var>}{x}</code></p>
+					<p>המחיר משתנה ביחס ישר למספר ה<var>deskItem_plural( 0 )</var> שהחלטנו לקנות, ולכן שני היחסים צריכים להיות שווים.</p>
+				</div>
+
+				<div data-if="IDX === 3" data-unwrap>
+					<p>אם נסמן ב- <code>x</code> את המחיר של <var>plural_heb( N2, deskItem( 0 ), deskItem_plural( 0 ) )</var>, נקבל את היחס הבא:</p>
+					<p><code>\dfrac{x}{<var>N2</var>}</code></p>
+					<p>עלינו לשלם<var>C</var> ₪ בעבור  המחיר של <var>plural_heb( N1, deskItem( 0 ), deskItem_plural( 0 ) )</var>, ואת זאת ניתן לרשום בתור היחס הבא:</p>
+					<p><code>\dfrac{₪<var>C</var>}{<var>N1</var>}</code></p>
+					<p>ומכיון שהמחיר עבור כל <var>deskItem( 0 )</var> לא משתנה, שני היחסים זהים.</p>
+				</div>
+
+				<p><code><var>SOLUTIONS[ IDX ]</var></code></p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

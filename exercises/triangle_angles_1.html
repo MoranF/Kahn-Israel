@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers graphie-geometry math-format">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>זוויות המשולש 1</title>
+	<script src="../khan-exercise.js"></script>
+	<script>
+		function scTriangle(){
+			while( ! a || Math.abs( a - b ) < 5 || Math.abs( a - c ) < 5 || Math.abs( b - c ) < 5 ){
+				var a = KhanUtil.randRange( 25, 150 );
+				var b = KhanUtil.randRange( 25, 180 - a );
+				if ( a + b > 170 ){
+					a = Math.max( 30, a - 15  );
+					b = Math.max( 30, b - 15  );
+				}
+				var c = 180 - a - b;
+			}
+
+			var sa = KhanUtil.randRange( 4, 8 );
+			var sb = sa * Math.sin( b * Math.PI / 180 )  / Math.sin( a * Math.PI / 180 );
+			var sc = sa * Math.sin( c * Math.PI / 180 )  / Math.sin( a * Math.PI / 180 );
+			return [ [ a, b, c ] , [ sc.toFixed( 1 ),  sa.toFixed( 1 ), sb.toFixed( 1 ) ] ];
+		}
+
+		function eqTriangle(){
+			var a = KhanUtil.randRange( 4, 8 );
+			return [ [ 60, 60, 60 ], [ a, a, a ] ];
+		}
+
+		function isoTriangle(){
+			var a = KhanUtil.randRangeExclude( 25, 75, [ 60 ] );
+			var c = 180 - 2 * a;
+			var sa = KhanUtil.randRange( 4, 8 );
+			var sc = sa * Math.sin( c * Math.PI / 180 )  / Math.sin( a * Math.PI / 180 );
+			var ang =  [ a, a, c ];
+			var sides = [ sc.toFixed( 1 ), sa,  sa ];
+			return [ ang , sides ];
+
+		}
+
+	</script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="scalene">
+				<div class="vars">
+					<var id="TRIANGLE">scTriangle()</var>
+				</div>
+				<div class="problem">
+					מה הוא הערך של הזווית המסומנת ב- "X" ?
+				</div>
+				<div class="question">
+					<div class="graphie">
+						init({
+							range: [ [-1, 10 ], [ -8, 1 ] ]
+						})
+						var tr = new Triangle( [ 3, -4 ],  TRIANGLE[ 0 ], 5, { "sides" : TRIANGLE[ 1 ], "angles" : [ TRIANGLE[ 0 ][ 0 ]  + "^{\\circ}", TRIANGLE[ 0 ][ 1 ] + "^{\\circ}",  "X" ] } );
+						tr.rotate( randRange( 0, 90 ) );
+						tr.boxOut( [ [ [ -10, 1 ], [ 10, 1 ] ] ], [ 0,-0.5 ] )
+						tr.draw();
+						tr.drawLabels();
+					</div>
+				</div>
+
+				<div class="solution" data-type="multiple"><p><code>X =</code><span class="sol"><var>TRIANGLE[ 0 ][ 2 ]</var></span></div>
+				<div class="hints">
+					<p>סכום זוויות במשולש שווה ל180 מעלות.</p>
+					<p>אנו יודעים 2 זוויות במשולש הנתון.</p>
+					<p>הזווית השלישית היא 180 מעלות , מינוס האחרות</p>
+					<p>ולכן הזווית המסומנת בX שווה <code>180 - <var>TRIANGLE[ 0 ][ 0 ]</var> - <var>TRIANGLE[ 0 ][ 1 ]</var> = <var>TRIANGLE[ 0 ][ 2 ]</var></code></p>
+				</div>
+			</div>
+			<div id="isosceles1" data-type="scalene">
+				<div class="vars">
+					<var id="TRIANGLE">isoTriangle()</var>
+				</div>
+				<div class="question">
+					<div class="graphie">
+						init({
+							range: [ [-1, 10 ], [ -8, 1 ] ]
+						})
+						var tr = new Triangle( [ 3, -4 ],  TRIANGLE[ 0 ], 5, { "sides" : TRIANGLE[ 1 ], "angles" : [ TRIANGLE[ 0 ][ 0 ] + "^{\\circ}", "",  "X" ] } );
+						tr.rotate( randRange( 0, 90 ), 3, -3 );
+						tr.boxOut( [ [ [ -10, 1 ], [ 10, 1 ] ] ], [ 0,-0.5 ] )
+						tr.draw();
+						tr.drawLabels();
+					</div>
+				</div>
+				<div class="solution" data-type="multiple"><p><code>X =</code><span class="sol"><var>TRIANGLE[ 0 ][ 2 ]</var></span></div>
+
+				<div class="hints">
+					<p>סכום זוויות במשולש שווה ל180 מעלות.</p>
+					<p>בגלל שבמשולש הנתון יש 2 צלעות שוות, הוא משולש שווה שוקיים. במשולש שווה שוקיים זוויות הבסיס שוות.</p>
+					<p>אנו יכולים לכתוב מחדש את  <code>A + B + C = 180</code> ל <code>A + A + C = 180, 2A + C = 180 </code></p>
+					<p>זוויות אשר נמצאות בבסיס ( הצלע השונה), שוות, והזווית בין הצלעות השוות שונה.</p>
+					<p>אנו יודעים זווית בסיס אחת, וזה אומר שאנחנו יודעים את הזווית הבסיס השניה שלידה. השווה גם היא ל <var>TRIANGLE[ 0 ][ 0 ]</var></p>
+					<p>נשתמש במשוואה שלנו ונקבל <code>2 \cdot <var>TRIANGLE[ 0 ][ 0 ]</var> + X = 180,<var>2 * TRIANGLE[ 0 ][ 0 ]</var> + C = 180</code></p>
+					<p><code>X = 180 - <var>2 * TRIANGLE[ 0 ][ 0 ]</var></code></p>
+					<p><code>X = <var>180 - 2 * TRIANGLE[ 0 ][ 0 ]</var></code></p>
+				</div>
+			</div
+>
+			<div id="isosceles2" data-type="scalene">
+				<div class="vars">
+					<var id="TRIANGLE">isoTriangle()</var>
+				</div>
+				<div class="question">
+					<div class="graphie">
+						init({
+							range: [ [-1, 10 ], [ -8, 1 ] ]
+						})
+						var tr = new Triangle( [ 3, -4 ],  TRIANGLE[ 0 ], 5, { "sides" : TRIANGLE[ 1 ], "angles" : [ "X", "", TRIANGLE[ 0 ][ 2 ] + "^{\\circ}" ]  } );
+						tr.rotate( randRange( 0, 90 ), 3, -3 );
+						tr.boxOut( [ [ [ -10, 1 ], [ 10, 1 ] ] ], [ 0,-0.5 ] )
+						tr.draw();
+						tr.drawLabels();
+					</div>
+				</div>
+				<div class="solution" data-type="multiple"><p><code>X =</code><span class="sol"><var>TRIANGLE[ 0 ][ 0 ]</var></span></div>
+
+				<div class="hints">
+					<p>סכום זוויות במשולש שווה ל180 מעלות.</p>
+					<p>בגלל שבמשולש הנתון יש 2 צלעות שוות, הוא משולש שווה שוקיים. במשולש שווה שוקיים זוויות הבסיס שוות.</p>
+					<p>אנו יכולים לכתוב מחדש את  <code>A + B + C = 180</code> ל <code>A + A + C = 180, 2A + C = 180 </code></p>
+					<p>זוויות אשר נמצאות בבסיס ( הצלע השונה), שוות, והזווית בין הצלעות השוות שונה.</p>
+					<p>אנו יודעים את הזווית השונה, ולכן אנו יכולים לדעת את זוויות הבסיס.</p>
+					<p>הזווית שאנו מחפשים היא  <code>A</code></p>
+					<p>על ידי המשוואה שלמעלה נקבל   <code>2X  + <var>TRIANGLE[ 0 ][ 2 ]</var> = 180</code></p>
+					<p><code>2X = 180 - <var>TRIANGLE[ 0 ][ 2 ]</var> </code></p>
+					<p><code>2X = <var>180 - TRIANGLE[ 0 ][ 2 ]</var></code></p>
+					<p><code>X = \dfrac{ <var>180 - TRIANGLE[ 0 ][ 2 ]</var> }{ 2 }</code></p>
+					<p><code>X = <var>TRIANGLE[ 0 ][ 0 ]</var></code></p>
+				</div>
+			</div>
+			<div id="isosceles3" data-type="scalene">
+				<div class="vars">
+					<var id="TRIANGLE">isoTriangle()</var>
+				</div>
+				<div class="question">
+					<div class="graphie">
+						init({
+							range: [ [-1, 10 ], [ -8, 1 ] ]
+						})
+						var tr = new Triangle( [ 3, -4 ],  TRIANGLE[ 0 ], 5, { "sides" : TRIANGLE[ 1 ], "angles" : [ TRIANGLE[ 0 ][ 0 ]+ "^{\\circ}",  "X", "" ]  } );
+						tr.rotate( randRange( 0, 90 ), 3, -3 );
+						tr.boxOut( [ [ [ -10, 1 ], [ 10, 1 ] ] ], [ 0,-0.5 ] )
+						tr.draw();
+						tr.drawLabels();
+					</div>
+				</div>
+				<div class="solution" data-type="multiple"><p><code>X =</code><span class="sol"><var>TRIANGLE[ 0 ][ 0 ]</var></span></div>
+				<div class="hints">
+					<p>סכום זוויות במשולש שווה ל180 מעלות.</p>
+					<p>בגלל שבמשולש הנתון יש 2 צלעות שוות, הוא משולש שווה שוקיים. במשולש שווה שוקיים זוויות הבסיס שוות.</p>
+					<p>אנו יכולים לכתוב מחדש את  <code>A + B + C = 180</code> ל <code>A + A + C = 180, 2A + C = 180 </code></p>
+					<p>זוויות אשר נמצאות בבסיס ( הצלע השונה), שוות, והזווית בין הצלעות השוות שונה.</p>
+					<p>אנו יודעים שזווית בסיס אחת שווה ל  <var>TRIANGLE[ 0 ][ 0 ]</var>, והזווית שאנו מחפשים היא על אותו בסיס . </p>
+					<p>לכן הזווית שאנו מחפשים שווה ל  <var>TRIANGLE[ 0 ][ 0 ]</var>.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

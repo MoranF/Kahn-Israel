@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות יחס מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+
+	<div class="problems">
+		<div id="classroom">
+			<div class="vars">
+				<var id="RATIO_GIRLS">randRange( 2, 10 )</var>
+				<var id="RATIO_BOYS">randRange( 2, 10 )</var>
+				<var id="FACTOR">randRange( 2, 5 )</var>
+				<var id="NUM_GIRLS">RATIO_GIRLS * FACTOR</var>
+				<var id="NUM_BOYS">RATIO_BOYS * FACTOR</var>
+				<var id="TOTAL">NUM_GIRLS + NUM_BOYS</var>
+			</div>
+			<p class="problem">בשיעור <var>course( 1 )</var>, יחס הבנות לבנים הוא <code><var>RATIO_GIRLS</var></code> ל- <code><var>RATIO_BOYS</var></code>.</p>
+			<p class="question">אם ישנן <code><var>NUM_GIRLS</var></code> בנות, כמה בנים יש בכיתה?</p>
+			<p class="solution" data-forms="integer"><var></var></p>
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM_BOYS</var></span> בנים</p>
+			</div>
+			<div class="hints">
+				<p>המשמעות של יחס של <code><var>RATIO_GIRLS</var></code> בנות ל-<code><var>RATIO_BOYS</var></code> בנים היא שעל כל קבוצה של <code><var>RATIO_GIRLS</var></code> בנות ישנה קבוצה של <code><var>RATIO_BOYS</var></code> בנים.</p>
+				<p>אם ישנן <code><var>NUM_GIRLS</var></code> בנות, משמע שישנן <code><var>FACTOR</var></code> קבוצות שבכל אחת <code><var>RATIO_GIRLS</var></code> בנות.</p>
+				<p>מכיוון שאנו יודעים שיש יחס של <code><var>RATIO_GIRLS</var>:<var>RATIO_BOYS</var></code> בין בנות לבנים, צריכות להיות <code><var>FACTOR</var></code> קבוצות שבכל אחת <code><var>RATIO_BOYS</var></code> בנים.</p>
+				<p>על כן, בסך הכל ישנם <code><var>NUM_BOYS</var></code> בנים בשיעור <var>course( 1 )</var>.</p>
+			</div>
+		</div>
+
+		<div id="classroom-give-boys-ask-girls" data-type="classroom">
+			<p class="question">אם ישנם <code><var>NUM_BOYS</var></code> בנים, כמה בנות יש בכיתה?</p>
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM_GIRLS</var></span> בנות</p>
+			</div>
+			<div class="hints">
+				<p>המשמעות של יחס של <code><var>RATIO_GIRLS</var></code> בנות ל-<code><var>RATIO_BOYS</var></code> בנים היא שעל כל קבוצה של <code><var>RATIO_GIRLS</var></code> בנות ישנה קבוצה של <code><var>RATIO_BOYS</var></code> בנים.</p>
+				<p>אם ישנם <code><var>NUM_BOYS</var></code> בנים, משמע שישנן <code><var>FACTOR</var></code> קבוצות שבכל אחת <code><var>RATIO_BOYS</var></code> בנים.</p>
+				<p>מכיוון שאנו יודעים שיש יחס של <code><var>RATIO_GIRLS</var>:<var>RATIO_BOYS</var></code> בין בנות לבנים, צריכות להיות <code><var>FACTOR</var></code> קבוצות שבכל אחת <code><var>RATIO_GIRLS</var></code> בנות.</p>
+				<p>על כן, בסך הכל ישנן <code><var>NUM_GIRLS</var></code> בנות בשיעור <var>course( 1 )</var>.</p>
+			</div>
+		</div>
+
+		<div id="classroom-give-total-ask-girls" data-type="classroom">
+			<p class="question">אם בסך הכל ישנם <code><var>TOTAL</var></code> תלמידים בכיתה, כמה מהם בנות?</p>
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM_GIRLS</var></span> בנות</p>
+			</div>
+			<div class="hints">
+				<p>המשמעות של יחס של <code><var>RATIO_GIRLS</var></code> בנות ל-<code><var>RATIO_BOYS</var></code> בנים היא שניתן לחלק את הכיתה לקבוצות שבכל אחת <code><var>RATIO_GIRLS + RATIO_BOYS</var></code> תלמידים מתוכם <code><var>RATIO_GIRLS</var></code> בנות ו-<code><var>RATIO_BOYS</var></code> בנים.</p>
+				<p>כיתה של <code><var>TOTAL</var></code> תלמידים ניתן לחלק ל-<code><var>FACTOR</var></code> קבוצות של <code><var>RATIO_GIRLS + RATIO_BOYS</var></code> תלמידים.</p>
+				<p>מכיוון שאנו יודעים שישנן <code><var>RATIO_GIRLS</var></code> בנות בכל קבוצה של <code><var>RATIO_GIRLS + RATIO_BOYS</var></code> תלמידים, בכיתה צריכות להיות <code><var>FACTOR</var></code> קבוצות שבכל אחת <code><var>RATIO_GIRLS</var></code> בנות.</p>
+				<p>על כן, בסך הכל ישנן <code><var>NUM_GIRLS</var></code> בנות בשיעור <var>course( 1 )</var>.</p>
+			</div>
+		</div>
+
+		<div id="classroom-give-total-ask-boys" data-type="classroom">
+			<p class="question">אם בסך הכל ישנם <code><var>TOTAL</var></code> תלמידים בכיתה, כמה מהם בנים?</p>
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>NUM_BOYS</var></span> בנים</p>
+			</div>
+			<div class="hints">
+				<p>המשמעות של יחס של <code><var>RATIO_GIRLS</var></code> בנות ל-<code><var>RATIO_BOYS</var></code> בנים היא שניתן לחלק את הכיתה לקבוצות שבכל אחת <code><var>RATIO_GIRLS + RATIO_BOYS</var></code> תלמידים מתוכם <code><var>RATIO_GIRLS</var></code> בנות ו-<code><var>RATIO_BOYS</var></code> בנים.</p>
+				<p>כיתה של <code><var>TOTAL</var></code> תלמידים ניתן לחלק ל-<code><var>FACTOR</var></code> קבוצות של <code><var>RATIO_GIRLS + RATIO_BOYS</var></code> תלמידים.</p>
+				<p>מכיוון שאנו יודעים שישנם <code><var>RATIO_BOYS</var></code> בנים בכל קבוצה של <code><var>RATIO_GIRLS + RATIO_BOYS</var></code> תלמידים, צריכות להיות <code><var>FACTOR</var></code> קבוצות שבכל אחת <code><var>RATIO_BOYS</var></code> בנים.</p>
+				<p>על כן, בסך הכל ישנם <code><var>NUM_BOYS</var></code> בנים בשיעור <var>course( 1 )</var>.</p>
+			</div>
+		</div>
+
+		<div id="map">
+			<div class="vars">
+				<var id="SCALE_MAP">randRange( 1, 10 )</var>
+				<var id="SCALE_REAL">randRange( 1, 10 )</var>
+				<var id="FACTOR">randRange( 2, 10 )</var>
+				<var id="DISTANCE_MAP">FACTOR * SCALE_MAP</var>
+				<var id="DISTANCE_REAL">FACTOR * SCALE_REAL</var>
+			</div>
+			<p class="problem">קנה המידה במפה הוא <var>SCALE_MAP</var> סנטימטרים : <var>SCALE_REAL</var> קילומטרים.</p>
+			<p class="question">אם מדדנו במפה מרחק של <var>DISTANCE_MAP</var> סנטימטרים בין שתי ערים מהו המרחק האמיתי בינהן בקילומטרים?</p>
+			<div class="solution" data-type="multiple">
+				<p><span class="sol" style="padding-right: 5px" data-forms="integer"><var>DISTANCE_REAL</var></span> קילומטרים</p>
+			</div>
+			<div class="hints">
+				<p>משמעות קנה המידה היא שכל <var>SCALE_MAP</var> סנטימטרים מתארים מרחק אמיתי של <var>SCALE_REAL</var> קילומטרים על פני השטח.</p>
+				<p>מרחק של <var>DISTANCE_MAP</var> סנטימטרים ניתן לרשום כ- <var>FACTOR</var> <code>\cdot</code> <var>SCALE_MAP</var> סנטימטרים.</p>
+				<p>על כן, המרחק האמיתי בין שתי הערים הוא <var>FACTOR</var> <code>\cdot</code> <var>SCALE_REAL</var> קילומטרים, שהם <var>DISTANCE_REAL</var> קילומטרים.</p>
+			</div>
+		</div>
+
+		<div id="map-give-real-ask-map" data-type="map">
+			<p class="question">אם המרחק האמיתי בין שתי ערים הוא <var>DISTANCE_REAL</var> קילומטרים, מה יהיה המרחק שנמדוד בינהן על המפה?</p>
+			<div class="solution" data-type="multiple">
+				<p><span class="sol" style="padding-right: 5px" data-forms="integer"><var>DISTANCE_MAP</var></span> סנטימטרים</p>
+			</div>
+			<div class="hints">
+				<p>משמעות קנה המידה היא שכל <var>SCALE_MAP</var> סנטימטרים מתארים מרחק אמיתי של <var>SCALE_REAL</var> קילומטרים על פני השטח.</p>
+				<p>מרחק אמיתי של <var>DISTANCE_REAL</var> קילומטרים ניתן לרשום כ- <var>FACTOR</var> <code>\cdot</code> <var>SCALE_REAL</var> קילומטרים.</p>
+				<p>על כן, המרחק שנמדוד בין הערים על המפה הוא <var>FACTOR</var> <code>\cdot</code> <var>SCALE_MAP</var> סנטימטרים, שהם <var>DISTANCE_MAP</var> סנטימטרים.</p>
+			</div>
+		</div>
+	</div>
+
+	</div>
+</body>
+</html>

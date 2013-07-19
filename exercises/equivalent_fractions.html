@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>שברים שווי ערך</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="vars" data-ensure="A < B">
+        <var id="A">randRange( 1, 3 )</var>
+        <var id="B">randRange( 2, 4 )</var>
+        <var id="M">randRange(2, 3)</var>
+        <var id="C">A * M</var>
+        <var id="D">B * M</var>
+        <var id="SYMBOL">binop( 1 )</var>
+    </div>
+
+    <div class="problems">
+        <div id="numerator">
+            <p class="question">איזה מספר יכול להחליף את הסימן  <code><var>SYMBOL</var></code> בנוסחה שלפניכם?</p>
+            <p><code>\dfrac{<var>A</var>}{<var>B</var>} = \dfrac{<var>SYMBOL</var>}{<var>D</var>}</code></p>
+            <div class="solution" data-forms="integer"><var>C</var></div>
+            <div class="hints">
+                <div>
+                    <p>השבר משמאל מסמל  <var>A</var> מתוך  <var>B</var> פרוסות של <var>pizza( 1 )</var> מלבנית.</p>
+                    <div class="graphie">
+                        init({ range: [ [0, 1], [0, 1] ], scale: [180, 25] });
+                        rectchart( [A, B - A], ["#e00", "#999"] );
+                    </div>
+                </div>
+                <div>
+                    <p>מה יקרה אם נפרוס את ה<var>pizza( 1 )</var> ל- <var>D</var> פרוסות במקום זאת? כמה פרוסות יכילו אותה כמות  <var>pizza( 1 )</var>?</p>
+                    <div class="graphie">
+                        init({ range: [ [0, 1], [0, 1] ], scale: [180, 25] });
+                        rectchart( [0, D], ["#e00", "#999"] );
+                    </div>
+                </div>
+                <div>
+                    <p>התשובה היא   <var>C</var> פרוסות.</p>
+                    <div class="graphie">
+                        init({ range: [ [0, 1], [0, 1] ], scale: [180, 25] });
+                        rectchart( [C, D - C], ["#e00", "#999"] );
+                    </div>
+                </div>
+                <p><code>\dfrac{<var>A</var>}{<var>B</var>} = \dfrac{<var>C</var>}{<var>D</var>}</code> ולכן התשובה לשאלה המקורית היא  <code><var>C</var></code> פרוסות.</p>
+
+                <div>
+                    <p>דרך נוספת לקבל את התשובה היא להכפיל ב-  <code>\dfrac{<var>M</var>}{<var>M</var>}</code> פרוסות.</p>
+                    <p><code>\dfrac{<var>M</var>}{<var>M</var>} = \dfrac{1}{1} = 1</code> לכן אנו סך הכל מכפילים ב-1.</p>
+                </div>
+                <p>התשובה הסופית היא: <code>\dfrac{<var>A</var>}{<var>B</var>} \times \dfrac{<var>M</var>}{<var>M</var>} = \dfrac{<var>C</var>}{<var>D</var>} </code> לכן תשובתינו היא  <code><var>C</var></code> פרוסות.</p>
+
+            </div>
+        </div>
+
+        <div id="denominator">
+            <p class="question">איזה מספר יכול להחליף את הסימן  <code><var>SYMBOL</var></code> בנוסחה שלפניכם?</p>
+            <p><code>\dfrac{<var>A</var>}{<var>B</var>} = \dfrac{<var>C</var>}{<var>SYMBOL</var>}</code></p>
+            <div class="solution" data-forms="integer"><var>D</var></div>
+            <div class="hints">
+                <div>
+                    <p>השבר משמאל מסמל  <var>A</var> מתוך  <var>B</var> פרוסות של <var>pizza( 1 )</var> מלבנית.</p>
+                    <div class="graphie">
+                        init({ range: [ [0, 1], [0, 1] ], scale: [180, 25] });
+                        rectchart( [A, B - A], ["#e00", "#999"] );
+                    </div>
+                </div>
+
+                <div>
+                    <p>כמה פרוסות עלינו לפרוס סה"כ כדי שאותה כמות <var>pizza( 1 )</var> תיכנס ב-<var>C</var> פרוסות? </p>
+                    <div class="graphie">
+                        init({ range: [ [0, 1], [0, 1] ], scale: [180, 25] });
+                        rectchart( [C, D - C], ["#e00", "#fff"] );
+                    </div>
+                </div>
+
+                <div>
+                    <p>נצטרך לפרוס את ה<var>pizza( 1 )</var> ל- <var>D</var> פרוסות.</p>
+                    <div class="graphie">
+                        init({ range: [ [0, 1], [0, 1] ], scale: [180, 25] });
+                        rectchart( [C, D - C], ["#e00", "#999"] );
+                    </div>
+                </div>
+                <p><code>\dfrac{<var>A</var>}{<var>B</var>} = \dfrac{<var>C</var>}{<var>D</var>}</code> ולכן התשובה היא  <code><var>D</var></code> פרוסות.</p>
+
+                <div>
+                    <p>דרך נוספת לקבל את התשובה היא להכפיל ב-  <code>\dfrac{<var>M</var>}{<var>M</var>}</code> פרוסות.</p>
+                    <p><code>\dfrac{<var>M</var>}{<var>M</var>} = \dfrac{1}{1} = 1</code> לכן אנו סך הכל מכפילים ב-1.</p>
+                </div>
+
+                <p>התשובה הסופית היא: <code>\dfrac{<var>A</var>}{<var>B</var>} \times \dfrac{<var>M</var>}{<var>M</var>} = \dfrac{<var>C</var>}{<var>D</var>} </code> לכן תשובתינו היא  <code><var>D</var></code> פרוסות.</p>
+
+            </div>
+        </div>
+
+        <div id="custom-7" data-weight="0" data-type="numerator">
+            <div class="vars">
+                <var id="A">1</var>
+                <var id="B">2</var>
+                <var id="M">2</var>
+                <var id="C">A * M</var>
+                <var id="D">B * M</var>
+                <var id="SYMBOL">"\\otimes"</var>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

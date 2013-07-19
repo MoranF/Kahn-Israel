@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html data-require="math graphie interactive word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>דפוסי ערימות</title>
+    <script src="../khan-exercise.js"></script>
+    <style type="text/css">
+        #answer_area input[type=text] {
+            width: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div>
+                <div class="vars"
+                    data-ensure="(USEA || USEB || USEC || USED)
+                    &amp;&amp; A + B + C + D > 0 &amp;&amp;
+                    XS !== START">
+                    <var id="USEA">random() &lt; 0.5</var>
+                    <var id="A">USEA ? randRange(1, 3) : 0</var>
+                    <var id="USEB">random() &lt; 0.5</var>
+                    <var id="B">USEB ? randRange(0, 2) : 0</var>
+                    <var id="USEC">random() &lt; 0.5</var>
+                    <var id="C">USEC ? randRange(1, 3) : 0</var>
+                    <var id="USED">random() &lt; 0.5</var>
+                    <var id="D">USED ? randRange(0, 2) : 0</var>
+                    <var id="LEFTMAX">USEC ? (C + 4) : 2</var>
+                    <var id="TOPMAX">USED ? (D + 4) : 0</var>
+                    <var id="XS">_.reduce([USEA, USEB, USEC, USED],
+                    function(sum, e) {
+                        return sum + (e ? 1 : 0);
+                    }, 0)</var>
+                    <var id="START">A + B + C + D</var>
+                </div>
+                <p class="question">
+כמה בלוקים בדיאגרמה בכל שלב? גרור את הנקודה הכתומה שעל הציר כדי לבחון את ההתנהגות של הדיאגרמה
+                </p>
+                <div class="problem">
+                    <div class="graphie" id="main">
+                        var vertscale = -2;
+
+                        if (USEB) {
+                            vertscale -= B + 4;
+                        }
+                        if (USED) {
+                            vertscale -= D + 4;
+                        }
+                        if (USEA) {
+                            vertscale -= 1;
+                        }
+                        if (USEC) {
+                            vertscale -= 1;
+                        }
+
+                        init({
+                            range: [[-1, 15], [vertscale, 1]]
+                        });
+
+                        addMouseLayer();
+
+                        label([1, 0.2], "\\text{שלב}:", "above left");
+                        line([1, 0], [9, 0]);
+                        for (var x = 1; x &lt;= 9; x += 2) {
+                            line([x, -0.2], [x, 0.2]);
+                            label([x, 0.2], (x - 1) / 2, "above");
+                        }
+
+                        var drawBox = function(x, y) {
+                            y = -y - 2 - TOPMAX;
+                            x = x + LEFTMAX;
+
+                            return path([
+                                [x, y],
+                                [x + 1, y],
+                                [x + 1, y + 1],
+                                [x, y + 1],
+                                true
+                            ]);
+                        };
+
+                        var drawPile = function(x, y, dir, start, num) {
+                            var set = raphael.set();
+
+                            var offset = [
+                                [1, 0],
+                                [0, 1],
+                                [-1, 0],
+                                [0, -1]
+                            ][dir];
+
+                            for (var i = start; i &lt; num; ++i) {
+                                set.push(
+                                    drawBox(x + offset[0] * i,
+                                            y + offset[1] * i)
+                                );
+                            }
+
+                            return set;
+                        };
+
+                        var drawPattern = function(num) {
+                            var boxes = raphael.set();
+
+                            var start = (num === 0);
+
+                            if (USED) {
+                                boxes.push(drawPile(0, -1, 3,
+                                    start ? 0 : D + num - 1, num + D));
+                            }
+
+                            var y = 0;
+
+                            if (USEC) {
+                                boxes.push(drawPile(0, y, 2,
+                                    start ? 0 : C + num - 1, num + C));
+                                y += 1;
+                            }
+                            if (USEA) {
+                                boxes.push(drawPile(0, y, 0,
+                                    start ? 0 : A + num - 1, num + A));
+                                y += 1;
+                            }
+                            if (USEB) {
+                                boxes.push(drawPile(0, y, 1,
+                                    start ? 0 : B + num - 1, num + B));
+                                y += 1;
+                            }
+
+                            return boxes;
+                        };
+
+                        var steps = [];
+
+                        for (var i = 0; i &lt; 5; i++) {
+                            steps[i] = drawPattern(i);
+
+                            steps[i].attr("opacity", 0);
+                        }
+
+                        steps[0].attr("opacity", 1);
+                        steps[1].attr("opacity", 1);
+
+                        var currStep = 1;
+
+                        var showStep = function(step) {
+                            while (currStep &lt; step) {
+                                // add blocks
+                                steps[currStep + 1].attr("fill", "#ddddff");
+                                steps[currStep + 1].animate({ "opacity": 1 }, 300);
+                                steps[currStep + 1].animate({ "fill": "#ffffff" }, 200);
+                                currStep++;
+                            }
+                            while (currStep > step) {
+                                steps[currStep].animate({ "opacity": 0 }, 200);
+                                currStep--;
+                            }
+                        };
+
+                        graph.slider = addMovablePoint({
+                            coord: [3, 0],
+                            constraints: {
+                                constrainY: true
+                            }
+                        });
+
+                        graph.slider.onMove = function(x, y) {
+                            if (x &lt; 1) return false;
+                            if (x > 9) return false;
+
+                            var newx = round((x - 1) / 2);
+
+                            showStep(newx);
+
+                            return [newx * 2 + 1, y];
+                        };
+                    </div>
+                </div>
+                <div class="solution" data-type="multiple">
+                   בשלב 0 יש לנו<span class="sol"><var>START</var></span> בלוקים. בכל שלב אנו מוסיפים  <span class="sol"><var>XS</var></span> בלוקים יותר .<br><br>
+                    כאשר S מספר את מספר השלב <code>S</code>,יש לנו<br><span class="sol"><var>START</var></span> <code>+</code> <span class="sol"><var>XS</var></span> <code>\times S</code>  בלוקים.
+                </div>
+                <div class="hints">
+                    <p>מספר הבלוקים בדיאגרמה מייצגים סדרה חשבונית, זה אומר שבכל שלב, מספר בלוקים זהה מוסף. אנו רוצים למצוא דרך לדעת כמה בלוקים יהיו בכל שלב.</p>
+                    <p>ראשית, אנו צריכים לדעת כמה בלוקים היו בהתחלה.  נספור כמה בלוקים היו בהתחלה על ידי גרירת הנקודה הכתובה בציר אל הספרה 0. ונספור את מספר הבלוקים.</p>
+                    <div>
+                        <p>אנו רואים שיש  <var>START</var> בלוקים בשלב 0. רשום זאת במקום התשובה המתאים.</p>
+                        <div class="graphie" data-update="main">
+                            graph.slider.moveTo(1, 0);
+                        </div>
+                    </div>
+                    <p>לאחר מכן, נברר כמה בלוקים נוספים בכל שלב. הדרך הקלה ביותר היא כמה בלוקים נוספים משלב 0 לשלב 1.</p>
+                    <div>
+                        <p>ישנם <code><var>START + XS</var></code> בלוקים בשלב 1. כדי לגלות כמה בלוקים מוספים בכל שלב, אנו צריכים פשוט להחסיר מכמות הבלוקים בשלב 1 מכמות הבלוקים בשלב 0 <code><var>START + XS</var> - <var>START</var> = <var>XS</var></code> בלוקים נוספים כל שלב. כתוב זו בתשובה.</p>
+                        <div class="graphie" data-update="main">
+                            graph.slider.moveTo(3, 0);
+                        </div>
+                    </div>
+                    <p>ולבסוף, אנו צריכים לחשוב כמה בלוקים יהיו בכל שלב.  אנו יכולים לחשוב על זה כך: " אם היו לנו  <code>S</code> שלבים, כמה בלוקים יהיו בשלב הזה?"</p>
+                    <p>ובכן, בואו נתבונן כמה בלוקים יש בכל שלב, ונראה האם יש פה סדרה מסויימת.</p>
+                    <p>שלב 0: <span class="const"><var>START</var> בלוקים</span></p>
+                    <div>
+                        <p>אנו יודעים שבשלב 1 יש <code><var>START + XS</var></code> בלוקים, אבל אנו יכולים לרשום את זה ככמות הבלוקים בשלב 0, פלוס כמות הבלוקים הנוספים בין שלב 0 לשלב 1:</p>
+                        <p>שלב  1: <code>)</code>מספר הבלוקים בשלב  0<code> = <var>XS</var> + (   </code> <span class="const"><code> + <var>START</var>  </code></span><span class="lin"><code> <var>XS</var> </code></span> בלוקים</p>
+                    </div>
+                    <p>אנו יכולים לעשות אותו דבר עם השלבים 2 ו3, בגלל שאנחנו יודעים שאנו מוסיפים מספר בלוקים זהה כל פעם:</p>
+                    <p>שלב 2: <code>)</code>מספר הבלוקים בשלב  1<code> = <var>XS</var> + (   </code> <span class="const"><code> + <var>START</var>  </code></span><span class="lin"><code><var>XS</var> + <var>XS</var></code></span> בלוקים</p>
+                    <p>שלב 3: <code>)</code>מספר הבלוקים בשלב 2<code> = <var>XS</var> + (   </code> <span class="const"><code> + <var>START</var>  </code></span><span class="lin"><code><var>XS</var> + <var>XS</var> + <var>XS</var></code></span> בלוקים</p>
+                    <div>
+                        <p>אנו יכולים לראות סדרה כלשהיא! מספר הבלוקים בכל שלב מתאר את הסכום של  <span class="const"><var>START</var> בלוקים </span>ומספר של קבוצות של <span class="lin"><var>XS</var></span> בלוקים. כמה קבוצות של <var>XS</var> בלוקים יש בכל שלב?</p>
+                        <div class="graphie">
+                            $(".const").addClass("hint_blue");
+                            $(".lin").addClass("hint_orange");
+                        </div>
+                    </div>
+                    <p>בדיוק, אותו מספר כמספר השלבים!</p>
+                    <p>אז, אנו יכולים לחבר את מספר הקבוצותביחד, כדי שיהיה משהו כזה : <code><var>START</var> + <var>XS</var> \times S</code>, כאשר S מציין את השלב שאנו נמצאים בו.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

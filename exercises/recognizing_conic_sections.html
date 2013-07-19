@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>זיהוי חתכים חרוטיים</title>
+		<script src="../khan-exercise.js"></script>
+	</head>
+	<body>
+		<div class="exercise">
+			<div class="problems">
+				<div id="parabola">
+					<div class="vars">
+						<var id="A">randRangeNonZero( -30, 30 ) / 10</var>
+						<var id="B">randRange( -30, 30 ) / 10</var>
+						<var id="C">randRange( -70, 70 ) / 10</var>
+
+						<var id="FUNC">function( x ) {
+							return A*x*x + B*x + C;
+						}</var>
+					</div>
+
+					<div class="problem">
+						<p>זהה את החתך החרוטי שלהלן:</p>
+
+						<div class="graphie" id="conic">
+							graphInit({
+								range: 10,
+								scale: 20,
+								tickStep: 1,
+								axisArrows: "&lt;-&gt;"
+							});
+							style({ stroke: "#6495ED" });
+						</div>
+					</div>
+					<div class="question">
+						<div class="graphie" data-update="conic">
+							plot( FUNC, [-10, 10] );
+						</div>
+					</div>
+
+					<div class="solution">פרבולה</div>
+					<ul class="choices" data-category="true">
+						<li>פרבולה</li>
+						<li>היפרבולה</li>
+						<li>מעגל</li>
+						<li>אליפסה</li>
+					</ul>
+
+					<div class="hints">
+						<p>לגרף זה יש שיא והוא בצורת U. הוא ממשיך עד אינסוף בשני צידיו.</p>
+						<p>זהו תאור של <em>פרבולה</em>.</p>
+					</div>
+				</div>
+
+				<div id="ellipse" data-type="parabola">
+					<div class="vars">
+						<var id="A">randRangeNonZero( -70, 70 ) / 10</var>
+						<var id="B" data-ensure="abs( abs( A ) - abs( B ) ) > 1">randRangeNonZero( -70, 70 ) / 10</var>
+						<var id="C">randRangeNonZero( -30, 30 ) / 10</var>
+						<var id="D">randRangeNonZero( -30, 30 ) / 10</var>
+
+						<var id="PARA_FUNC">function( t ) {
+							return [ A * cos( t ) + C, B * sin( t ) + D ];
+						}</var>
+					</div>
+
+					<div class="question">
+						<div class="graphie" data-update="conic">
+							plotParametric( PARA_FUNC, [-PI, PI] );
+						</div>
+					</div>
+
+					<div class="solution">אליפסה</div>
+
+					<div class="hints">
+						<p>ניתן לראות כי גרף זה דומה למעגל "מחוץ".</p>
+						<p>צורה זו היא <em>אליפסה</em>.</p>
+					</div>
+				</div>
+
+				<div id="circle" data-type="ellipse">
+					<div class="vars" data-ensure="A > 0.5">
+						<var id="A">randRangeNonZero( -70, 70 ) / 10</var>
+						<var id="B">A</var>
+					</div>
+
+					<div class="solution">מעגל</div>
+
+					<div class="hints">
+						<p>צורה זו עגולה וסימטרית לחלוטין. כל הנקודות עליה נמצאות במרחק שווה מהמרכז.</p>
+						<p>אלו הם מאפיינים של <em>עיגול</em></p>
+					</div>
+				</div>
+
+				<div id="hyperbola" data-type="parabola">
+					<div class="vars">
+						<var id="A">randRangeNonZero( -40, 40 ) / 10</var>
+						<var id="B">randRangeNonZero( -40, 40 ) / 10</var>
+
+						<var id="PARA_FUNC">function( t ) {
+							return [ A / cos( t ), B * tan( t ) ];
+						}</var>
+					</div>
+
+					<div class="question">
+						<div class="graphie" data-update="conic">
+							// to steer clear of discontinuities,
+							// split up the plotting and add some buffer area away from them
+							plotParametric( PARA_FUNC, [-PI, -PI/2-0.1] );
+							plotParametric( PARA_FUNC, [-PI/2+0.1, PI/2-0.1] );
+							plotParametric( PARA_FUNC, [PI/2+0.1, PI] );
+						</div>
+					</div>
+
+					<div class="solution">היפרבולה</div>
+
+					<div class="hints">
+						<div>
+							<p>גרף זה שואף לשתי אסימפטוטות. כמו כן הוא בצורת U משני צידיו.</p>
+							<div class="graphie" data-update="conic">
+								plot( function( x ) { return (B/A) * x; }, [-10, 10], { stroke: "gray" } );
+								plot( function( x ) { return (B/A) * -1 * x; }, [-10, 10], { stroke: "gray" } );
+							</div>
+						</div>
+						<p>החתך החרוטי הזה הוא לפיכך <em>היפרבולה</em>.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

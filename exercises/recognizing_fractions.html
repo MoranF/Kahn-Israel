@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>זיהוי שברים</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars" data-ensure="NUMERATOR < DENOMINATOR">
+            <var id="NUMERATOR">randRange( 1, 11 )</var>
+            <var id="DENOMINATOR">randRange( 2, 12 )</var>
+        </div>
+
+        <div class="problems">
+            <div id="original">
+                <p class="question">מה הוא המונה של השבר  <code>\dfrac{<var>NUMERATOR</var>}{<var>DENOMINATOR</var>}</code>?</p>
+                <p class="solution" data-forms="integer"><var>NUMERATOR</var></p>
+                <div class="hints">
+                    <p>שברים מייצגים חלק ממספר שלם .</p>
+                    <div>
+                        <p>השבר  <code>\dfrac{<var>NUMERATOR</var>}{<var>DENOMINATOR</var>}</code> יכול ליצג <var>NUMERATOR</var> מתוך <var>DENOMINATOR</var> חתיכות של עוגה. במילים אחרות , העוגה נחתכה ל <var>DENOMINATOR</var> חתיכות , ואנחנו מחשיבים רק <var>NUMERATOR</var> מהחתיכות האלו.</p>
+                        <div class="graphie">
+                            init({
+                                range: [ [-2, 10], [-2, 2] ],
+                                scale: 25
+                            });
+
+                            piechart( [NUMERATOR, DENOMINATOR - NUMERATOR], ["#6495ED", "#FFA500"], 2 );
+                            label( [2, 0], "=\\dfrac{\\color{#6495ED}{" + NUMERATOR + "}}{" + DENOMINATOR + "}"
+                                + "=\\dfrac{\\color{#6495ED}{\\text{מונה}}}{\\text{מכנה}}", "right");
+                        </div>
+                    </div>
+                    <p>המונה הוא  מספר החתיכות שאנחנו מתייחסים אליהם, והוא נכתב מעל קו השבר. המכנה הוא המספר הכולל של החתיכות, והוא נכתב מתחת לקו.</p>
+                    <p id="answer_hint">לכן המונה הוא  <code><var>NUMERATOR</var></code>.</p>
+                </div>
+            </div>
+            <div data-type="original">
+                <p class="question">מה הוא המכנה של השבר  <code>\dfrac{<var>NUMERATOR</var>}{<var>DENOMINATOR</var>}</code>?</p>
+                <p class="solution" data-forms="integer"><var>DENOMINATOR</var></p>
+                <div class="hints" data-apply="appendContents">
+                    <p id="answer_hint">לכן, המכנה הוא  <code><var>DENOMINATOR</var></code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html data-require="math polynomials expressions math-format">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>השלמה לריבוע 1</title>
+	<script src="../khan-exercise.js"></script>
+	<style type="text/css">
+		#answer_area .short input[type=text] {
+			width: 60px;
+		}
+	</style>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="original" data-weight="5">
+				<div class="vars">
+					<var id="X1">randRangeNonZero( -10, 10 )</var>
+					<var id="X2" data-ensure="X1 !== X2">randRange( -5, 5 ) * 2 + ( X1 % 2 )</var>
+					<var id="B">( X1 + X2 ) * -1</var>
+					<var id="C">X1 * X2</var>
+					<var id="POLY">new Polynomial( 0, 2, [C, B, 1], "x" )</var>
+					<var id="POLY_TEXT">POLY.text()</var>
+				</div>
+				<p class="question">פתור את המשוואה עבור <code>x</code> על ידי השלמה לריבוע.</p>
+				<p><code><var>POLY_TEXT</var> = 0</code></p>
+				<div class="solution" data-type="set">
+					<div class="set-sol"><var>X1</var></div>
+					<div class="set-sol"><var>X2</var></div>
+					<div class="input-format">
+						<p><code>x = \quad</code><span class="entry short"></span><code>\quad \text{-ו} \quad x = \quad</code><span class="entry short"></span></p>
+					</div>
+				</div>
+			</div>
+			<div id="one-root" data-type="original" data-weight="1">
+				<div class="vars">
+					<var id="X2">X1</var>
+				</div>
+				<div class="solution" data-type="multiple">
+					<p><code>x = \quad</code><span class="sol"><var>X1</var></span></p>
+				</div>
+			</div>
+		</div>
+		<div class="hints">
+			<div data-if="X1 !== X2" data-unwrap>
+				<div data-if="C !== 0">
+					<p>תחילה נעביר את המקדם החופשי לצד ימין של המשוואה.</p>
+					<p><code>x^2 <span data-if="B !== 0"> + <var>B</var>x</span> = <var>C * -1</var></code></p>
+				</div>
+				<div data-if="B !== 0">
+					<p>כדי להשלים לריבוע, ניקח את המקדם של איבר ה-<code>x</code>, נחלק אותו בשתיים ונעלה בריבוע. את התוצאה נוסיף לשני צידי המשוואה. המקדם של איבר ה-<code>x</code> הוא <code><var>B</var></code>, אם נחלק אותו בשתיים נקבל <code><var>B / 2</var></code>, ואחרי העלאה בריבוע נקבל <code>\color{blue}{<var>pow( B / 2, 2 )</var>}</code>.</p>
+					<p><code>x^2 + <var>B</var>x \color{blue}{ + <var>pow( B / 2, 2 )</var>} = <var>C * -1</var> \color{blue}{ + <var>pow( B / 2, 2 )</var>}</code></p>
+				</div>
+				<div data-if="B !== 0">
+					<p>עכשיו נכתוב מחדש את צד שמאל של המשוואה כאיבר ריבועי.</p>
+					<p><code>( x + <var>B / 2</var> )^2 = <var>C * -1 + pow( B / 2, 2 )</var></code></p>
+				</div>
+			</div>
+			<div data-else data-unwrap>
+				<p>צד שמאל של המשוואה הוא טרינום ריבועי מושלם. המקדם של איבר ה-<code>x</code> הוא <code><var>B</var></code>, חצי ממנו הוא <code><var>B / 2</var></code>, והעלאה שלו בריבוע תיתן <code>\color{blue}{<var>pow( B / 2, 2 )</var>}</code>, שהוא המקדם החופשי.</p>
+				<div>
+					<p>לכן אנו יכולים לכתוב את הצד השמאלי של המשוואה כאיבר ריבועי.</p>
+					<p><code>( x + <var>B / 2</var> )^2 = <var>C * -1 + pow( B / 2, 2 )</var></code></p>
+				</div>
+			</div>
+			<div>
+				<p>נוציא שורש מכל אחד מצידי המשוואה.</p>
+				<p><code>x <span data-if="B !== 0"> + <var>B / 2</var></span> = <span data-if="sqrt( C * -1 + pow( B / 2, 2 ) ) !== 0">\pm</span><var>sqrt( C * -1 + pow( B / 2, 2 ) )</var></code></p>
+			</div>
+			<div data-if="B !== 0">
+				<p>נבודד את <code>x</code> על מנת למצוא את הפתרון(ות).</p>
+				<p data-if="sqrt( C * -1 + pow( B / 2, 2 ) ) !== 0"><code>x = <var>-B / 2</var>\pm<var>sqrt( C * -1 + pow( B / 2, 2 ) )</var></code></p>
+				<p><code>x = <var>-B / 2 + sqrt( C * -1 + pow( B / 2, 2 ) )</var><span data-if="sqrt( C * -1 + pow( B / 2, 2 ) ) !== 0"> \text{ או } x = <var>-B / 2 - sqrt( C * -1 + pow( B / 2, 2 ) )</var></span></code></p>
+			</div>
+			<div data-else>
+				<p><code>x = <var>-B / 2 + sqrt( C * -1 + pow( B / 2, 2 ) )</var><span data-if="sqrt( C * -1 + pow( B / 2, 2 ) ) !== 0"> \text{ או } x = 	<var>-B / 2 - sqrt( C * -1 + pow( B / 2, 2 ) )</var></span></code></p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

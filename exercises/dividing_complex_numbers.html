@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html data-require="math math-format">
+<head>
+	<meta charset="UTF-8" />
+	<title>חילוק מספרים מרוכבים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="vars" data-ensure="B_REAL !== 0 || B_IMAG !== 0"> <!-- safeguard against division by zero -->
+		<var id="A_REAL">randRange( -5, 5 )</var>
+		<var id="A_IMAG">randRange( -5, 5 )</var>
+		<var id="B_REAL">randRange( -5, 5 )</var>
+		<var id="B_IMAG">randRange( -5, 5 )</var>
+		<var id="DENOMINATOR">B_REAL * B_REAL + B_IMAG * B_IMAG</var>
+		<var id="REAL_NUMERATOR">( A_REAL * B_REAL ) + ( A_IMAG * B_IMAG )</var>
+		<var id="IMAG_NUMERATOR">( A_IMAG * B_REAL ) - ( A_REAL * B_IMAG )</var>
+		<var id="REAL_FRACTION">fraction( REAL_NUMERATOR, DENOMINATOR, true, true )</var>
+		<var id="IMAG_FRACTION">fraction( IMAG_NUMERATOR, DENOMINATOR, true, true )</var>
+		<var id="ANSWER">complexFraction( REAL_NUMERATOR, DENOMINATOR, IMAG_NUMERATOR, DENOMINATOR )</var>
+		<var id="ANSWER_REAL_UNROUNDED">REAL_NUMERATOR / DENOMINATOR</var>
+		<var id="ANSWER_IMAG_UNROUNDED">IMAG_NUMERATOR / DENOMINATOR</var>
+		<var id="ANSWER_REAL">roundTo( 2, ANSWER_REAL_UNROUNDED )</var>
+		<var id="ANSWER_IMAG">roundTo( 2, ANSWER_IMAG_UNROUNDED )</var>
+		<var id="A_REP">complexNumber( A_REAL, A_IMAG )</var>
+		<var id="B_REP">complexNumber( B_REAL, B_IMAG )</var>
+		<var id="A_REP_COLORED">"\\color{" + ORANGE + "}{" + A_REP + "}"</var>
+		<var id="B_REP_COLORED">"\\color{" + BLUE + "}{" + B_REP + "}"</var>
+		<var id="A_REAL_COLORED">"\\color{" + ORANGE + "}{" + A_REAL + "}"</var>
+		<var id="A_IMAG_COLORED">"\\color{" + ORANGE + "}{" + A_IMAG + "}"</var>
+		<var id="B_REAL_COLORED">"\\color{" + BLUE + "}{" + B_REAL + "}"</var>
+		<var id="B_IMAG_COLORED">"\\color{" + BLUE + "}{" + B_IMAG + "}"</var>
+		<var id="B_CONJUGATE_IMAG">-B_IMAG</var>
+		<var id="B_CONJUGATE_IMAG_COLORED">"\\color{" + BLUE + "}{" + negParens( B_CONJUGATE_IMAG ) +"}"</var>
+		<var id="CONJUGATE">complexNumber( B_REAL, B_CONJUGATE_IMAG )</var>
+		<var id="CONJUGATE_COLORED">"\\color{" + BLUE + "}{" + CONJUGATE + "}"</var>
+	</div>
+
+	<div class="problems">
+		<div>
+			<p class="question">חלק את המספרים המרוכבים הבאים, ניתן לעגל את החלק המדומה והממשי למאית הקרובה.</p>
+			<p>
+				<code>\qquad \dfrac{<var>A_REP_COLORED</var>}{<var>B_REP_COLORED</var>}</code>
+			</p>
+			<div class="solution" data-type="complexNumberSeparate">
+				[ <var>ANSWER_REAL_UNROUNDED</var>, <var>ANSWER_IMAG_UNROUNDED</var> ]
+			</div>
+			<div class="hints">
+				<p> את חילוק המספרים המרוכבים ניתן לפתור על ידי המרת החילוק לכפל של מספרים מרוכבים. נכפיל את מונה והמכנה <b> בצמוד</b> של המכנה .
+				</p>
+				<p>
+					<code>\qquad \dfrac{<var>A_REP_COLORED</var>}{<var>B_REP_COLORED</var>} =
+						\dfrac{<var>A_REP_COLORED</var>}{<var>B_REP_COLORED</var>} \cdot
+						\dfrac{<var>CONJUGATE_COLORED</var>}{<var>CONJUGATE_COLORED</var>}
+					</code>
+				</p>
+				<div>
+					<p>
+						הכפלנו את המונה והמכנה בצמוד של המכנה, כדי לפשט את המכנה למספר ממשי. נפשט כך : <code>(a + b) \cdot (a - b) = a^2 - b^2</code>.
+					</p>
+					<code>
+						\qquad \dfrac{(<var>A_REP_COLORED</var>) \cdot (<var>CONJUGATE_COLORED</var>)}
+						{(<var>B_REP_COLORED</var>) \cdot (<var>CONJUGATE_COLORED</var>)} =
+						\dfrac{(<var>A_REP_COLORED</var>) \cdot (<var>CONJUGATE_COLORED</var>)}
+						{(<var>B_REAL_COLORED</var>)^2 - (\color{<var>BLUE</var>}{<var>B_IMAG</var>i})^2}
+					</code>
+					<p>
+						שימו לב שהמכנה כרגע לא כולל מספר מדומה, אלא רק מספר ממשי. עכשיו אפשר לפתור את הבעיה בעזרת כפל של מספרים מרוכבים.<br />
+					</p>
+				</div>
+				<div>
+					<p>
+						ריבועי המכנה מחושבים ביחד :
+					</p>
+					<code>
+						\qquad \dfrac{(<var>A_REP_COLORED</var>) \cdot (<var>CONJUGATE_COLORED</var>)}
+						{(<var>B_REAL_COLORED</var>)^2 - (<var>B_IMAG_COLORED</var>i)^2} =
+						\dfrac{(<var>A_REP_COLORED</var>) \cdot (<var>CONJUGATE_COLORED</var>)}
+						{<var>B_REAL * B_REAL</var> + <var>B_IMAG * B_IMAG</var>} =
+						\dfrac{(<var>A_REP_COLORED</var>) \cdot (<var>CONJUGATE_COLORED</var>)}
+						{<var>B_REAL * B_REAL + B_IMAG * B_IMAG</var>}
+					</code>
+				</div>
+				<div>
+					<p>
+						לאחר מכן, המונה יחושב על ידי חוק הפילוג.
+					</p>
+					<code>
+						\qquad \dfrac{(<var>A_REP_COLORED</var>) \cdot (<var>CONJUGATE_COLORED</var>)}
+						{<var>DENOMINATOR</var>} =
+						\dfrac{(<var>A_REAL_COLORED</var> \cdot \color{<var>BLUE</var>}{<var>negParens( B_REAL )</var>}) + (<var>A_IMAG_COLORED</var> \cdot \color{<var>BLUE</var>}{<var>negParens( B_REAL )</var>} i) + (<var>A_REAL_COLORED</var> \cdot \color{<var>BLUE</var>}{<var> B_CONJUGATE_IMAG_COLORED </var>}i) + (<var>A_IMAG_COLORED</var> \cdot \color{<var>BLUE</var>}{<var> B_CONJUGATE_IMAG_COLORED </var>} i^2)}
+						{<var>DENOMINATOR</var>}
+					</code>
+					<p>
+						כל הכפולות מחושבות.
+					</p>
+					<code>
+						\qquad \dfrac{(<var>A_REAL * B_REAL</var>) + (<var>A_IMAG * B_REAL</var>i) + (<var>A_REAL * B_CONJUGATE_IMAG</var>i) + (<var>A_IMAG * B_CONJUGATE_IMAG</var> i^2)}
+						{<var>DENOMINATOR</var>}
+					</code>
+				</div>
+				<div>
+					<p>
+						נפשט את השבר.
+					</p>
+					<code>
+						\qquad \dfrac{<var>A_REAL * B_REAL</var> + <var>A_IMAG * B_REAL</var>i + <var>A_REAL * B_CONJUGATE_IMAG</var>i - <var>A_IMAG * B_CONJUGATE_IMAG</var>}
+						{<var>DENOMINATOR</var>} =
+						\dfrac{<var>REAL_NUMERATOR</var> + <var>IMAG_NUMERATOR</var>i}
+						{<var>DENOMINATOR</var>} =
+						<var>ANSWER</var>
+					</code>
+				</div>
+				<div>
+					<p>
+						החלק הממשי הוא <code><var>REAL_FRACTION</var></code>, שהוא שווה ל (לאחר עיגול למאית הקרובה) <code><var>ANSWER_REAL</var></code>.
+					</p>
+					<p>
+						החלק המדומה הוא <code><var>IMAG_FRACTION</var></code>, שהוא שווה ל (לאחר עיגול למאית הקרובה) <code><var>ANSWER_IMAG</var></code>.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
+

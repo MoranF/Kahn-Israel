@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html data-require="math word-problems spin">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>משוואות ליניאריות - בעיות מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="homeruns_needed">
+				<div class="vars">
+					<var id="X">randRange( 5, 20 )</var><!-- # Initial runs -->
+					<var id="Q">randRange( 25, 50 )</var><!-- # Total runs -->
+					<var id="P">Q - X</var><!-- # Runs needed -->
+				</div>
+
+				<p class="problem spin">{<var>person( 1 )</var> מקווה לשחק יום אחד כדורגל באופן מקצועי. |}{במהלך החודשים הראשונים  של עונת הכדורגל|במהלך 100 המשחקים הראשונים של עונת הכדורגל}, <var>genderize(1,"הבקיע","הבקיעה")</var> <var>person( 1 )</var> <var>X</var> שערים.</p>
+				<p class="question spin">{אם <var>person( 1 )</var> רוצה להבקיע סך הכל <var>Q</var> שערים עד סוף העונה, כמה שערים נוספים <var>genderize( 1 ,"עליו","עליה")</var> להבקיע במהלך המשחקים שנותרו|כמה שערים <var>generize(1,"עליו","עליה")</var> להבקיע כדי להגיע לתוצאה של <var>Q</var> שערים סך הכל עד סוף העונה}?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>P</var></span> שערים
+				</div>
+
+				<div class="hints">
+					<p>שערים שהובקעו + שערים שעוד צריך להבקיע = סך כל השערים שצריך להבקיע</p>
+					<div>
+						<p>שערים שהובקעו = <code><var>X</var></code></p>
+						<p>סך כל השערים שנדרשים = <code><var>Q</var></code></p>
+						<p>מספר השערים שנותר להבקיע = <code>x</code></p>
+					</div>
+					<p><code><var>X</var> + x = <var>Q</var></code></p>
+					<p><code>x = <var>Q</var> - <var>X</var></code></p>
+					<p><code><var>P</var> = <var>Q</var> - <var>X</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"צריך","צריכה")</var> להבקיע עוד <code><var>P</var></code> שערים במהלך המשחקים שנותרו העונה.</strong></p>
+				</div>
+			</div>
+
+			<div id="babysitting_hourly_wage">
+				<div class="vars">
+					<var id="X" data-ensure="X <= 6">randRange( 2, 6 ) + ( rand(2) > 0 ? 0.5 : 0 )</var><!-- # of hours -->
+					<var id="Q">randRange( 15, 70 )</var><!-- Total earnings -->
+					<var id="P">roundTo( 2, Q / X )</var><!-- Earnings per hour -->
+				</div>
+
+				<p class="problem spin"><var>person( 1 )</var> {<var>genderize(1,"הרויח","הרויחה")</var> ₪<var>Q</var> במהלך <var>X</var> שעות של שמרטפות.|<var>genderize(1,"שימש כשמרטף","שימשה כשרמטרפית")</var> במהלך <var>X</var> שעות בעבור <var>Q</var>₪.}</p>
+				<p class="question">מה היה השכר השעתי של <var>person( 1 )</var> ?</p>
+				<p class="extra-info">(מידע נוסף: עגלו למאית השקל הקרובה.)</p>
+
+				<div class="solution" data-forms="dollar"><var>P</var></div>
+
+				<div class="hints">
+					<p>מספר השעות בו <var>he( 1 )</var> <var>genderize(1,"עבד","עבדה")</var> x שכר שעתי = סך כל הכסף ש<var>he( 1 )</var> <var>genderize(1,"הרויח","הרויחה")</var>.</p>
+					<div>
+						<p>מספר השעות בו <var>he( 1 )</var> <var>genderize(1,"עבד","עבדה")</var> = <code><var>X</var></code></p>
+						<p>סך כל הכסף ש<var>he( 1 )</var> <var>genderize(1,"הרויח","הרויחה")</var> = <code><var>Q</var></code></p>
+						<p>שכר שעתי = <code>y</code></p>
+					</div>
+					<p><code><var>X</var>y = <var>Q</var></code></p>
+					<p><code>y = \dfrac{<var>Q</var>}{<var>X</var>}</code></p>
+					<p><code><var>P</var> = \dfrac{<var>Q</var>}{<var>X</var>}</code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"הרויח","הרויחה")</var> ₪<var>P</var> עבור כל שעת שמרטפות.</strong></p>
+				</div>
+			</div>
+
+			<div id="tshirt_cost">
+				<div class="vars">
+					<var id="X">randRange( 10, 20 )</var><!-- Payment amount -->
+					<var id="Q" data-ensure="Q % 100 !== 0">randRange( 150, 499 ) / 100</var><!-- Change amount -->
+					<var id="P">roundTo( 2, X - Q )</var><!-- Tshirt cost -->
+				</div>
+
+				<p class="problem spin">{<var>person( 1 )</var> <var>genderize(1,"שילם","שילמה")</var> ₪<var>X</var> עבור חולצה ו<var>genderize(1,"קיבל","קיבלה")</var> עודף של ₪<var>Q</var>.|בעת ש<var>genderize(1,"קנה","קנתה")</var> חולצה בקניון, <var>person( 1 )</var> <var>genderize(1,"נתן","נתנה")</var> ל<var>genderize(2,"קופאי","קופאית")</var> ₪<var>X</var> ו<var>genderize(1,"קיבל","קיבלה")</var> ₪<var>Q</var> בתור עודף.}</p>
+				<p class="question">כמה עלתה החולצה?</p>
+
+				<div class="solution" data-forms="dollar"><var>P</var></div>
+
+				<div class="hints">
+					<p>מחיר החולצה + עודף שהתקבל = סך כל הכסף ש<var>person( 1 )</var> <var>genderize(1,"שילם","שילמה")</var></p>
+					<div>
+						<p>עודף שהתקבל = <code><var>Q</var></code></p>
+						<p>סך כל הכסף ש<var>person( 1 )</var> <var>genderize(1,"שילם","שילמה")</var> = <code><var>X</var></code></p>
+						<p>מחיר החולצה = <code>x</code></p>
+					</div>
+					<p><code>x + <var>Q</var> = <var>X</var></code></p>
+					<p><code>x = <var>X</var> - <var>Q</var></code></p>
+					<p><code><var>P</var> = <var>X</var> - <var>Q</var></code></p>
+					<p><strong>מחיר החולצה הוא ₪<var>P</var>.</strong></p>
+				</div>
+			</div>
+
+			<div id="milk_gallon_cost">
+				<div class="vars">
+					<var id="X">randRange( 5, 10 )</var><!-- # of gallons -->
+					<var id="Q" data-ensure="Q % 100 !== 0">randRange( 1425, 2525 ) / 100</var><!-- Bill -->
+					<var id="P">roundTo( 2, Q / X )</var><!-- Per milk cost -->
+				</div>
+
+				<p class="problem spin"><var>person( 1 )</var> <var>genderize(1,"עובד כקופאי","עובדת כקופאית")</var>
+         בחנות מכולת. חלב הוא בין המוצרים הנמכרים ביותר במכולת, וכבר בתחילת המשמרת האחרונה <var>his( 1 )</var> <var>genderize(2,"הגיע לקוח וקנה","הגיעה לקוחה וקנתה")</var> <var>X</var> ליטרים של חלב בעבור ₪<var>Q</var>.</p>
+				<p class="question">מהו מחירו של כל ליטר חלב במכולת?</p>
+
+				<div class="solution" data-forms="dollar"><var>P</var></div>
+
+				<div class="hints">
+					<p>מספר ליטרים של חלב שנקנו x מחירו של כל ליטר = עלות כוללת</p>
+					<div>
+						<p>מספר ליטרים של חלב שנקנו = <code><var>Q</var></code></p>
+						<p>עלות כוללת = <code><var>X</var></code></p>
+						<p>מחירו של כל ליטר חלב = <code>y</code></p>
+					</div>
+					<p><code><var>Q</var>y = <var>X</var></code></p>
+					<p><code>y = \dfrac{<var>Q</var>}{<var>X</var>}</code></p>
+					<p><code><var>P</var> = \dfrac{<var>Q</var>}{<var>X</var>}</code></p>
+					<p><strong>מחירו של כל ליטר חלב הוא ₪<var>P</var>.</strong></p>
+				</div>
+			</div>
+
+			<div id="running_distance_left">
+				<div class="vars">
+					<var id="X">0.25 * randRange( 1, 13.25 / 0.25 )</var><!-- First 3 legs -->
+					<var id="Q">randRange( 15, 20 )</var><!-- Total miles -->
+					<var id="P">Q - X</var><!-- Final leg -->
+				</div>
+                                                                  
+				<p class="problem spin"><var>person( 1 )</var> <var>genderize(1,"רץ","רצה")</var> את המקטע האחרון במירוץ שליחים שאורכו הכולל <var>Q</var> קילומטרים. כאשר <var>person( 1 )</var> <var>genderize(1,"החל","החלה")</var> את המקטע, הקבוצה שלו כבר השלימה <var>X</var> קילומטרים מהמירוץ.</p>
+				<p class="question">כמה היה על <var>person( 1 )</var> לרוץ על מנת לסיים את המירוץ?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol"><var>P</var></span> קילומטרים
+				</div>
+
+				<div class="hints">
+					<p>קילומטרים ש<var>he( 1 )</var> <var>genderize(1,"רץ","רצה")</var> + קילומטרים שהושלמה במקטעים הקודמים = סך כל אורך המירוץ</p>
+					<div>
+						<p>קילומטרים שהושלמה במקטעים הקודמים = <code><var>X</var></code></p>
+						<p>סך כל אורך המירוץ = <code><var>Q</var></code></p>
+						<p>קילומטרים ש<var>he( 1 )</var> <var>genderize(1,"רץ","רצה")</var> = <code>x</code></p>
+					</div>
+					<p><code>x + <var>X</var> = <var>Q</var></code></p>
+					<p><code>x = <var>Q</var> - <var>X</var></code></p>
+					<p><code><var>P</var> = <var>Q</var> - <var>X</var></code></p>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"רץ","רצה")</var> <code><var>P</var></code> קילומטרים עד לקו הסיום.</strong></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

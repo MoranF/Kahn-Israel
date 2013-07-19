@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html data-require="math math-format probability word-problems graphie">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>הסתברות מאורעות בלתי תלויים</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="problems">
+        <div id="coindie">
+            <div class="vars">
+                <var id="HT">random() &lt; 0.5 ? "עץ" : "פלי"</var>
+                <var id="RESULT_DESC, RESULT_POSSIBLE">randFromArray([
+                    [" 1", [1]],
+                    [" 2", [2]],
+                    [" 3", [3]],
+                    [" 4", [4]],
+                    [" 5", [5]],
+                    [" 6", [6]],
+                    ["לכל הפחות 2", [2, 3, 4, 5, 6]],
+                    ["לכל הפחות 3", [3, 4, 5, 6]],
+                    ["לכל הפחות 4", [4, 5, 6]],
+                    ["גבוה מ 2", [3, 4, 5, 6]],
+                    ["גבוה מ 3", [4, 5, 6]],
+                    ["גבוה מ 4", [5, 6]],
+                    ["נמוך מ 4", [1, 2, 3]],
+                    ["נמוך מ 5", [1, 2, 3, 4]],
+                    ["נמוך מ 6", [1, 2, 3, 4, 5]],
+                    [" זוגי", [2, 4, 6]],
+                    [" זוגי", [2, 4, 6]],
+                    [" אי זוגי", [1, 3, 5]],
+                    [" אי זוגי", [1, 3, 5]],
+                    [" ראשוני", [2, 3, 5]]
+                ])</var>
+                <var id="PRETTY_N">RESULT_POSSIBLE.length / getGCD(RESULT_POSSIBLE.length,12)</var>
+                <var id="PRETTY_D">12 / getGCD(RESULT_POSSIBLE.length,12)</var>
+            </div>
+
+            <p class="question">
+                אם נזרוק מטבע ונטיל קוביה הוגנת, מה ההסתברות שיצא במטבע <var>HT</var> וערך הקוביה יהיה <var>RESULT_DESC</var>?
+            </p>
+
+            <div class="solution" data-forms="proper, decimal"><var>0.5 * RESULT_POSSIBLE.length / 6</var></div>
+
+            <div class="hints">
+                <p>
+                    זריקת מטבע על <var>HT</var> והטלת קוביה על מספר <var>RESULT_DESC</var> הם מאורעות בלתי תלויים: הם לא מושפעים אחד מהשני.
+                    לכן, בכדי לקבל את ההסתברות ששני המאורעות יקרו, אנו צריכים להכפיל את ההסתברות שהאירוע הראשון יקרה בהסתברות שהאירוע השני יקרה.
+                </p>
+                <p>
+                    ההסתברות לקבל  <var>HT</var> היא <code>\dfrac{1}{2}</code>.
+                </p>
+                <p>
+                    ההסתברות להטלת מספר <var>RESULT_DESC</var> היא <code>\dfrac{<var>RESULT_POSSIBLE.length</var>}{6}</code>, מכיוון שיש
+
+
+					<var>RESULT_POSSIBLE.length > 1 ? RESULT_POSSIBLE.length + " תוצאות "  : "תוצאה אחת "</var>
+					
+                    אשר <var>RESULT_POSSIBLE.length > 1 ? "מספקות" : "מספקת "</var> את המצב הרצוי
+                    (<var>toSentence(RESULT_POSSIBLE)</var>), ו 6 תוצאות אפשריות באופן כללי.
+                </p>
+                <p>
+                    לכן, ההסתברות ששני מאורעות אלו יקרו היא: <code>\dfrac{1}{2} \cdot \dfrac{<var>RESULT_POSSIBLE.length</var>}{6}
+                    = \dfrac{<var>PRETTY_N</var>}{<var>PRETTY_D</var>}</code>
+                </p>
+            </div>
+        </div>
+        <div id="freethrows">
+            <div class="vars">
+                <var id="FREE_THROWS">
+                    [["שרון אהרוני", .84],
+                    ["בן בנימיני", .70],
+                    ["מיכאל ברוך", .75],
+                    ["משה כהן", .70],
+                    ["איתן ברנר", .78],
+                    ["קובי בירן", .83],
+                    ["דני דניאלי", .69],
+                    ["גיל דויד", .74],
+                    ["אביב אביבי", .75],
+                    ["תום דנקן", .72],
+                    ["דני דגן", .88],
+                    ["ציון פלג", .81],
+                    ["שמשון גרנות", .86],
+                    ["גרשון גרשון", .82],
+                    ["מנחם גלרון", .87],
+                    ["גידי הנרי", .83],
+                    ["לירון גמל", .76],
+                    ["עמי ויצמן", .73],
+                    ["שרון מיכאל", .77],
+                    ["שמואל נעמן", .74],
+                    ["עידן לוי", .88],
+                    ["מיכאל בר", .86],
+                    ["דני ורדי", .86],
+                    ["אמנון לוי", .79],
+                    ["יעקב אילון", .77]]
+                </var>
+                <var id="ALL">random() &lt; 0.5</var>
+                <var id="PLAYER,PR">randFromArray(FREE_THROWS)</var>
+                <var id="PROB">ALL ? PR : (1-PR).toFixed(2)</var>            
+                <var id="STREAK">randRange(4,9)</var>
+                <var id="SINGLE_PCT">(PROB * 100).toFixed(0)</var>
+                <var id="TWO_PCT">(pow(PROB,2) * 100).toFixed(0)</var>
+                <var id="THREE_PCT">
+                    (pow(PROB,3) * 100) &lt; 0.5 ? 
+                    (pow(PROB,3) * 100).toFixed(1) :
+                    (pow(PROB,3) * 100).toFixed(0)
+                </var>
+                <var id="OPTIONS">shuffle(
+                    [PR + "^" + STREAK,
+                     STREAK + " \\cdot" + PR,
+                     STREAK + " \\cdot" + "(1 - " + PR + ")",
+                     "(1 - " + PR + ")^" + STREAK])
+                 </var>
+                 <var id="ANS">
+                    ALL ? 
+                    PR + "^" + STREAK :
+                    "(1 - " + PR + ")^" + STREAK
+                </var>
+            </div>
+
+            <p>
+                <var>PLAYER</var> יורה למטרה, אם הוא פוגע במטרה או מחטיא אותה, ההסתברות שיפגע במטרה בפעם הבאה לא משתנה. ב <code><var>(PR*100).toFixed(0)</var>\%</code>
+                מהפעמים הוא יפגע במטרה.
+            </p>
+
+            <p class="question">
+                מה ההסתברות של <var>PLAYER</var> <var>ALL ? "לפגוע בכל" : "להחטיא בכל "</var>
+                <var>STREAK</var> הנסיונות שלו?
+            </p>
+
+            <div class="solution"><code><var>ANS</var></code></div>
+
+            <ul class="choices" data-show="4">
+                <li><code><var>OPTIONS[0]</var></code></li>
+                <li><code><var>OPTIONS[1]</var></code></li>
+                <li><code><var>OPTIONS[2]</var></code></li>
+                <li><code><var>OPTIONS[3]</var></code></li>
+            </ul>
+
+            <div class="hints">
+                <div data-unwrap data-if="ALL">
+                    <div>
+                        אנו יודעים ש <code>\blue{<var>SINGLE_PCT</var> \%}</code> מהפעמים הוא פוגע.
+                        <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10,-0.53], SINGLE_PCT + "\\%", "center");
+
+                            style({ stroke: "BLUE", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [PROB*10,0]);
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                        </div>
+                        </br>
+                        אז <code><var>SINGLE_PCT</var> \%</code> מהפעמים הוא פוגע בירייה הראשונה, הוא גם פוגע בירייה השניה, ו 
+                        <code><var>((1-PROB)*100).toFixed(0)</var> \%</code> מהפעמים הוא פוגע בירייה הראשונה, ומחטיא את היריה השניה.
+                        <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10, -0.53], SINGLE_PCT + "\\%", "center");
+
+                            style({ stroke: "ORANGE", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [PROB*PROB*10,0]);
+                            line([PROB*PROB*10,-0.2], [PROB*PROB*10,0.2]);
+
+                            style({ stroke: "PINK", strokeWidth: 3 });
+                            line([PROB*PROB*10,0], [PROB*10,0]);
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                        </div>
+                    </div>
+                    <p>
+                        שימו לב שאנו יכולים להתעלם לגמרי מחלקו הימני של הקו, בגלל שזה היה כשהיורההחטיא את נסיון הירי הראשון, ולנו חשוב רק אם
+    					הוא פגע בנסיון הראשון <b>ו</b>בנסיון השני.
+    					אז הסיכוי לפגוע <b>פעמיים</b> בשתי נסיונות ברציפות זה <code><var>SINGLE_PCT</var>\%</code> בזמן שפגע בנסיון הירי הראשון, מה שיקרה 
+    					<code><var>SINGLE_PCT</var>\%</code> מהפעמים באופן כללי.
+                    </p>
+                    <p>
+                        זה <code><var>SINGLE_PCT</var>\% \cdot <var>SINGLE_PCT</var>\%</code>, או
+                        <code><var>PROB</var> \cdot <var>PROB</var> = <var>(PROB*PROB).toFixed(3)</var></code>.
+                    </p>
+                    <div>
+    					אנו יכולים לחזור על תהליך זה שוב בכדי לקבל את ההסתברות לפגוע <b>שלוש</b> יריות ברציפות.
+    					ניקח את <code><var>SINGLE_PCT</var>\%</code> הסיכוי שהיורה יפגע בשתי יריות ברציפות, נתון שאנו יודעים מהשלב הקודם זה:
+                        <code><var>(PROB*PROB).toFixed(3)</var> \approx \orange{<var>TWO_PCT</var>\%}</code>.
+                        <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10, -0.53], SINGLE_PCT + "\\%", "center");
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                            label([PROB*PROB*10, -0.53], TWO_PCT + "\\%", "center");
+
+                            style({ stroke: "ORANGE", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [PROB*PROB*10,0]);
+                            line([PROB*PROB*10,-0.2], [PROB*PROB*10,0.2]);
+                        </div>
+                        </br>
+                        <code><var>SINGLE_PCT</var>\%</code> of <code>\orange{<var>TWO_PCT</var>\%}</code> is 
+                        <code><var>PROB</var> \cdot <var>(PROB*PROB).toFixed(3)</var> = <var>Math.pow(PROB,3).toFixed(3)</var></code>, or
+                        about <code>\green{<var>THREE_PCT</var>\%}</code>:
+                        <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10, -0.53], SINGLE_PCT + "\\%", "center");
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                            label([PROB*PROB*10, -0.53], TWO_PCT + "\\%", "center");
+                            label([Math.pow(PROB,3)*10, -0.53], THREE_PCT + "\\%", "center");
+
+                            style({ stroke: "GREEN", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [Math.pow(PROB,3)*10,0]);
+                            line([Math.pow(PROB,3)*10,-0.2], [Math.pow(PROB,3)*10,0.2]);
+
+                            style({ stroke: "PINK", strokeWidth: 3 });
+                            line([Math.pow(PROB,3)*10,0], [PROB*PROB*10,0]);
+                            line([PROB*PROB*10,-0.2], [PROB*PROB*10,0.2]);
+                        </div>
+                    </div>
+                    <p>
+                        יש כאן דפוס חוזר: ההסתברות של היורה לפגוע במטרה פעמיים ברציפות הייתה
+                        <code><var>PROB</var> \cdot <var>PROB</var></code>, וההסתברות שהוא יפגע שלוש פעמים ברציפות הייתה
+    					<code><var>PROB</var> \cdot <var>(PROB*PROB).toFixed(3)</var> = 
+                        <var>PROB</var> \cdot (<var>PROB</var> \cdot <var>PROB</var>)
+                        = <var>PROB</var>^3</code>.
+                    </p>
+                    <p>
+    					באופן כללי, תוכל להמשיך בדרך זו למצוא את ההסתברות של היורה לפגוע בכל מספר יריות.
+                    </p>
+                    <p>
+    					ההסתברות לפגוע <var>STREAK</var> יריות ברציפות היא <code><var>PROB</var> ^ <var>STREAK</var></code>.
+                    </p>
+                </div>
+                <div data-unwrap data-else>
+                    <div>
+    					אנו יודעים ש <code>\blue{<var>SINGLE_PCT</var> \%}</code> מהפעמים, הוא יחטיא את היריה הראשונה.
+                        <code>(100 \% - <var>(PR*100).toFixed(0)</var> \% = <var>SINGLE_PCT</var> \%)</code>.
+                        <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10,-0.53], SINGLE_PCT + "\\%", "center");
+
+                            style({ stroke: "BLUE", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [PROB*10,0]);
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                        </div>
+                        </br>
+                        אז <code><var>SINGLE_PCT</var> \%</code> מהפעמים הוא יחטיא בירייה הראשון, והוא גם יחטיא בירייה השניה.
+                        <code><var>((1-PROB)*100).toFixed(0)</var> \%</code> מהפעמים הוא יחטיא בירייה הראשון, והוא יפגע בירייה השניה.
+                        <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10, -0.53], SINGLE_PCT + "\\%", "center");
+
+                            style({ stroke: "ORANGE", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [PROB*PROB*10,0]);
+                            line([PROB*PROB*10,-0.2], [PROB*PROB*10,0.2]);
+
+                            style({ stroke: "PINK", strokeWidth: 3 });
+                            line([PROB*PROB*10,0], [PROB*10,0]);
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                        </div>
+                    </div>
+                    <p>
+                        שימו לב שאנו יכולים להתעלם לגמרי מחלקו הימני של הקו, בגלל שזה היה כשהיורה החטיא את נסיון הירי הראשון, ולנו חשוב רק אם
+    					הוא פגע	 בנסיון הראשון <b>ו</b>בנסיון השני.
+    					אז הסיכוי להחטיא <b>פעמיים</b> בשתי נסיונות ברציפות זה <code><var>SINGLE_PCT</var>\%</code> בזמן שהחטיא בנסיון הירי הראשון, מה שיקרה 
+    					<code><var>SINGLE_PCT</var>\%</code> מהפעמים.
+                    </p>
+                    <p>
+                        זה <code><var>SINGLE_PCT</var>\% \cdot <var>SINGLE_PCT</var>\%</code>, או
+                        <code><var>PROB</var> \cdot <var>PROB</var> = <var>(PROB*PROB).toFixed(3)</var></code>.
+                    </p>
+                    <div>
+                        אנו יכולים חזור על תהליך זה שוב בכדי לקבל את ההסתברות להחטיא <b>שלוש</b> יריות ברציפות. ניקח את 
+                        <code><var>SINGLE_PCT</var>\%</code> הסיכוי שהיורה יחטיא בשתי יריות ברציפות, נתון שאני יודעים מהשלב הקודם זה:
+                        <code><var>(PROB*PROB).toFixed(3)</var> \approx \orange{<var>TWO_PCT</var>\%}</code>.
+    				   <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10, -0.53], SINGLE_PCT + "\\%", "center");
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                            label([PROB*PROB*10, -0.53], TWO_PCT + "\\%", "center");
+
+                            style({ stroke: "ORANGE", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [PROB*PROB*10,0]);
+                            line([PROB*PROB*10,-0.2], [PROB*PROB*10,0.2]);
+                        </div>
+                        </br>
+                        <code><var>SINGLE_PCT</var>\%</code> מ <code>\orange{<var>TWO_PCT</var>\%}</code> זה 
+                        <code><var>PROB</var> \cdot <var>(PROB*PROB).toFixed(3)</var> = <var>Math.pow(PROB,3).toFixed(3)</var></code>, או
+                        כ- <code>\green{<var>THREE_PCT</var>\%}</code>:
+                        <div class="graphie">
+                            init({
+                                range: [[-1, 11], [-1, 1]]
+                            });
+
+                            line([0, 0], [10, 0]);
+                            line([10,-0.2], [10,0.2]);
+                            label([PROB*10, -0.53], SINGLE_PCT + "\\%", "center");
+                            line([PROB*10,-0.2], [PROB*10,0.2]);
+                            label([PROB*PROB*10, -0.53], TWO_PCT + "\\%", "center");
+
+                            style({ stroke: "GREEN", strokeWidth: 3 });
+                            line([0,-0.2], [0,0.2]);
+                            line([0,0], [Math.pow(PROB,3)*10,0]);
+                            line([Math.pow(PROB,3)*10,-0.2], [Math.pow(PROB,3)*10,0.2]);
+
+                            style({ stroke: "PINK", strokeWidth: 3 });
+                            line([Math.pow(PROB,3)*10,0], [PROB*PROB*10,0]);
+                            line([PROB*PROB*10,-0.2], [PROB*PROB*10,0.2]);
+                        </div>
+                    </div>
+                    <p>
+                        יש כאן דפוס חוזר: ההסתברות של היורה להחטיא  פעמיים ברציפות הייתה
+                        <code><var>PROB</var> \cdot <var>PROB</var></code>, וההסתברות שהוא יחטיא שלוש פעמים ברציפות הייתה
+    					<code><var>PROB</var> \cdot <var>(PROB*PROB).toFixed(3)</var> = 
+                        <var>PROB</var> \cdot (<var>PROB</var> \cdot <var>PROB</var>)
+                        = <var>PROB</var>^3</code>.
+                    </p>
+                    <p>
+                        באופן כללי, תוכל להמשיך בדרך זו למצוא את ההסתברות של היורה להחטיא בכל מספר יריות.
+                    </p>
+                    <p>
+                        ההסתברות להחטיא <var>STREAK</var> יריות ברציפות היא
+                        <code><var>PROB</var> ^ <var>STREAK</var> = <var>ANS</var></code>.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="YARR">
+            <div class="vars" data-ensure="CAPTAIN_PROB > PIRATE_PROB">
+                <var id="CAPTAIN_NUM">randRange(1,4)</var>
+                <var id="CAPTAIN_DEM">CAPTAIN_NUM + randRange(1,6)</var>
+                <var id="CAPTAIN_PROB">CAPTAIN_NUM/CAPTAIN_DEM</var>
+                <var id="PIRATE_NUM">randRange(1,4)</var>
+                <var id="PIRATE_DEM">PIRATE_NUM + randRange(4,6)</var>
+                <var id="PIRATE_PROB">PIRATE_NUM/PIRATE_DEM</var>
+                <var id="CGCD, PGCD">[getGCD(CAPTAIN_NUM,CAPTAIN_DEM), getGCD(PIRATE_NUM,PIRATE_DEM)]</var>
+                <var id="C_HIT_PRETTY">"\\dfrac{" + CAPTAIN_NUM/CGCD + "}{" + CAPTAIN_DEM/CGCD + "}"</var>
+                <var id="C_MISS_PRETTY">"\\dfrac{" + (CAPTAIN_DEM/CGCD - CAPTAIN_NUM/CGCD) + "}{" + CAPTAIN_DEM/CGCD + "}"</var>
+                <var id="P_HIT_PRETTY">"\\dfrac{" + PIRATE_NUM/PGCD + "}{" + PIRATE_DEM/PGCD + "}"</var>
+                <var id="P_MISS_PRETTY">"\\dfrac{" + (PIRATE_DEM/PGCD - PIRATE_NUM/PGCD) + "}{" + PIRATE_DEM/PGCD + "}"</var>
+                <var id="INDEX">randRange(0,3)</var>
+                <var id="QUESTION">
+                    ["הקפטן פוגע בפירטים, אבל הפירטים לא פוגעים בקפטן",
+                    "הפירטים פוגעים בקפטן, אבל הקפטן לא פוגע בפירטים",
+                    "גם הקפטן וגם הפירטים יפגעו האחד בשני",
+                    "גם הקפטן וגם הפירטים לא יצליחו לפגוע האחד בשני"][INDEX]
+                </var>
+                <var id="ANS_N, ANS_D, ANSWER">
+                    [[CAPTAIN_NUM * (PIRATE_DEM-PIRATE_NUM), CAPTAIN_DEM*PIRATE_DEM, CAPTAIN_PROB*(1-PIRATE_PROB)],
+                    [(CAPTAIN_DEM-CAPTAIN_NUM) * PIRATE_NUM, CAPTAIN_DEM*PIRATE_DEM, (1-CAPTAIN_PROB)*PIRATE_PROB],
+                    [CAPTAIN_NUM * PIRATE_NUM, CAPTAIN_DEM*PIRATE_DEM, CAPTAIN_PROB*PIRATE_PROB],
+                    [(CAPTAIN_DEM-CAPTAIN_NUM) * (PIRATE_DEM-PIRATE_NUM), CAPTAIN_DEM*PIRATE_DEM, (1-CAPTAIN_PROB)*(1-PIRATE_PROB)]][INDEX]
+                </var>
+                <var id="C">INDEX === 0 || INDEX === 2</var>
+                <var id="P">INDEX === 1 || INDEX === 2</var>
+            </div>
+            <p>
+                הקפטן <var>person(1)</var> והספינה, אזמרלדה, נמצאים 2000 מטר מאימת הפירט
+                 <var>person(2)</var> וחבורת המפוקפקים.
+                </br></br>
+                לקפטן יש הסתברות של  <code><var>C_HIT_PRETTY</var></code> לפגוע בספינת הפירטים.
+                 לפירט יש רק עין אחת טובה לכן <var>he(2)</var> פוגע בספינתו של הקפטן רק בהסתברות של 
+                <code><var>P_HIT_PRETTY</var></code>.
+            </p>
+
+            <p class="question">
+                אם שניהם מפעילים את אש התותחים באותו הזמן, מה ההסתברות ש<var>QUESTION</var>?
+            </p>
+
+            <div class="solution" data-forms="proper, decimal"><var>ANSWER</var></div>
+
+            <div class="hints">
+                <p>
+                    אם הקפטן פוגע בספינת הפירטים, זה לא יושפע אם
+					גם יפגע מתותחים של הפירטים (ולהיפך), משום ששניהם ירו באותו הזמן. לכן אירועים אלו הם בלתי תלויים האחד בשני. 
+                </p>
+                <p>
+                    מכיוון שהם אירועים בלתי תלויים, על מנת לקבל את ההסתברות ש<var>QUESTION</var>, אנו רק צריכים להכפיל יחד את ההסתברויות ש<var>C ? "הקפטן פוגע" : "הקפטן לא פוגע"</var> ואת ההסתברות ש<var>P ? "הפירטים פוגעים" : "הפירטים לא פוגעים"</var>.
+                </p>
+                <p data-if="C">
+                    ההסתברות של הקפטן לפגוע היא <code><var>C_HIT_PRETTY</var></code>.
+                </p>
+                <p data-else>
+                    ההסתברות של הקפטן לא לפגוע היא <code> - 1 </code> (ההסתברות שהקפטן פוגע) שהיא <code>1 - <var>C_HIT_PRETTY</var> = <var>C_MISS_PRETTY</var></code>.
+                </p>
+                <p data-if="P">
+                    ההסתברות של הפירטים לפגוע היא <code><var>P_HIT_PRETTY</var></code>.
+                </p>
+                <p data-else>
+                    ההסתברות של הפירטים לא לפגוע היא <code> - 1 </code> (ההסברות של הפירטים לפגוע) שהיא <code>1 - <var>P_HIT_PRETTY</var> = <var>P_MISS_PRETTY</var></code>.
+                </p>
+                <p>
+                    לכן, ההסתברות ש<var>QUESTION</var> היא 
+                    <code><var>C ? C_HIT_PRETTY : C_MISS_PRETTY</var> \cdot <var>P ? P_HIT_PRETTY : P_MISS_PRETTY</var> = 
+                    \dfrac{<var>ANS_N/getGCD(ANS_N,ANS_D)</var>}{<var>ANS_D/getGCD(ANS_N,ANS_D)</var>}</code>.
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

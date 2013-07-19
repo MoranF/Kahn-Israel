@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html data-require="math math-format probability word-problems stat">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>חוקי חיבור בהסתברות</title>
+    <script src="../khan-exercise.js"></script>
+    <script type="text/javascript">
+        function enFunc(innerString, usePercentages) {
+            if (usePercentages)
+                return  "<code>)</code>"+ innerString + "<code>P(</code>";
+            else
+                return "<code>\\lvert</code>" + innerString + "<code>\\rvert</code>";
+        }
+    </script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="problems">
+        <div>
+            <div class="vars">
+                <var id="VARINDX_X, VARINDX_Y, VARINDX_X_OR_Y, VARINDX_X_AND_Y">[0, 1, 2, 3]</var>
+                <var id="CHOOSE_ATTRIBUTES">
+                    function( attrChoices1, attrChoices2 ) {
+                        att1 = randFromArray( attrChoices1 );
+                        att2 = randFromArray( attrChoices2 );
+                        return [ att1, att2, att1 + " או " + att2, att1 + " וגם " + att2 ];
+                    }
+                </var>
+                <var id="INTRO, VARDESC, QSTNPRETEXT, QSTNPOSTTEXT, USEPERCENTAGES">
+                    <!-- Put each question in the following structure: [INTRO, [X DESC, Y DESC, X_OR_Y DESC, X_AND_Y DESC], QSTNPRETEXT, QSTNPOSTTEXT, USEPERCENTAGES] -->
+                   
+                 randFromArray([
+                        ["חנות מקומית התחילה במבצע על שני פריטים, חולצה ושעון. ישנם ", ["לקוחות אשר קנו שעון", "לקוחות אשר קנו חולצה", "לקוחות אשר קנו חולצה או שעון ", "לקוחות אשר קנו חולצה ושעון "], "מה הוא מספר של  ", "?", false],
+                        ["בקבוצת לימודים בבית ספר מסויים יש  ", ["גבוהים", "בחורות", "גבוהים או בחורות", "בחורות גבוהות "], "כמה  ", " בקבוצה הלמידה ?", false],
+                        ["קבוצה של מטופלים, ", CHOOSE_ATTRIBUTES( ["גברים", "נשים"], ["צולעים", "שמנים", "תת משקל", "מעל גיל שישים", "חולים בשפעת", "קטינים", "בריאים"] ), "מה אחוז המטופלים שהם ", "?", true],
+                        ["מתוך הבתים בעיר האורות  ", CHOOSE_ATTRIBUTES( ["לבנים", "כחולים", "ירוקים", "ליד הגן", "ליד פארק"], ["ממוזגים", "מעץ", "מאבן"] ), "מה הוא אחוז הבתים  ", "?", true],
+                        ["מפקד אוכלוסין התקבל לעבודה חדשה בעיירה. הוא החליט לעשות סקר אוכלוסין וגילה כי :  ", CHOOSE_ATTRIBUTES( ["עובדים בהייטק", "עובדים בבנק", "לבנים", "כהיי עור"], ["גברים", "נשים", "קטינים", "מעל גיל 65"] ), "מה הוא אחוז התושבים שהם  ", "?", true],
+                        ["סוכן מכוניות פרסם סיכום של המוצרים שלו. מתוך המכוניות, הפרסום מצהיר כי  ", CHOOSE_ATTRIBUTES( ["לבנות", "כחולות", "ירוקות", "אדומות", "אפורות", "שחורות"], ["משאיות", "ידניות", "אוטומטיות", "מכוניות ספורט", "מכוניות מנהלים"] ), "מה אחוז המכוניות אשר הן ", "?", true]
+                    ])
+                </var>
+                <!-- Randomize the order the variables (X, Y, X_OR_Y, X_AND_Y) are written in the question -->
+                <var id="ORDER">shuffle( [0, 1, 2, 3] )</var>
+                <!-- Assign values to each variable, subject to constraints so all counts are > 1 and no counts are negative -->
+                <var id="VARVALS">
+                    ( function( usePercentages ) {
+                        var rangemin = usePercentages ? 1 : 2;
+                        var rangemax = usePercentages ? 100 : 10;
+                        var vals = [0, 0, 0, 0];
+                        vals[VARINDX_X] = randRange( rangemin, rangemax );
+                        vals[VARINDX_Y] = randRange( rangemin, rangemax );
+                        vals[VARINDX_X_AND_Y] = randRange( max( rangemin, vals[VARINDX_X]+vals[VARINDX_Y]-100 ), min( vals[VARINDX_X], vals[VARINDX_Y] ) );
+                        vals[VARINDX_X_OR_Y] = vals[VARINDX_X] + vals[VARINDX_Y] - vals[VARINDX_X_AND_Y];
+                        return vals;
+                    } )( USEPERCENTAGES )
+                </var>
+                <var id="QUESTIONTEXT">
+                    ( function() {
+                        var optionalPercentage = USEPERCENTAGES ? "% " : " ";
+                        var qstn = INTRO;
+                        for (var i=0; i &lt; ORDER.length-1; i++) {
+                            qstn += (i===ORDER.length-2) ? "ו " : "";
+                            qstn += VARVALS[ORDER[i]] + optionalPercentage + VARDESC[ORDER[i]];
+                            qstn += (i &lt; ORDER.length-2) ? ", " : ".  ";
+                        }
+                        qstn += QSTNPRETEXT + VARDESC[ORDER[ORDER.length-1]] + QSTNPOSTTEXT;
+                        return qstn;
+                    } )()
+                </var>
+                <!-- this just passes the call to plain JS to avoid problems with unescaped HTML in the function body, while still giving access to vars -->
+                <var id="ENFUNC"> function (innerString) { return enFunc(innerString, USEPERCENTAGES); } </var>
+
+            </div>
+            <div class="question"><p><var>QUESTIONTEXT</var></p></div>
+            <div class="solution"><var>VARVALS[ORDER[ORDER.length-1]]</var></div>
+            <div class="hints" >
+                <p>זכור את חוק החיבור בהיסתברות: <code>P(A\cup B) = P(A) + P(B) - P(A\cap B)</code></p>
+                <p data-if="USEPERCENTAGES === false">בגלל שהמכנה של השבר עבור כל ההיסתברות במקרה זה זהה, בשביל נוחות אנו יכולים פשוט להשתמש בסכום של כל קבוצה במקום:  <code>|A\cup B| = |A|+ |B| - |A\cap B|</code></p>
+
+                <!-- substitute english descriptions for variables -->
+                <p >נחסר משתנים,<br/> <var>ENFUNC(VARDESC[3])</var> - <var>ENFUNC(VARDESC[0])</var> + <var>ENFUNC(VARDESC[1])</var>  = <var>ENFUNC(VARDESC[2])</var> </p>
+
+                <!-- rearrange the unknown to the left hand side IF it wasn't already -->
+                <p data-if="ORDER[ORDER.length-1] === 0">נסדר מחדש,<br/> <var>ENFUNC(VARDESC[1])</var> -<var>ENFUNC(VARDESC[3])</var> + <var>ENFUNC(VARDESC[2])</var> </var>=<var>ENFUNC(VARDESC[0])</var></p>
+                <p data-if="ORDER[ORDER.length-1] === 1">נסדר מחדש ,<br/> <var>ENFUNC(VARDESC[0])</var> -<var>ENFUNC(VARDESC[3])</var> + <var>ENFUNC(VARDESC[2])</var> </var>=<var>ENFUNC(VARDESC[1])</var></p>
+                <p data-if="ORDER[ORDER.length-1] === 3">נסדר מחדש,<br/>  <var>ENFUNC(VARDESC[2])</var>- <var>ENFUNC(VARDESC[0])</var> + <var>ENFUNC(VARDESC[1])</var> </var>=<var>ENFUNC(VARDESC[3])</var></p>
+
+                <!-- substitue vals for vars on RHS -->
+                <p data-if="ORDER[ORDER.length-1] === 0"> <code><var>VARVALS[3]</var> + <var>VARVALS[2]</var> - <var>VARVALS[1]</var> </code>=<var>ENFUNC(VARDESC[0])</var>
+                <p data-if="ORDER[ORDER.length-1] === 1"> <code><var>VARVALS[3]</var> + <var>VARVALS[2]</var> - <var>VARVALS[0]</var></code>=<var>ENFUNC(VARDESC[1])</var>
+                <p data-if="ORDER[ORDER.length-1] === 2"> <code><var>VARVALS[0]</var> + <var>VARVALS[1]</var> - <var>VARVALS[3]</var></code>=<var>ENFUNC(VARDESC[2])</var>
+                <p data-if="ORDER[ORDER.length-1] === 3"> <code><var>VARVALS[0]</var> + <var>VARVALS[1]</var> - <var>VARVALS[2]</var></code>=<var>ENFUNC(VARDESC[3])</var>
+
+                <!-- give the final answer -->
+                <p data-if="ORDER[ORDER.length-1] === 0"> <code><var>VARVALS[3] + VARVALS[2] - VARVALS[1]</var></code>=<var>ENFUNC(VARDESC[0])</var>
+                <p data-if="ORDER[ORDER.length-1] === 1"> <code><var>VARVALS[3] + VARVALS[2] - VARVALS[0]</var></code>=<var>ENFUNC(VARDESC[1])</var>
+                <p data-if="ORDER[ORDER.length-1] === 2"> <code><var>VARVALS[0] + VARVALS[1] - VARVALS[3]</var></code>=<var>ENFUNC(VARDESC[2])</var>
+                <p data-if="ORDER[ORDER.length-1] === 3"> <code><var>VARVALS[0] + VARVALS[1] - VARVALS[2]</var></code>=<var>ENFUNC(VARDESC[3])</var> 
+            </div>
+        </div>
+
+    </div>
+    </div>
+</body>
+</html>
+
+

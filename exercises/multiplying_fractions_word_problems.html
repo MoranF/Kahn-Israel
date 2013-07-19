@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>הכפלת שברים - בעיות מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+
+			<div id="birthday-party-guests">
+				<div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1">
+					<var id="D">randFromArray([ 5, 8 ])</var>
+					<var id="N">randRange( 3, D - 1 )</var>
+					<var id="INVITEES">randRange( 1, 5 ) * D</var>
+					<var id="SOLUTION">N / D * INVITEES</var>
+				</div>
+
+				<p class="problem">
+					<var>person( 1 )</var> <var>genderize(1,"הזמין","הזמינה")</var> <var>INVITEES</var> <var>genderize(1,"חברים","חברות")</var> למסיבת יום ההולדת <var>his( 1 )</var>.
+           לכמה <var>genderize(1,"חברים","חברות")</var> היו תכניות אחרות ולכן לא יכלו להגיע, אולם <code>\frac{<var>N</var>}{<var>D</var>}</code> מה<var>genderize(1,"חברים","חברות")</var>
+           ש<var>person( 1 )</var> <var>genderize(1,"הזמין","הזמינה")</var>	יכלו להגיע.
+				</p>
+
+				<p class="question">כמה אנשים הגיעו למסיבת יום ההולדת של <var>person( 1 )</var>?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>SOLUTION</var></span> <var>genderize(1,"חברים","חברות")</var>
+				</div>
+
+				<div class="hints">
+					<p>
+						עלינו להבין כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code><var>INVITEES</var></code> מוזמנים כדי להבין
+						כמה אנשים הגיעו למסיבה.
+					</p>
+					<p>
+						אנו יכולים למצוא כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code><var>INVITEES</var></code> על ידי הכפלת
+						<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> ו- <code class="hint_orange"><var>INVITEES</var></code>.
+					</p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{<var>INVITEES</var>} =
+						\color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{\dfrac{<var>INVITEES</var>}{1}} =
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>INVITEES</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>} \cdot \color{<var>ORANGE</var>}{1}} = \color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>INVITEES</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>}} = \color{<var>GREEN</var>}{\dfrac{<var>N * INVITEES</var>}{<var>D</var>}} =
+						\color{<var>GREEN</var>}{<var>SOLUTION</var>}
+					</code></p>
+					<div>
+						<p>
+							אפשר גם לראות בעזרת ציור ש-<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך
+							<code class="hint_orange"><var>INVITEES</var></code> זה <code class="hint_green"><var>SOLUTION</var></code>:
+						</p>
+						<div class="graphie">
+							init({ range: [ [ -0.05, 1 ], [ 0,  3 ] ],scale: [ 500, 30 ] });
+							rectchart( [ N, D - N ], [ BLUE, "#ccc" ], 2 );
+							rectchart( [ INVITEES, 0 ], [ ORANGE, "#999" ], 1 );
+							rectchart( [ SOLUTION, INVITEES - SOLUTION ], [ GREEN, "#fff" ], 0 );
+							style({ color: BLUE }, function() {
+								label([ 0, 2.5 ], "\\frac{" + N + "}{" + D + "}", "left" );
+							});
+							style({ color: ORANGE }, function() {
+								label([ 0, 1.5 ], INVITEES, "left" );
+							});
+							style({ color: GREEN }, function() {
+								label([ 0, 0.5 ], SOLUTION, "left" );
+							});
+						</div>
+					</div>
+					<p><strong><var>SOLUTION</var> <var>genderize(1,"חברים","חברות")</var> הגיעו למסיבת יום ההולדת של <var>person( 1 )</var>.</strong></p>
+				</div>
+			</div>
+
+
+			<div id="bookstore-spending">
+				<div class="vars" data-ensure="isInt ( SOLUTION ) && getGCD( D, N ) === 1">
+					<var id="AMOUNT">(randRange( 2, 10 )*D)</var>
+					<var id="D">randFromArray([ 2, 8 ])</var>
+					<var id="N">randRange( 1, D - 1 )</var>
+					<var id="SOLUTION">N / D * AMOUNT</var>
+				</div>
+
+				<p class="problem">
+					אחרי ש<var>genderize(1,"חסך","חסכה")</var> במשך זמן מה, ל<var>person( 1 )</var> היו ₪<var>AMOUNT</var>.00 
+					בקופת החסכון <var>his( 1 )</var>, ו<var>he( 1 )</var> <var>genderize(1,"הוציא")</var>
+					<code>\frac{<var>N</var>}{<var>D</var>}</code> מהכסף על ספרים שקנתה לאחרונה.
+				</p>
+
+				<p class="question">כמה כסף <var>person( 1 )</var> <var>genderize(1,"שילם","שילמה")</var> עבור הספרים?</p>
+
+				<div class="solution" data-forms="dollar"><var>SOLUTION</var></div>
+
+				<div class="hints">
+					<p>
+						עלינו להבין כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code>₪<var>AMOUNT</var>.00</code> כדי למצוא כמה
+						<var>person(1)</var> <var>genderize(1,"שילם","שילמה")</var>.
+					</p>
+					<p>
+						ניתן לחשב כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code>₪<var>AMOUNT</var>.00</code> על ידי הכפלת
+						<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> ו- <code class="hint_orange"><var>AMOUNT</var></code>.
+					</p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{<var>AMOUNT</var>} =
+						\color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{\dfrac{<var>AMOUNT</var>}{1}} =
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>AMOUNT</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>} \cdot \color{<var>ORANGE</var>}{1}} = \color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>AMOUNT</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>}} = \color{<var>GREEN</var>}{\dfrac{<var>N * AMOUNT</var>}{<var>D</var>}} =
+						\color{<var>GREEN</var>}{<var>SOLUTION</var>}
+					</code></p>
+					<div>
+						<p>
+							אפשר גם לראות בעזרת ציור ש-<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> of
+							<code class="hint_orange"><var>AMOUNT</var></code> זה <code class="hint_green"><var>SOLUTION</var></code>:
+						</p>
+						<div class="graphie">
+							init({ range: [ [ -0.05, 1 ], [ 0,  3 ] ],scale: [ 500, 30 ] });
+							rectchart( [ N, D - N ], [ BLUE, "#ccc" ], 2 );
+							rectchart( [ AMOUNT, 0 ], [ ORANGE, "#999" ], 1 );
+							rectchart( [ SOLUTION, AMOUNT - SOLUTION ], [ GREEN, "#fff" ], 0 );
+							style({ color: BLUE }, function() {
+								label([ 0, 2.5 ], "\\frac{" + N + "}{" + D + "}", "left" );
+							});
+							style({ color: ORANGE }, function() {
+								label([ 0, 1.5 ], AMOUNT, "left" );
+							});
+							style({ color: GREEN }, function() {
+								label([ 0, 0.5 ], SOLUTION, "left" );
+							});
+						</div>
+					</div>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"שילם","שילמה")</var> ₪<var>SOLUTION</var>.00 עבור הספרים.</strong></p>
+				</div>
+			</div>
+
+
+			<div id="canned-food-spending">
+				<div class="vars" data-ensure="isInt ( SOLUTION ) && getGCD( D, N ) === 1">
+					<var id="AMOUNT">(randRange( 2, 10 )*D)</var>
+					<var id="D">randFromArray([ 8, 6 ])</var>
+					<var id="N">randRange( 1, D - 1 )</var>
+					<var id="SOLUTION">roundTo( 2, N / D * AMOUNT )</var>
+				</div>
+
+				<p class="problem">
+					כל יום <var>person( 1 )</var> <var>genderize(1,"שם","שמה")</var> את העודף שב<var>genderize(1,"כיסיו","כיסיה")</var> בצנצנת.
+          אחרי <var>randRange( 10, 30 )</var> שבועות, <var>he( 1 )</var> <var>genderize(1,"חסך","חסכה")</var> ₪<var>AMOUNT</var>.00. <var>person( 1 )</var>
+					<var>genderize(1,"החליט","החליטה")</var> להשתמש ב-<code>\frac{<var>N</var>}{<var>D</var>}</code> מתוך הכסף של שבצנצנת כדי לקנות מזון לחסרי בית.
+				</p>
+
+				<p class="question">כמה כסף <var>genderize(1,"הוציא")</var> <var>person( 1 )</var> עבור קניית המזון?</p>
+
+				<div class="solution" data-forms="dollar"><var>SOLUTION</var></div>
+
+				<div class="hints">
+					<p>
+						עלינו להבין כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code>₪<var>AMOUNT</var>.00</code> כדי למצוא כמה כסף
+						<var>genderize(1,"הוציא")</var> <var>person(1)</var>.
+					</p>
+					<p>
+						אנו יכולים לחשב כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code>₪<var>AMOUNT</var>.00</code> על ידי הכפלת
+						<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> and <code class="hint_orange"><var>AMOUNT</var></code>.
+					</p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{<var>AMOUNT</var>} =
+						\color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{\dfrac{<var>AMOUNT</var>}{1}} =
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>AMOUNT</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>} \cdot \color{<var>ORANGE</var>}{1}} = \color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>AMOUNT</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>}} = \color{<var>GREEN</var>}{\dfrac{<var>N * AMOUNT</var>}{<var>D</var>}} =
+						\color{<var>GREEN</var>}{<var>SOLUTION</var>}
+					</code></p>
+					<div>
+						<p>
+							אפשר גם לראות בעזרת ציור ש-<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך
+							<code class="hint_orange"><var>AMOUNT</var></code> זה <code class="hint_green"><var>SOLUTION</var></code>:
+						</p>
+						<div class="graphie">
+							init({ range: [ [ -0.05, 1 ], [ 0,  3 ] ],scale: [ 500, 30 ] });
+							rectchart( [ N, D - N ], [ BLUE, "#ccc" ], 2 );
+							rectchart( [ AMOUNT, 0 ], [ ORANGE, "#999" ], 1 );
+							rectchart( [ SOLUTION, AMOUNT - SOLUTION ], [ GREEN, "#fff" ], 0 );
+							style({ color: BLUE }, function() {
+								label([ 0, 2.5 ], "\\frac{" + N + "}{" + D + "}", "left" );
+							});
+							style({ color: ORANGE }, function() {
+								label([ 0, 1.5 ], AMOUNT, "left" );
+							});
+							style({ color: GREEN }, function() {
+								label([ 0, 0.5 ], SOLUTION, "left" );
+							});
+						</div>
+					</div>
+					<p><strong><var>person( 1 )</var> <var>genderize(1,"הוציא")</var> ₪<var>SOLUTION</var>.00 על קניית מזון לחסרי בית.</strong></p>
+				</div>
+			</div>
+
+
+			<div id="road-trip-gas">
+				<div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1">
+					<var id="GALLONS">randRange( 20, 40 )</var>
+					<var id="D">randFromArray([ 8, 6, 10 ])</var>
+					<var id="N">randRange( 1, D - 1 )</var>
+					<var id="SOLUTION">N / D * GALLONS</var>
+				</div>
+
+				<p class="problem">
+					לפני שיצאו לטיול, <var>person( 1 )</var> <var>genderize(1,"מילא","מילאה")</var> את מיכל הדלק של המכונית <var>his( 1 )</var>,
+          שנפחו הוא <var>GALLONS</var> ליטרים. לאחר <var>0.5 * randRange( 3 / 0.5, 10 / 0.5 )</var> שעות של נסיעה, <var>person( 1 )</var>
+					<var>genderize(1,"שם","שמה")</var> לב שרק <code>\frac{<var>N</var>}{<var>D</var>}</code> מהמיכל מלא.
+				</p>
+
+				<p class="question">כמה ליטרים של דלק נשארו במיכל?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>SOLUTION</var></span> ליטרים
+				</div>
+
+				<div class="hints">
+					<p>
+						מכיוון שאנו יודעים את החלק מהמיכל שנשאר מלא, עלינו רק להבין כמה זה
+						<code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code><var>GALLONS</var></code> ליטרים
+						כדי לדעת כמה דלק נותר במיכל.
+					</p>
+					<p>
+						אנו יכולים לחשב כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code><var>GALLONS</var></code> ליטרים על ידי הכפלת
+						<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> ו- <code class="hint_orange"><var>GALLONS</var></code>.
+					</p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{<var>GALLONS</var>} =
+						\color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{\dfrac{<var>GALLONS</var>}{1}} =
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>GALLONS</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>} \cdot \color{<var>ORANGE</var>}{1}} = \color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>GALLONS</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>}} = \color{<var>GREEN</var>}{\dfrac{<var>N * GALLONS</var>}{<var>D</var>}} =
+						\color{<var>GREEN</var>}{<var>SOLUTION</var>}
+					</code></p>
+					<div>
+						<p>
+							אפשר גם לראות בעזרת ציור ש-<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך
+							<code class="hint_orange"><var>GALLONS</var></code> זה <code class="hint_green"><var>SOLUTION</var></code>:
+						</p>
+						<div class="graphie">
+							init({ range: [ [ -0.05, 1 ], [ 0,  3 ] ],scale: [ 500, 30 ] });
+							rectchart( [ N, D - N ], [ BLUE, "#ccc" ], 2 );
+							rectchart( [ GALLONS, 0 ], [ ORANGE, "#999" ], 1 );
+							rectchart( [ SOLUTION, GALLONS - SOLUTION ], [ GREEN, "#fff" ], 0 );
+							style({ color: BLUE }, function() {
+								label([ 0, 2.5 ], "\\frac{" + N + "}{" + D + "}", "left" );
+							});
+							style({ color: ORANGE }, function() {
+								label([ 0, 1.5 ], GALLONS, "left" );
+							});
+							style({ color: GREEN }, function() {
+								label([ 0, 0.5 ], SOLUTION, "left" );
+							});
+						</div>
+					</div>
+					<p><strong>במיכל נותרו <var>SOLUTION</var> ליטרים של דלק ברגע ש<var>person( 1 )</var> <var>genderize(1,"בדק","בדקה")</var> אותו.</strong></p>
+				</div>
+			</div>
+
+
+			<div id="picnic-attendees">
+				<div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1">
+					<var id="ATTENDEES">randRange( 15, 40 )</var>
+					<var id="D">randFromArray([ 8, 6, 10 ])</var>
+					<var id="N">randRange( 1, D - 1 )</var>
+					<var id="SOLUTION">N / D * ATTENDEES</var>
+				</div>
+
+				<p class="problem">
+					<var>ATTENDEES</var> אנשים השתתפו בפיקניק בפארק הירקון.
+					<code>\frac{<var>N</var>}{<var>D</var>}</code> מתוך האנשים היו מבוגרים.
+				</p>
+
+				<p class="question">כמה אנשים מבוגרים השתתפו בפיקניק?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>SOLUTION</var></span> מבוגרים
+				</div>
+
+				<div class="hints">
+					<p>
+						עלינו להבין כמה זה <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code><var>ATTENDEES</var></code> כדי למצוא
+						כמה מהאנשים שהשתתפו בפיקניק היו מבוגרים.
+					</p>
+					<p>
+						אנו יכולים לחשב את <code>\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך <code><var>ATTENDEES</var></code> על ידי הכפלת
+						<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> ו- <code class="hint_orange"><var>ATTENDEES</var></code>.
+					</p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{<var>ATTENDEES</var>} =
+						\color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{\dfrac{<var>ATTENDEES</var>}{1}} =
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>ATTENDEES</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>} \cdot \color{<var>ORANGE</var>}{1}} = \color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>ATTENDEES</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>}} = \color{<var>GREEN</var>}{\dfrac{<var>N * ATTENDEES</var>}{<var>D</var>}} =
+						\color{<var>GREEN</var>}{<var>SOLUTION</var>}
+					</code></p>
+					<div>
+						<p>
+							אפשר גם לראות בעזרת ציור ש-<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך
+							<code class="hint_orange"><var>ATTENDEES</var></code> זה <code class="hint_green"><var>SOLUTION</var></code>:
+						</p>
+						<div class="graphie">
+							init({ range: [ [ -0.05, 1 ], [ 0,  3 ] ],scale: [ 500, 30 ] });
+							rectchart( [ N, D - N ], [ BLUE, "#ccc" ], 2 );
+							rectchart( [ ATTENDEES, 0 ], [ ORANGE, "#999" ], 1 );
+							rectchart( [ SOLUTION, ATTENDEES - SOLUTION ], [ GREEN, "#fff" ], 0 );
+							style({ color: BLUE }, function() {
+								label([ 0, 2.5 ], "\\frac{" + N + "}{" + D + "}", "left" );
+							});
+							style({ color: ORANGE }, function() {
+								label([ 0, 1.5 ], ATTENDEES, "left" );
+							});
+							style({ color: GREEN }, function() {
+								label([ 0, 0.5 ], SOLUTION, "left" );
+							});
+						</div>
+					</div>
+					<p><strong><var>SOLUTION</var> מהמשתתפים בפיקניק היו מבוגרים.</strong></p>
+				</div>
+			</div>
+
+
+			<div id="recipe">
+				<div class="vars" data-ensure="isInt( SOLUTION ) && getGCD( D, N ) === 1">
+					<var id="BATCHES">(randRange( 1,5 )*D)</var>
+					<var id="D">randFromArray([ 2,8 ])</var>
+					<var id="N">randRange( 1, D - 1 )</var>
+					<var id="SOLUTION">N / D * BATCHES</var>
+				</div>
+
+				<div class="problem">
+					<p>
+						<var>person(1)</var> <var>genderize(1,"החליט")</var> לאפות עוגיות למכירה מיוחדת שהתקיימה בבית הספר.
+            <var>He(1)</var> <var>genderize(1,"מצא")</var> מתכון
+						עבורו נדרשה <code>\frac{<var>N</var>}{<var>D</var>}</code> כוס של פתיתי שוקולד.
+					</p>
+					<p>
+						כדי להכין מספיק עוגיות למכירה, <var>person(1)</var> <var>genderize(1,"היה צריך","היתה צריכה")</var> להכין
+             <var>BATCHES</var> מנות של עוגיות מהמתכון ש<var>genderize(1,"מצא")</var>.
+					</p>
+				</div>
+
+				<p class="question">כמה כוסות של פתיתי שוקולד נדרשו לשם הכנת על העוגיות?</p>
+
+				<div class="solution" data-type="multiple">
+					<span style="padding-right: 5px" class="sol" data-forms="integer"><var>SOLUTION</var></span> cups
+				</div>
+
+				<div class="hints">
+					<p>
+						אנו יכולים להכפיל <code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> כוס ב-<code class="hint_orange"><var>BATCHES</var></code>
+						מנות כדי למצוא כמה כוסות של פתיתי שוקולד נדרשו.
+					</p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{<var>BATCHES</var>} =
+						\color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\color{<var>BLUE</var>}{\dfrac{<var>N</var>}{<var>D</var>}} \times \color{<var>ORANGE</var>}{\dfrac{<var>BATCHES</var>}{1}} =
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>BATCHES</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>} \cdot \color{<var>ORANGE</var>}{1}} = \color{<var>GREEN</var>}{\text{?}}
+					</code></p>
+					<p><code>
+						\dfrac{\color{<var>BLUE</var>}{<var>N</var>} \cdot \color{<var>ORANGE</var>}{<var>BATCHES</var>}}
+						{\color{<var>BLUE</var>}{<var>D</var>}} = \color{<var>GREEN</var>}{\dfrac{<var>N * BATCHES</var>}{<var>D</var>}} =
+						\color{<var>GREEN</var>}{<var>SOLUTION</var>}
+					</code></p>
+					<!--
+
+					This is backwards for this problem. The visualization should somehow show that BATCHES instances of N/D is SOLUTION
+
+					<div>
+						<p>
+							אפשר גם לראות בעזרת ציור ש-<code class="hint_blue">\dfrac{<var>N</var>}{<var>D</var>}</code> מתוך
+							<code class="hint_orange"><var>BATCHES</var></code> זה <code class="hint_green"><var>SOLUTION</var></code>:
+						</p>
+						<div class="graphie">
+							init({ range: [ [ -0.05, 1 ], [ 0,  3 ] ],scale: [ 500, 30 ] });
+							rectchart( [ N, D - N ], [ BLUE, "#ccc" ], 2 );
+							rectchart( [ BATCHES, 0 ], [ ORANGE, "#999" ], 1 );
+							rectchart( [ SOLUTION, BATCHES - SOLUTION ], [ GREEN, "#fff" ], 0 );
+							style({ color: BLUE }, function() {
+								label([ 0, 2.5 ], "\\frac{" + N + "}{" + D + "}", "left" );
+							});
+							style({ color: ORANGE }, function() {
+								label([ 0, 1.5 ], BATCHES, "left" );
+							});
+							style({ color: GREEN }, function() {
+								label([ 0, 0.5 ], SOLUTION, "left" );
+							});
+						</div>
+					</div>
+					-->
+					<p><strong>סך הכל <var>person(1)</var> <var>genderize(1,"היה צריך","היתה צריכה")</var> <var>plural_heb(SOLUTION, "כוס","כוסות","f")</var> של פתיתי שוקולד על מנת להכין מספיק עוגיות למכירה בבית הספר.</strong></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

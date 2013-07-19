@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie word-problems">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>חקירת משוואה לינארית</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars"></div>
+		<div class="problems">
+			<div id="increase" data-weight="3">
+				<div class="vars">
+					<var id="INDEX">randRange( 0, 2 )</var>
+					<var id="M">1 / randRange( 2, 5 )</var>
+					<var id="B">randRange( 1, 3 )</var>
+					<var id="UNIT">[ deskItem( 0 ), fruit( 0 ), "X" ][ INDEX ]</var>
+					<var id="X_AXIS_LABEL">[ "מספר ה" + plural( UNIT ), "מספר ה" + plural( UNIT ), "X" ][ INDEX ]</var>
+					<var id="Y_AXIS_LABEL">[ "מחיר ה" + plural( UNIT ), "מחיר ה" + plural( UNIT ), "Y" ][ INDEX ]</var>
+					<var id="X_AXIS_QUESTION">[ "מספר ה" + plural( UNIT ), "מספר ה" + plural( UNIT ), "X" ][ INDEX ]</var>
+					<var id="Y_AXIS_QUESTION">[ "מחיר ה" + plural( UNIT ), "מחיר ה" + plural( UNIT ), "Y" ][ INDEX ]</var>
+				</div>
+				<div class="question">
+					<p><b>כיצד משתנה <var>Y_AXIS_QUESTION</var> כאשר <var>X_AXIS_QUESTION</var> עולה?</b></p>
+					<div class="graphie" id="grid">
+						init({
+							range: [[-3, 10], [-1, 10]],
+							scale: [30, 30]
+						});
+
+						grid( [10, 10], [10, 10], {
+							stroke: "#ccc"
+						});
+
+						style({
+							stroke: "#888",
+							strokeWidth: 2,
+							arrows: "->"
+						});
+						path( [ [-0.5, 0], [10, 0] ] );
+						path( [ [0, -0.5], [0, 10] ] );
+
+						style({
+
+							stroke: "#000000",
+							strokeWidth: 0.9,
+							arrows: "->"
+						});
+
+						label( [ 0, 9.2 ], "\\text{" + Y_AXIS_LABEL + "}", "right");
+						label( [ 8.5, 0], "\\text{" + X_AXIS_LABEL + "}", "below");
+
+						style({
+							stroke: "#6495ED",
+							strokeWidth: 2,
+							arrows: "->"
+						});
+
+						plot( function( x ) {
+							return ( M ) * x + B;
+						}, [0, 10]);
+					</div>
+				</div>
+
+				<div class="solution">עולה</div>
+				<ul class="choices" data-category="true">
+					<li>עולה</li>
+					<li>יורד</li>
+					<li>אינו משתנה</li>
+				</ul>
+				<div class="hints">
+					<div>
+						<div class="graphie" data-update="grid">
+							style({ fill: "", stroke: "#000000" });
+							line( [ 4, 4 * M + B ], [ 7, 4 * M + B ] );
+							style({ stroke: "#40a020" });
+							line( [ 7, 4 * M + B ], [ 7, 7 * M + B ] );
+						</div>
+						<p>כשמביטים בגרף רואים שכאשר <code>x</code> עולה (<code>\color{#000000}{\text{חץ שחור}}</code>), <code>y</code> עולה (<code>\color{#40a020}{\text{חץ ירוק}}</code>).</p>
+					</div>
+					<p>אפשר לומר ששיפוע הקו חיובי, או שבין המשתנים יש יחס ישר.</p>
+					<p>לכן, כאשר <var>X_AXIS_QUESTION</var> עולה, <var>Y_AXIS_QUESTION</var><b> עולה</b>.</p>
+				</div>
+			</div>
+			<div id="decrease" data-type="increase" data-weight="3">
+				<div class="vars">
+					<var id="M">1 / randRange( 2, 5 ) * -1</var>
+					<var id="B">randRange( 6, 8 )</var>
+				</div>
+				<div class="solution">יורד</div>
+				<div class="hints">
+					<div>
+						<div class="graphie" data-update="grid">
+							style({ fill: "", stroke: "#000000" });
+							line( [ 4, 4 * M + B ], [ 7, 4 * M + B ] );
+							style({ stroke: "#ff0000" });
+							line( [ 7, 4 * M + B ], [ 7, 7 * M + B ] );
+						</div>
+						<p>כשמביטים בגרף רואים שכאשר <code>x</code> עולה (<code>\color{#000000}{\text{חץ שחור}}</code>), <code>y</code> יורד (<code>\color{#ff0000}{\text{חץ אדום}}</code>).</p>
+					</div>
+					<p>אפשר לומר ששיפוע הקו שלילי, או שבין המשתנים יש יחס הפכי.</p>
+					<p>לכן, כאשר <var>X_AXIS_QUESTION</var> עולה, <var>Y_AXIS_QUESTION</var> <b>יורד</b>.</p>
+				</div>
+			</div>
+			<div id="stays" data-type="increase" data-weight="1">
+				<div class="vars">
+					<var id="M">0</var>
+					<var id="B">randRange( 2, 8 )</var>
+				</div>
+				<div class="solution">אינו משתנה</div>
+				<div class="hints">
+					<p>כשמביטים בגרף, רואים שכאשר <code>x</code> עולה, אין שינוי ב-<code>y</code>.</p>
+					<p>אפשר לומר ששיפוע הקו הוא אפס, או שאין קשר בין המשתנים.</p>
+					<p>לכן, כאשר <var>X_AXIS_QUESTION</var> עולה, <var>Y_AXIS_QUESTION</var> <b>אינו משתנה</b>.</p>
+				</div>
+			</div>
+
+			<div data-weight="7" id="identifypoint">
+				<!-- Ensure the X and Y deltas of the beginning and end of the line are at least
+				     five. -->
+				<div class="vars" data-ensure="abs( LINESTART[ 0 ] - LINEEND[ 0 ] ) >= 5 && abs( LINESTART[ 1 ] - LINEEND[ 1 ] ) >= 5">
+					<!-- When X is the solution ensure that Y isn't 0 and vice versa so that the line
+					     added by the first hint doesn't cover up an axis. -->
+					<div data-ensure="POINTX === SOLUTION ? POINTY !== 0 : POINTX !== 0">
+						<var id="POINTX, POINTY">randRange( -9, 9, 2 )</var>
+						<var id="SOLUTION">randFromArray([ POINTX, POINTY ])</var>
+					</div>
+
+					<var id="LINESTART">
+						(function() {
+							var lineStartX,
+							    lineStartY;
+
+							if (randFromArray([ false, true ])) {
+								lineStartX = randFromArray([ -10, 10 ]);
+								lineStartY = randRange( -10, 10 );
+							} else {
+								lineStartX = randRange( -10, 10 );
+								lineStartY = randFromArray([ -10, 10 ]);
+							}
+
+							return [ lineStartX, lineStartY ];
+						})()
+					</var>
+					<var id="LINEEND">
+						(function() {
+							var lineEndX = POINTX,
+									lineEndY = POINTY,
+									newXDelta,
+									newYDelta,
+									xDelta = -( LINESTART[ 0 ] - POINTX ),
+									yDelta = -( LINESTART[ 1 ] - POINTY );
+
+
+							// Reduce xDelta and yDelta until their absolute values are less than or equal
+							// to one.
+							if ( Math.abs( xDelta ) > Math.abs( yDelta ) ) {
+								newXDelta = xDelta > 0 ? 1 : -1;
+								newYDelta = yDelta * newXDelta / xDelta;
+							} else {
+								newYDelta = yDelta > 0 ? 1 : -1;
+								newXDelta = xDelta * newYDelta / yDelta;
+							}
+
+							xDelta = newXDelta;
+							yDelta = newYDelta;
+
+
+							while ( Math.abs( lineEndX ) &lt; 10 && Math.abs( lineEndY ) &lt; 10 ) {
+								lineEndX += xDelta;
+								lineEndY += yDelta;
+							}
+
+							return [ lineEndX, lineEndY ];
+						})()
+					</var>
+				</div>
+
+				<div class="question">
+					<p data-if="POINTX === SOLUTION">מהו <code>x</code> כאשר <code>y</code> הוא <code><var>POINTY</var></code>?</p>
+					<p data-else>מהו <code>y</code> כאשר <code>x</code> הוא <code><var>POINTX</var></code>?</p>
+
+					<div class="graphie" id="graph">
+						graphInit({
+                            range: 10,
+							scale:       20,
+                            axisArrows: "&lt;-&gt;",
+							tickStep:    2,
+                            labelStep: 1,
+						});
+
+                        label( [ 0, 10], "y", "below right");
+                        label( [ 10, 0], "x", "above left");
+						style({ stroke: '#6495ed' });
+						line( LINESTART, LINEEND );
+					</div>
+				</div>
+
+				<div class="hints">
+					<div>
+						<div class="graphie" data-update="graph" dir=ltr>
+							var lineStart, lineEnd;
+
+							if ( POINTX === SOLUTION ) {
+								lineStart = [ -10, POINTY ];
+								lineEnd = [ 10, POINTY ];
+							} else {
+								lineStart = [ POINTX, -10 ];
+								lineEnd = [ POINTX, 10 ];
+							}
+
+							line( lineStart, lineEnd, {
+								stroke:          '#28ae7b',
+								strokeDasharray: '- '
+							});
+						</div>
+
+						<p data-if="POINTX === SOLUTION">הקו <span style="color: #28ae7b;">הירוק</span> המקווקו מראה איפה <code>y</code> הוא <code><var>POINTY</var></code>.</p>
+						<p data-else>הקו <span style="color: #28ae7b;">הירוק</span> המקווקו מראה איפה <code>x</code> הוא <code><var>POINTX</var></code>.</p>
+					</div>
+
+					<p>הקו <span style="color: #6495ed;">הכחול</span> והקו <span style="color: #28ae7b;">הירוק</span> המקווקו נפגשים בנקודה <code>(<var>POINTX</var>, <var>POINTY</var>)</code>.</p>
+					<p>לכן <code><var>POINTX === SOLUTION ? 'x' : 'y'</var></code> הוא <code><var>SOLUTION</var></code>.</p>
+				</div>
+
+				<div class="solution" data-forms="integer" data-type="multiple">
+                    <p><code><var>POINTX === SOLUTION ? 'x' : 'y'</var> =</code> <span class="sol" data-forms="integer"><var>SOLUTION</var></span></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

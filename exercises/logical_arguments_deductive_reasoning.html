@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html data-require="math word-problems graphie">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>טיעונים לוגים והגיון דדוקטיבי</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="detachment">
+                <div class="vars">
+                    <var id="QUESTIONS">
+                        [[person(1)+genderize(1, " החמיץ "," החמיצה ")+" את האוטובוס ", he(1)+ genderize(1, " יאחר "," תאחר ")+" לבית ספר",
+                            [person(1)+genderize(1, " החמיץ "," החמיצה ")+" את האוטובוס",
+                             person(1)+genderize(1, " מאחר "," מאחרת ")+" לבית ספר",
+                             person(1)+" לא "+genderize(1, " החמיץ "," החמיצה ")+" את האוטובוס",
+                             person(1)+" לא "+genderize(1, " יאחר "," תאחר ")+"לבית ספר"]],
+                         ["היום יום חמישי", "אני אוכל סושי",
+                            ["היום יום חמישי",
+                             "אני אוכל סושי",
+                             "היום לא יום חמישי",
+                             "אני לא אוכל סושי היום "]],
+                         ["האנשים הולכים מהקונצרט", "הנגנים מאוכזבים",
+                            ["האנשים הולכים מהקונצרט",
+                             "הנגנים מאוכזבים",
+                             "האנשים לא הולכים מהקונצרט",
+                             "הנגנים לא מאוכזבים"]],
+                         ["אני אלך לאימון היום", "אשחק במשחק מחר",
+                             ["אני אלך לאימון היום",
+                              "אני אשחק במשחק מחר",
+                              "לא הלכתי לאימון היום",
+                              "לא אשחק במשחק מחר"]]]
+                    </var>
+                    <var id="Q_TYPE">randRange(0, QUESTIONS.length - 1)</var>
+                    <var id="IF_CLAUSE">QUESTIONS[Q_TYPE][0]</var>
+                    <var id="THEN_CLAUSE">QUESTIONS[Q_TYPE][1]</var>
+                    <var id="TYPE">randRange(0, 3)</var>
+                    <var id="IMPLICATION">QUESTIONS[Q_TYPE][2]</var>
+                    <var id="CONCLUSION">[IMPLICATION[1], IMPLICATION[0], IMPLICATION[3], IMPLICATION[2]]</var>
+                    <var id="SOLUTION">(TYPE === 1 || TYPE === 2) ? "שום מסקנה לוגית אפשרית" : CONCLUSION[TYPE]</var>
+                </div>
+                <p class="problem">השתמש במידע הנתון כדי להגיע למסקנה לוגית, אם אפשר. אם אי אפשר להסיק שום מסקנה לוגית מהמידע הנתון, בחר ב-" שום מסקנה לוגית אפשרית"."</p>
+                <p class="question">אם <span id="if-clause"><var>IF_CLAUSE</var></span>, אז <span id="then-clause"><var>THEN_CLAUSE</var></span>. <span id="second-sent"><var>IMPLICATION[ TYPE ]</var></span>. </p>
+                <p class="solution"><var>SOLUTION</var></p>
+                <ul class="choices" data-category="true">
+                    <li><var>capitalize(CONCLUSION[TYPE])</var></li>
+                    <li>שום מסקנה לוגית אפשרית</li>
+                </ul>
+                <div class="hints">
+                    <div>
+                        <p>זהה את חלק ה<span class="hint_blue">השערה</span>,  ה<span class="hint_green">מסקנה</span> של משפט הראשון, וה<span class="hint_purple">מסקנה של המשפט השני</span>.</p>
+                        <div class="graphie">
+                            $("#if-clause").addClass("hint_blue");
+                            $("#then-clause").addClass("hint_green");
+                            $("#second-sent").addClass("hint_purple");
+                        </div>
+                    </div>
+                    <p>האם  ה<span class="hint_purple">משפט השני</span> מתייחס ל<span class="hint_blue">השערה</span> של המשפט הראשון, או אל <span class="hint_green">המסקנה</span> של המשפט הראשון?</p>
+                    <div data-if="TYPE === 0 || TYPE === 2">
+                        <p>ה<span class="hint_purple">משפט השני</span> מתייחס אל ה<span class="hint_blue">השערה</span> של המשפט הראשון, בגלל שהוא מדבר האם או לא <var>IMPLICATION[0]</var>.</p>
+                        <p>האם ה<span class="hint_purple">משפט השני</span> מצדיק את ה<span class="hint_blue">השערה</span>, או סותר את ה<span class="hint_blue">ההשערה</span>?</p>
+                    </div>
+                    <div data-else>
+                        <p>ה<span class="hint_purple">משפט השני</span> מתייחס אל ה<span class="hint_green">מסקנה</span> של המשפט הראשון, בגלל שהוא מדבר על האם או לא <var>IMPLICATION[1]</var>.</p>
+                        <p>האם ה<span class="hint_purple">משפט השני</span> מצדיק את ה<span class="hint_green">מסקנה</span>, או סותר את ה<span class="hint_green">מסקנה</span>?</p>
+                    </div>
+                    <div data-if="TYPE === 0" data-unwrap>
+                        <p>ה <span class="hint_purple">משפט השני</span> מצדיק את ה<span class="hint_blue">השערה</span> של המשפט הראשון.</p>
+                        <p>בגלל שה<span class="hint_purple">משפט השני</span> מצדיק <span class="hint_blue">השערה</span> של המשפט הראשון, ה<span class="hint_purple">משפט השני</span> מרמז על המשפט הראשון.</p>
+                        <p>בגלל שאנו מרמזים על המספר האמיתי, אנו יכולים להסיק את ה<span class="hint_green">מסקנה</span> של המשפט הראשון.</p>
+                    </div>
+                    <div data-if="TYPE === 1" data-unwrap>
+                        <p>ה<span class="hint_purple">משפט השני</span> מצדיק את ה<span class="hint_green">מסקנה</span> של המשפט הראשון.</p>
+                        <p>בגלל שה<span class="hint_purple">משפט השני</span> מצדיק את ה<span class="hint_green">מסקנה</span> של המשפט הראשון, ה<span class="hint_purple">משפט השני</span> מייצג את ההופכי של המשפט הראשון.</p>
+                        <p>משפטים הופכים אינם שווים לוגית למשפטים המקוריים, אז אנו לא יכולים להגיע למסקנה לוגית.</p>
+                    </div>
+                    <div data-if="TYPE === 2" data-unwrap>
+                        <p>ה<span class="hint_purple">משפט השני</span> מצדיק את ההפך של ה<span class="hint_blue">השערה</span> של המשפט הראשון.</p>
+                        <p>בגלל שה<span class="hint_purple">משפט השני</span> מצדיק את ההפך של ה<span class="hint_blue">השערה</span> של המשפט הראשון, ה<span class="hint_purple">משפט השני</span>מייצג את נגדי של המשפט הראשון של המשפט הראשון.</p>
+                        <p>המשפט הנגדי אינו שווה לוגית למשפט המקורי, אז אנו לא יכולים להגיע למסקנה לוגית.</p>
+                    </div>
+                    <div data-if="TYPE === 3" data-unwrap>
+                        <p>בגלל שה<span class="hint_purple">משפט השני</span> מצדיק את ההפך של ה<span class="hint_green">מסקנה</span> של המשפט הראשון, ה<span class="hint_purple">משפט השני</span> מרמז את המשפט הקונטרה חיובי למשפט המקורי.</p>
+                        <p>בגלל שמשפט קונטרה חיובי מרמז על המשפט המקורי שלו, ה<span class="hint_purple">משפט השני</span> מרמז את ההפך של ה<span class="hint_blue">השערה</span>.</p>
+                    </div>
+                    <p>לכן התשובה היא "<var>SOLUTION</var>"</p>
+                </div>
+            </div>
+            <div id="syllogism">
+                <div class="vars">
+                    <var id="QUESTIONS">
+                        [[true,  true,  ["צורה היא ריבוע", "היא מלבן", "צורה היא מלבן", "יש לה 4 זוויות"]],
+                         [false, true,  ["אני משחק כדורסל", "אני אתלטי", "אני משחק כדורעף", "אני אתלטי"]],
+                         [true,  true,  ["היום יום שבת", "אני לא חייב ללכת לבית ספר", "אני לא חייב ללכת לבית ספר", "אני יכול ללכת לשחק בחצר"]],
+                         [false, true,  ["אני גר בירושלים", "אני גר בישראל", "אני גר בתל אביב", "אני גר בישראל"]],
+                         [true,  true,  ["קרן חוצה זווית", "היא יוצרת 2 זוויות חופפות", "ישנם 2 זוויות חופפות", "שני הזוויות בעלות אותן ערך"]],
+                         [false, false, ["אם צורה היא מחומש", "הצורה בעלת 5 צלעות", "צורה היא מחומש", "הצורה בעלת 5 זוויות"]],
+                         [true,  true,  ["תלמיד בכיתה י'ב", "הוא או היא בתיכון", "תלמיד נמצא בתיכון", "הוא או היא לא באוניברסיטה"]],
+                         [false, true,  ["הכנתי פיקניק", "אני רואה נמלים", "יורד גשם הרבה", "אתה תראה נמלים"]]]</var>
+                    <var id="Q_TYPE">randRange(0, QUESTIONS.length - 1)</var>
+                    <var id="CONC_POSSIBLE">QUESTIONS[Q_TYPE][0]</var>
+                    <var id="HYP_DIFF">QUESTIONS[Q_TYPE][1]</var>
+                    <var id="HYP_A">QUESTIONS[Q_TYPE][2][0]</var>
+                    <var id="CONC_A">QUESTIONS[Q_TYPE][2][1]</var>
+                    <var id="HYP_B">QUESTIONS[Q_TYPE][2][2]</var>
+                    <var id="CONC_B">QUESTIONS[Q_TYPE][2][3]</var>
+                    <var id="SOLUTION">CONC_POSSIBLE ? ("If "+HYP_A+", then "+CONC_B+".") : "שום מסקנה לוגית אפשרית."</var>
+                </div>
+                <p class="problem">השתמש במידע הנתון כדי להגיע למסקנה לוגית, אם אפשר.</p>
+                <p class="question">אם <span id="hyp_a"><var>HYP_A</var></span>, אז <span id="conc_a"><var>CONC_A</var></span>. אם <span id="hyp_b"><var>HYP_B</var></span>, אז <span id="conc_b"><var>CONC_B</var></span>.</p>
+                <p class="solution"><var>SOLUTION</var></p>
+                <ul class="choices" data-category="true">
+                    <li data-if="CONC_POSSIBLE">אם <var>HYP_A</var>, אז <var>CONC_B</var>.</li>
+                    <li data-else-if="HYP_DIFF">אם <var>HYP_A</var>, אז <var>HYP_B</var>.</li>
+                    <li data-else>אם <var>CONC_A</var>, אז <var>CONC_B</var>.</li>
+                    <li>שום מסקנה לוגית אפשרית.</li>
+                </ul>
+                <div class="hints">
+                    <div>
+                        <p>זהה את ה<span class="hint_blue">השערה ראשונה</span>, ה<span class="hint_green">מסקנה הראשונה</span>, ה<span class="hint_red">השערה ראשונה</span>, וה<span class="hint_purple">מסקנה השניה</span>.</p>
+                        <div class="graphie">
+                            $( "#hyp_a" ).addClass( "hint_blue" );
+                            $( "#conc_a" ).addClass( "hint_green" );
+                            $( "#hyp_b" ).addClass( "hint_red" );
+                            $( "#conc_b" ).addClass( "hint_purple" );
+                        </div>
+                    </div>
+                    <div>
+                        <p>האם שני המשפטים באים בצורה של "אם <span class="hint_blue">P</span>, אז <span class="hint_green">Q</span>. אם <span class="hint_red">Q</span>, אז <span class="hint_purple">R</span>", כאשר <span class="hint_green">מסקנה השניה</span> וה<span class="hint_red">השערה ראשונה</span> הינן אותו הדבר?</p>
+                        <p>במילים אחרות, האם המשפט נראה כך: <code>\blue{P}\implies \green{Q}</code>. <code>\red{Q}\implies \purple{R}</code>?</p>
+                    </div>
+                    <div data-if="CONC_POSSIBLE" data-unwrap>
+                        <p>כן. בגלל ששני המשפטים האמצעיים אומרים ש<span class="hint_green"><var>HYP_B</var></span>, אנו יכולים לחבר את המשפטים האלו ביחד: <code>\blue{P}\implies\green{Q}\implies\purple{R}</code> או <br/>
+                        <span class="hint_purple">"<var>CONC_B</var>"</span></span><code>\implies</code><span class="hint_green">"<var>CONC_A</var>"</span><code>\implies</code><span class="hint_blue">"<var>HYP_A</var>".</p>
+                        <p>אנו יכולים להוריד את המשפט האמצעי, ולהגיע למסקנה </br>
+                       <span class="hint_purple">"<var>CONC_B</var>"</span><code>\implies</code><span class="hint_blue">"<var>HYP_A</var>"
+                        </span>. אז, התשובה היא "אם <span class="hint_blue"> <var>HYP_A</var></span>, אז <span class="hint_purple"> <var>CONC_B</var></span>."</p>
+                    </div>
+                    <p data-else>לא, אז אתה לא יכול ליצור מסקנה לוגית .</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

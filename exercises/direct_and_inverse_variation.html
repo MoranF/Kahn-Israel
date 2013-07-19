@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html data-require="math">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>השתנות ישרה והשתנות הפוכה</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="VARIABLE_NAMES">[["x", "y"], ["a", "b"], ["m", "n"]]</var>
+
+			<var id="V1, V2">randFromArray(VARIABLE_NAMES)</var>
+
+			<var id="MULTIPLIER_IS_FRACTIONAL">rand(2)</var>
+			<var id="MULTIPLIER_VALUE">randRange(2, 9)</var>
+
+			<var id="MULTIPLIER_INVERSE">MULTIPLIER_IS_FRACTIONAL ? MULTIPLIER_VALUE : "\\frac{1}{"+MULTIPLIER_VALUE+"}"</var>
+			<var id="MULTIPLIER">MULTIPLIER_IS_FRACTIONAL ? "\\frac{1}{"+MULTIPLIER_VALUE+"}" : MULTIPLIER_VALUE</var>
+		</div>
+
+		<div class="problems">
+			<div id="direct-variation">
+				<div class="vars">
+					<var id="STATEMENT">randFromArray([
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; תלוי באופן ישיר ב- &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt;",
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; ו- &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt; משתנים באופן ישיר",
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; משתנה באופן ישיר עם &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt;",
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; ו- &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt; קשורים ביחס ישיר"
+					])</var>
+				</div>
+
+				<p class="problem"><var>STATEMENT</var>.</p>
+				<p class="question">איזו מהמשוואות הבאות מתארת יחס אפשרי בין <code><var>V1</var></code> ו- <code><var>V2</var></code>?</p>
+				<p class="solution"><code>
+						<var>V1</var> = <var>MULTIPLIER</var> \cdot <var>V2</var>
+				</code></p>
+
+				<div class="hints">
+					<p><var>STATEMENT</var> אם <code><var>V1</var> = k \cdot <var>V2</var></code> כאשר <code>k</code> הוא קבוע כלשהו.</p>
+					<p>התשובה <code><var>V1</var> = <var>MULTIPLIER</var> \cdot <var>V2</var></code> מתאימה לתבנית הזו, אם נבחר <code>k = <var>MULTIPLIER</var></code>.</p>
+				</div>
+
+				<ul class="choices" data-show="5">
+					<li><code>
+							<var>V1</var> \cdot <var>V2</var> = <var>MULTIPLIER</var>
+					</code></li>
+					<li><code>
+							<var>V1</var> \cdot <var>V2</var> = <var>MULTIPLIER_INVERSE</var>
+					</code></li>
+					<li><code>
+							<var>V1</var> = <var>MULTIPLIER</var> \cdot \frac{1}{<var>V2</var>}
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER</var> \cdot <var>V1</var> = \frac{1}{<var>V2</var>}
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER_INVERSE</var> \cdot <var>V1</var> = \frac{1}{<var>V2</var>}
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER</var> \cdot \frac{1}{<var>V1</var>} = <var>V2</var>
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER_INVERSE</var> \cdot \frac{1}{<var>V1</var>} = <var>V2</var>
+					</code></li>
+					<li><code>
+							<var>V1</var> + <var>V2</var> = <var>MULTIPLIER_INVERSE</var>
+					</code></li>
+					<li><code>
+							<var>V1</var> = <var>MULTIPLIER</var> - <var>V2</var>
+					</code></li>
+				</ul>
+			</div>
+
+			<div data-type="direct-variation" id="v1-over-v2">
+				<p class="solution"><code>\frac{<var>V1</var>}{<var>V2</var>} = <var>MULTIPLIER</var></code></p>
+
+				<div class="hints">
+					<p><var>STATEMENT</var> אם <code><var>V1</var> = k \cdot <var>V2</var></code> כאשר <code>k</code> הוא קבוע כלשהו.</p>
+					<p>אם נחלק את שני הצדדים של המשוואה הזו ב- <code><var>V2</var></code>, נקבל <code>\dfrac{<var>V1</var>}{<var>V2</var>} = k</code> עבור קבוע כלשהו <code>k</code>.</p>
+					<p>התשובה <code>\dfrac{<var>V1</var>}{<var>V2</var>} = <var>MULTIPLIER</var></code> מתאימה לתבנית זו, אם נבחר <code>k = <var>MULTIPLIER</var></code>.</p>
+				</div>
+			</div>
+
+			<div data-type="direct-variation" id="inverse-k">
+				<p class="solution"><code><var>MULTIPLIER</var> \cdot <var>V1</var> = <var>V2</var></code></p>
+
+				<div class="hints">
+					<p><var>STATEMENT</var> אם <code><var>V1</var> = k \cdot <var>V2</var></code> כאשר <code>k</code> הוא קבוע כלשהו.</p>
+					<p>אם נחלק את שני הצדדים של המשוואה הזו ב- <code>k</code>, נקבל <code>\dfrac{1}{k} \cdot <var>V1</var> = <var>V2</var></code>.</p>
+					<p>התשובה <code><var>MULTIPLIER</var> \cdot <var>V1</var> = <var>V2</var></code> מתאימה לתבנית זו, אם נבחר <code>k = <var>MULTIPLIER_INVERSE</var></code>.</p>
+				</div>
+			</div>
+
+			<div id="inverse-variation">
+				<div class="vars">
+					<var id="STATEMENT">randFromArray([
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; תלוי באופן הפוך ב- &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt;",
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; ו- &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt; משתנים באופן הפוך",
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; משתנה באופן הפוך ל- &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt;",
+						"&lt;code&gt;&lt;var&gt;V1&lt;/var&gt;&lt;/code&gt; ו- &lt;code&gt;&lt;var&gt;V2&lt;/var&gt;&lt;/code&gt; קשורים ביחס הופכי."
+					])</var>
+				</div>
+
+				<p class="problem"><var>STATEMENT</var>.</p>
+				<p class="question">איזו מהמשוואות הבאות מתארת יחס אפשרי בין <code><var>V1</var></code> and <code><var>V2</var></code>?</p>
+				<p class="solution"><code><var>V1</var> = <var>MULTIPLIER</var> \cdot \frac{1}{<var>V2</var>}</code></p>
+
+				<div class="hints">
+					<p><var>STATEMENT</var> אם <code><var>V1</var> = k \cdot \dfrac{1}{<var>V2</var>}</code> כאשר <code>k</code> הוא קבוע כלשהו.</p>
+					<p>התשובה <code><var>V1</var> = <var>MULTIPLIER</var> \cdot \dfrac{1}{<var>V2</var>}</code> מתאימה לתבנית זו, אם נבחר <code>k = <var>MULTIPLIER</var></code>.</p>
+				</div>
+
+				<ul class="choices" data-show="5">
+					<li><code>
+							\frac{<var>V1</var>}{<var>V2</var>} = <var>MULTIPLIER</var>
+					</code></li>
+					<li><code>
+							\frac{<var>V1</var>}{<var>V2</var>} = <var>MULTIPLIER_INVERSE</var>
+					</code></li>
+					<li><code>
+							<var>V1</var> = <var>MULTIPLIER</var> \cdot <var>V2</var>
+					</code></li>
+					<li><code>
+							<var>V1</var> = <var>MULTIPLIER_INVERSE</var> \cdot <var>V2</var>
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER</var> \cdot <var>V1</var> = <var>V2</var>
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER_INVERSE</var> \cdot <var>V1</var> = <var>V2</var>
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER</var> \cdot \frac{1}{<var>V1</var>} = \frac{1}{<var>V2</var>}
+					</code></li>
+					<li><code>
+							<var>MULTIPLIER_INVERSE</var> \cdot \frac{1}{<var>V1</var>} = \frac{1}{<var>V2</var>}
+					</code></li>
+					<li><code>
+							<var>V1</var> - <var>V2</var> = <var>MULTIPLIER_INVERSE</var>
+					</code></li>
+					<li><code>
+							<var>V1</var> = <var>MULTIPLIER</var> + <var>V2</var>
+					</code></li>
+				</ul>
+			</div>
+
+			<div data-type="inverse-variation" id="v1-v2-over-k">
+				<p class="solution"><code><var>V1</var> \cdot <var>V2</var> = <var>MULTIPLIER</var></code></p>
+
+				<div class="hints">
+					<p><var>STATEMENT</var> אם <code><var>V1</var> = k \cdot \dfrac{1}{<var>V2</var>}</code> כאשר <code>k</code> הוא קבוע כלשהו.</p>
+					<p>אם נכפיל את כל שני צידי  המשוואה ב- <code><var>V2</var></code>, נקבל <code><var>V1</var> \cdot <var>V2</var> = k</code> כאשר <code>k</code> הוא קבוע כלשהו.</p>
+					<p>התשובה <code><var>V1</var> \cdot <var>V2</var> = <var>MULTIPLIER</var></code> מתאימה לתבנית זו, אם נבחר <code>k = <var>MULTIPLIER</var></code>.</p>
+				</div>
+			</div>
+
+			<div data-type="inverse-variation" id="k-over-a">
+				<p class="solution"><code><var>MULTIPLIER</var> \cdot \dfrac{1}{<var>V1</var>} = <var>V2</var></code></p>
+
+				<div class="hints">
+						<p><var>STATEMENT</var> אם <code><var>V1</var> = k \cdot \dfrac{1}{<var>V2</var>}</code> כאשר <code>k</code> הוא קבוע כלשהו.</p>
+						<p>אם נחלק את שני צידי המשוואה ב- <code>k</code>, נקבל <code>\dfrac{<var>V1</var>}{k} = \dfrac{1}{<var>V2</var>}</code>.</p>
+						<p>כעת ניתן לקחת את הביטוי ההופכי של כל אחד מצידי המשוואה ולקבל <code>\dfrac{k}{<var>V1</var>} = <var>V2</var></code>.</p>
+					<p>התשובה <code><var>MULTIPLIER</var> \cdot \dfrac{1}{<var>V1</var>} = <var>V2</var></code> מתאימה לתבנית זו, אם נבחר <code>k = <var>MULTIPLIER</var></code>.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

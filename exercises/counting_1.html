@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html data-require="math spin word-problems">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ספירה 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="problems">
+			<div id="page-numbers">
+				<div class="vars">
+					<var id="START">randRange( 20, 50 )</var>
+					<var id="ANSWER">randRange( 20, 40 )</var>
+					<var id="END">START + ANSWER - 1</var>
+				</div>
+				<p class="spin">
+					<var>person( 1 )</var> <var>genderize(1,"היה צריך","היתה צריכה")</var> לפתור את שאלות <var>START</var> עד <var>END</var> כשיעורי בית ל{אתמול|מחר}.
+				</p>
+				<p class="question spin">
+					אם <var>person( 1 )</var> <var>genderize(1,"פתר","פתרה")</var> את כל השאלות <var>genderize(1,"שקיבל","שקיבלה")</var>, כמה שאלות <var>he( 1 )</var> <var>genderize(1,"פתר","פתרה")</var> סך הכל?
+				</p>
+				
+				<div class="solution" data-type="multiple">
+					<p><span class="sol" data-forms="integer"><var>ANSWER</var></span> שאלות</p>
+				</div>
+				<div class="hints">
+					<p>במקום לספור את מספר השאלות <var>START</var> עד <var>END</var>, אנו יכולים להפחית <var>START - 1</var> משני המספרים ולספור מ- 1 עד <var>ANSWER</var>.</p>
+					<p>אנו רואים אם כך ש<var>person( 1 )</var> <var>genderize(1,"פתר","פתרה")</var> <var>ANSWER</var> שאלות.
+					שימו לב ש<var>he( 1 )</var> <var>genderize(1,"פתר","פתרה")</var> <var>ANSWER</var> ולא <var>ANSWER - 1</var> שאלות.</p>
+				</div>
+			</div>
+			<div id="slices">
+				<div class="vars">
+					<var id="NUM">randRange( 5, 15 )</var>
+				</div>
+				<p class="spin">אופה צריך לפרוס {בגט|כיכר לחם}.</p>
+				<p class="question spin">כמה חתכים עליו לעשות על מנת לקבל בדיוק <var>NUM</var> פרוסות שוות?</p>
+				<div class="solution" data-type="multiple">
+					<p><span class="sol" data-forms="integer"><var>NUM -1</var></span> חתכים</p>
+				</div>
+				<div class="hints">
+					<p>חתך אחד יוצר שתי פרוסות, שני חתכים יוצרים שלוש פרוסות, וכן הלאה.</p>
+					<p>לכן הוא צריך לעשות <var>NUM - 1</var> כדי לקבל <var>NUM</var> פרוסות.</p>
+				</div>
+			</div>
+			<div id="fences">
+				<div class="vars">
+					<var id="LENGTH">randRange( 10, 20 )</var>
+				</div>
+				<p><var>person( 1 )</var> בונה גדר, המורכבת מעמודים המופרדים במטר אחד מהשני.</p>
+				<p class="question">אם אורכה של הגדר הוא <var>LENGTH</var> מטרים, לכמה עמודים <var>he( 1 )</var> <var>genderize( 1,"זקוק","זקוקה")</var>?</p>
+				<div class="solution" data-type="multiple">
+					<p><span class="sol" data-forms="integer"><var>LENGTH + 1</var></span> עמודים</p>
+				</div>
+				<div class="hints">
+					<p>עבור גדר באורך מטר, נדרשים שני עמודים (אחד בכל קצה).</p>
+					<p>עבור גדר באורך שני מטרים, נדרשים שלושה עמודים, וכן הלאה.</p>
+					<p>לכן, <var>he( 1 )</var> <var>genderize( 1,"זקוק","זקוקה")</var> ל-<var>LENGTH + 1</var> עמודים עבור גדר באורך <var>LENGTH</var> מטרים.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

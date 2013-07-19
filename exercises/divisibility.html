@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>חלוקה</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars" data-ensure="A !== ANSWER && B !== ANSWER">
+            <var id="A">randRange( 10, 25 )</var>
+            <var id="B" data-ensure="A !== B">randRange( 10, 25 )</var>
+            <var id="LCM">getLCM( A, B )</var>
+            <var id="LCM_FACTORIZATION">getPrimeFactorization( LCM )</var>
+            <var id="ANSWER">
+                (function() {
+                    var num = randRange( ceil( LCM_FACTORIZATION.length / 2 ), LCM_FACTORIZATION.length - 1 );
+                    var shuffled = shuffle( LCM_FACTORIZATION );
+                    var answer = 1;
+                    for ( var i = 0; i &lt; num; i++ ) {
+                        answer *= shuffled.shift();
+                    }
+                    return answer;
+                })()
+            </var>
+            <var id="WRONGS">
+                (function() {
+                    var wrongs = [];
+                    while( wrongs.length &lt; 4 ) {
+                        var w = randRange( 10, LCM );
+                        if ( LCM % w !== 0 ) {
+                            wrongs.push( w );
+                        }
+                    }
+                    return wrongs;
+                })()
+            </var>
+        </div>
+
+        <div class="problems">
+            <div>
+                <div class="question">כל מספרים שניתנים לחלוקה ב- <code><var>A</var></code> וב- <code><var>B</var></code> ניתנים לחלוקה גם ב...?</div>
+                <p class="solution"><code><var>ANSWER</var></code></p>
+                <ul class="choices">
+                    <li data-each="WRONGS as index, wrong"><code><var>wrong</var></code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="hints">
+            <p>מספר ניתן לחלוקה במספר אחר  (מחלק) אם הפירוק לגורמים ראשוניים שלו מכיל את הפירוק לגורמים ראשוניים של המחלק.</p>
+            <p>הפירוק לגורמים ראשוניים של  <code><var>A</var></code> הוא  <code><var>getPrimeFactorization( A ).join( "\\times" )</var></code>.</p>
+            <p>הפירוק לגורמים ראשוניים של  <code><var>B</var></code> הוא  <code><var>getPrimeFactorization( B ).join( "\\times" )</var></code>.</p>
+            <p>לכן, עבור כל מספר שניתן לחלוקה בשני מספרים אלו, פירוקו לגורמים ראשוניים צריך להכיל את  <code><var>LCM_FACTORIZATION.join( "\\times" )</var></code> .</p>
+            <p>כל המספרים שיכולים להיות מחלק של מספר זה, פירוקם לגורמים ראשוניים מוכל ב- <code><var>LCM_FACTORIZATION.join( "\\times" )</var></code>.</p>
+            <p>הפירוק לגורמים ראשוניים של  <code><var>ANSWER</var></code> הוא  <code><var>getPrimeFactorization( ANSWER ).join( "\\times" )</var></code>.</p>
+            <p class="final_answer">מכיוון ש- <code><var>getPrimeFactorization( ANSWER ).join( "\\times" )</var></code> מוכל ב- <code><var>LCM_FACTORIZATION.join( "\\times" )</var></code>, כל המספרים שניתנים לחלוקה ב- <code><var>A</var></code> ו- <code><var>B</var></code> ניתנים גם לחלוקה ב-<code><var>ANSWER</var></code>.</p>
+        </div>
+    </div>
+</body>
+</html>

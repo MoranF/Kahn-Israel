@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers graphie-geometry math-format">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>משולשים חופפים 1</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="MAIN">randomTriangleAngles.triangle()</var>
+            <var id="MAIN_SIZE">5 + random() * 2</var>
+            <var id ="IS_B">randRange( 0, 1 ) === 1 ? true : false</var>
+            <var id="B">IS_B ? MAIN : randomTriangleAngles.triangle()</var>
+            <var id="B_SIZE">IS_B ? MAIN_SIZE : 2 + random() * 2</var>
+            <var id="ANSWER">IS_B ? "כן" : "לא"</var>
+
+            <var id="A_ANGLES">[ 0, 1, 2 ]</var>
+            <var id="B_ANGLES">A_ANGLES</var>
+            <var id="A_SIDES">[ 0, 1, 2 ]</var>
+            <var id="B_SIDES">A_SIDES</var>
+
+            <var id="TR_A">
+                function(){
+                    var t = new Triangle( [ 3, -2 ], MAIN, MAIN_SIZE, {} );
+                    t.labels =  { "name": "A", "angles" : clearArray( t.niceAngles, A_ANGLES ),  "sides" : clearArray( t.niceSideLengths, A_SIDES ) };
+                    return t;
+                }()
+            </var>
+            <var id="TR_B">
+                function(){
+                    var t = new Triangle( [ 7, -6 ], B, B_SIZE, {} );
+                    t.labels =  { "name": "B", "angles" : clearArray( t.niceAngles, B_ANGLES ),  "sides" : clearArray( t.niceSideLengths, B_SIDES ) };
+                    return t;
+                }()
+            </var>
+        </div>
+        <div class="hints">
+                <p>משולשים הם חופפים כאשר כל צלע וזוית פנימית במשולש אחד חופפת לצלע וזוית פנימית במשולש השני. </p>
+                <p>אולם, איננו צריכים לדעת את כל הגדלים של הצלעות הזויות בשני המשולשים על מנת לקבוע שהם חופפים. </p>
+                <p>המשפטים שאנו משתמשים כדי לקבוע חפיפה הם צ.צ.צ., ז.צ.ז., צ.ז.צ. וז.ז.צ. </p>
+        </div>
+        <div class="problem">
+            האם שני המשולשים שמוצגים למטה חופפים?
+        </div>
+        <div class="question">
+            <div class="graphie">
+
+                TR_A.rotate( randRange( 0, 360 ) );
+                TR_B.rotate( randRange( 0, 360 ) );
+
+                var aBounding = TR_A.boundingRange(1);
+                var bBounding = TR_B.boundingRange(1);
+
+                var minX = Math.min(aBounding[0][0], bBounding[0][0]);
+                var maxX = Math.max(aBounding[0][1], bBounding[0][1]);
+
+                var minY = Math.min(aBounding[1][0], bBounding[1][0]);
+                var maxY = Math.max(aBounding[1][1], bBounding[1][1]);
+
+                init({
+                    range: [ [minX, maxX ], [ minY, maxY ] ]
+                })
+
+                TR_A.draw();
+                TR_A.drawLabels();
+
+                TR_B.draw();
+                TR_B.drawLabels();
+            </div>
+        </div>
+        <div class="solution"><var>ANSWER</var></div>
+        <ul class="choices" data-category="true">
+            <li>כן</li>
+            <li>לא</li>
+            <li>אין מספיק נתונים כדי לקבוע</li>
+        </ul>
+        <div class="problems">
+
+            <div id="SSS">
+                <div class="vars">
+                    <var id="A_ANGLES">[]</var>
+                    <var id="A_SIDES">[ 0, 1, 2 ]</var>
+                </div>
+                <div class="hints" data-apply="appendContents">
+                    <p>בבעיה הזו נתונות לנו הצלעות של המשולשים, כך שניתן להשוות את המשולשים די בקלות.</p>
+                    <p data-if="IS_B">למשולש B יש 3 צלעות זהות לאלו של משולש A, ולכן אלו משולשים חופפים.</p>
+                    <p data-else>משום שהצלעות לא שוות, משולש B איננו חופף למשולש A.</p>
+                </div>
+            </div>
+
+            <div id="SAS">
+                <div class="vars">
+                    <var id="A_ANGLES">[ 1 ]</var>
+                    <var id="A_SIDES">[ 0, 1 ]</var>
+                </div>
+                <div class="hints" data-apply="appendContents">
+                    <p>בבעיה זו נתונות לנו שתי צלעות וזוית בינהן, לכן עלינו להשתמש במשפט צ.ז.צ.</p>
+                    <p data-if="IS_B">הצלעות והזוית שנתונות במשולש B זהות לאלו של משולש A, ולכן המשולשים חופפים.</p>
+                    <p data-else>מכיון והצלעות והזוית הנתונות לא מתאימות, משולש A לא חופף למשולש B.</p>
+                </div>
+            </div>
+
+            <div id="ASA">
+                <div class="vars">
+                    <var id="A_ANGLES">[ 0, 1 ]</var>
+                    <var id="A_SIDES">[ 1 ]</var>
+                </div>
+                <div class="hints" data-apply="appendContents">
+                    <p>בבעיה זו נתונות לנו שתי זויות וצלע בינהן, לכן עלינו להשתמש במשפט ז.צ.ז.</p>
+                    <p data-if="IS_B">הזויות הצלע שנתונות במשולש B זהות לאלו של משולש A, ולכן המשולשים חופפים.</p>
+                    <p data-else>מכיון שהזויות והצלע שנתונות בשני המשולשים אינן שוות, המשולשים אינם חופפים.</p>
+                </div>
+            </div>
+
+            <div id="AAS">
+                <div class="vars">
+                    <var id="A_ANGLES">[ 0, 1 ]</var>
+                    <var id="A_SIDES">randRange( 0, 1 ) === 1 ? [ 2 ] : [ 1 ]</var>
+                </div>
+                <div class="hints" data-apply="appendContents">
+                    <p>בבעיה זו נתונות לנו שתי זויות וצלע מול אחת הזויות, ולכן נשתמש במשפט ז.ז.צ.</p>
+                    <p data-if="IS_B">הזויות הצלע שנתונות במשולש B זהות לאלו של משולש A, ולכן המשולשים חופפים.</p>
+                    <p data-else>מכיון שהזויות והצלע שנתונות בשני המשולשים אינן שוות, המשולשים אינם חופפים.</p>
+                </div>
+            </div>
+
+            <div id="AAA">
+                <div class="vars">
+                    <var id="A_ANGLES">[ 0, 1, 2 ]</var>
+                    <var id="A_SIDES">[ ]</var>
+                    <var id="ANSWER">IS_B ? "There is not enough information to say" : "No"</var>
+                </div>
+                <div class="hints" data-apply="appendContents">
+                    <p>בבעיה זו נתונות לנו שלוש הזויות של כל אחד משני המשולשים.</p>
+                    <p data-if="IS_B">אולם, לא ניתן להסיק ששני המשולשים חופפים מתוך נתון זה. אנו יכולים רק להסיק שהמשולשים דומים. המשולשים אינם חופפים משום שיתכן שגודלם שונה בעוד שהזויות שלהן שוות.</p>
+                    <p data-else>משום שהזויות לא מתאימות, משולש A ומשולש B אינם חופפים ואף אינם דומים.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

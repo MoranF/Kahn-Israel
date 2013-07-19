@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie graphie-helpers">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>עיגול מספרים שלמים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+
+<body>
+<div class="exercise">
+	<div class="problems">
+		<div id="all-digits-random" data-weight="2">
+			<div class="vars">
+				<var id="DIGITS">shuffle( [1, 2, 3, 4, 5, 6, 7, 8, 9], 5 )</var>
+				<var id="NUM">+DIGITS.join( "" )</var>
+				<var id="PLACE">randFromArray([ -2, -3 ])</var>
+				<var id="TPLACE">tenPowerHeb[ -PLACE ]</var>
+				<var id="ROUNDED">Math.round(roundTo( PLACE, NUM ))</var>
+			</div>
+
+			<p class="question">עגל את <code><var>commafy( NUM )</var></code> ל<var>TPLACE</var> הקרוב<span data-if="-PLACE == 3"></span><span data-else>ה</span>.</code></p>
+			<div class="solution" data-forms="integer"><var>ROUNDED</var></div>
+		</div>
+		<div id="look-at-five" data-weight="1">
+			<div class="vars">
+				<var id="PLACE">randFromArray([ -2, -3 ])</var>
+				<var id="DIGITS">
+					(function() {
+						var digits = shuffle( [1, 2, 3, 4, 6, 7, 8, 9], 5 );
+						digits[ 5 + PLACE ] = 5;
+						return digits;
+					})()
+				</var>
+				<var id="NUM">+DIGITS.join( "" )</var>
+				<var id="TPLACE">tenPowerHeb[ -PLACE ]</var>
+				<var id="ROUNDED">roundTo( PLACE, NUM )</var>
+			</div>
+			<p class="question">עגל את <code><var>commafy( NUM )</var></code> ל<var>TPLACE</var> הקרוב<span data-if="-PLACE == 3"></span><span data-else>ה</span>.</code></p>
+			<div class="solution" data-forms="integer"><var>ROUNDED</var></div>
+		</div>
+	</div>
+
+	<div class="hints">
+		<p>ניתן לחשוב על הבעיה הזו בשתי דרכים: </p>
+		<p>הדרך הראשונה: נבחן את ספרת ה<var>placesLeftOfDecimalHeb[ -1 - PLACE ]</var> <code><var>DIGITS[ 5 + PLACE ]</var></code> כדי לדעת האם לעגל כלפי מעלה או מטה.</p>
+		<p data-if="DIGITS[ 5 + PLACE ] >= 5">בגלל שהיא <span data-if="DIGITS[ 5 + PLACE ] > 5">גדולה מ-</span><span data-else>שווה ל-</span> <code>5</code>, נעגל כלפי מעלה ונקבל <code><var>commafy( ROUNDED )</var></code>.</p>
+		<p data-else>בגלל שהיא קטנה מ-<code>5</code>, נעגל כלפי מטה ונקבל <code><var>commafy( ROUNDED )</var></code>.</p>
+		<p>הדרך השניה:
+		<div class="graphie">
+			init({
+				range: [ [ -0.06 * pow( 10, -PLACE ) , 1.06 * pow( 10, -PLACE ) ], [-1, 1] ],
+				scale: [ 600 * pow( 10, PLACE ), 40 ]
+			});
+			numberLine( floorTo( PLACE , NUM   ), ceilTo( PLACE , NUM ) +  pow( 10, -( PLACE+2 ))  , round( pow( 10, -(PLACE + 1 ))) );
+			style({ stroke: "#FFA500", fill: "#FFA500", strokeWidth: 3.5 });
+			ellipse( [  10 * pow( 10, -( PLACE+1 )) * (NUM -  floorTo( PLACE , NUM   ))/pow( 10,- (PLACE) ), 0 ], [pow( 10, -PLACE ) / 100, 0.15]);
+			label( [  10 * pow(10, -( PLACE+1 )) * ( NUM -  floorTo( PLACE , NUM ))/pow( 10,- (PLACE) )], NUM, "below");
+			style({ stroke: "#6495ED", "fill": "none", strokeWidth: 3.5 });
+			if( DIGITS[ 5 + PLACE ] >= 5 ) {
+				ellipse( [ pow( 10, -PLACE ), -0.55 ], [pow( 10, - PLACE - 0.5 ) / 6.5, 0.35] );
+			} else {
+				ellipse( [ 0, -0.55 ], [pow( 10, - PLACE - 0.5 ) / 6.5, 0.35] );
+			}
+		</div></p>
+    <p>נבחן איזה קצה של ציר המספרים קרוב יותר ל-<var>NUM</var>. הקצה הזה מוקף בכחול.</p>
+	</div>
+</div>
+</body>
+</html>

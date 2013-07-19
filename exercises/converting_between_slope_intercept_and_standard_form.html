@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html data-require="math math-format expressions graphie">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>המרה בין הצורה הסטנדרטית של משוואה לצורת שיפוע-לכיד</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="standard-to-slope">
+			<div class="vars">
+				<var id="A">randRangeNonZero( -5, 5 )</var>
+				<var id="B">randRangeNonZero( -5, 5 )</var>
+				<var id="C">randRangeNonZero( -5, 5 )</var>
+				<var id="SLOPE">-1 * A / B</var>
+				<var id="Y_INTERCEPT">C / B</var>
+			</div>
+			<p class="question">המירו את המשוואה הבא, הרשומה בצורה הסטנדרטית, לצורת שיפוע-לכיד.</p>
+			<p>במילים אחרות, עלינו לרשום את המשוואה בצורה  <code>y = mx + b</code>, ולמצוא מהם הערכים של  <code>m</code> ושל  <code>b</code>.</p>
+			<p><code><var>expr([ "*", A, "x"])</var> + <var>expr([ "*", B, "y" ])</var> = <var>C</var></code></p>
+			<div class="solution" data-type="multiple">
+				<p><code>m</code> = <span class="sol"><var>SLOPE</var></span></p>
+				<p><code>b</code> = <span class="sol"><var>Y_INTERCEPT</var></span></p>
+			</div>
+			<div class="hints">
+				<div>
+					<p>נעביר את האיבר  <code>x</code> לצד השני של המשוואה.</p>
+					<p><code><var>expr([ "*", B, "y" ])</var> = <var>expr([ "*", -1 * A, "x"])</var> + <var>C</var></code></p>
+				</div>
+				<div data-if="B !== 1">
+					<p>נחלק את שני צידי המשוואה ב- <code><var>B</var></code>.</p>
+					<p><code>y = <span data-if="abs( SLOPE ) !== 1"><var>fractionReduce( -1 * A, B)</var></span><span data-if="SLOPE === -1">-</span>x + <var>fractionReduce( C, B )</var></code></p>
+				</div>
+				<div>
+					<p>כעת שהמשוואה בצורת שיפוע-לכיד ניתן ללמוד ממנה את הנתונים הבאים:</p>
+					<p><code>\begin{align*}m &amp;= <var>fractionReduce( -1 * A, B)</var>\\
+						b &amp;= <var>fractionReduce( C, B )</var>\end{align*}</code></p>
+				</div>
+				<div>
+					<p>איזה פלא! שתי המשוואות מיצגות את אותו הישר!</p>
+					<div class="graphie" id="grid">
+						graphInit({
+							range: 10,
+							scale: 20,
+							axisArrows: "&lt;-&gt;",
+							tickStep: 1,
+							labelStep: 1
+						});
+
+						style({ stroke: BLUE, fill: BLUE });
+
+						plot(function( x ) {
+							return x * SLOPE + Y_INTERCEPT;
+						}, [ -10, 10 ]);
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="slope-to-standard">
+			<div class="vars">
+				<var id="SLOPE">randRange( -3, 3 )</var>
+				<var id="Y_INTERCEPT">randRangeNonZero( -3, 3 )</var>
+				<var id="A">SLOPE &lt;= 0 ? -1 * SLOPE : SLOPE</var>
+				<var id="B">SLOPE &lt;= 0 ? 1 : -1</var>
+				<var id="C">SLOPE &lt;= 0 ? Y_INTERCEPT: -1 * Y_INTERCEPT</var>
+			</div>
+			<p class="question">המירו את המשוואה הבאה, הנתונה בצורת לכיד-שיפוע, לצורה הסטנדרטית.</p>
+			<p>במילים אחרות, עליכם לכתוב את המשוואה בצורה  <code>Ax + By = C</code>, ולמצוא את הערכים של  <code>A</code>, <code>B</code>, ושל  <code>C</code>.</p>
+			<p data-if="SLOPE !==0">הבא נניח ש- <code>A</code> חיובי.</p>
+			<p><code>y = <var>expr([ "+", [ "*", SLOPE, "x" ], Y_INTERCEPT ])</var></code></p>
+			<div class="solution" data-type="set">
+				<div class="set-sol" data-type="multiple">
+					<span class="sol"><var>A</var></span>
+					<span class="sol"><var>B</var></span>
+					<span class="sol"><var>C</var></span>
+				</div>
+				<div data-if="A === 0" class="set-sol" data-type="multiple">
+					<span class="sol"><var>A</var></span>
+					<span class="sol"><var>-B</var></span>
+					<span class="sol"><var>-C</var></span>
+				</div>
+				
+				<div class="input-format">
+					<div class="entry" data-type="multiple">
+						<p><code>A</code> = <span class="sol"></span></p>
+						<p><code>B</code> = <span class="sol"></span></p>
+						<p><code>C</code> = <span class="sol"></span></p>
+					</div>
+				</div>
+			</div>
+			<div class="hints">
+				<div data-if="SLOPE !== 0">
+					<p>נעביר את האיבר שתלוי ב-  <code>x</code> לאותו הצד של המשוואה כמו האיבר שתלוי ב-<code>y</code> .</p>
+					<p><code><var>expr([ "*", -SLOPE, "x" ])</var> + y = <var>Y_INTERCEPT</var></code></p>
+				</div>
+				<div data-else>
+					<p>מכיוון שהשיפוע הוא  <code>0</code> אין איבר  <code>x</code> , והמשוואה היא כבר בצורה הסטנדרטית.</p>
+					<p><code>y = <var>Y_INTERCEPT</var></code></p>
+				</div>
+				<div data-if="SLOPE > 0">
+					<p>נכפיל את שני צידי המשוואה ב- <code>-1</code> כך ש- <code>A</code> יהיה חיובי</p>
+					<p><code><var>expr([ "*", SLOPE, "x" ])</var> - y = <var>-Y_INTERCEPT</var></code></p>
+				</div>
+				<div>
+					<p>כעת שהמשוואה בצורת סטנדרטית ניתן ללמוד ממנה את הנתונים הבאים:</p>
+					<p><code>\begin{align*}A &amp;= <var>A</var>\\
+						B &amp;= <var>B</var>\\
+						C &amp;= <var>C</var>\end{align*}</code></p>
+				</div>
+				<div>
+					<p>איזה פלא! שתי המשוואות מיצגות את אותו הישר!</p>
+					<div class="graphie" id="grid">
+						graphInit({
+							range: 10,
+							scale: 20,
+							axisArrows: "&lt;-&gt;",
+							tickStep: 1,
+							labelStep: 1
+						});
+
+						style({ stroke: BLUE, fill: BLUE });
+
+						plot(function( x ) {
+							return x * SLOPE + Y_INTERCEPT;
+						}, [ -10, 10 ]);
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+</body>
+</html>

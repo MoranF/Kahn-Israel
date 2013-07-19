@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html data-require="math math-format stat word-problems word-problems-heb graphie">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>קריאת גרף תמונות 2</title>
+	<script src="../khan-exercise.js"></script>
+	<style>
+		.fake_header span, .fake_row span {
+			width: 40px;
+			height: 40px;
+			vertical-align: top;
+			line-height: 40px;
+		}
+		.fake_row span:first-child {
+			width: 80px;
+		}
+		.fake_header span:first-child {
+			width: 480px;
+		}
+	</style>
+</head>
+<body>
+<div class="exercise">
+	<div class="vars">
+		<var id="DATA">randRangeUnique( 1, 8, 5 )</var>
+		<var id="BADGE">randFromArray([ ["meteorite","מטאוריט"],["moon","ירח"], ["earth","ארץ"]])</var>
+		<var id="FULL_IMAGE">"&lt;img src='" + Khan.urlBase + "images/" + BADGE[0] + "-small.png'&gt;"</var>
+		<var id="HALF_IMAGE">"&lt;div style=\"background-image:url('" + Khan.urlBase + "images/" + BADGE[0] + "-small.png'); width:20px; height:40px;\"&gt;&nbsp;&lt;/div&gt;"</var>
+		<var id="VALUE_PER_IMG">randFromArray([ 2, 4 ])</var>
+		<var id="HALF">VALUE_PER_IMG === 1 ? [ 0, 0, 0, 0, 0 ] : [ rand(2), rand(2), rand(2), rand(2), rand(2) ]</var>
+	</div>
+
+	<div class="problem">
+		<p>השתמשו בגרף התמונות כדי לענות על השאלה הבאה:</p>
+		<div class="fake_header">
+			<span><span style="text-transform:capitalize">עיטורי <var>BADGE[1]</var></span> בהם זכה כל תלמיד</span>
+		</div>
+		<div class="fake_row" data-each="5 times as n">
+			<span><var>person( n + 1)</var></span><span data-each="DATA[n] times"><var>FULL_IMAGE</var>
+			</span><span data-if="HALF[n]"><var>HALF_IMAGE</var>
+			</span><span data-else></span><span data-each="(7 - DATA[n]) times">&nbsp;</span>
+		</div>
+		<span style="height: 50px; vertical-align: top; line-height: 50px;"><var>FULL_IMAGE</var> = <var>VALUE_PER_IMG</var> עיטורי <var>BADGE[1]</var></span>
+	</div>
+
+	<div class="problems">
+
+		<div id="read-chart">
+			<div class="vars">
+				<var id="PERSON">rand( 5 )</var>
+				<var id="ANSWER">DATA[ PERSON ] * VALUE_PER_IMG + HALF[ PERSON ] * VALUE_PER_IMG / 2</var>
+			</div>
+
+			<p class="question">בכמה עיטורי <var>BADGE[1]</var> <var>genderize(PERSON+1,"זכה","זכתה")</var> <var>person( PERSON + 1 )</var>?</p>
+
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>ANSWER</var></span> עיטורי <var>BADGE[1]</var></p>
+			</div>
+			<div class="hints">
+				<p>לפי המקרא בתחתית הגרף כל סמל מלא מסמל <var>plural_heb( VALUE_PER_IMG, "עיטור","עיטורים","m" )</var>.</p>        
+				<div>
+					מצאו את השורה של <var>person( PERSON + 1 )</var> בטבלה:
+					<div class="fake_row">
+						<span><var>person( PERSON + 1 )</var></span><span data-each="DATA[ PERSON ] times"><var>FULL_IMAGE</var>
+						</span><span data-if="HALF[ PERSON ]"><var>HALF_IMAGE</var>
+						</span><span data-else></span><span data-each="(7 - DATA[ PERSON ]) times">&nbsp;</span>
+					</div>
+				</div>
+				<p>
+					בשורה יש <var>plural_heb( DATA[ PERSON ], "סמל מלא","סמלים מלאים","m" )</var><span data-if="HALF[ PERSON ]"> וחצי סמל נוסף</span>.
+					<span data-if="HALF[ PERSON ]">המסלים המלאים מסמלים <var>plural_heb( VALUE_PER_IMG, "עיטור","עיטורים","m" )</var>,
+          ולכן הסמל החצוי מסמל <var>plural_heb( VALUE_PER_IMG/2, "עיטור","עיטורים","m" )</var>.</span>
+				</p>
+
+				<div>
+					<div>
+						<var>plural_heb( DATA[ PERSON ], "סמל","סמלים","m" )</var> 
+						<code> \times </code> <var>VALUE_PER_IMG</var> עיטורים לכל סמל =
+            <var>plural_heb(DATA[ PERSON ] * VALUE_PER_IMG, "עיטור","עיטורים","m" )</var>
+						<span data-if="HALF[ PERSON ]">
+							<br /> 1 חצי סמל <code> \times</code> <var> VALUE_PER_IMG/2</var> עיטורים לכל חצי סמל = <var>plural_heb(VALUE_PER_IMG/2, "עיטור","עיטורים","m" )</var>.
+						</span>
+					</div>
+				</div>
+				<p><var>person( PERSON + 1 )</var> <var>genderize(PERSON+1,"זכה","זכתה")</var>  <var>plural_heb( ANSWER, "עיטור " + BADGE[1],"עיטורי " + BADGE[1],"m","ב")</var>.</p>
+			</div>
+		</div>
+
+		<div id="reverse">
+			<div class="vars">
+				<var id="PERSON">rand( 5 )</var>
+				<var id="VALUE">DATA[ PERSON ] * VALUE_PER_IMG + HALF[ PERSON ] * VALUE_PER_IMG / 2</var>
+				
+				<var id="NUM_SYMBOLS"> VALUE / VALUE_PER_IMG</var>
+			</div>
+
+			<p class="question">מי זכה <var>plural_heb( VALUE, "עיטור " + BADGE[1],"עיטורי " + BADGE[1],"m","ב")</var>?</p>
+
+			<div class="solution"><var>person( PERSON + 1 )</var></div>
+			<ul class="choices" data-category="true">
+				<li><var>person( 1 )</var></li>
+				<li><var>person( 2 )</var></li>
+				<li><var>person( 3 )</var></li>
+				<li><var>person( 4 )</var></li>
+				<li><var>person( 5 )</var></li>
+			</ul>
+
+			<div class="hints">
+				<p>לפי המקרא בתחתית הגרף כל סמל שלם מסמל <var>plural_heb( VALUE_PER_IMG, "עיטור","עיטורים","m" )</var>.</p>        
+				<p>כמה סמלים מסמלים <var>plural_heb( VALUE, "עיטור","עיטורים","m" )</var>?</p>
+				<p>
+					<code>
+						\dfrac{<var>VALUE</var>}{ <var>VALUE_PER_IMG</var>}						
+					</code> = <var>NUM_SYMBOLS</var> סמלים
+				</p>
+				<div>
+					למי יש <var>plural_heb( NUM_SYMBOLS, "סמל","סמלים","m" )</var> ליד שמו?
+					<div class="fake_row">
+						<span>???</span><span data-each="DATA[ PERSON ] times"><var>FULL_IMAGE</var>
+						</span><span data-if="HALF[ PERSON ]"><var>HALF_IMAGE</var>
+						</span><span data-else></span><span data-each="(7 - DATA[ PERSON ]) times">&nbsp;</span>
+					</div>
+				</div>
+				<p>ל<var>person( PERSON + 1 )</var> יש <var>plural_heb( NUM_SYMBOLS, "סמל","סמלים","m" )</var> ליד <var>genderize(PERSON + 1,"שמו","שמה")</var>.</p>
+				<p><var>person( PERSON + 1 )</var> <var>genderize(PERSON+1,"זכה","זכתה")</var>  <var>plural_heb( VALUE, "עיטור " + BADGE[1],"עיטורי " + BADGE[1],"m","ב")</var>.</p>
+			</div>
+		</div>
+
+		<div id="difference">
+			<div class="vars">
+				<div data-ensure="VAL1 > VAL2">
+					<var id="PERSON1">rand( 5 )</var>
+					<var id="PERSON2">rand( 5 )</var>
+					<var id="VAL1">DATA[ PERSON1 ] * VALUE_PER_IMG + HALF[ PERSON1 ] * VALUE_PER_IMG / 2</var>
+					<var id="VAL2">DATA[ PERSON2 ] * VALUE_PER_IMG + HALF[ PERSON2 ] * VALUE_PER_IMG / 2</var>
+				</div>
+				<var id="SYMBOL_DIFF">( VAL1 - VAL2 ) / VALUE_PER_IMG</var>
+				<var id="PRETTY_SYM_DIFF">mixedFractionFromImproper( toFraction( SYMBOL_DIFF, 0.001 )[0], toFraction( SYMBOL_DIFF, 0.001 )[1] )</var>
+			</div>
+
+			<p class="question">כמה עיטורי <var>BADGE[1]</var> נוספים <var>genderize(PERSON1 + 1,"זכה","זכתה")</var> <var>person( PERSON1 + 1 )</var> ביחס לכמה ש<var>genderize(PERSON2 + 1,"זכה","זכתה")</var> <var>person( PERSON2 + 1 )</var>?</p>
+
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>VAL1 - VAL2</var></span> עיטורי <var>BADGE[1]</var></p>
+			</div>
+			<div class="hints">
+				<p>לפי המקרא בתחתית הגרף כל סמל שלם מסמל <var>plural_heb( VALUE_PER_IMG, "עיטור","עיטורים","m" )</var>.</p>        
+				<div>
+					מצאו את השורה של <var>person( PERSON1 + 1 )</var> ושל <var>person( PERSON2 + 1 )</var> בטבלה:       
+					<div class="fake_row">
+						<span><var>person( PERSON1 + 1 )</var></span><span data-each="DATA[ PERSON1 ] times"><var>FULL_IMAGE</var>
+						</span><span data-if="HALF[ PERSON1 ]"><var>HALF_IMAGE</var>
+						</span><span data-else></span><span data-each="(7 - DATA[ PERSON1 ]) times">&nbsp;</span>
+					</div>
+					<div class="fake_row">
+						<span><var>person( PERSON2 + 1 )</var></span><span data-each="DATA[ PERSON2 ] times"><var>FULL_IMAGE</var>
+						</span><span data-if="HALF[ PERSON2 ]"><var>HALF_IMAGE</var>
+						</span><span data-else></span><span data-each="(7 - DATA[ PERSON2 ]) times">&nbsp;</span>
+					</div>
+				</div>
+				<p>
+					ל<var>person( PERSON1 + 1 )</var> יש <code><var>SYMBOL_DIFF</var></code> יותר סמלים ליד <var>genderize(PERSON1+1,"שמו","שמה")</var> מאשר <var>person( PERSON2 + 1 )</var>.
+				</p>
+
+				<div>
+					<div>
+						<var>SYMBOL_DIFF</var> סמלים</var>
+						<code> \times </code> <var>VALUE_PER_IMG</var> עיטורים לכל סמל  = <var>VAL1 - VAL2</var> עיטורים.
+					</div>
+				</div>
+				<p><var>person( PERSON1 + 1 )</var> <var>genderize(PERSON1 + 1,"זכה","זכתה")</var> ב-<code><var>VAL1 - VAL2</var></code> עיטורי <var>BADGE[1]</var> יותר מאשר <var>person( PERSON2 + 1 )</var>.</p>
+			</div>
+		</div>
+
+		<div id="total">
+			<div class="vars">
+				<var id="FULL_SYM">sum( DATA )</var>
+				<var id="HALF_SYM">sum( HALF )</var>
+				<var id="TOTAL">sum( DATA ) * VALUE_PER_IMG + sum( HALF ) * ( VALUE_PER_IMG / 2 )</var>
+			</div>
+			<p class="question">בכמה עיטורי <var>BADGE[1]</var> זכו כולם יחד?</p>
+
+			<div class="solution" data-type="multiple">
+				<p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>TOTAL</var></span> עיטורי <var>BADGE[1]</var></p>
+			</div>
+			<div class="hints">
+				<p>נתחיל בלספור את כל הסמלים בטבלא.</p>
+				<p>ישנם סך הכל <code><var>FULL_SYM</var></code> סמלים מלאים<span data-if="HALF_SYM !== 0"> ו-<var>HALF_SYM</var> חצאי סמלים</span>.</p>
+				<p>
+					כל סמל מסמל <code><var>VALUE_PER_IMG</var></code> עיטורי <span data-if="HALF_SYM !== 0">
+					וכל חצי סמל מסמל אם כך <code><var>VALUE_PER_IMG / 2</var></code> עיטורי <var>BADGE[1]</var> </span>.
+				</p>
+				<div>
+					<div>
+						<var>FULL_SYM</var>  סמלים
+						<code> \times </code> <var>VALUE_PER_IMG</var> עיטורים לכל סמל מלא  = <var>FULL_SYM * VALUE_PER_IMG</var> עיטורים.
+						<span data-if="HALF_SYM">
+							<br /><var>HALF_SYM</var> חצאי סמלים
+							<code> \times </code> <var>VALUE_PER_IMG/2</var> עיטורים לכל חצי סמל = <var>HALF_SYM * VALUE_PER_IMG / 2</var> עיטורים.
+						</span>
+					</div>
+				</div>
+				<p>סך הכל זכו כולם יחד ב-<code><var>TOTAL</var></code> עיטורי <var>BADGE[1]</var>.</p>
+			</div>
+		</div>
+
+	</div>
+</div>
+</body>
+</html>

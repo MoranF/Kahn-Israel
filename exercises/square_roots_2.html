@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html data-require="math subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>שורש ריבועי 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="summary">שיעור של חורשים ריבועיים על ידי המצאות בין 2 שורשים ריבועיים המוכרים לנו
+        וידאו המלמד זאת: http://www.khanacademy.org/test-prep/cahsee/v/cahsee-practice--problems-1-3 question 2
+        שיעור קודם: שורשים ריבועיים
+    </div>
+    <div class="exercise">
+        <div class="problems">
+            <div id="square">
+                <div class="vars">
+                    <var id="N">randRange( 2, 11 )</var>
+                    <var id="Q">randRange( N * N + 1, (N + 1) * (N + 1) - 1 )</var>
+                </div>
+
+                <p class="question"> בין אילו ערכים <code>\sqrt{<var>Q</var>}</code> נע בתוך <a href="#" class="show-definition" data-definition="consecutive-integers">מספרים עוקבים</a>?</p>
+                
+                <div class="definition" id="consecutive-integers">
+                    מספרים שלמים כמו 1 2 3 ההולכים לפי סדר ספירה .
+                </div>
+
+                <p class="solution"><var>N</var></p>
+                <div class="solution" data-type="multiple">
+                    <p><span class="sol short"><var>N</var></span> <code>&lt; \sqrt{<var>Q</var>} &lt;</code> <span class="sol short"><var>N + 1</var></span></p>
+                    <span class="example">שני מספרים שלמים, כמו <code>6</code></span>
+                </div>
+                
+                <div class="hints">
+                    <div>
+                        <p>חשוב אילו חזקות מושלמות הכי קרובות ל <code><var>Q</var></code>.
+                            [<a href="#" class="show-subhint"
+                            data-subhint="explain-perfect-square">מה הן חזקות מושלמות?</a>]
+                        </p>
+                        <div class="subhint" id="explain-perfect-square">
+                            <p>
+                                חזקות מושלמות הינם מספרים שלמים חיוביים אשר ניתן להגיע אליהם על ידי העלאה בריבוע של מספר שלם אחר.
+                            </p>
+                            <p>
+                                13 החזקות המושלמות הראשונות הן:
+                            </p>
+                            <code>\qquad 1,4,9,16,25,36,49,64,81,100,121,144,169</code>
+                        </div>
+                    </div>
+                    <p><code><var>N * N</var></code> הינו החזקה המושלמת הקרובה ביותר ל <code><var>Q</var></code> וקטנה ממנו.</p>
+                    <p><code><var>(N + 1) * (N + 1)</var></code> הינו החזקה המושלמת הקרובה ביותר ל <code><var>Q</var></code> וגדולה ממנו .</p>
+                    <p>אז, אנו יודעים <code><var>N * N</var> &lt; <var>Q</var> &lt; <var>(N + 1) * (N + 1)</var></code>.</p>
+                    <p>אז, <code>\sqrt{<var>N * N</var>} &lt; \sqrt{<var>Q</var>} &lt; \sqrt{<var>(N + 1)*(N + 1)</var>}</code>.</p>
+                    <p class="final_answer">אז <code>\sqrt{<var>Q</var>}</code> הינו בין <code><var>N</var></code> ו <code><var>N + 1</var></code>.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

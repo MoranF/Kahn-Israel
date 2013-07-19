@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html data-require="math math-format polynomials expressions">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>גבולות 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="n-eq-d" data-weight="3">
+                <div class="vars">
+                    <var id="DEG">randRange( 4, 7 )</var>
+                    <var id="NUM" data-ensure="NUM.findMaxDegree() === DEG">new Polynomial( randRange( 2, 4 ), DEG )</var>
+                    <var id="DEN" data-ensure="DEN.findMaxDegree() === DEG">new Polynomial( randRange( 2, 4 ), DEG )</var>
+                    <var id="PM">randFromArray([ "", "-" ])</var>
+                </div>
+
+                <div class="question">
+                    <p>חשבו את הגבול : <code>\displaystyle\lim_{x \to <var>PM</var>\infty}\dfrac{<var>NUM.text()</var>}{<var>DEN.text()</var>}</code>.</p>
+                </div>
+
+                <p class="solution"><code><var>fractionReduce( NUM.getCoefAndDegreeForTerm(0).coef, DEN.getCoefAndDegreeForTerm(0).coef )</var></code></p>
+                <ul class="choices">
+                    <li><code><var>fractionReduce( -NUM.getCoefAndDegreeForTerm(0).coef, DEN.getCoefAndDegreeForTerm(0).coef )</var></code></li>
+                    <li><code>+\infty</code></li>
+                    <li><code>-\infty</code></li>
+                    <li><code>0</code></li>
+                    <li>גבול אינו מוגדר</li>
+                </ul>
+
+                <div class="hints">
+                    <p>נסתכל על האיברים המובילים במונה ובמכנה, <code><var>expr(NUM.expr()[1])</var></code> ו- <code><var>expr(DEN.expr()[1])</var></code>.</p>
+                    <p>מכיוון שהם מאותה חזקה, <code><var>DEG</var></code>, הגבול שווה למנה של המקדמים שלהם.</p>
+                    <p><code>\displaystyle\lim_{x \to <var>PM</var>\infty}\dfrac{<var>NUM.text()</var>}{<var>DEN.text()</var>} = <var>fractionSimplification( NUM.coefs[DEG], DEN.coefs[DEG] )</var></code></p>
+                </div>
+            </div>
+
+            <div id="n-lt-d" data-weight="3">
+                <div class="vars" data-ensure="NUM.findMaxDegree() < DEN.findMaxDegree()">
+                    <var id="DEG">randRange( 4, 7 )</var>
+                    <var id="NUM">new Polynomial( randRange( 2, 4 ), randRange( 4, 7 ) )</var>
+                    <var id="DEN">new Polynomial( randRange( 2, 4 ), randRange( 4, 7 ) )</var>
+                    <var id="PM">randFromArray([ "", "-" ])</var>
+                </div>
+
+                <div class="question">
+                    <p>חשבו את הגבול : <code>\displaystyle\lim_{x \to <var>PM</var>\infty}\dfrac{<var>NUM.text()</var>}{<var>DEN.text()</var>}</code>.</p>
+                </div>
+
+                <p class="solution"><code>0</code></p>
+                <ul class="choices">
+                    <li><code><var>fractionReduce( NUM.getCoefAndDegreeForTerm(0).coef, DEN.getCoefAndDegreeForTerm(0).coef )</var></code></li>
+                    <li><code><var>fractionReduce( -NUM.getCoefAndDegreeForTerm(0).coef, DEN.getCoefAndDegreeForTerm(0).coef )</var></code></li>
+                    <li><code>+\infty</code></li>
+                    <li><code>-\infty</code></li>
+                    <li>גבול אינו מוגדר</li>
+                </ul>
+
+                <div class="hints">
+                    <p>נסתכל על האיברים המובילים במונה ובמכנה, <code><var>expr(NUM.expr()[1])</var></code> ו- <code><var>expr(DEN.expr()[1])</var></code>.</p>
+                    <p>מכיוון שהחזקה של האיבר המוביל במונה, <code><var>NUM.getCoefAndDegreeForTerm(0).degree</var></code>, נמוכה מהחזקה של האיבר המוביל במכנה, <code><var>DEN.getCoefAndDegreeForTerm(0).degree</var></code>,האיבר במכנה יהיה דומיננטי בגבול שבו <code>x</code> שואף ל- <code><var>PM</var>\infty</code>.</p>
+                    <p>המכנה גדל מהר יותר ולכן בגבול הביטוי ישאף ל-<code>0</code>.</p>
+                </div>
+            </div>
+
+            <div id="n-gt-d" data-weight="3">
+                <div class="vars" data-ensure="NUM.findMaxDegree() > DEN.findMaxDegree()">
+                    <var id="DEG">randRange( 4, 7 )</var>
+                    <var id="NUM">new Polynomial( randRange( 2, 4 ), randRange( 4, 7 ) )</var>
+                    <var id="DEN">new Polynomial( randRange( 2, 4 ), randRange( 4, 7 ) )</var>
+                    <var id="RIGHT_SIGN">NUM.getCoefAndDegreeForTerm(0).coef * DEN.getCoefAndDegreeForTerm(0).coef > 0 ? "+" : "-"</var>
+                    <var id="WRONG_SIGN">RIGHT_SIGN === "+" ? "-" : "+"</var>
+                </div>
+
+                <div class="question">
+                    <p>חשבו את הגבול : <code>\displaystyle\lim_{x \to \infty}\dfrac{<var>NUM.text()</var>}{<var>DEN.text()</var>}</code>.</p>
+                </div>
+
+                <p class="solution"><code><var>RIGHT_SIGN</var>\infty</code></p>
+                <ul class="choices">
+                    <li><code><var>fractionReduce( NUM.getCoefAndDegreeForTerm(0).coef, DEN.getCoefAndDegreeForTerm(0).coef )</var></code></li>
+                    <li><code><var>fractionReduce( -NUM.getCoefAndDegreeForTerm(0).coef, DEN.getCoefAndDegreeForTerm(0).coef )</var></code></li>
+                    <li><code><var>WRONG_SIGN</var>\infty</code></li>
+                    <li><code>0</code></li>
+                    <li>גבול אינו מוגדר</li>
+                </ul>
+
+                <div class="hints">
+                    <p>נסתכל על האיברים המובילים במונה ובמכנה, <code><var>expr(NUM.expr()[1])</var></code> ו- <code><var>expr(DEN.expr()[1])</var></code>.</p>
+                    <p>כאשר <code>x \to \infty</code>, המונה שואף ל- <code><var>NUM.getCoefAndDegreeForTerm(0).coef &lt; 0 ? "-" : ""</var>\infty</code> משום שהמקדם <code><var>NUM.getCoefAndDegreeForTerm(0).coef</var></code> <var>NUM.getCoefAndDegreeForTerm(0).coef &lt; 0 ? "שלילי" : "חיובי"</var>.</p>
+                    <p>כאשר <code>x \to \infty</code>, המכנה <var>NUM.getCoefAndDegreeForTerm(0).coef * DEN.getCoefAndDegreeForTerm(0).coef > 0 ? "גם כן " : ""</var>שואף ל- <code><var>DEN.getCoefAndDegreeForTerm(0).coef &lt; 0 ? "-" : ""</var>\infty</code> משום שהמקדם <code><var>DEN.getCoefAndDegreeForTerm(0).coef</var></code> <var>DEN.getCoefAndDegreeForTerm(0).coef &lt; 0 ? "שלילי" : "חיובי"</var>.</p>
+                    <p>מכיוון שהחזקה של האיבר המוביל במונה, <code><var>NUM.getCoefAndDegreeForTerm(0).degree</var></code>, גדולה יותר מהחזקה של האיבר המוביל במכנה, <code><var>DEN.getCoefAndDegreeForTerm(0).degree</var></code>, הביטוי מתבדר.</p>
+                    <p data-if="NUM.getCoefAndDegreeForTerm(0).coef * DEN.getCoefAndDegreeForTerm(0).coef > 0">למכנה ולמונה יש אותו סימן עבור ערכי <code>x</code> גדולים, ולכן הביטוי שואף ל- <code>+\infty</code>.</p>
+                    <p data-else>למכנה ולמונה סימנים הפוכים עבור ערכי <code>x</code> גדולים, ולכן שואף ל- <code>-\infty</code>.</p>
+                </div>
+            </div>
+
+            <div id="a-o-xmk" data-weight="2">
+                <div class="vars">
+                    <var id="A">randRangeNonZero( -7, 7 )</var>
+                    <var id="K">randRangeNonZero( -7, 7 )</var>
+                    <var id="SIGN_LIM_LEFT">A &gt; 0 ? "-" : "+"</var>
+                    <var id="SIGN_LIM_RIGHT">SIGN_LIM_LEFT === "+" ? "-" : "+"</var>
+                </div>
+
+                <div class="question">
+                    <p>חשבו את הגבול : <code>\displaystyle\lim_{x \to <var>K</var>}\dfrac{<var>A</var>}{<var>B</var>x + <var>-K</var>}</code>.</p>
+                </div>
+
+                <p class="solution">גבול אינו מוגדר</p>
+                <ul class="choices">
+                    <li><code><var>fractionReduce( A, K )</var></code></li>
+                    <li><code><var>fractionReduce( A, -K )</var></code></li>
+                    <li><code>+\infty</code></li>
+                    <li><code>-\infty</code></li>
+                    <li><code>0</code></li>
+                </ul>
+
+                <div class="hints">
+                    <p>בואו נבחן את ההתנהגות של הפונקציה כאשר <code>x \to <var>K</var></code> משני הכיוונים.</p>
+                    <p>כאשר <code>x</code> שואף ל- <code><var>K</var></code> משמאל, <code><var>B</var>x + <var>-K</var></code> מתחיל מערך שלילי ועולה לעבר הערך <code>0</code>, ולכן <code>\dfrac{<var>A</var>}{<var>B</var>x + <var>-K</var>}</code> שואף ל- <code><var>SIGN_LIM_LEFT</var>\infty</code>.</p>
+                    <p>כאשר <code>x</code> שואל ל- <code><var>K</var></code> מימין, <code><var>B</var>x + <var>-K</var></code> מתחיל מערך חיובי ויורד לעבר הערך <code>0</code>, ולכן <code>\dfrac{<var>A</var>}{<var>B</var>x + <var>-K</var>}</code> שואף ל- <code><var>SIGN_LIM_RIGHT</var>\infty</code>.</p>
+                    <p>מכיוון שהביטוי שואף לערכים שונים מימין ומשמאל, הגבול איננו מוגדר.</p>
+                </div>
+            </div>
+
+            <div id="a-o-xmk2" data-weight="2">
+                <div class="vars">
+                    <var id="A">randRangeNonZero( -7, 7 )</var>
+                    <var id="K">randRangeNonZero( -7, 7 )</var>
+                    <var id="RIGHT_SIGN">A > 0 ? "+" : "-"</var>
+                    <var id="WRONG_SIGN">RIGHT_SIGN === "+" ? "-" : "+"</var>
+                </div>
+
+                <div class="question">
+                    <p>חשבו את הגבול : <code>\displaystyle\lim_{x \to <var>K</var>}\dfrac{<var>A</var>}{(<var>B</var>x + <var>-K</var>\smash{)}^2}</code>.</p>
+                </div>
+
+                <p class="solution"><code><var>RIGHT_SIGN</var>\infty</code></p>
+                <ul class="choices">
+                    <li><code><var>fractionReduce( A, K * K )</var></code></li>
+                    <li><code><var>fractionReduce( A, -K * K )</var></code></li>
+                    <li><code><var>WRONG_SIGN</var>\infty</code></li>
+                    <li><code>0</code></li>
+                    <li>גבול אינו מוגדר</li>
+                </ul>
+
+                <div class="hints">
+                    <p>בואו נבחן את ההתנהגות של הפונקציה כאשר <code>x \to <var>K</var></code> משני הכיוונים.</p>
+                    <p>בשני הכיוונים, <code>(x + <var>-K</var>)^2</code> שואף ל- <code>0</code>, ולכן <code>\dfrac{<var>A</var>}{(<var>B</var>x + <var>-K</var>\smash{)}^2}</code> מתבדר.</p>
+                    <p>מכיוון ש- <code>(x + <var>-K</var>)^2</code> תמיד חיובי ו- <code><var>A</var></code> <var>A > 0 ? "חיובי" : "שלילי"</var>, <code>\dfrac{<var>A</var>}{(<var>B</var>x + <var>-K</var>\smash{)}^2}</code> שואף ל- <code><var>RIGHT_SIGN</var>\infty</code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

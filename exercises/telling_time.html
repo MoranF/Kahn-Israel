@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html data-require="math math-format graphie time">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>קריאת שעונים</title>
+    <script src="../khan-exercise.js"></script>
+    <style type="text/css">
+        #answer_area .short input[type=text] {
+            width: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="exercise">
+    <div class="vars">
+        <var id="HOUR">randRange( 1, 12 )</var>
+        <var id="MINUTE">randRange( 0, 11 ) * 5 </var>
+        <var id="NICE_MINUTE"> MINUTE &gt; 5 ? MINUTE : "0" + "" + MINUTE</var>
+        <var id="AM_PM">HOUR >= 7 ? "a.m" : "p.m."</var>
+    </div>
+
+    <div class="problems">
+        <div id="analog">
+            <div class="question">
+                <p>מה היא השעה?</p>
+                <div class="graphie" id="pie" style="float: left;">
+                    init({ range: [ [-4, 4 ], [ -4, 4 ] ], scale: 25 });
+                    clock = addAnalogClock({ hour: HOUR, minute: MINUTE, minuteTicks: 0, showLabels: false });
+                    clock.draw();
+                </div>
+                <div class="graphie" id="digital" style="float: left;">
+                    init({ range: [ [-5, 5], [-3, 3] ], scale: 25 });
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="solution" data-type="multiple">
+                               <p class="short"> <span class="sol"><var>HOUR</var></span> : <span class="sol"><var>NICE_MINUTE</var></span> השעה היא</p>
+                <p class="example">זמן בשעות ודקות</p>
+            </div>
+
+            <div class="hints">
+                <div>
+                    <div class="graphie">
+                            clock.drawLabels();
+                    </div>
+                    <div class="graphie" data-update="digital">
+                        path([ [-3, -1], [3, -1], [3, 1], [-3, 1], [-3, -1] ]);
+                        graph.time = label( [0, -0.1],
+                            "\\Huge{\\phantom{00}:\\phantom{00}}",
+                            "center" );
+                    </div>
+                </div>
+                    <p>המחוג הקטן הינו עבור השעות, והמחוג הקטן הינו עבור הדקות.</p>
+                <div>
+                     <p data-if="MINUTE === 0"> מחוג השעות מצביע על <code><var>HOUR</var></code>, ולכן השעה היא <code><var>HOUR</var></code>.</p>
+                    <p data-else-if="MINUTE > 10  && MINUTE < 45">מחוג השעות הינו בין <code><var>HOUR</var></code> ו <code><var>HOUR + 1 === 13 ? 1 : HOUR + 1</var></code>, ולכן השעה היא <code><var>HOUR</var></code>.</p>
+                    <p data-else>מחוג השעות הינו קרוב אך לא עבר את  <code><var>HOUR + 1 === 13 ? 1 : HOUR + 1</var></code>, ולכן השעה הינה עדין  <code><var>HOUR</var></code>.</p>
+                    <div class="graphie" data-update="digital">
+                        graph.time.remove();
+                        var padding = HOUR &lt; 10 ? "\\phantom{0}" : "";
+                        graph.time = label([0, -0.1],
+                            "\\Huge{" + padding + HOUR + ":\\phantom{00}}",
+                            "center" );
+                    </div>
+                </div>
+                <div>
+                   <p>מחוג הדקות מתחיל ב <code>0</code>  דקות, ועושה סיבוב שלם בשעה ( לאחר שעבר את כל 12 המספרים ב-60 דקות).</p>
+                    <p> עבור כל קו שמחוג הדקות עובר, נוספות עוד<code>\dfrac{60}{12} = 5</code> דקות.</p>
+                </div>
+                <div>
+                    <p>מחוג הדקות מצביע על <code><var> (MINUTE / 5) === 0 ? 12: MINUTE / 5 </var></code>, אשר מייצג <span data-if="MINUTE === 0"><code>0</code></span><span data-else><code>5 \times <var>(MINUTE / 5) === 0 ? 12: MINUTE / 5</var> = <var>MINUTE</var></code></span> דקות.</p>
+                    <div class="graphie" data-update="digital">
+                        graph.time.remove();
+                        var padding = MINUTE &lt; 10 ? "0" : "";
+                        graph.time = label([0, -0.1],
+                            "\\Huge{" + HOUR + ":" + padding + MINUTE + "}",
+                            "center" );
+                    </div>
+                </div>
+
+                <p>השעה היא <code><var>NICE_MINUTE</var></code>:<code><var>HOUR</var></code>.</p>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

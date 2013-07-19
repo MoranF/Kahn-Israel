@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html data-require="math word-problems math-format">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>הסתברות תלויה</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="students">
+                <div class="vars">
+                    <var id="TOTAL">randRange(6, 10)</var>
+                    <var id="SPECIAL">randRange(2, TOTAL-2)</var>
+                    <var id="ALL">random() &lt; 0.5</var>
+                    <var id="CHOSEN">randRange(2, 
+                        Math.min(ALL ? SPECIAL : TOTAL-SPECIAL,4))
+                    </var>
+                    <var id="EVENT_PY, EVENT_PN, EVENT_Y, EVENT_N">
+                    randFromArray(
+                        [["יאכלו על ידי דובים",
+                            "לא יאכלו על ידי דובים",
+                            "יאכל על ידי דובים",
+                            "לא יאכל על ידי דובים"],
+                         ["עשו את השיעורי הבית שלהם",
+                            "לא עשו את השיעורי הבית שלהם",
+                            "עשה את השיעורי הבית שלו",
+                            "לא עשה את השיעורי הבית שלו"],
+                         ["הם בחשאי רובוטים",
+                            "הם לא הבחשאי רובוטים",
+                            "בחשאי רובוט",
+                            "לא בחשאי רובוט"],
+                         ["שחכו את ארוחת הצהריים שלהם",
+                            "זכרו לקחת את ארוחת הצהריים שלהם",
+                            "שכח את ארוחת הצהריים שלו",
+                            "זכר את ארוחת הצהריים שלו"],
+                         ["הינם מומחי אומנויות לחימה",
+                                "אינם מומחי אומנויות לחימה",
+                                "הינו מומחה אומנויות לחימה",
+                                "אינו מומחה אומנויות לחימה"],
+                         ["משחקים בכדורגל",
+                                "לא משחקים בכדורגל",
+                                "משחק כדורגל",
+                                "לא משחק כדורגל"]])
+                    </var>
+                    <var id="EVENT_P">ALL ? EVENT_PY : EVENT_PN</var>
+                    <var id="EVENT_S">ALL ? EVENT_Y : EVENT_N</var>
+                    <var id="PROBS">
+                        (function(){
+                            prs = [];
+                            _.each(_.range(CHOSEN), function(i) {
+                                if(ALL) {
+                                    num = (SPECIAL - i);
+                                    den = (TOTAL - i);
+                                    prs.push([num,den]);
+                                } else {
+                                    num = (TOTAL - SPECIAL - i);
+                                    den = (TOTAL - i);
+                                    prs.push([num,den]);
+                                }
+                            });
+                            return prs;
+                        })()
+                    </var>
+                    <var id="ANS_N,ANS_D">
+                        (function(){
+                            n = d = 1;
+                            _.each(PROBS, function(frac) {
+                                n *= frac[0];
+                                d *= frac[1];
+                            });
+                            gcd = getGCD(n, d);
+                            n = n/gcd;
+                            d = d/gcd;
+                            return [n, d];
+                        })()
+                    </var>
+                </div>
+
+                <p class="problem">
+                    בכיתה של <code><var>TOTAL</var></code> תלמידים, 
+                    ישנם <code><var>SPECIAL</var></code> תלמידים אשר
+                    <var>EVENT_PY</var>.
+                </p>
+
+                <p class="question">
+                    אם מורה תבחר ברנדומליות <code><var>CHOSEN</var></code>
+                    תלמידים, מה ההסתברות שהיא תבחר ב<var>ALL ? ((CHOSEN === 2) ? "שני " : "כל ") :
+                    ((CHOSEN === 2) ? "אף אחד מ" : "אף אחד מ")</var>התלמידים אשר <var>EVENT_PY</var>?
+                </p>
+
+                <div class="solution" data-forms="proper">
+                    <var>ANS_N/ANS_D</var>
+                </div>
+
+                <div class="hints">
+                    <p>
+                       אנו יכולים לחשוב על בעיה זו כההסתברות של 
+                        <code><var>CHOSEN</var></code> אירועים שמתקיימים.
+                        </br></br>
+                        האירוע הראשון הוא שהמורה בוחרת תלמיד אחד שהוא <var>EVENT_S</var>. האירוע השני הוא שהמורה בוחרת
+                        תלמיד אחר שגם הוא <var>EVENT_S</var>, בהנחה שהמורה בחרה מישהו שהוא  
+                        <var>EVENT_S</var> 
+                        <var>CHOSEN > 2 ? ", וכך הלאה." : "."</var>
+                    </p>
+                    <p>
+                        ההסתברות שהמורה תבחר מישהו שהוא <var>EVENT_S</var> הוא מספר התלמידים שהם
+                        <var>EVENT_P</var> החלקי המספר הכולל של התלמידים: <code>\dfrac{<var>PROBS[0][0]</var>}
+                            {<var>PROBS[0][1]</var>}</code>.
+                    </p>
+                    <p>
+כאשר המורה סיימה לבחור את התלמיד הראשון נשארו
+                        <code><var>TOTAL-1</var></code> תלמידים.
+                    </p>
+                    <p>
+                        בנוסף ישתלמיד אחד פחות ש<var>EVENT_S</var>,
+                        בגלל שהמורה לא יכולה לבחור באותו תלמיד פעמים.
+                    </p>
+                    <p>
+                        אז, ההסתברות שהמורה תבחר בתלמיד שני שהוא <var>EVENT_S</var> היא 
+                        <code>\dfrac{<var>PROBS[1][0]</var>}
+                                    {<var>PROBS[1][1]</var>}</code>.
+                    </p>
+                    <p data-if="CHOSEN &gt; 2">
+                        ההסתברות שהמורה תבחר בשני תלמידים שהם <var>EVENT_P</var> חייב להיות אז
+                        <code>\dfrac{<var>PROBS[0][0]</var>}
+                                    {<var>PROBS[0][1]</var>} \cdot
+                              \dfrac{<var>PROBS[1][0]</var>}
+                                    {<var>PROBS[1][1]</var>}</code>.
+                    </p>
+                    <p data-if="CHOSEN &gt; 2">
+                        נשתמש באותו הגיון עבור שאר התלמידים שהמורה בוחרת.
+                    </p>
+                    <p>
+                        אז, ההסתברות שמורה תבחר ב<code><var>CHOSEN</var></code> תלמידים ש<var>ALL ? ((CHOSEN === 2) ? "שניהם" : "כולם") 
+                                 : "אף אחד "</var> מהם  
+                        <var>EVENT_PY</var> הוא: 
+                        <code><var>_.map(PROBS, function(p){
+                            return "\\dfrac{"+p[0]+"}{"+p[1]+"}";
+                        }).join("\\cdot")</var> =
+                        \dfrac{<var>ANS_N</var>}{<var>ANS_D</var>}</code>
+                    </p>
+                </div>
+            </div>
+            <div id="marbles">
+                <div class="vars">
+                    <var id="CONTAINER">
+                        randFromArray(["שק", "מיכל", "נרתיק", "כובע"])
+                    </var>
+                    <var id="MARBLE">
+                        randFromArray(["כדור", "ממתק", "דיסק"])
+                    </var>
+                    <var id="REDMAR">randRange(2, 6)</var>
+                    <var id="GREENMAR">randRange(2, 6)</var>
+                    <var id="BLUEMAR">randRange(2, 6)</var>
+                    <var id="TOTAL">REDMAR + GREENMAR + BLUEMAR</var>
+                    <var id="COLOR_ONE,NUM_ONE">
+                        randFromArray([["אדום", REDMAR], ["ירוק", GREENMAR],
+                         ["כחול", BLUEMAR]])
+                    </var>
+                    <var id="COLOR_T,NUM_TWO">
+                        randFromArray([["אדום", REDMAR], ["ירוק", GREENMAR],
+                        ["כחול", BLUEMAR]])
+                    </var>
+                    <var id="COLOR_TWO">
+                        COLOR_ONE === COLOR_T ? 
+                        "אחר " + COLOR_T : COLOR_T
+                    </var>
+                    <var id="AFTER_NUM">
+                        COLOR_ONE === COLOR_T ? 
+                        NUM_TWO - 1 : NUM_TWO
+                    </var>
+                    <var id="ANS_N">
+                        NUM_ONE*AFTER_NUM/
+                        getGCD(NUM_ONE*AFTER_NUM,TOTAL*(TOTAL-1))
+                    </var>
+                    <var id="ANS_D">
+                        TOTAL*(TOTAL-1)/
+                        getGCD(NUM_ONE*AFTER_NUM,TOTAL*(TOTAL-1))
+                    </var>
+                </div>
+
+                <p class="problem">
+                    <p> <var>CONTAINER</var> מכיל 
+                    <code><var>REDMAR</var></code> <var>MARBLE</var>ים אדומים ,
+                    <code><var>GREENMAR</var></code> <var>MARBLE</var>ים ירוקים ,
+                    ו- <code><var>BLUEMAR</var></code>
+                    <var>MARBLE</var>ים כחולים.</p>
+                </p>
+                <div class="question">
+                    <p>אם נבחר ב<var>MARBLE</var>, ואז <var>
+                    MARBLE</var> אחר
+                    <em> ולא נחזיר אותם חזרה למקומם ב<var>CONTAINER</var></em>, מה היא ההסתברות שה<var>MARBLE</var> הראשון יהיה בצבע <var>COLOR_ONE</var> 
+                     והשני יהיה <var>COLOR_T</var><var>COLOR_ONE === COLOR_T ? " גם כן?" : "?"</var> כתבו תשובתכם בצורת שבר פשוט.</p>
+                </div>
+                <div class="solution" data-forms="proper">
+                    <var>(NUM_ONE/TOTAL)*(AFTER_NUM/(TOTAL-1))</var>
+                </div>
+                <div class="hints">
+                    <p>
+                       ההסתברות שאירוע א' יקרה ואז אירוע ב' יקרה היא ההסתברות שאירוע א' יקרה כפול ההסתברות שאירוע ב' יקרה. <em>נניח שהאירוע קרה</em>. 
+                        </br></br>
+                        אז במקרה זה, באירוע א' נבחר <var>MARBLE</var> <var>COLOR_ONE</var>
+                         ואז הוא נשאיר אותו מחוץ ל<var>CONTAINER</var>.
+                       באירוע ב' נבחר <var>MARBLE</var> <var>COLOR_TWO</var> 
+                        .
+                    </p>
+                    <p>
+                        ניקח כל אחד מהאירועים בנפרד ונחשבם. 
+                        מה היא ההסתברות שה<var>MARBLE</var> הראשון יהיה <var>COLOR_ONE</var>?
+                    </p>
+                    <p>
+                        ישנם <code><var>NUM_ONE</var></code> 
+                        <var>MARBLE</var>ים בצבע <var>COLOR_ONE</var> , 
+                        ו-<code><var>TOTAL</var></code> בסך הכל, אז ההסתברות שנבחר ב<var>MARBLE</var> <var>COLOR_ONE</var> 
+                          היא
+                        <code>\dfrac{<var>NUM_ONE</var>}
+                            {<var>TOTAL</var>}</code>.
+                    </p>
+                    <p>
+                        אחרי שנוציא את ה<var>MARBLE</var> הראשון, אנו 
+                       לא שמים אותו חזרה, אז יש לנו רק 
+                        <code><var>TOTAL-1</var></code> <var>MARBLE</var>ים
+                        לאחר שהוצאנו את הראשון.
+                    </p>
+                    <p data-if="COLOR_ONE === COLOR_T">
+                        בנוסף, הוצאנו <var>MARBLE</var> <var>COLOR_ONE</var> 
+                        אחת, יש נשארו לנו 
+                        <code><var>AFTER_NUM</var></code> לאחר ההוצאה.
+                    </p>
+                    <p data-else>
+                        בגלל שה<var>MARBLE</var> הראשון היה בצבע 
+                        <var>COLOR_ONE</var>, נשארו 
+                        <code><var>AFTER_NUM</var></code> 
+                        <var>MARBLE</var>ים בצבע  <var>COLOR_T</var>.
+                    </p>
+                    <p>
+                        אז, ההסתברות של בחירה ב<var>MARBLE</var> <var>COLOR_TWO</var> 
+                         לאחר הוצאה של 
+                        <var>MARBLE</var> <var>COLOR_ONE</var>  היא 
+                        <code>\dfrac{<var>AFTER_NUM</var>}
+                            {<var>TOTAL-1</var>}</code>.
+                    </p>
+                    <p>
+                        לכן, ההסתברות של בחירה  
+                        ב<var>MARBLE</var> <var>COLOR_ONE</var>  , ואז 
+               ב<var>MARBLE</var> <var>COLOR_TWO</var> 
+                        היא <code>\dfrac{<var>NUM_ONE</var>}{<var>TOTAL</var>} 
+                        \cdot \dfrac{<var>AFTER_NUM</var>}{<var>TOTAL-1</var>}
+                        = \dfrac{<var>ANS_N</var>}{<var>ANS_D</var>}</code>
+                    </p>
+                </div>
+            </div>
+            <div id="YARR">
+                <div class="vars" data-ensure="CAPTAIN_PROB > PIRATE_PROB">
+                    <var id="C_FIRST">random() &lt; 0.5</var>
+                    <var id="CAPTAIN_NUM">randRange(1,4)</var>
+                    <var id="CAPTAIN_DEM">CAPTAIN_NUM + randRange(1,6)</var>
+                    <var id="CAPTAIN_PROB">CAPTAIN_NUM/CAPTAIN_DEM</var>
+                    <var id="PIRATE_NUM">randRange(1,4)</var>
+                    <var id="PIRATE_DEM">PIRATE_NUM + randRange(4,6)</var>
+                    <var id="PIRATE_PROB">PIRATE_NUM/PIRATE_DEM</var>
+                    <var id="CGCD, PGCD">[getGCD(CAPTAIN_NUM,CAPTAIN_DEM), getGCD(PIRATE_NUM,PIRATE_DEM)]</var>
+                    <var id="C_HIT_PRETTY">"\\dfrac{" + CAPTAIN_NUM/CGCD + "}{" + CAPTAIN_DEM/CGCD + "}"</var>
+                    <var id="C_MISS_PRETTY">"\\dfrac{" + (CAPTAIN_DEM/CGCD - CAPTAIN_NUM/CGCD) + "}{" + CAPTAIN_DEM/CGCD + "}"</var>
+                    <var id="P_HIT_PRETTY">"\\dfrac{" + PIRATE_NUM/PGCD + "}{" + PIRATE_DEM/PGCD + "}"</var>
+                    <var id="P_MISS_PRETTY">"\\dfrac{" + (PIRATE_DEM/PGCD - PIRATE_NUM/PGCD) + "}{" + PIRATE_DEM/PGCD + "}"</var>
+                    <var id="INDEX">randRange(0,2)</var>
+                    <var id="QUESTION">
+                        (function(){
+                            if(C_FIRST) {
+                                return ["סירת הקפטן פוגעת בסירת הפיראטים והפיראטים מחמיצים",
+                                "סירת הקפטן מחמיצה את הפיראטים, והפיראטים פוגעים בסירת הקפטן",
+                                "גם סירת הקפטן וגם סירת הפיראטים יפגעו"][INDEX];
+                            } else {
+                                return ["הפיראטים מחמיצים את סירת הקפטן, וסירת הקפטן פוגעת בסירת הפיראטים",
+                                "סירת הפיראטים פוגעת בסירת הקפטן, והקפטן מחמיץ את סירת הפיראטים",
+                                "גם סירת הפיראטים וגם סירת הקפטן יפגעו"][INDEX];
+                            }
+                        })()
+                    </var>
+                    <var id="ANS_N, ANS_D, ANSWER">
+                        (function(){
+                            if(C_FIRST) {
+                                return [[CAPTAIN_NUM, CAPTAIN_DEM, CAPTAIN_PROB],
+                                [(CAPTAIN_DEM-CAPTAIN_NUM) * PIRATE_NUM, CAPTAIN_DEM*PIRATE_DEM, (1-CAPTAIN_PROB)*PIRATE_PROB],
+                                [0,1,0]][INDEX];
+                            } else {
+                                return [[CAPTAIN_NUM * (PIRATE_DEM-PIRATE_NUM), CAPTAIN_DEM*PIRATE_DEM, CAPTAIN_PROB*(1-PIRATE_PROB)],
+                                [PIRATE_NUM, PIRATE_DEM, PIRATE_PROB],
+                                [0,1,0]][INDEX];
+                            }
+                        })()
+                    </var>
+                    <var id="C">INDEX === 0 || INDEX === 2</var>
+                    <var id="P">INDEX === 1 || INDEX === 2</var>
+                    <var id="EV_A, PR_A">
+                       [C_FIRST ? (C ? "הקפטן  פוגע בספינת הפיראטים" : "הקפטן מפספס את סירת הפיראטים")
+                                : (P ? "הפיראטים פוגעים בספינת הקפטן" : "הפיראטים מפספסים את סירת הקפטן"),
+                        C_FIRST ? (C ? C_HIT_PRETTY : C_MISS_PRETTY) : (P ? P_HIT_PRETTY : P_MISS_PRETTY)]
+                    </var>
+                    <var id="EV_B, PR_B">
+                        (function(){
+                            if(C_FIRST) {
+                                if(P &amp;&amp; C) { 
+                                    return ["הפיראטים פוגעים בספינת הקפטן", 0];
+                                } else if(P) {
+                                    return ["הפיראטים פוגעים בספינת הקפטן", P_HIT_PRETTY];
+                                } else if(!P &amp;&amp; C) {
+                                    return ["הפיראטים מפספסים את ספינת הקפטן", 1];
+                                } else {
+                                    return ["הפיראטים מפספסים את ספינת הקפטן", P_MISS_PRETTY];
+                                }
+                            } else {
+                                if(C &amp;&amp; P) { 
+                                    return ["ספינת הקפטן פוגעת בספינת הפיראטים", 0];
+                                } else if(C) {
+                                    return ["ספינת הקפטן פוגעת בספינת הפיראטים", C_HIT_PRETTY];
+                                } else if(!C &amp;&amp; P) {
+                                    return ["ספינת הקפטן מפספסת את ספינת הפיראטים", 1];
+                                } else {
+                                    return ["ספינת הקפטן מפספסת את ספינת הפיראטים", C_MISS_PRETTY];
+                                }
+                            }
+                        })()
+                    </var>
+                </div>
+
+                <p>
+                    הקפטן <var>person(1)</var> והסירה <var>his(1)</var> , ה-כ.ר.י.ש 787, נמצאים 350 מטר מסירת הפיראטים האיתנית והמאיימת של  <var>person(2)</var>.
+                </p>
+                <p>
+                    ההתסברות של הקפטן לפגוע בסירת הפיראטים, אם הסירה <var>his(1)</var> לא נפגעה היא  <code><var>C_HIT_PRETTY</var></code> . אם היא נפגעה, <var>he(1)</var> תמיד תחמיץ.
+                    ההסתברות של הפיראטים לפגוע בסירת הקפטן , אם הסירה <var>his(2)</var> לא נפגעה היא <code><var>P_HIT_PRETTY</var></code> אם היא נפגעה, הסירה תמיד תחמיץ.
+                </p>
+
+                <p class="question">
+                    אם סירת ה<var>C_FIRST ? "הקפטן" : "הפיראטים"</var> יורה ראשונה, מה היא ההסתברות ש<var>QUESTION</var>?
+                </p>
+
+                <div class="solution" data-forms="proper">
+                    <var>ANSWER</var>
+                </div>
+
+                <div class="hints">
+                    <p>
+                        ההסתברות שאירוע א' יקרה ואז אירוע ב' יקרה היא ההסתברות שאירוע א' יקרה כפול ההסתברות שאירוע ב' יקרה. 
+                        </br></br>
+                        במקרה זה, אירוע א' הוא <var>EV_A</var> ואירוע ב' הוא <var>EV_B</var>.
+                    </p>
+                    <p>
+                      ה<var>C_FIRST ? "קפטן" : "פיראט"</var> יורה קודם, אז 
+                     הסירה  <var>his(C_FIRST ? 1 : 2)</var> לא יכולה להיות מוטבעת עד 
+                        שהוא יורה את התותח שלו.
+                    </p>
+                    <p>
+                        אז, ההסתברות ש<var>EV_A</var> היא <code><var>PR_A</var></code>.
+                    </p>
+                    <p data-if="PR_B === 0 || PR_B === 1">
+                        אם ה<var>C_FIRST ? "קפטן" : "פיראט"</var> פוגע בספינת ה<var>C_FIRST ? "פיראטים" : "קפטן"</var> ,
+                        ה<var>C_FIRST ? "פיראט" : "קפטן"</var> ללא סיכוי לפגוע חזרה.
+                    </p>
+                    <p data-else>
+                        אם ה<var>C_FIRST ? "קפטן" : "פיראט"</var> 
+                         מפספס את ספינת ה<var>C_FIRST ? "פיראטים" : "קפטן"</var>
+                         
+                       ,ל<var>C_FIRST ? "פיראט" : "קפטן"</var> יש הסתברות רגילה לפגוע.
+                    </p>
+                    <p>
+                        אז, ההסתברות ש<var>EV_B</var> בהנחה ש<var>EV_A</var> היא <code><var>PR_B</var></code>.
+                    </p>
+                    <p>
+                        ההסתברות ש<var>QUESTION</var> היא ההסתברות ש<var>EV_A</var> כפול
+                        ההסתברות ש<var>EV_B</var> בהנחה ש<var>EV_A</var>.
+                    </p>
+                    <p>
+                        כלומר  <code><var>PR_A</var> \cdot <var>PR_B</var> 
+                        = <var>fraction(ANS_N, ANS_D, true, true)</var></code>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html data-require="math math-format expressions graphie graphie-helpers interactive word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>הבנת שיפוע ולכיד</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+<div class="exercise">
+    <div class="problems">
+        <div id="graph-slope" data-weight="1">
+            <div class="vars">
+                <var id="SLOPE">randFromArray([
+                    "positive", "negative", "zero", "undefined"
+                ])</var>
+                <var id="SLOPE1">(function() {
+                    if (SLOPE === "positive") 
+                     return "חיובי";
+                    else if (SLOPE === "negative")
+                     return "שלילי";
+                    else if (SLOPE === "zero")
+                     return "אפס";
+                    else
+                     return "לא מוגדר";
+                })()</var>
+                <var id="POINTS">{}</var>
+            </div>
+
+            <p class="question">
+                שרטטו ישר בעל שיפוע <var>SLOPE1</var>:
+            </p>
+
+            <div class="graphie" id="grid">
+                graphInit({
+                    range: 11,
+                    scale: 20,
+                    axisArrows: "&lt;-&gt;",
+                    tickStep: 1,
+                    labelStep: 1,
+                    gridOpacity: 0.05,
+                    axisOpacity: 0.2,
+                    tickOpacity: 0.4,
+                    labelOpacity: 0.5
+                });
+
+                label([0, 11], "y", "above");
+                label([11, 0], "x", "right");
+
+                addMouseLayer();
+                POINTS.pointA = addMovablePoint({
+                    coord: [-5, 5],
+                    snapX: 0.5,
+                    snapY: 0.5,
+                });
+                POINTS.pointB = addMovablePoint({
+                    coord: [5, 5],
+                    snapX: 0.5,
+                    snapY: 0.5,
+                });
+                graph.line1 = addMovableLineSegment({
+                    pointA: POINTS.pointA,
+                    pointZ: POINTS.pointB,
+                    fixed: true,
+                    extendLine: true,
+                    normalStyle: {
+                        stroke: ORANGE,
+                        "stroke-width": 2
+                    }
+                });
+
+                // A and B can't be in the same place
+                POINTS.pointA.onMove = function(x, y) {
+                    return (x !== POINTS.pointB.coord[0] ||
+                        y !== POINTS.pointB.coord[1]);
+                }
+                POINTS.pointB.onMove = function(x, y) {
+                    return (x !== POINTS.pointA.coord[0] ||
+                        y !== POINTS.pointA.coord[1]);
+                }
+
+                POINTS.pointA.toFront();
+                POINTS.pointB.toFront();
+            </div>
+
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    עליכם לגרור את שתי הנקודות על מנת להזיז את הישר למקום הנכון.
+                </div>
+                <div class="guess">
+                    [POINTS.pointA.coord, POINTS.pointB.coord]
+                </div>
+                <div class="validator-function">
+                    if (SLOPE !== "zero" &amp;&amp;
+                            guess[0][0] === -5 &amp;&amp;
+                            guess[0][1] === 5 &amp;&amp;
+                            guess[1][0] === 5 &amp;&amp;
+                            guess[1][1] === 5) {
+                        return "";
+                    }
+                    var slope = (guess[1][1] - guess[0][1]) /
+                        (guess[1][0] - guess[0][0]);
+                    if (SLOPE === "positive") {
+                        return slope &gt; 0;
+                    } else if (SLOPE === "negative") {
+                        return slope &lt; 0;
+                    } else if (SLOPE === "zero") {
+                        return abs(slope) &lt; 0.001;
+                    } else if (SLOPE === "undefined") {
+                        return guess[1][0] === guess[0][0];
+                    }
+                </div>
+                <div class="show-guess">
+                    POINTS.pointA.setCoord(guess[0]);
+                    POINTS.pointB.setCoord(guess[1]);
+                    graph.line1.transform(true);
+                </div>
+            </div>
+
+            <div class="hints">
+                <p>
+                    השיפוע של הישר הוא היחס בין השינוי ב-
+                    <code>y</code>
+                    לבין השינוי ב- 
+                    <code>x</code>
+                    לאורך הישר.
+                </p>
+                <p data-if="SLOPE === 'positive'">
+                    עבור שיפוע חיובי, אם השינוי ב- 
+                    <code>y</code> 
+                    בין נקודה אחת לשניה הוא חיובי, גם השינוי ב-
+                    <code>x</code> 
+                    בין שתי הנקודות יהיה חיובי.
+                </p>
+                <p data-else-if="SLOPE === 'negative'">
+                    עבור שיפוע שלילי, אם השינוי ב- 
+                    <code>y</code> 
+                    בין נקודה אחת לשניה הוא חיובי, השינוי ב-
+                    <code>x</code> 
+                    בין שתי הנקודות יהיה שלילי.
+                </p>
+                <p data-else-if="SLOPE === 'zero'">
+                    עבור שיפוע 0, השינוי ב-
+                    <code>y</code> 
+                    בין כל שתי נקודות הוא אפס. 
+                </p>
+                <p data-else>
+                    עבור שיפוע לא מוגדר השינוי ב- 
+                    <code>x</code> 
+                    בין כל שתי נקודות הוא אפס. 
+                </p>
+                <div>
+                    <p>
+                        ישר עם שיפוע <var>SLOPE1</var> נראה כך:
+                    <p>
+                    <div class="graphie" style="margin-left: 30px">
+                        graphInit({
+                            range: 6,
+                            scale: 20,
+                            axisArrows: "&lt;-&gt;",
+                            tickStep: 1,
+                            labelStep: 10,
+                            gridOpacity: 0.05,
+                            axisOpacity: 0.2,
+                            tickOpacity: 0.4,
+                            labelOpacity: 0.5
+                        });
+
+                        style({ stroke: ORANGE }, function() {
+                            var intercept = randRange(-3, 3);
+                            if (SLOPE === "positive") {
+                                plot(function(x) {
+                                    return x + intercept;
+                                }, [-6, 6]);
+                            } else if (SLOPE === "negative") {
+                                var yInt = randRange(-3, 3);
+                                plot(function(x) {
+                                    return -x + intercept;
+                                }, [-6, 6]);
+                            } else if (SLOPE === "zero") {
+                                var y = randRangeNonZero(-3, 3);
+                                path([[-6, intercept], [6, intercept]]);
+                            } else if (SLOPE === "undefined") {
+                                var x = randRangeNonZero(-3, 3);
+                                path([[intercept, -6], [intercept, 6]]);
+                            }
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="graph-compare" data-type="graph-slope" data-weight="1">
+            <div class="vars">
+                <var id="SLOPE_N">randRangeNonZero(-5, 5)</var>
+                <var id="SLOPE_D">randRange(1, 5)</var>
+                <var id="Y_INT">randRange(-5, 5)</var>
+                <var id="GOAL">SLOPE_N &lt; 0 ? "negative" : "positive"</var>
+                <var id="CHANGE">randFromArray(["greater", "less"])</var>
+                <var id="GOAL1">SLOPE_N &lt; 0 ? "שלילי" : "חיובי"</var>
+                <var id="CHANGE1">CHANGE === "greater" ? "גדול": "קטן"</var>
+                <var id="NEW_SLOPE">(function() {
+                    if (SLOPE_N &lt; 0) {
+                        if (CHANGE === "greater") {
+                            return (SLOPE_N / SLOPE_D) / 2;
+                        } else {
+                            return (SLOPE_N / SLOPE_D) * 2;
+                        }
+                    } else {
+                        if (CHANGE === "less") {
+                            return (SLOPE_N / SLOPE_D) / 2;
+                        } else {
+                            return (SLOPE_N / SLOPE_D) * 2;
+                        }
+                    }
+                })()</var>
+            </div>
+            <p class="question">
+                שרטטו גרף בעל שיפוע <em><var>GOAL1</var></em>
+                ו<em><var>CHANGE1</var> יותר</em> מהשיפוע של הישר הכחול.
+            </p>
+            <div class="graphie" data-update="grid">
+                plot(function(x) {
+                    return (SLOPE_N / SLOPE_D) * x + Y_INT;
+                }, [-11, 11], {
+                    stroke: BLUE
+                }).toBack();
+            </div>
+
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    עליכם לגרור את שתי הנקודות על מנת להזיז את הישר למקום הנכון.
+                </div>
+                <div class="guess">
+                    [POINTS.pointA.coord, POINTS.pointB.coord]
+                </div>
+                <div class="validator-function">
+                    if (guess[0][0] === -5 &amp;&amp;
+                            guess[0][1] === 5 &amp;&amp;
+                            guess[1][0] === 5 &amp;&amp;
+                            guess[1][1] === 5) {
+                        return "";
+                    }
+                    var slope = (guess[1][1] - guess[0][1]) /
+                        (guess[1][0] - guess[0][0]);
+
+                    if (GOAL === "positive" &amp;&amp;
+                            CHANGE === "less") {
+                        return (slope &gt; 0) &amp;&amp;
+                            (slope &lt; SLOPE_N / SLOPE_D);
+                    } else if (GOAL === "positive" &amp;&amp;
+                            CHANGE === "greater") {
+                        return (slope &gt; 0) &amp;&amp;
+                            (slope &gt; SLOPE_N / SLOPE_D);
+                    } else if (GOAL === "negative" &amp;&amp;
+                            CHANGE === "less") {
+                        return (slope &lt; 0) &amp;&amp;
+                            (slope &lt; SLOPE_N / SLOPE_D);
+                    } else if (GOAL === "negative" &amp;&amp;
+                            CHANGE === "greater") {
+                        return (slope &lt; 0) &amp;&amp;
+                            (slope &gt; SLOPE_N / SLOPE_D);
+                    }
+                </div>
+                <div class="show-guess">
+                    POINTS.pointA.setCoord(guess[0]);
+                    POINTS.pointB.setCoord(guess[1]);
+                    graph.line1.transform(true);
+                </div>
+            </div>
+            <div class="hints">
+                <p>
+                    השיפוע של הישר המקורי הוא
+                    <span data-if="SLOPE_N > 0">חיובי.</span>
+                    <span data-else>שלילי.</span>
+                </p>
+                <div data-if="GOAL === 'negative'">
+                    <div data-if="CHANGE === 'greater'">
+                        <p>
+                            אם השיפוע של הישר החדש הוא שלילי וגדול מהשיפוע של הישר המקורי
+                            אזי הישר החדש צריך להיות פחות תלול.
+                        </p>
+                    </div>
+                    <div data-else>
+                        <p>
+                            אם השיפוע של הישר החדש הוא שלילי וקטן מהשיפוע של הישר המקורי
+                            אזי הישר החדש צריך להיות יותר תלול.
+                        </p>
+                    </div>
+                </div>
+                <div data-else>
+                    <div data-if="CHANGE === 'greater'">
+                        <p>
+                            אם השיפוע של הישר החדש הוא חיובי וגדול מהשיפוע של הישר המקורי
+                            אזי הישר החדש צריך להיות יותר תלול.
+                        </p>
+                    </div>
+                    <div data-else>
+                        <p>
+                            אם השיפוע של הישר החדש הוא חיובי וקטן מהשיפוע של הישר המקורי
+                            אזי הישר החדש צריך להיות פחות תלול.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <p>
+                        מכיוון שהשיפוע המקורי הוא <code>
+                        <var>fractionReduce(SLOPE_N, SLOPE_D)</var></code>,
+                        השיפוע של הישר החדש יכול להיות לדוגמא <code>
+                        <var>decimalFraction(NEW_SLOPE, true, true)</var>
+                        </code>. במקרה כזה הוא ייראה כך:
+                    <p>
+                    <div class="graphie" style="margin-left: 30px">
+                        graphInit({
+                            range: 11,
+                            scale: 10,
+                            axisArrows: "&lt;-&gt;",
+                            tickStep: 1,
+                            labelStep: 20,
+                            gridOpacity: 0.05,
+                            axisOpacity: 0.2,
+                            tickOpacity: 0.4,
+                            labelOpacity: 0.5
+                        });
+
+                        style({ stroke: BLUE }, function() {
+                            plot(function(x) {
+                                return x * (SLOPE_N / SLOPE_D) + Y_INT;
+                            }, [-11, 11]);
+                        });
+
+                        style({ stroke: ORANGE }, function() {
+                            plot(function(x) {
+                                return x * NEW_SLOPE + 2;
+                            }, [-11, 11]);
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="find-slope-and-yint" data-weight="1">
+            <div class="vars" data-ensure="!(M === 1 && B === 0) &&
+                    abs(M) < 10 && abs(B) < 10 && INCR < 6">
+                <var id="X1, X2">randRangeUnique(-8, 8, 2)</var>
+                <var id="Y1, Y2">randRangeUnique(-8, 8, 2)</var>
+                <var id="RISE">Y2 - Y1</var>
+                <var id="RUN">X2 - X1</var>
+                <var id="M">RISE / RUN</var>
+                <var id="B">Y1 - X1 * M</var>
+                <var id="INCR">abs(RUN) / getGCD(abs(RISE), abs(RUN))</var>
+                <var id="GRAPH">{}</var>
+            </div>
+
+            <p class="question">
+    				  שנו את השיפוע ולכיד ה-y כך שהגרף יעבור בין שתי הנקודות.           
+              נסו להבין כיצד הערכים של השיפוע ולכיד ה-y משנים את צורת הגרף.          
+            </p>
+
+            <div class="graphie" id="grid">
+                graphInit({
+                    range: 11,
+                    scale: 20,
+                    axisArrows: "&lt;-&gt;",
+                    tickStep: 1,
+                    labelStep: 1,
+                    gridOpacity: 0.05,
+                    axisOpacity: 0.2,
+                    tickOpacity: 0.4,
+                    labelOpacity: 0.5
+                });
+
+                label([0, 11], "y", "above");
+                label([11, 0], "x", "right");
+
+                style({
+                    stroke: BLUE,
+                    fill: BLUE
+                }, function() {
+                    circle([X1, Y1], 0.2);
+                    circle([X2, Y2], 0.2);
+                });
+
+                GRAPH.MN = 1;
+                GRAPH.MD = 1;
+                GRAPH.BN = 1;
+                GRAPH.BD = 1;
+                var plot = line([-11, -11 * GRAPH.MN / GRAPH.MD +
+                    GRAPH.BN / GRAPH.BD], [11, 11 * GRAPH.MN / GRAPH.MD +
+                    GRAPH.BN / GRAPH.BD], { stroke: BLUE });
+
+                GRAPH.redraw = function() {
+                    plot.remove();
+                    plot = line([-11, -11 * GRAPH.MN / GRAPH.MD +
+                        GRAPH.BN / GRAPH.BD], [11, 11 * GRAPH.MN / GRAPH.MD +
+                        GRAPH.BN / GRAPH.BD], { stroke: BLUE });
+                    GRAPH.updateLabels();
+                };
+
+                GRAPH.changeSlope = function(dir) {
+                    var prevDenom = GRAPH.MD;
+                    GRAPH.MD = getLCM(prevDenom, INCR);
+                    GRAPH.MN = (GRAPH.MD / prevDenom * GRAPH.MN) +
+                        (dir * GRAPH.MD / INCR);
+                    GRAPH.redraw();
+                };
+
+                GRAPH.changeIntercept = function(dir) {
+                    var prevDenom = GRAPH.BD;
+                    GRAPH.BD = getLCM(prevDenom, INCR)
+                    GRAPH.BN = (GRAPH.BD / prevDenom * GRAPH.BN) +
+                        (dir * GRAPH.BD / INCR);
+                    GRAPH.redraw();
+                };
+            </div>
+
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    <div style="clear: left;">
+                        התאימו את המשוואה על ידי לחיצה על החצים:
+                    </div>
+                    <div class="graphie">
+                        init({
+                            range: [[0, 4], [0.5, 2.5]]
+                        });
+                        label([0, 1.5], "y = ", "right");
+                        var slopeLabel = label([1.7, 1.5], "1", "left");
+                        label([1.45, 1.5], "x", "right");
+                        signLabel = label([1.8, 1.5], "+", "right");
+                        var interceptLabel = label([2.2, 1.5], "1", "right");
+                        addMouseLayer();
+                        addArrowWidget({
+                            coord: [1.4, 2.1],
+                            direction: "up",
+                            onClick: function() {
+                                GRAPH.changeSlope(1);
+                            }
+                        });
+                        addArrowWidget({
+                            coord: [1.4, 0.8],
+                            direction: "down",
+                            onClick: function() {
+                                GRAPH.changeSlope(-1);
+                            }
+                        });
+                        addArrowWidget({
+                            coord: [2.5, 2.1],
+                            direction: "up",
+                            onClick: function() {
+                                GRAPH.changeIntercept(1);
+                            }
+                        });
+                        addArrowWidget({
+                            coord: [2.5, 0.8],
+                            direction: "down",
+                            onClick: function() {
+                                GRAPH.changeIntercept(-1);
+                            }
+                        });
+                        GRAPH.updateLabels = function() {
+                            slopeLabel.remove();
+                            signLabel.remove();
+                            interceptLabel.remove();
+                            slopeLabel = label([1.7, 1.5],
+                                fractionReduce(GRAPH.MN, GRAPH.MD), "left");
+                            signLabel = label([1.8, 1.5],
+                                (GRAPH.BN &lt; 0 ? "-" : "+"), "right");
+                            interceptLabel = label([2.2, 1.5],
+                                fractionReduce(abs(GRAPH.BN), GRAPH.BD),
+                                "right");
+                        };
+                    </div>
+                </div>
+                <div class="guess">
+                    [GRAPH.MN / GRAPH.MD, GRAPH.BN / GRAPH.BD]
+                </div>
+                <div class="validator-function">
+                    if ((abs(guess[0] - M) &lt; 0.001) &amp;&amp;
+                        (abs(guess[1] - B) &lt; 0.001)) {
+                        return true;
+                    }
+                    if (guess[0] === 1 &amp;&amp; guess[1] === 1) {
+                        return "";
+                    }
+                    return false;
+                </div>
+                <div class="show-guess">
+                    guess = guess.length ? guess : [1, 1, 1, 1];
+                    GRAPH.MN = guess[0];
+                    GRAPH.MD = 1;
+                    GRAPH.BN = guess[1];
+                    GRAPH.BD = 1;
+                    GRAPH.updateLabels();
+                    GRAPH.redraw();
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

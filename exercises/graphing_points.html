@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html data-require="math interactive graphie">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>שרטוט נקודות</title>
+        <script src="../khan-exercise.js"></script>
+    </head>
+
+    <body>
+        <div class="summary">Plotting points in QI.
+            Common Core State Standard: 5.G.1
+            Related Videos: Quadrants of Coordinate Plane, The Coordinate Plane
+            Prerequisite: Number line (sort of, or coming soon Number line 0.5 which handles only positive points)
+            Required/helpful For: Plotting points, Graphing linear equations, (coming soon) Graphing using x and y intercepts
+        </div>
+        <div class="exercise">
+            <div class="vars" data-ensure="X !== 0 || Y !== 0">
+                <var id="X">randRange( 0, 10 )</var>
+                <var id="Y">randRange( 0, 10 )</var>
+            </div>
+            <div class="problems">
+                <div>
+                    <p class="question">
+                        שרטטו את הנקודה  <code>(<var>X</var>, <var>Y</var>)</code>
+                    </p>
+                    <div class="problem">
+                        <br />
+                        <div class="graphie" id="grid">
+                            graphInit({
+                                range: [ [-1, 11], [-1, 11] ],
+                                scale: 30,
+                                axisArrows: "&lt;-&gt;",
+                                tickStep: 1,
+                                labelStep: 1,
+                                gridOpacity: 0.05,
+                                axisOpacity: 0.2,
+                                tickOpacity: 0.4,
+                                labelOpacity: 0.5
+                            });
+
+                            label( [ 0, 11 ], "y", "above" );
+                            label( [ 11, 0 ], "x", "right" );
+
+                            addMouseLayer();
+                            graph.movablePoint = addMovablePoint({coord: [0,0], snapY: 1, snapX: 1 });
+
+                            graph.movablePoint.onMove = function( x, y ) {
+                                return [ max( 0, min( x, 10 ) ), max( 0, min( y, 10 ) ) ];
+                            };
+                        </div>
+                    </div>
+                    <div class="solution" data-type="custom">
+                        <div class="instruction">
+                            גררו את הנקודה הכתומה לנקודה אותה נתבקשתם למצוא.
+                        </div>
+                        <div class="guess">graph.movablePoint.coord</div>
+                        <div class="validator-function">
+                            if ( guess[0] === 0 &amp;&amp; guess[1] === 0 ) {
+                                return "";
+                            }
+                            return ( guess[0] === X &amp;&amp; guess[1] === Y );
+                        </div>
+                        <div class="show-guess">
+                            graph.movablePoint.setCoord( guess );
+                        </div>
+                    </div>
+
+
+
+                    <div class="hints">
+                        <p>הקואורדינטות רשומות כך :   <code>(\blue{x},\green{y})</code>. </p>
+                        <p>
+                            לכן, עבור  <code>( \blue{<var>X</var>}, \green{<var>Y</var>} )</code> 
+                            <span class="hint_blue"> קואורדינטת ה-<code>x</code></span> היא <code class="hint_blue"><var>X</var></code> ואילו
+                            <span class="hint_green"> קואורדינטת ה-<code>y</code></span> היא <code class="hint_green"><var>Y</var></code>.</p>
+
+                        <p>
+                             <span class="hint_blue"> קואורדינטת ה- <code>x</code></span> אומרת לנו כמה רחוק עלינו לזוז מראשית הצירים ימינה ואילו
+                            <span class="hint_green"> קואורדינטת ה-<code>y</code></span> אומרת לנו כמה עלינו לנוע למעלה מראשית הצירים.
+                        </p>
+
+                        <div>
+                            <div data-if="X === 0">
+                                Since our <span class="hint_blue"><code>x</code>-coordinate</span> is equal to <code class="hint_blue">0</code>, we don't need to move to the right of the origin.
+                            </div>
+                            <div data-else>
+                                <p>
+                                    מכיוון ש <span class="hint_blue">קואורדינטת ה-<code>x</code></span> שווה ל- <code class="hint_blue"><var>X</var></code>,
+                                    עלינו לנוע <code class="hint_blue"><var>X</var></code> יחידות לימין מראשית הצירים.
+                                </p>
+                                <div class="graphie" data-update="grid">
+                                    style({
+                                        stroke: BLUE,
+                                        strokeWidth: 3,
+                                        arrows: "-&gt;"
+                                    }, function() {
+                                        line( [ 0, 0 ], [ X, 0 ]);
+                                    });
+                                    graph.movablePoint.toFront();
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div data-if="Y === 0">
+                                Since our <span class="hint_green"><code>y</code>-coordinate</span> is equal to <code class="hint_green">0</code>, we don't need to move up from the origin.
+                            </div>
+                            <div data-else>
+                                <p>
+                                    מכיוון ש <span class="hint_green"> קואורדינטת ה-<code>y</code></span> שווה ל- <code class="hint_green"><var>Y</var></code>,
+                                    עלינו לנוע <code class="hint_green"><var>Y</var></code> יחידות מעלה מראשית הצירים.
+                                </p>
+                                <div class="graphie" data-update="grid">
+                                    style({
+                                        stroke: GREEN,
+                                        strokeWidth: 3,
+                                        arrows: "-&gt;"
+                                    }, function() {
+                                        line( [ X, 0 ], [ X, Y ] );
+                                    });
+                                    graph.movablePoint.toFront();
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="final_answer">
+                                הזיזו את הנקודה אל <code>( \blue{<var>X</var>}, \green{<var>Y</var>} )</code> שמסומנת כעת בשרטוט.
+                                <input type="button" value="הראו לי" onClick="javascript:KhanUtil.currentGraph.graph.movablePoint.moveTo( KhanUtil.tmpl.getVAR('X'), KhanUtil.tmpl.getVAR('Y') );" />
+                            </p>
+                            <div class="graphie" data-update="grid">
+                                style({
+                                    stroke: PINK,
+                                    strokeWidth: 3
+                                }, function() {
+                                    line( [ X - 0.25, Y - 0.25 ], [ X + 0.25, Y + 0.25 ] );
+                                    line( [ X + 0.25, Y - 0.25 ], [ X - 0.25, Y + 0.25 ] );
+                                });
+                                graph.movablePoint.toFront();
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

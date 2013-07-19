@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html data-require="math word-problems spin graphie graphie-helpers-arithmetic">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>הנחות, מיסים ותשר - בעיות מילוליות</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		
+		<div id="tax-total-cost">
+			<div class="vars">
+				<var id="DOLLARS">randRange(4,25).toFixed(2)</var>
+				<var id="SALES_TAX">randRange(3,19)</var>
+				<var id="TOTAL_PRICE">roundTo(2, (1+(SALES_TAX/100))*DOLLARS).toFixed(2)</var>
+			</div>
+			<div class="question spin">
+				<p><var>person(1)</var> <var>genderize(1,"קנה","קנתה")</var> דלי של <var>fruit_plural(1)</var> במבצע במחיר גולמי של ₪<var>DOLLARS</var>.
+        מס הקניה על מוצר זה הוא <var>SALES_TAX</var>%.  מהו המחיר הכולל שעל <var>person(1)</var> לשלם בעבור דלי ה<var>fruit_plural(1)</var>?  (עגלו לאגורה הקרובה ביותר.)</p>
+			</div>	
+			<p class="solution" data-forms="dollar"><var>TOTAL_PRICE</var></p>
+			<div class="hints">
+				<div>
+					<p>כדי למצוא את המחיר הכולל, נמצא תחילה את כמות המס שיש לשלם על ידי הכפלת המחיר הגולמי של דלי ה<var>fruit_plural(1)</var> בשיעור המס.          
+					<p><code class="hint_blue"><var>SALES_TAX</var>\%</code> <code>\times</code> <code class="hint_green">₪<var>DOLLARS</var></code> =</p>
+				</div>	
+				<div>
+          <p>מכיוון ששיעור המס נתון באחוזים עלינו תחילה להמיר אותו לשבר עשרוני.
+           אחוז הוא למעשה "אחד חלקי מאה", ולכן" <code class="hint_blue"><var>SALES_TAX</var>\%</code> שווה ל-<code class="hint_blue">\displaystyle\frac{<var>SALES_TAX</var>}{100}</code> שהוא גם שווה ל-<code class="hint_blue"><var>SALES_TAX</var> \div 100</code>.</p>
+          <p><code class="hint_blue"><var>SALES_TAX</var> \div 100 = <var>(SALES_TAX/100).toFixed(2)</var></code>          
+				</div>	
+				<div>
+          <p> נכפיל את שיעור המס במחיר הגולמי כדי למצוא את כמות המס שיש לשלם.</p>
+					<p><code class="hint_blue"><var>SALES_TAX/100</var></code> <code>\times</code> <code class="hint_green">₪<var>DOLLARS</var></code> <code>=</code> <code class="hint_purple">₪<var>((SALES_TAX/100) * DOLLARS).toFixed(2)</var></code>
+				</div>
+				<div>        
+					<p>נחבר את מס הקניה עם המחיר הגולמי כדי למצוא את המחיר שעל <var>person(1)</var> לשלם.<p>
+					<p><code class="hint_purple">₪<var>((SALES_TAX/100) * DOLLARS).toFixed(2)</var></code> + <code class="hint_green">₪<var>DOLLARS</var></code> <code>=</code> <code class="hint_orange">₪<var>TOTAL_PRICE</var></code>
+					<p class="final_answer"><var>person(1)</var> <var>genderize(1,"צריך","צריכה")</var> לשלם <code class="hint_orange">₪<var>TOTAL_PRICE</var>.</code></p>
+				</div>
+				</div>
+			</div>
+			
+		<div id="simple-tax">
+			<div class="vars">
+				<var id="TAX">roundTo(1, randRange(31,139) / 10 )</var>
+				<var id="PRICE">randRange(3,200).toFixed(2)</var>
+				<var id="TOTAL_TAX">roundTo(2, (TAX / 100) * PRICE).toFixed(2)</var>
+			</div>
+			<div class="question spin">
+					<p>אם מס הקניה בעירכם הוא <var>TAX</var>%, 
+          כמה מס תשלמו עבור פריט שעולה ₪<var>PRICE</var>? עגלו לאגורה הקרובה ביותר.</p>
+			</div>
+			<p class="solution" data-forms="dollar"><var>TOTAL_TAX</var></p>
+			<div class="hints">
+				<div>
+					<p>כדי למצוא את המחיר הכולל, נמצא תחילה את כמות המס שיש לשלם על ידי הכפלת המחיר הגולמי של הפריט בשיעור המס.</p>          
+					<p><code class="hint_blue"><var>TAX</var>\%</code> <code>\times</code> <code class="hint_green">₪<var>PRICE</var></code><code> =</code></p>
+				</div>			
+				<div>
+          <p>מכיוון ששיעור המס נתון באחוזים עלינו תחילה להמיר אותו לשבר עשרוני.
+           אחוז הוא למעשה "אחד חלקי מאה", ולכן" <code class="hint_blue"><var>SALES_TAX</var>\%</code> שווה ל-<code class="hint_blue">\displaystyle\frac{<var>SALES_TAX</var>}{100}</code> שהוא גם שווה ל-<code class="hint_blue"><var>SALES_TAX</var> \div 100</code>.</p>
+          <p><code class="hint_blue"><var>SALES_TAX</var> \div 100 = <var>(SALES_TAX/100).toFixed(2)</var></code>          
+				</div>	
+				<div>
+					<p>נכפיל את השבר העשרוני שזה אתה חישבנו במחיר הגולמי כדי למצוא את כמות המס שיש לשלם.</p>
+					<p><code class="hint_blue"><var>(TAX/100).toFixed(3)</var></code> <code>\times</code> <code class="hint_green">₪<var>PRICE</var></code> = <code class="hint_orange">₪<var>TOTAL_TAX</var></code>
+					<p class="final_answer">תצטרכו לשלם מס קניה של <code class="hint_orange">₪<var>TOTAL_TAX</var></code>.</p>
+				</div>
+			</div>
+			</div>
+			
+			<div id="total-price-with-discount">
+			<div class="vars">
+				<var id="PRICE">(randRange(8,85)).toFixed(2)</var>
+				<var id="DISCOUNT">randRange(1,11)*5</var>
+				<var id="DISCOUNT_PRICE">roundTo(2, PRICE - ( (DISCOUNT/100) * PRICE)).toFixed(2)</var>
+			</div>
+			<div class="question spin">
+					<p><var>person(1)</var> <var>genderize(1,"קנה","קנתה")</var> <var>clothing( 1 )</var> בחנות שבקניון ליד <var>genderize(1,"ביתו","ביתה")</var>
+          ב-<var>DISCOUNT</var>% הנחה. אם המחיר הרגיל של ה<var>clothing( 1 )</var> הוא ₪<var>PRICE</var>,
+          כמה <var>genderize(1,"שילם","שילמה")</var> <var>person(1)</var> לאחר ההנחה?</p>
+			</div>
+			<p class="solution" data-forms="dollar"><var>DISCOUNT_PRICE</var></p>
+			<div class="hints">
+				<div>
+					<p>תחילה נמצא את כמות ההנחה על ידי הכפלת המחיר המקורי באחוז ההנחה.</p>
+					<p><code class="hint_blue">₪<var>PRICE</var></code> <code>\times</code> <code class="hint_green"><var>DISCOUNT</var>\%</code> <code>=</code></p>
+				</div>
+				<div>
+          <p>מכיוון ששיעור ההנחה נתון באחוזים עלינו תחילה להמיר אותו לשבר עשרוני.
+           אחוז הוא למעשה "אחד חלקי מאה", ולכן" <code class="hint_green"><var>DISCOUNT</var>\%</code> שווה ל-<code class="hint_green">\displaystyle\frac{<var>DISCOUNT</var>}{100}</code> שהוא גם שווה ל-<code class="hint_green"><var>DISCOUNT</var> \div 100</code>.</p>
+          <p><code class="hint_green"><var>DISCOUNT</var> \div 100 = <var>(DISCOUNT/100).toFixed(2)</var></code>          
+				</div>	
+				<div>
+          <p> נכפיל את שיעור ההנחה במחיר המקורי כדי למצוא את כמות הכסף ש<var>person(1)</var> <var>genderize(1,"חסך","חסכה")</var>.</p>
+					<p><code class="hint_green"><var>(DISCOUNT/100).toFixed(2)</var></code> <code>\times</code> <code class="hint_blue">₪<var>PRICE</var></code><code> = </code><code class="hint_purple">₪<var>((DISCOUNT/100) * PRICE).toFixed(2)</var></code>
+				</div>
+				<div>
+					<p>נפחית את כמות ההנחה שזה אתה חישבנו מהמחיר המקורי של הפריט כדי לקבל את המחיר לאחר ההנחה.<p>
+					<p><code class="hint_blue">₪<var>PRICE</var></code> <code>-</code> <code class="hint_purple">₪<var>(DISCOUNT/100*PRICE).toFixed(2)</var></code><code> = </code><code class="hint_orange">₪<var>DISCOUNT_PRICE</var></code>,</p>
+					<p class="final_answer"><var>person(1)</var> <var>genderize(1,"שילם","שילמה")</var> <code class="hint_orange">₪<var>DISCOUNT_PRICE</var></code> בעבור ה<var>clothing(1)</var>.</p>
+				</div>
+			</div>
+			</div>
+			
+			<div id="simple-discount">
+			<div class="vars">
+				<var id="DISCOUNT">randRange(1,11)*5</var>
+				<var id="PRICE">randRange(6,20)</var>
+				<var id="TOTAL_DISCOUNT">roundTo(2, (DISCOUNT / 100) * PRICE).toFixed(2)</var>
+			</div>
+			<div class="question spin">
+					<p>הפיצריה של <var>person(2)</var> מעניקה <var>DISCOUNT</var>% הנחה על כל הפיצות.
+          אם הפיצה ש<var>person(1)</var> לרוב קונה שם עולה ₪<var>PRICE</var>, כמה שקלים <var>genderize(1,"הוא חסך","היא חסכה")</var> בזכות ההנחה? 
+          (עגלו לאגורה הקרובה ביותר.)</p>
+			</div>
+			<p class="solution" data-forms="dollar"><var>TOTAL_DISCOUNT</var></p>
+			<div class="hints">
+				<div>
+					<p>כדי למצוא את כמות ההנחה, נכפיל את שיעור הנחה במחיר המקורי של הפיצה.</p>
+					<p><code class="hint_blue"><var>DISCOUNT</var>\%</code> <code>\times</code> <code class="hint_green">₪<var>PRICE</var></code> =</p>
+				</div>
+				<div>
+          <p>מכיוון ששיעור ההנחה נתון באחוזים עלינו תחילה להמיר אותו לשבר עשרוני.
+           אחוז הוא למעשה "אחד חלקי מאה", ולכן" <code class="hint_blue"><var>DISCOUNT</var>\%</code> שווה ל-<code class="hint_blue">\displaystyle\frac{<var>DISCOUNT</var>}{100}</code> שהוא גם שווה ל-<code class="hint_blue"><var>DISCOUNT</var> \div 100</code>.</p>
+          <p><code class="hint_blue"><var>DISCOUNT</var> \div 100 = <var>(DISCOUNT/100).toFixed(2)</var></code>          
+				</div>	
+				<div>
+          <p> נכפיל את שיעור ההנחה במחיר המקורי כדי למצוא את כמות הכסף ש<var>person(1)</var> <var>genderize(1,"חסך","חסכה")</var>.</p>
+					<p><code class="hint_blue"><var>(DISCOUNT/100).toFixed(2)</var></code> <code>\times</code> <code class="hint_green">₪<var>PRICE</var></code> = <code class="hint_orange">₪<var>TOTAL_DISCOUNT</var></code></p>
+					<p class="final_answer"><var>person(1)</var> <var>genderize(1,"חסך","חסכה")</var> <code class="hint_orange">₪<var>TOTAL_DISCOUNT</var></code> בזכות ההנחה.</p>
+				</div>
+			</div>
+			</div>		
+		<div id="tip">
+			<div class="vars">
+				<var id="BILL">randRange(20,50)</var>
+				<var id="BILL_FORMAT">parseFloat(BILL).toFixed(2)</var>
+				<var id="TIP_PERCENT">randRange(1, 4) * 5</var>
+				<var id="TIP_AMOUNT">BILL * (TIP_PERCENT / 100)</var>
+				<var id="TIP_AMOUNT_FORMAT">parseFloat(TIP_AMOUNT).toFixed(2)</var>
+				<var id="TIP_TEN_PERCENT">parseFloat(BILL * 0.1).toFixed(2)</var>
+				<var id="TIP_FIVE_PERCENT">parseFloat(BILL * 0.05).toFixed(2)</var>
+				<var id="TOTAL">BILL + TIP_AMOUNT</var>
+				<var id="TOTAL_FORMAT">roundTo(2, parseFloat(TOTAL)).toFixed(2)</var>
+			</div>
+			<div class="question">
+				<p class="spin"><var>person(1)</var> <var>genderize(1,"אכל")</var> ארוחת {בוקר|צהרים|ערב} ב{מסעדה|בית קפה} 
+        ועלות הארוחה <var>his(1)</var> היא ₪<var>BILL_FORMAT</var>.
+        <var>He(1)</var> רוצה להשאיר תשר בשיעור של <var>TIP_PERCENT</var>%. כמה <var>onhim(1)</var> לשלם סך הכל כולל התשר?</p>
+			</div>
+			<p class="solution" data-forms="dollar"><var>TOTAL</var></p>
+			<div class="hints">
+				<div>
+					<p>כמות התשר שווה ל <code><var>TIP_PERCENT</var>\% \times ₪<var>BILL_FORMAT</var></code>.</p>
+					<p data-if="TIP_PERCENT !== 10">
+          אנו יכולים לחשב את התשר על חישוב תשר של <code class="hint_purple">10\%</code> <span data-if="TIP_PERCENT === 5"> ואז לחלק את התוצאה בשניים.</span><span data-else-if="TIP_PERCENT === 20"> ואז להכפיל את המספר בשתיים.</span><span data-else> ולחשב תשר בשיעור של <code class="hint_pink">5\%</code>, ולחבר את שתי התוצאות.</span></p>
+				</div>
+				<div>
+					<p>כדי לחשב תשר בשיעור של <code class="hint_purple">10\%</code>, העבירו את הנקודה העשרונית ב-<code>₪<var>BILL_FORMAT</var></code> מקום אחד שמאלה.</p>
+					<p><code>\purple{10\%} \times ₪<var>BILL_FORMAT</var> = \purple{₪<var>TIP_TEN_PERCENT</var>}</code></p>
+				</div>
+				<div data-if="TIP_PERCENT !== 10">
+					<div data-if="TIP_PERCENT % 10 === 5">
+						<p>כדי לחשב תשר בשיעור של <code class="hint_pink">5\%</code>, חלקו את התשר בשיעור של <code class="hint_purple">10\%</code> בשתיים.</p>
+						<p><code>\pink{5\%} \times ₪<var>BILL_FORMAT</var> = \purple{₪<var>TIP_TEN_PERCENT</var>} \div 2 = \pink{₪<var>TIP_FIVE_PERCENT</var>}</code>.</p>
+					</div>
+					<div data-else>
+						<p>כדי לחשב תשר בשיעור של <code class="hint_green">20\%</code>, הכפילו את התשר בשיעור של <code class="hint_purple">10\%</code> בשתיים.</p>
+						<p><code>\green{20\%} \times ₪<var>BILL_FORMAT</var> = \purple{₪<var>TIP_TEN_PERCENT</var>} \times 2 = \green{₪<var>TIP_AMOUNT_FORMAT</var>}</code>.</p>
+					</div>
+				</div>
+				<div data-if="TIP_PERCENT === 15">
+					<p>נחבר את שתי התוצאות ונקבל <code class="hint_purple">₪<var>TIP_TEN_PERCENT</var></code> + <code class="hint_pink">₪<var>TIP_FIVE_PERCENT</var> =</code><code> ₪<var>TIP_AMOUNT_FORMAT</var></code>.</p>
+				</div>
+				<p>נחבר את עלות הארוחה והתשר.</p>
+				<p><code>₪<var>BILL_FORMAT</var> + ₪<var>TIP_AMOUNT_FORMAT</var> = \orange{₪<var>TOTAL_FORMAT</var>}</code>.</p>
+				<p class="final_answer">על <var>person(1)</var> לשלם סך הכל <code class="hint_orange">₪<var>TOTAL_FORMAT</var></code> על הארוחה  .</p>
+			</div>
+		</div>
+	</div>
+	</div>
+
+</body>
+
+</html>

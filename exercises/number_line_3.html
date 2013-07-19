@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html data-require="math graphie word-problems-heb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ציר המספרים 3</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="vars">
+        <var id="MIDPOINT">randRange( -15, 15 )</var>
+        <var id="DISTANCE">randRange( -2, 2 )</var>
+        <var id="NUMBER">randRangeExclude( max(MIDPOINT-5, MIDPOINT-5-DISTANCE),min(MIDPOINT+5, MIDPOINT+5-DISTANCE), [ 0, MIDPOINT - DISTANCE ] )</var>
+    </div>
+    <div class="problems">
+        <div>
+            <div class="question">
+                <p data-if="DISTANCE !== 0">איזה מספר ממוקם <strong><var>plural_heb( abs( DISTANCE ), "קו","קוים","m")</var> מ<span data-if="DISTANCE < 1">שמאל</span><span data-else>ימין</span> לנקודה הכתומה</strong>? המרחק בין הקוים הינו 1.</p>
+                <p data-else>איזה מספר מייצגת הנקודה הכתומה? המרחק בין הקוים הינו 1.</p>
+                <div class="graphie" id="number-line">
+                    init({
+                        range: [ [ MIDPOINT-6, MIDPOINT+6 ], [ -1, 1 ] ]
+                    });
+
+                    line( [ MIDPOINT-5, 0 ], [ MIDPOINT+5, 0 ] );
+                    for ( var x = MIDPOINT-5; x &lt;= MIDPOINT+5; x++ ) {
+                        line( [ x, -0.2 ], [ x, 0.2 ] );
+                    }
+
+                    style({ stroke: "#6495ED", strokeWidth: 3.5 });
+                    line( [ MIDPOINT, -0.2], [MIDPOINT, 0.2]);
+                    label( [ MIDPOINT, -0.53 ],  MIDPOINT, "center", { color: "#6495ED" });
+
+                    style({ stroke: "#FFA500", fill: "#FFA500" });
+                    graph.orangeDot = circle( [ NUMBER, 0 ], 0.10 );
+                </div>
+            </div>
+            <div class="solution" data-forms="integer"><var>NUMBER+DISTANCE</var></div>
+
+            <div class="hints">
+                <p> אנו יודעים ש<code><var>MIDPOINT</var></code> נמצא על ציר המספרים כי הוא מסומן שם.</p>
+                <p>המספרים משמאל ל <code><var>MIDPOINT</var></code> קטנים ממנו, ובעוד המספרים מימין ל <code><var>MIDPOINT</var></code> גדולים ממנו. </p>
+                
+                <div data-if="DISTANCE !== 0">
+                    <p>אנו צריכים למצוא את המספר המיוצג על ידי הנקודה הכחולה, אשר נמצא  <var>(abs( DISTANCE )!=1)?abs( DISTANCE )+ " קוים  " :" קו  אחד "</var><span data-if="DISTANCE >= 1">לימין</span><span data-else>לשמאל</span> של הנקודה הכתומה.</p>
+                    <div class="graphie" data-update="number-line">
+                        style({ stroke: "#6495ED", fill: "#6495ED" });
+                        graph.blueDot = circle( [ NUMBER+DISTANCE, 0 ], 0.10 );
+                    </div>
+                </div>
+                <div>
+                    <p>נתחיל מ <code><var>MIDPOINT</var></code>, אנו נזוז <code> <var>abs( NUMBER-MIDPOINT+DISTANCE )</var> </code><span data-if="NUMBER-MIDPOINT+DISTANCE < 0"> לשמאל </span><span data-else> לימין </span> כדי להגיע אל הנקודה <span data-if="DISTANCE !== 0">הכחולה</span><span data-else>הכתומה</span>.</p>
+                    <div class="graphie" data-update="number-line">
+                        var color = "#6495ED";
+                        if ( DISTANCE === 0 ) {
+                            color = "#FFA500";
+                        }
+                        style({ stroke: color, fill: color, strokeWidth: 3.5, arrows: "->" });
+                        line( [ MIDPOINT, 0 ], [ NUMBER+DISTANCE, 0 ] );
+                        graph.blueDot.toFront();
+                        graph.orangeDot.toFront();
+                    </div>
+                </div>
+                <div>
+                    <p class="final_answer">לכן הנקודה ה<span data-if="DISTANCE !== 0">כחולה</span><span data-else>כתומה</span> מייצגת את המספר <code><var>NUMBER+DISTANCE</var></code>.</p>
+                    <div class="graphie" data-update="number-line">
+                        var color = "#6495ED";
+                        if ( DISTANCE === 0 ) {
+                            color = "#FFA500";
+                        }
+                        label( [ NUMBER+DISTANCE, -0.53 ],  NUMBER+DISTANCE, "center", { color: color });
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

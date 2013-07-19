@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-polygon interactive">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>זווית היקפית 2</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div id="find-angle">
+			<div class="vars">
+				<var id="START">randRange( 0, 360 )</var>
+				<var id="CENTRAL">randRange( 10, 80 ) * 2</var>
+				<var id="SUBTENDED_POINT">randRange( START + 180 + 5, START + CENTRAL + 180 - 5 ) % 360</var>
+				<var id="RADIUS">4</var>
+
+				<var id="GIVEN">CENTRAL</var>
+				<var id="GIVEN_LABEL">"הכחולה"</var>
+				<var id="ASKED_LABEL">"הכתומה"</var>
+			</div>
+			<p class="question" dir=rtl> אם הזווית <var>GIVEN_LABEL</var> הינה <var>GIVEN</var> מעלות, כמה מעלות הזווית <var>ASKED_LABEL</var>?</p>
+			<p dir=rtl>מדובר במקרה מיוחד בו מרכז המעגל נמצא בתוך הזווית ההיקפית הכתומה. הזווית הכחולה נקראת זווית מרכזית.</p>
+			<div class="graphie" id="circle">
+				init({
+					range: [ [ -RADIUS - 1, RADIUS + 1 ], [ -RADIUS - 1, RADIUS + 1 ] ]
+				});
+				addMouseLayer();
+				graph.circle = new Circle( RADIUS );
+
+				style({ stroke: BLUE, fill: BLUE });
+				graph.circle.drawCenter();
+				graph.circle.drawPoint( START );
+				graph.circle.drawPoint( START + CENTRAL );
+
+				graph.central = graph.circle.drawCentralAngle( START, START + CENTRAL );
+
+				style({ stroke: ORANGE, fill: ORANGE });
+				graph.inscribed = graph.circle.drawInscribedAngle( SUBTENDED_POINT, START, START + CENTRAL );
+
+				graph.circle.drawMovablePoint( SUBTENDED_POINT, START + CENTRAL, START );
+			</div>
+			<div class="solution" data-type="multiple">
+				<span class="sol"><var>CENTRAL / 2</var></span> :מעלות
+			</div>
+			<div class="hints">
+				<div>
+					<p dir=rtl>מה אנו יודעים על זווית המשנה שהוקמה על ידי הקוטר המקווקו שמוצג למעלה?</p>
+					<div class="graphie" data-update="circle">
+						style({stroke: BLUE, "stroke-dasharray": "-"}, function() {
+							graph.circle.drawChord( SUBTENDED_POINT, SUBTENDED_POINT + 180 );
+						});
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>אם אנו מסתכלים רק על זווית המשנה שצויירה כעת, ניתן לראות כי המקרה מוכר לנו מתרגול הזווית ההיקפית הקודם!</p>
+					<p>אנו יודעים שזווית המשנה הכתומה היא מחצית מזווית המשנה הכחולה.</p>
+					<div class="graphie" data-update="circle">
+						graph.inscribed.arc.animate({opacity: 0.4});
+						graph.central.arc.animate({opacity: 0.4});
+						style({stroke: BLUE});
+						graph.centralSub = graph.circle.drawCentralArc( SUBTENDED_POINT + 180, START + CENTRAL, 0.7 );
+						style({stroke: ORANGE});
+						graph.inscribedSub = graph.circle.drawInscribedArc( SUBTENDED_POINT, SUBTENDED_POINT + 180, START + CENTRAL, 0.7 );
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>כמו כן, זווית המשנה הכתומה הנוספת שווה למחצית מזווית המשנה הכחולה הנוספת, כפי שצוייר.</p>
+					<div class="graphie" data-update="circle">
+						graph.centralSub.remove();
+						graph.inscribedSub.remove();
+						style({stroke: BLUE});
+						graph.centralSub = graph.circle.drawCentralArc( START, SUBTENDED_POINT + 180, 0.7 );
+						style({stroke: ORANGE});
+						graph.inscribedSub = graph.circle.drawInscribedArc( SUBTENDED_POINT, START, SUBTENDED_POINT + 180, 0.7 );
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>אם שתי זוויות המשנה הכתומות שוות למחצית משתי זוויות המשנה הכחולות, אז אנו יודעים שהזווית הכתומה המקורית שווה למחצית מהזווית הכחולה מהקורית.</p>
+					<div class="graphie" data-update="circle">
+						graph.centralSub.remove();
+						graph.inscribedSub.remove();
+						graph.inscribed.arc.animate({opacity: 1.0});
+						graph.central.arc.animate({opacity: 1.0});
+					</div>
+				</div>
+				<p><code> \dfrac{1}{2} \cdot \color{<var>ORANGE</var>}{\text{זווית כתומה}}= \color{<var>BLUE</var>}{\text{זווית כחולה}}</code></p>
+				<p><code> \dfrac{1}{2} \cdot \color{<var>BLUE</var>}{<var>CENTRAL</var>^{\circ}}= \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>
+				<p><code> \color{<var>ORANGE</var>}{<var>CENTRAL / 2</var>^{\circ}}= \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>
+			</div>
+		</div>
+		<div id="find-central-on" data-type="find-angle">
+			<div class="vars">
+				<var id="GIVEN">CENTRAL / 2</var>
+				<var id="GIVEN_LABEL">"הכתומה"</var>
+				<var id="ASKED_LABEL">"הכחולה"</var>
+			</div>
+			<div class="solution" data-type="multiple">
+				<span class="sol"><var>CENTRAL</var></span> :מעלות
+			</div>
+
+			<div class="hints">
+				<div>
+					<p>מה אנו יודעים על זווית המשנה שהוקמה על ידי הקוטר המקווקו שמוצג למעלה?</p>
+					<div class="graphie" data-update="circle">
+						style({stroke: BLUE, "stroke-dasharray": "-"}, function() {
+							graph.circle.drawChord( SUBTENDED_POINT, SUBTENDED_POINT + 180 );
+						});
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>אם אנו מסתכלים רק על זווית המשנה שצויירה כעת, ניתן לראות כי המקרה מוכר לנו מתרגול הזווית ההיקפית הקודם!</p>
+					<p dir=rtl>אנו יודעים שזווית המשנה הכתומה היא מחצית מזווית המשנה הכחולה.</p>
+					<div class="graphie" data-update="circle">
+						graph.inscribed.arc.animate({opacity: 0.4});
+						graph.central.arc.animate({opacity: 0.4});
+						style({stroke: BLUE});
+						graph.centralSub = graph.circle.drawCentralArc( SUBTENDED_POINT + 180, START + CENTRAL, 0.7 );
+						style({stroke: ORANGE});
+						graph.inscribedSub = graph.circle.drawInscribedArc( SUBTENDED_POINT, SUBTENDED_POINT + 180, START + CENTRAL, 0.7 );
+					</div>
+				</div>
+				<div>
+					<p dir=trl>כמו כן, זווית המשנה הכתומה הנוספת שווה למחצית מזווית המשנה הכחולה הנוספת, כפי שצוייר.</p>
+					<div class="graphie" data-update="circle">
+						graph.centralSub.remove();
+						graph.inscribedSub.remove();
+						style({stroke: BLUE});
+						graph.centralSub = graph.circle.drawCentralArc( START, SUBTENDED_POINT + 180, 0.7 );
+						style({stroke: ORANGE});
+						graph.inscribedSub = graph.circle.drawInscribedArc( SUBTENDED_POINT, START, SUBTENDED_POINT + 180, 0.7 );
+					</div>
+				</div>
+				<div>
+					<p dir=rtl>אם שתי זוויות המשנה הכחולות הן פעמיים שתי זוויות המשנה הכחולות, אז אנו יודעים שהזווית הכחולה היא פעמיים הזווית הכתומה.</p>
+					<div class="graphie" data-update="circle">
+						graph.centralSub.remove();
+						graph.inscribedSub.remove();
+						graph.inscribed.arc.animate({opacity: 1.0});
+						graph.central.arc.animate({opacity: 1.0});
+					</div>
+				</div>
+				<p><code> 2 \cdot \color{<var>BLUE</var>}{\text{זווית כחולה}} = \color{<var>ORANGE</var>}{\text{זווית כתומה}}</code></p>	
+				<p><code> 2 \cdot \color{<var>ORANGE</var>}{<var>CENTRAL / 2</var>^{\circ}}= \color{<var>BLUE</var>}{\text{זווית כחולה}}</code></p>
+				<p><code> \color{<var>BLUE</var>}{<var>CENTRAL</var>^{\circ}}= \color{<var>BLUE</var>}{\text{זווית כחולה}} </code></p>
+			</div>
+		</diV>
+	</div>
+	</div>
+</body>
+</html>

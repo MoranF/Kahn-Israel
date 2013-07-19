@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html data-require="math">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>מינוח של תכונות פעולות חשבון 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+
+	<div class="vars">
+		<var id="A,B,C,D">randRangeUnique( 2, 10, 4 )</var>
+		<var id="PROPERTIES">[ "קיבוץ", "חילוף", "פילוג" ]</var>
+		<var id="EQUATIONS">shuffle( [ "a+b=b+a", "a+b(c+d)=a+bc+bd", "a+(b+c)=(a+b)+c" ] )</var>
+		<var id="ASSOCIATIVE_RESULT">A+B+C</var>
+		<var id="COMMUTATIVE_RESULT">A+B</var>
+		<var id="DISTRIBUTIVE_RESULT">A+B*C+B*D</var>
+	</div>
+
+
+		<div class="problems">
+
+			<div id="associative">
+				<p class="question">איזו מהתכונות הבאות הביטוי <code>a+(b+c)=(a+b)+c</code> מייצג:</p>
+				<p class="solution">קיבוץ</p>
+				<ul class="choices" data-category="true">
+					<li data-each="PROPERTIES as place"><var>place</var></li>
+				</ul>
+				<div class="hints">
+					<p>נשים לב שבצד השמאלי של הביטוי, הסוגריים מורים לסכום את <code>b</code> ו-<code>c</code> לפני הסכימה עם <code>a</code>.</p>
+					<p>בצד הימני של הביטוי, נסכום את <code>a</code> ו-<code>b</code> לפני הסכימה עם <code>c</code>.</p>
+					<p>הסדר של המשתנים לא השתנה אך הקיבוץ שלהם לקבוצות (מה שבתוך הסוגריים) השתנה.</p>
+					<p>הקבוצות השתנו והתוצאה לא, ולכן ביטוי זה מייצג את תכונת ה<em>קיבוץ</em> של הסכום.</p>
+				</div>
+			</div>
+
+			<div id="associate-values">
+				<p class="question">איזו מהתכונות הבאות הביטוי <code><var>A</var>+(<var>B</var>+<var>C</var>)=(<var>A</var>+<var>B</var>)+<var>C</var></code> מייצג:</p>
+				<p class="solution">קיבוץ</p>
+				<ul class="choices" data-category="true">
+					<li data-each="PROPERTIES as place"><var>place</var></li>
+				</ul>
+				<div class="hints">
+					<p>נשים לב שבצד השמאלי של הביטוי, הסוגריים מורים לסכום את <var>B</var> ו-<var>C</var> לפני הסכימה עם <var>A</var>. בצד הימני של הביטוי, נסכום את <var>A</var> ו-<var>B</var> לפני הסכימה עם <var>C</var>.</p>
+					<p>הסדר של המספרים לא השתנה אך הקיבוץ שלהם לקבוצות (מה שבתוך הסוגריים) השתנה.</p>
+					<div>
+						<p>נפתור את הצד השמאלי:</p>
+						<p><code><var>A</var>+(<var>B</var>+<var>C</var>)=<var>ASSOCIATIVE_RESULT</var></code></p>
+						<p>נפתור את הצד הימני, ונראה שהתוצאה זהה:</p>
+						<p><code>(<var>A</var>+<var>B</var>)+<var>C</var>=<var>ASSOCIATIVE_RESULT</var></code></p>
+					</div>
+					<p>הקבוצות השתנו והתוצאה לא, ולכן ביטוי זה מייצג את תכונת ה<em>קיבוץ</em> של הסכום.</p>
+				</div>
+			</div>
+
+			<div id="associative-variable">
+				<p class="question">איזה מהביטויים מימין מייצג את תכונת הקיבוץ של הסכום?</p>
+				<p class="solution"><code>a+(b+c)=(a+b)+c</code></p>
+				<ul class="choices" data-category="true">
+					<li data-each="EQUATIONS as value"><code><var>value</var></code></li>
+				</ul>
+				<div class="hints">
+					<p>נבדיל בין תכונת הקיבוץ לתכונת החילוף בה סדר המספרים מוחלף.</p>
+					<p>בניגוד לתכונת החילוף, תכונת הקיבוץ מאפשרת לסדר מחדש את הסוגריים. כך לדוגמא, הסכום <code>(4+2)+3</code> שקול לסכום <code>4+(2+3)</code>.</p>
+					<p>הביטוי <code>a+(b+c)=(a+b)+c</code> מייצג את תכונת הקיבוץ של הסכום.</p>
+				</div>
+			</div>
+
+			<div id="commutative">
+				<p class="question">איזו מהתכונות הבאות הביטוי <code>a+b=b+a</code> מייצג:</p>
+				<p class="solution">חילוף</p>
+				<ul class="choices" data-category="true">
+					<li data-each="PROPERTIES as value"><var>value</var></li>
+				</ul>
+				<div class="hints">
+					<p>כפי שהביטו מרמז, שינוי הסדר של <code>a</code> ו-<code>b</code> אינו משנה את התוצאה הסופית.</p>
+					<p>נבדיל בין תכונה זו לתכונת הקיבוץ לפיה ניתן לשנות את הקיבוץ לקבוצות (מה שבתוך הסוגריים).</p>
+					<p>הביטוי מייצג את תכונת החילוף. המשפט הבא יסייע לך לזכור תכונה זו: המרחק ה<em>חלופי </em>זהה בשני הכיוונים, מבית הספר לבית ומהבית לבית הספר.</p>
+				</div>
+			</div>
+
+			<div id="commutative-values">
+				<p class="question">איזו מהתכונות הבאות הביטוי <code><var>A</var>+<var>B</var>=<var>B</var>+<var>A</var></code> מייצג:</p>
+				<p class="solution">חילוף</p>
+				<ul class="choices" data-category="true">
+					<li data-each="PROPERTIES as value"><var>value</var></li>
+				</ul>
+				<div class="hints">
+					<p>נבדיל בין תכונה זו לתכונת הקיבוץ בה סדר הפעולות מוחלף.</p>
+					<p>כפי שרואים בביטוי, החלפת הסדר בין <var>A</var> ו-<var>B</var> אינה משנה את התוצאה.</p>
+					<div>
+						<p>נפתור את הצד השמאלי:</p>
+						<p><code><var>A</var>+<var>B</var>=<var>COMMUTATIVE_RESULT</var></code></p>
+					</div>
+					<div>
+						<p>נפתור את הצד הימני, ונראה שהתוצאה זהה:</p>
+						<p><code><var>B</var>+<var>A</var>=<var>COMMUTATIVE_RESULT</var></code></p>
+					</div>
+					<p>הביטוי מייצג את תכונת החילוף. המשפט הבא יסייע לך לזכור תכונה זו: המרחק ה<em>חלופי </em>זהה בשני הכיוונים, מבית הספר לבית ומהבית לבית הספר.</p>
+				</div>
+			</div>
+
+			<div id="commutative-variable">
+				<p class="question">איזה מהביטויים מימין מייצג את תכונת החילוף של הסכום?</p>
+				<p class="solution"><code>a+b=b+a</code></p>
+				<ul class="choices" data-category="true">
+					<li data-each="EQUATIONS as value"><code><var>value</var></code></li>
+				</ul>
+				<div class="hints">
+					<p>על פי תכונת החילוף, אין חשיבות לסדר של המספרים.</p>
+					<p>נבדיל בין תכונת החילוף לתכונת הקיבוץ לפיה ניתן לשנות את הקיבוץ לקבוצות (מה שבתוך הסוגריים).</p>
+					<p> המשפט הבא יסייע לך לזכור את תכונת החילוף: המרחק ה<em>חלופי </em>זהה בשני הכיוונים, מבית הספר לבית ומהבית לבית הספר.</p>
+					<p>הביטוי <code>a+b=b+a</code> מייצג את תכונת החילוף.</p>
+				</div>
+			</div>
+
+			<div id="distributive">
+				<p class="problem"></p>
+				<p class="question">איזו מהתכונות הבאות הביטוי <code>a+b(c+d)=a+bc+bd</code> מייצג:</p>
+				<p class="solution">פילוג</p>
+				<ul class="choices" data-category="true">
+					<li data-each="PROPERTIES as value"><var>value</var></li>
+				</ul>
+				<div class="hints">
+					<p>בצד השמאלי של הביטוי, <code>b</code> מוכפל בסכום של <code>c</code> ו-<code>d</code>.</p>
+					<p>בצד הימני של הביטוי, קודם נכפיל את <code>b</code> ב-<code>c</code> וב-<code>d</code> לחוד, ואז נסכום את המכפלות.</p>
+					<p>נאמר שהכפל ב-<code>b</code><em> מתפלג </em>על פני הסכום של <code>c</code> ו-<code>d</code>, וביטוי זה מייצג את תכונת ה<em>פילוג.</em></p>
+				</div>
+			</div>
+
+			<div id="distributive-values">
+				<p class="question">איזו מהתכונות הבאות הביטוי <code><var>A</var>+<var>B</var>(<var>C</var>+<var>D</var>)=<var>A</var>+(<var>B</var>)(<var>C</var>)+(<var>B</var>)(<var>D</var>)</code> מייצג:</p>
+				<p class="solution">פילוג</p>
+				<ul class="choices" data-category="true">
+					<li data-each="PROPERTIES as value"><var>value</var></li>
+				</ul>
+				<div class="hints">
+					<p>בצד השמאלי של הביטוי, נכפיל את <code><var>B</var> </code> בסכום של <code><var>C</var></code> ו-<code><var>D</var></code>. בצד הימני של הביטוי, נכפיל קודם את <code><var>B</var></code> ב-<code><var>C</var></code> ו-<code><var>D</var></code> לחוד, ואז נסכום את המכפלות.</p>
+					<div>
+						<p>נפתור את הצד השמאלי:</p>
+						<p><code><var>A</var>+<var>B</var>(<var>C</var>+<var>D</var>)=<var>DISTRIBUTIVE_RESULT</var></code></p>
+					</div>
+					<div>
+						<p>נפתור את הצד הימני, ונראה שהתוצאה זהה:</p>
+						<p><code><var>A</var>+(<var>B</var>)(<var>C</var>)+(<var>B</var>)(<var>D</var>)=<var>DISTRIBUTIVE_RESULT</var></code></p>
+					</div>
+					<p>נאמר שהכפל ב-<code><var>B</var></code><em> מתפלג </em>על פני הסכום של <code><var>C</var></code> ו-<code><var>D</var></code> ולכן זו נקראת תכונת ה<em>פילוג.</em></p>
+				</div>
+			</div>
+
+			<div id="distributive-variable">
+				<p class="question">איזה מהביטויים מימין מייצג את תכונת הפילוג של הסכום?</p>
+				<p class="solution"><code>a+b(c+d)=a+bc+bd</code></p>
+				<ul class="choices" data-category="true">
+					<li data-each="EQUATIONS as value"><code><var>value</var></code></li>
+				</ul>
+				<div class="hints">
+					<p>בתשובה הנכונה, בצד השמאלי של הביטוי, <code>b</code> מוכפל בסכום של <code>c</code> ו-<code>d</code>.</p>
+					<p>בצד הימני של הביטוי, קודם נכפיל את <code>b</code> ב-<code>c</code> ו-<code>d</code> לחוד, ואז נסכום את המכפלות.</p>
+					<p>נאמר שהכפל ב-<code>b</code><em> מתפלג </em>על פני הסכום של <code>c</code> ו-<code>d</code>, ולכן זו נקראת תכונת הפילוג.</p>
+					<p>הביטוי <code>a+b(c+d)=a+bc+bd</code> מייצג את תכונת הפילוג.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>תמורה 1</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="letters" data-weight="0.6">
+                <div class="vars" data-ensure="WORD != PERM">
+                    <var id="INDEX">randRange(0,11)</var>
+                    <var id="WORD">["תפוח", "אזור", "אכל", "חוקים", "כאסים", "בוטן", "ביחד", "תינוק", "שירה", "גזר", "מנורה", "נאמר"][INDEX]</var>
+                    <var id="PERM">shuffle(WORD).join("")</var>
+                    <var id="ANSWER">factorial(WORD.length)</var>
+                </div>
+                <p class="question">בכמה דרכים יחודיות אפשר לארגן את האותיות של המילה <i><var>WORD</var></i>?</p>
+                <p class="solution" data-forms="integer"><var>ANSWER</var></p>
+                <div class="hints">
+                    <div>
+                        ננסה לבנות את המילים בצורות שורות (תמורות) מילה לאחר מילה. המילה בעלת <var>WORD.length</var> אותיות.
+                        <p><var>_.map(_.range(WORD.length), function(l){ return "_ "; }).join("")</var></p>
+                        <p>עבור האות הראשונה יש לנו <var>WORD.length</var> אפשרויות של מילים להכניס.
+                    </div>
+                    <div>
+                        אחרי שהכנסתי את האות הראשונה, נגיד והיא <var>PERM[0]</var>, יש לנו <var>WORD.length-1</var> אותיות לסדר.
+                        <p><var>PERM[0]+" "+_.map(_.range(WORD.length-1), function(l){ return "_ "; }).join("")</var></p>
+                        <p>עבור האות השניה , יש לנו רק <var>WORD.length-1</var> אותיות שאנו יכולים להכניס
+                            <code><var>WORD.length</var> \cdot <var>WORD.length-1</var></code>בדרך יחודית</p>
+                    </div>
+                    <div>
+                       אנו יכולים להמשיך בדרך זו ולהוסיף את האות השלישית, הרביעית ( אם קיימת) , וכך הלאה.  בכל שלב יש לנו אפשרות יחודית אחת פחות, עד שנגיע לאות האחרונה יהיה לנו 
+                       רק אפשרות יחודית אחת.
+                    </br></br>
+                    </div>
+                     <div>
+                       ולכן, הכמות המקסימלית של אפשרויות יחודיות שאפשר יהיה לארגן מחדש את המילה חייבת להיות <code><var>_.map(_.range(WORD.length).reverse(), function(l){ return (++l);}).join("\\cdot")</var>.</code> דרך אחרת לכתוב את זה יהיה <code><var>WORD.length</var>!</code>, 
+                        או  <var>WORD.length</var> עצרת, שזה למעשה <var>ANSWER</var>.
+                    </div>
+                </div>
+            </div>
+
+            <div id="reindeer" data-weight="0.4">
+                <div class="vars">
+                    <var id="NUM_NAMES">randRange(4,6)</var>
+                    <var id="NAMES">_.map(randRangeUnique(0,8,NUM_NAMES), function(n){
+                        return ["בלופיין", "גלופיין", "פנסר", "לנסר", "קיונטיין", "באלטזר", "משה", "ג'בדיה", "רודי"][n];
+                    })
+                    </var>
+                    <var id="SLOTS">randRange(3, NAMES.length-1)</var>
+                    <var id="ANSWER">factorial(NAMES.length)/factorial(NAMES.length-SLOTS)</var>
+                </div>
+                <p>
+                    יש לך  <var>NAMES.length</var> איילים, <var>toSentence(NAMES)</var>, ואתה רוצה ש- <var>SLOTS</var> יטיסו את המזחלת שלך.
+                    אתה תמיד דואג שכל האיילים שלך יטוסו בשורה אחת יחידה, לצורך טיסה מהנה.
+                </p>
+
+                <p class="question">בכמה דרכים יחודיות אתה יכול לסדר את האיילים שלך?</p>
+                <p class="solution" data-forms="integer"><var>ANSWER</var></p>
+
+                <div class="hints">
+                    <div>
+                    <p>אנו יכולים לבנות את שורת האיילים שלנו אחד אחר השני: יש לנו <var>SLOTS</var> מקומות, ויש לנו  <var>NAMES.length</var>
+                        איילים שונים שאנחנו יכולים להשים במקום הראשון. </p>
+                    </div>
+                    <p>
+                     <p>
+                       ברגע שמילינו את המקום הראשון, נשארו לנו <var>NAMES.length-1</var> איילים , ו- <var>NAMES.length-1</var> מקומות פנויים.
+                       עד עכשיו, יש לנו <code><var>NAMES.length</var> \cdot <var>NAMES.length-1</var> = <var>NAMES.length*(NAMES.length-1)</var></code> אפשרויות יחודיות שאנו יכולים ליצור.
+                    </p>
+                    <p>
+                        אנו יכולים להמשיך בדרך הזו, עבור האייל השלישי, וכן הלאה, עד לאחרון, שם ישארו לנו רק <var>NAMES.length - SLOTS + 1</var> אפשרויות עבור האייל האחרון.
+                    </p>
+                    <p>
+                       אז, המספר המקסימלי של אפשרויות יחודיות שאנו יכול לסדר את שורת האיילים הוא <code><var>_.map(_.range(SLOTS), function(l){ return (NAMES.length - l);}).join("\\cdot")</var>.</code> דרך נוספת לכתוב זאת היא  <code> \dfrac{<var>NAMES.length</var>!}{(<var>NAMES.length</var>-<var>SLOTS</var>)!} = <var>ANSWER</var></code>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

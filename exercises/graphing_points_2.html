@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html data-require="math interactive graphie">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>שרטוט נקודות 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+
+<body>
+    <div class="summary">Plotting points on a coordinate plane and tell quadrant.
+        Common Core State Standard: 6.NS.6c
+        Related Videos: Quadrants of Coordinate Plane, The Coordinate Plane
+        Prerequisite: Number line, (coming soon) Plotting points 0.5
+        Required/helpful For: Graphing linear equations, (coming soon) Graphing using x and y intercepts
+    </div>
+    <div class="exercise">
+        <div class="problems">
+            <div>
+                <div class="vars">
+                    <var id="X">randRangeNonZero( -10, 10 )</var>
+                    <var id="Y">randRangeNonZero( -10, 10 )</var>
+                    <var id="QUADRANT">X &gt; 0 ? ( Y &gt; 0 ? "I" : "IV" ) : ( Y &gt; 0 ? "II" : "III" )</var>
+                </div>
+                <p class="question">
+                    שרטטו את הנקודה  <code>(<var>X</var>, <var>Y</var>)</code> וסמנו באיזה רביע היא נמצאת.
+                </p>
+                <div class="problem">
+                    <br />
+                    <div class="graphie" id="grid">
+                        graphInit({
+                            range: 11,
+                            scale: 20,
+                            axisArrows: "&lt;-&gt;",
+                            tickStep: 1,
+                            labelStep: 1,
+                            gridOpacity: 0.05,
+                            axisOpacity: 0.2,
+                            tickOpacity: 0.4,
+                            labelOpacity: 0.5
+                        });
+
+                        label( [ 0, 11 ], "y", "above" );
+                        label( [ 11, 0 ], "x", "right" );
+
+                        addMouseLayer();
+                        graph.movablePoint = addMovablePoint({ coord: [ 0, 0 ], snapY: 1, snapX: 1 });
+
+                        graph.movablePoint.onMove = function( x, y ) {
+                            return [ max( -10, min( x, 10 ) ), max( -10, min( y, 10 ) ) ];
+                        };
+                    </div>
+                </div>
+                <div class="solution" data-type="custom">
+                    <div class="instruction">
+                        שרטטו את הנקודה וביחרו באיזה רביע היא נמצאת.
+                        <ul>
+                            <li><input type="radio" name="sol" id="r1" value="I" /><label for="r1">I</label></li>
+                            <li><input type="radio" name="sol" id="r2" value="II" /><label for="r2">II</label></li>
+                            <li><input type="radio" name="sol" id="r3" value="III" /><label for="r3">III</label></li>
+                            <li><input type="radio" name="sol" id="r4" value="IV" /><label for="r4">IV</label></li>
+                        </ul>
+                        השרטוט הוא גם חלק מהתשובה שלך.
+                    </div>
+                    <div class="guess">[ graph.movablePoint.coord, $( "#solutionarea" ).find( "input:checked" ).val() ]</div>
+                    <div class="validator-function">
+                        if ( guess[ 0 ][ 0 ] === 0 &amp;&amp; guess[ 0 ][ 1 ] === 0 &amp;&amp; guess[ 1 ] == null ) {
+                            return "";
+                        }
+                        return guess[ 0 ][ 0 ] === X &amp;&amp; guess[ 0 ][ 1 ] === Y &amp;&amp; guess[ 1 ] === QUADRANT;
+                    </div>
+                    <div class="show-guess">
+                        graph.movablePoint.setCoord( guess[0] );
+                    </div>
+                    <div class="show-guess-solutionarea">
+                        $( "#solutionarea" ).find( "input" ).prop( 'checked', false );
+                        if ( guess[ 1 ] != null ) {
+                            $( "#solutionarea" ).find( "input[value=" + guess[ 1 ] + "]" ).prop( 'checked', true );
+                        }
+                    </div>
+                </div>
+
+                <div class="hints">
+                    <p>הקואורדינטות רשומות כך : <code>(\blue{x},\green{y})</code>.</p>
+
+                    <p>
+                        לכן, עבור <code>( \blue{<var>X</var>}, \green{<var>Y</var>} )</code>  <span class="hint_blue"> קואורדינטת ה-<code>x</code></span>
+                        שלנו היא  קואורדינטת ה-<code>\blue{<var>X</var>}</code> ואילו<span class="hint_green"> קואורדינטת ה-<code>y</code></span> שלנו היא  קואורדינטת ה-<code>\green{<var>Y</var>}</code>.
+                    </p>
+
+                    <p>
+                         <span class="hint_blue"> קואורדינטת ה-<code>x</code></span> אומרת לנו כמה רחוק עלינו לזוז מראשית הצירים ימינה ואילו
+                        <span class="hint_green"> קואורדינטת ה-<code>y</code></span> אומרת לנו כמה עלינו לנוע למעלה מראשית הצירים.
+                    </p>
+
+                    <div>
+                        <p>
+                            מכיוון ש <span class="hint_blue"> קואורדינטת ה-<code>x</code></span> שלנו היא <span data-if="X > 0">היא חיובית</span><span data-else>היא שלילית</span>,
+                            עלינו לנוע  קואורדינטת ה-<code>\blue{<var>abs( X )</var>}</code> יחידות <span data-if="X > 0">ימינה</span><span data-else>שמאלה</span> מראשית הצירים.
+                        </p>
+                        <div class="graphie" data-update="grid">
+                            style({
+                                stroke: BLUE,
+                                strokeWidth: 3,
+                                arrows: "-&gt;"
+                            }, function() {
+                                line( [ 0, 0 ], [ X, 0 ]);
+                            });
+                            graph.movablePoint.toFront();
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>
+                            מכיוון ש <span class="hint_green"> קואורדינטת ה-<code>y</code><span> שלנו היא  <span data-if="Y > 0">חיובית</span><span data-else> שלילית</span>,
+                            עלינו לנוע  קואורדינטת ה-<code>\green{<var>abs( Y )</var>}</code> <span data-if="Y > 0"> יחידות מעלה</span><span data-else> יחידות מטה</span> מראשית הצירים.
+                        </p>
+                        <div class="graphie" data-update="grid">
+                            style({
+                                stroke: GREEN,
+                                strokeWidth: 3,
+                                arrows: "-&gt;"
+                            }, function() {
+                                line( [ X, 0 ], [ X, Y ] );
+                            });
+                            graph.movablePoint.toFront();
+                        </div>
+                    </div>
+                    <div>
+                        <p>
+                            הזיזו את הנקודה לעבר   קואורדינטת ה-<code>( \blue{<var>X</var>}, \green{<var>Y</var>} )</code> שמסומנת כעת בשרטוט.
+                            <input type="button" value="הראו לי" onClick="javascript:KhanUtil.currentGraph.graph.movablePoint.moveTo( KhanUtil.tmpl.getVAR('X'), KhanUtil.tmpl.getVAR('Y') );" />
+                        </p>
+                        <div class="graphie" data-update="grid">
+                            style({
+                            stroke: PINK,
+                            strokeWidth: 3
+                            }, function() {
+                            line( [ X - 0.3, Y - 0.3 ], [ X + 0.3, Y + 0.3 ] );
+                            line( [ X + 0.3, Y - 0.3 ], [ X - 0.3, Y + 0.3 ] );
+                            });
+                            graph.movablePoint.toFront();
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>כעת כשרטטנו את הנקודה, אנו יכולים לבדוק באיזה רביע היא נמצאת.</p>
+                        <p>המוסכמה היא לסמן את הרביעים   באמצעות מספרים רומאים, כאשר מתחילים מהרביע הימני העליון המסומן כ-  קואורדינטת ה-
+                        <code>\text{I}</code> ומשם ממשיכים נגד כיוון השעון.</p>
+                        <div class="graphie" data-update="grid">
+                            label( [ 5, 5] , " \\text{ I }", "center", { color: "purple" } );
+                            label( [ -5, 5] , " \\text{ II }", "center", { color: "purple" } );
+                            label( [ -5, -5] , " \\text{ III }", "center", { color: "purple" } );
+                            label( [ 5, -5] , " \\text{ IV }", "center", { color: "purple" } );
+                        </div>
+                    </div>
+                    <p class="final_answer">
+                        מכיוון והנקודה שלנו נמצאת בחלק 
+                        <span><span data-if="Y > 0">העליון</span><span data-else>התחתון</span></span>
+                        <span><span data-if="X > 0">ימני</span><span data-else>שמאלי</span></span>
+                        של הגרף הרביע שלה הוא <code>\purple{\text{<var>QUADRANT</var>}}.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

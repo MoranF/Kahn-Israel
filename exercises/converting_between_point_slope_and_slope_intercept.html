@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html data-require="math math-format expressions">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>המרת משוואה מהצורה נקודה-שיפוע לצורה שיפוע-לכיד</title>
+    <script src="../khan-exercise.js"></script>
+    <style type="text/css">
+        #answer_area input[type=text] {
+            width: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="exercise">
+    <div class="problems">
+        <div id="point-to-intercept">
+            <div class="vars" data-ensure="y1 != 0">
+                <var id="m">(random() > 0.5 ? -1 : 1) * (rand(5) + 1)</var>
+                <var id="b">(random() > 0.5 ? -1 : 1) * (rand(5) + 1)</var>
+                <var id="x1">(random() > 0.5 ? -1 : 1) * (rand(3) + 1)</var>
+                <var id="y1">m*x1+b</var>
+                <var id="var1">m*x1</var>
+            </div>
+            <p class="question">המירו את המשוואה הבאה מצורת נקודה-שיפוע לצורה שיפוע-לכיד</p>
+            <p>או במילים אחרות, כיתבו את המשוואה בצורה הבאה <code>y = mx + b</code>, מהם הערכים של  <code>m</code> ו- <code>b</code>?</p>
+            <p><code>y - <var>y1</var> = <var>m</var>(x - <var>x1</var>)</code></p>
+            <div class="solution" data-type="multiple">
+                <p><code>y = \space</code><span class="sol"><var>m</var></span><code>\space \cdot x + \space</code><span class="sol"><var>b</var></span></p>
+            </div>
+            <div class="hints">
+                <div>
+                    <p>נפתח את הסוגריים בצד הימני של המשוואה.</p>
+                    <p><code>y - <var>y1</var> = \color{<var>BLUE</var>}{<var>expr([ "*", m, "x" ])</var> - <var>var1</var>}</code></p>
+                </div>
+                <div>
+                    <p>
+                        נבודד את y בצד שמאל של המשוואה על ידי 
+                        <span data-if="y1 < 0">הפחתת  <code><var>-y1</var></code> משני צידי המשוואה.</span>
+                        <span data-else>הוספת <code><var>y1</var></code> לשני צידי המשוואה.</span>
+                    </p>
+                    <p><code>y = <var>expr([ "*", m, "x" ])</var> - <var>var1</var> + <var>y1</var></code></p>
+                </div>
+                <div>
+                    <p>כעת נקבץ את האיברים הקבועים בצד ימין.</p>
+                    <p><code>y = <var>expr([ "*", m, "x" ])</var> + <var>b</var></code></p>
+					<p>המשוואה היא כעת בצורת שיפוע-לכיד, כאשר השיפוע הוא  <code><var>m</var></code> ולכיד ה-y הוא  <code><var>b</var></code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>שברים - בעיות מילוליות 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+		<div class="vars">
+			<var id="A">randRange( 1, 5 )</var>
+			<var id="B">randRange( 1, 5 )</var>
+			<var id="LEFT">randRange( 1, 5 )</var>
+			<var id="TOTAL">A + B + LEFT</var>
+		</div>
+
+		<div class="problems">
+			<div id="show-total-want-eaten">
+				<p class="problem">
+					<var>person( 1 )</var> <var>genderize(1,"אכל","אכלה")</var> <var>plural_heb( A, "פרוסה","פרוסות","f" )</var> של <var>pizza( 1 )</var>, ואילו <var>person( 2 )</var>
+					<var>genderize(2,"אכל","אכלה")</var> <var>plural_heb( B, "פרוסה","פרוסות","f" )</var>.
+				</p>
+				<p class="question">אם בתחילה ישנן <var>TOTAL</var> פרוסות, מהו החלק של ה<var>pizza( 1 )</var> שנאכל?</p>
+				<p class="solution" data-type="rational" data-simplify="optional"><var>(A + B) / TOTAL</var></p>
+				<div class="hints">
+					<p><code>\text{חלק מה<var>pizza( 1 )</var> שנאכל} = \dfrac{\text{מספר פרוסות שנאכלו}}{\text{מספר פרוסות סך הכל}}</code></p>
+					<div>
+						<p>סך הכל <var>they(1,2)</var> אכלו <code>\color{#6495ED}{<var>A + B</var>}</code> מתוך <code><var>TOTAL</var></code> פרוסות.</p>
+						<div class="graphie">
+							init({
+								range: [ [-2, 2], [-2, 2] ],
+								scale: 25
+							});
+							var eaten = A + B;
+							piechart( [ eaten, TOTAL - eaten ], [ "#6495ED", "#FFA500" ], 2 );
+						</div>
+					</div>
+					<p><var>they(1,2)</var> אכלו <code>\dfrac{<var>A + B</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var>.</p>
+				</div>
+			</div>
+
+			<div id="show-left-want-eaten">
+				<p class="problem">
+					<var>person( 1 )</var> <var>genderize(1,"אכל","אכלה")</var> <var>plural_heb( A, "פרוסה","פרוסות","f" )</var> של <var>pizza( 1 )</var>, ואילו <var>person( 2 )</var>
+					<var>genderize(2,"אכל","אכלה")</var> <var>plural_heb( B, "פרוסה","פרוסות","f" )</var>.
+				</p>
+				<p class="question"> אם בסוף הערב <var>plural_heb_word(LEFT, "נשארה","נשארו")</var>  <var>plural_heb(LEFT, "פרוסה","פרוסות","f" )</var>, מהו החלק של ה<var>pizza( 1 )</var> שנאכל?</p>
+				<p class="solution" data-type="rational" data-simplify="optional"><var>(A + B) / TOTAL</var></p>
+				<div class="hints">
+					<p><code>\text{חלק מה<var>pizza( 1 )</var> שנאכל} = \dfrac{\text{מספר פרוסות שנאכלו}}{\text{מספר פרוסות סך הכל}}</code></p>
+          <p>
+						מכיוון ש<var>they(1,2)</var> אכלו <var>A + B</var> פרוסות <var>pizza( 1 )</var> והשאירו <var>plural_heb( LEFT, "פרוסה","פרוסות","f")</var>,
+						<var>they(1,2)</var> בהכרח התחילו לאכול כאשר היו <var>TOTAL</var> פרוסות.
+					</p>
+					<div>
+						<p><var>they(1,2)</var> אכלו <code>\color{#6495ED}{<var>A + B</var>}</code> מתוך <code><var>TOTAL</var></code> פרוסות.</p>
+						<div class="graphie">
+							init({
+								range: [ [-2, 2], [-2, 2] ],
+								scale: 25
+							});
+							var eaten = A + B;
+							piechart( [ eaten, TOTAL - eaten ], [ "#6495ED", "#FFA500" ], 2 );
+						</div>
+					</div>
+					<p><var>they(1,2)</var> אכלו <code>\dfrac{<var>A + B</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var>.</p>
+				</div>
+			</div>
+
+			<div id="show-first-want-eaten">
+				<p class="problem">
+					<var>person( 1 )</var> <var>genderize(1,"אכל","אכלה")</var> <var>plural_heb( A, "פרוסה","פרוסות","f" )</var> של <var>pizza( 1 )</var>, ואילו <var>person( 2 )</var>
+					<var>genderize(2,"אכל","אכלה")</var> <var>plural_heb( B, "פרוסה","פרוסות","f" )</var>.
+				</p>
+				<p class="question">
+					אם <var>person( 1 )</var> <var>genderize(1,"אכל","אכלה")</var> <code>\dfrac{<var>A</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var>,
+				  איזה חלק מה<var>pizza( 1 )</var> נאכל סך הכל?
+				</p>
+				<p class="solution" data-type="rational" data-simplify="optional"><var>(A + B) / TOTAL</var></p>
+				<div class="hints">
+					<p>
+						אם <var>plural_heb( A,"פרוסה","פרוסות","f" )</var> <var>plural_heb_word(A,"מייצגת","מייצגות")</var> 
+						<code>\dfrac{<var>A</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var>, היו בהכרח בתחילת הערב
+						<var>TOTAL</var> פרוסות.
+					</p>
+					<p><code>\text{חלק מה<var>pizza( 1 )</var> שנאכל} = \dfrac{\text{מספר פרוסות שנאכלו}}{\text{מספר פרוסות סך הכל}}</code></p>
+					<div>
+						<p><var>they(1,2)</var> אכלו <code>\color{#6495ED}{<var>A + B</var>}</code> מתוך <code><var>TOTAL</var></code> פרוסות.</p>
+						<div class="graphie">
+							init({
+								range: [ [-2, 2], [-2, 2] ],
+								scale: 25
+							});
+							var eaten = A + B;
+							piechart( [ eaten, TOTAL - eaten ], [ "#6495ED", "#FFA500" ], 2 );
+						</div>
+					</div>
+					<p><var>they(1,2)</var> אכלו <code>\dfrac{<var>A + B</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var>.</p>
+				</div>
+			</div>
+
+			<div id="show-total-want-left">
+				<p class="problem">
+					<var>person( 1 )</var> <var>genderize(1,"אכל","אכלה")</var> <var>plural_heb( A, "פרוסה","פרוסות","f" )</var> של <var>pizza( 1 )</var>, ואילו <var>person( 2 )</var>
+					<var>genderize(2,"אכל","אכלה")</var> <var>plural_heb( B, "פרוסה","פרוסות","f" )</var>.
+				</p>
+				<p class="question">אם בתחילת הערב היו סך הכל <var>TOTAL</var> פרוסות, איזה חלק של ה<var>pizza( 1 )</var> נשאר?</p>
+				<p class="solution" data-type="rational" data-simplify="optional"><var>LEFT / TOTAL</var></p>
+				<div class="hints">
+					<p><code>\text{חלק מה<var>pizza( 1 )</var> שנאכל} = \dfrac{\text{מספר פרוסות שנאכלו}}{\text{מספר פרוסות סך הכל}}</code></p>
+					<div>
+						<p>יחדיו <var>they(1,2)</var> אכלו <var>A + B</var> פרוסות. משמע ש<var>plural_heb_word(LEFT,"נשארה","נשארו")</var> <var>LEFT</var> מתוך <var>TOTAL</var> פרוסות.</p>
+						<div class="graphie">
+							init({
+								range: [ [-2, 2], [-2, 2] ],
+								scale: 25
+							});
+							var remaining = TOTAL - A - B;
+							piechart( [ remaining, TOTAL - remaining ], [ "#FFA500", "#6495ED" ], 2 );
+						</div>
+					</div>
+					<p>נשאר <code>\dfrac{<var>LEFT</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var> בסוף הערב.</p>
+				</div>
+			</div>
+
+			<div id="show-first-want-left">
+				<p class="problem">
+					<var>person( 1 )</var> <var>genderize(1,"אכל","אכלה")</var> <var>plural_heb( A, "פרוסה","פרוסות","f" )</var> של <var>pizza( 1 )</var>, ואילו <var>person( 2 )</var>
+					<var>genderize(2,"אכל","אכלה")</var> <var>plural_heb( B, "פרוסה","פרוסות","f" )</var>.
+				</p>
+				<p class="question">
+					אם <var>person( 1 )</var> <var>genderize(1,"אכל","אכלה")</var> <code>\dfrac{<var>A</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var>,
+					איזה חלק של ה<var>pizza( 1 )</var> נשאר בסוף הערב?
+				</p>
+				<p class="solution" data-type="rational" data-simplify="optional"><var>LEFT / TOTAL</var></p>
+				<div class="hints">
+					<p>
+						אם <var>plural_heb( A, "פרוסה","פרוסות","f")</var> <var>plural_heb_word(A,"מייצגת","מייצגות")</var>
+						<code>\dfrac{<var>A</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var>,
+					  בהכרח היו בתחילה הערב סך הכל <var>TOTAL</var> פרוסות.
+					</p>
+					<p><code>\text{חלק מה<var>pizza( 1 )</var> שנאכל} = \dfrac{\text{מספר פרוסות שנאכלו}}{\text{מספר פרוסות סך הכל}}</code></p>
+					<div>
+						<p>יחדיו <var>they(1,2)</var> אכלו <var>A + B</var> פרוסות. משמע ש<var>plural_heb_word(LEFT,"נשארה","נשארו")</var> <var>LEFT</var> מתוך <var>TOTAL</var> פרוסות.</p>
+						<div class="graphie">
+							init({
+								range: [ [-2, 2], [-2, 2] ],
+								scale: 25
+							});
+							var remaining = TOTAL - A - B;
+							piechart( [ remaining, TOTAL - remaining ], [ "#FFA500", "#6495ED" ], 2 );
+						</div>
+					</div>
+					<p>נשאר <code>\dfrac{<var>LEFT</var>}{<var>TOTAL</var>}</code> מה<var>pizza( 1 )</var> בסוף הערב.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

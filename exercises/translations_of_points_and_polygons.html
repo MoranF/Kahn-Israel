@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html data-require="math graphie geom interactive">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>טרנספורמצית תרגום של מצולעים</title>
+    <script src="../khan-exercise.js"></script>
+    <style type="text/css">
+        #answer_area input[type=text] {
+            width: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="exercise">
+    <div class="problems">
+        <div id="drag">
+            <div class="vars">
+                <var id="SX,SY,EX,EY" data-ensure="SX !== EX || SY !== EY">randRange(-4, 4, 4)</var>
+                <var id="DX,DY">[EX - SX, EY - SY]</var>
+                <var id="POINTS">_.map(_.range(6), function() {
+                    return {x: randRange(-4, 4), y: randRange(-4, 4)};
+                })</var>
+                <var id="HULL">_.map(Geom.convexhull(POINTS), function(p) {
+                    return [p.x + SX, p.y + SY];
+                })</var>
+                <var id="TARGET"> _.map(HULL, function(p) {
+                    return [p[0] + DX, p[1] + DY];
+                })</var>
+            </div>
+
+            <p class="question">
+               מה היא תמונת המצולע לאחר הטרנספורמצית התרגום  <code>T_{(<var>DX</var>, <var>DY</var>)}</code>?
+            </p>
+
+            <div class="problem">
+                <div class="graphie" id="grid">
+                    graphInit({
+                        range: 11,
+                        scale: 20,
+                        axisArrows: "&lt;-&gt;",
+                        tickStep: 1,
+                        labelStep: 1,
+                        gridOpacity: 0.05,
+                        axisOpacity: 0.2,
+                        tickOpacity: 0.4,
+                        labelOpacity: 0.5
+                    });
+
+                    for (var i=0; i &lt; HULL.length; i++) {
+                        line(HULL[i], HULL[(i+1) % HULL.length], { stroke: GRAY, strokeDasharray: "- " });
+                    }
+
+                    addMouseLayer();
+
+                    graph.points = _.map(HULL, function(point) { return addMovablePoint({ coord: point, visible: false }); });
+                    graph.lines = [];
+                    for (var i=0; i &lt; graph.points.length; i++) {
+                        graph.lines.push(addMovableLineSegment({ pointA: graph.points[i], pointZ: graph.points[(i+1) % graph.points.length], snapX: 1, snapY: 1}));
+                    }
+
+                    _.each(graph.lines, function(line) { line.onMove = function(dX, dY){ graph.updatePolygon(dX, dY); }});
+
+                    graph.updatePolygon = function(dX, dY) {
+                        _.each(graph.points, function(point){ point.setCoord([point.coord[0] + dX, point.coord[1] + dY]); point.updateLineEnds(); });
+                        graph.curPoints = _.map(graph.points, function(point){ return point.coord; });
+                    }
+
+                    graph.showGuess = function() {
+                        _.each(graph.points, function(point) { point.remove(); });
+                        _.each(graph.lines, function(line) { line.remove(); });
+                        graph.points = _.map(graph.curPoints, function(point) { return addMovablePoint({ coord: point, visible: false }); });
+                        graph.lines = [];
+                        for (var i=0; i &lt; graph.points.length; i++) {
+                            graph.lines.push(addMovableLineSegment({ pointA: graph.points[i], pointZ: graph.points[(i+1) % graph.points.length], snapX: 1, snapY: 1}));
+                        }
+                    }
+
+                    graph.drawAnswer = function() {
+                        for (var i=0; i &lt; TARGET.length; i++) {
+                            line(TARGET[i], TARGET[(i+1) % TARGET.length], { stroke: ORANGE });
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    גרור את המצולע הכחול לפי העתקה הנתונה.
+                </div>
+                <div class="guess"> KhanUtil.currentGraph.graph.curPoints
+                </div>
+                <div class="validator-function">
+                    coordList = _.map(KhanUtil.currentGraph.graph.points, function(point){ return point.coord; });
+                    return _.all(coordList, function(point) {
+                        return (point[0] === TARGET[_.indexOf(coordList, point)][0])
+                            &amp;&amp; (point[1] === TARGET[_.indexOf(coordList, point)][1]);
+                    });
+                </div>
+                <div class="show-guess">
+                    KhanUtil.currentGraph.graph.curPoints = guess;
+                    KhanUtil.currentGraph.graph.showGuess();
+                </div>
+            </div>
+
+            <div class="hints">
+                <p>
+                   העתקה, במקרה זה <code>T_{(a, b)}</code> מזיזה את הגוף <code>a</code> יחידות בציר ה <code>x</code> (ימינה אם 
+                    <code>a</code> חיובי,שמאלה אם <code>a</code> שלילי) ו
+                    <code>b</code> יחידות בציר ה <code>y</code>  (למעלה אם <code>b</code> חיובי, למטה אם <code>b</code> שלילי).
+                </p>
+                <div>
+                    כדי לראות איפה ההעתקה הזיזה את המצולע, נבחר נקודה אחת, ונזיז אותה. לדוגמא, מה יקרה ל 
+                    <code>(<var> HULL[0][0] </var>,<var> HULL[0][1] </var>)</code>  תחת הטרנספורמציה הנתונה?
+                    <div class="graphie" data-update="grid">
+                        circle(HULL[0], { r: 0.2, fill: "black", stroke: "none" });
+                    </div>
+                    </br></br>
+                </div> 
+                <div>
+                  תחת הטרנספורמציה הנתונה <code>T_{(<var>DX</var>, <var>DY</var>)}</code>, <code>(<var> HULL[0][0] </var>,<var> HULL[0][1] </var>)</code> הינה מתורגמת ב<code>(<var> TARGET[0][0] </var>,<var> TARGET[0][1] </var>)</code>. לאיפה שאר המצולע מתורגם?
+                    <div class="graphie" data-update="grid">
+                        circle(TARGET[0], { r: 0.2, fill: "black", stroke: "none" });
+                        line(HULL[0], TARGET[0], { stroke: "black", arrows: "->"});
+                    </div>
+                    </br></br>
+                </div>
+                <div>
+                    כדי להגיע מ <code>(<var> HULL[0][0] </var>,<var> HULL[0][1] </var>)</code> אל <code>(<var> TARGET[0][0] </var>,<var> TARGET[0][1] </var>)</code>, נשנה את קורדינטת הX ב <var>DX</var> וקורדינטת הY ב <var>DY</var>. כדי לתרגם את כל המצולע, אנו צריכים
+                    לעשות אותו דבר עבור כל הנקודות במצולע.
+                </br></br>
+                </div>
+                <div>
+                   המסגרת הכתומה מראה איפה יהיה המצולע לאחר התרגום.
+                    <div class="graphie" data-update="grid">
+                        for (var i=0; i &lt; TARGET.length; i++) {
+                            line(TARGET[i], TARGET[(i+1) % TARGET.length], { stroke: ORANGE });
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="reverse">
+            <div class="vars">
+                <var id="SX,SY,EX,EY" data-ensure="SX !== EX || SY !== EY">randRange(-4, 4, 4)</var>
+                <var id="DX,DY">[EX - SX, EY - SY]</var>
+                <var id="POINTS">_.map(_.range(6), function() {
+                    return {x: randRange(-4, 4), y: randRange(-4, 4)};
+                })</var>
+                <var id="HULL">_.map(Geom.convexhull(POINTS), function(p) {
+                    return [p.x + SX, p.y + SY];
+                })</var>
+                <var id="TARGET"> _.map(HULL, function(p) {
+                    return [p[0] + DX, p[1] + DY];
+                })</var>
+            </div>
+
+            <p class="question">
+               מה היא טרנספורמצית התרגום המופעלת כדי להזיז את הצורה הכחולה לצורה הכתומה המקווקת?
+            </p>
+
+            <div class="problem">
+                <div class="graphie" id="grid">
+                    graphInit({
+                        range: 11,
+                        scale: 20,
+                        axisArrows: "&lt;-&gt;",
+                        tickStep: 1,
+                        labelStep: 1,
+                        gridOpacity: 0.05,
+                        axisOpacity: 0.2,
+                        tickOpacity: 0.4,
+                        labelOpacity: 0.5
+                    });
+
+                    for (var i=0; i &lt; HULL.length; i++) {
+                        line(HULL[i], HULL[(i+1) % HULL.length], { stroke: BLUE });
+                    }
+
+                    for (var i=0; i &lt; TARGET.length; i++) {
+                        line(TARGET[i], TARGET[(i+1) % TARGET.length], { stroke: ORANGE, strokeDasharray: "- " });
+                    }
+
+                </div>
+            </div>
+
+            <div class="solution" data-type="multiple"><code>{\LARGE T } \;(</code>
+                <span class="sol" style="width:15px" data-fallback="1"><var>DX</var></span>
+                <code>,</code>
+                <span class="sol" style="width:15px" data-fallback="1"><var>DY</var></span>
+                <code>)</code>
+            </div>
+
+            <div class="hints">
+                <p>
+                   העתקה, במקרה זה <code>T_{(a, b)}</code> מזיזה את הגוף <code>a</code> יחידות בציר ה <code>x</code> (ימינה אם 
+                    <code>a</code> חיובי,שמאלה אם <code>a</code> שלילי) ו
+                    <code>b</code> יחידות בציר ה <code>y</code>  (למעלה אם <code>b</code> חיובי, למטה אם <code>b</code> שלילי).
+                </p>
+                <div>
+                    כדי לראות איזו טרנספורמציה תרגמה את המצולע הכחול, נבחר נקודה אחת ונתרגם אותה מהכתום לכחול. מה יקרה לנקודה 
+                    <code>(<var> HULL[0][0] </var>,<var> HULL[0][1] </var>)</code> תחת התרגום?
+                    <div class="graphie" data-update="grid">
+                        circle(HULL[0], { r: 0.2, fill: "black", stroke: "none" });
+                    </div>
+                    </br></br>
+                </div> 
+                <div>
+                    תחת התרגום , <code>(<var> HULL[0][0] </var>,<var> HULL[0][1] </var>)</code> תורגמה ל <code>(<var> TARGET[0][0] </var>,<var> TARGET[0][1] </var>)</code>. מה זה אומר לך על התרגום שהשתמשו בו?
+                    <div class="graphie" data-update="grid">
+                        circle(TARGET[0], { r: 0.2, fill: "black", stroke: "none" });
+                        line(HULL[0], TARGET[0], { stroke: "black", arrows: "->"});
+                    </div>
+                    </br></br>
+                </div>
+                <div>
+                    כדי להגיע מ <code>(<var> HULL[0][0] </var>,<var> HULL[0][1] </var>)</code> אל <code>(<var> TARGET[0][0] </var>,<var> TARGET[0][1] </var>)</code>, אנו צריכים לשנות את קורדינטת הX ב <var>DX</var> וקורדינטת הY ב <var>DY</var>.
+                    </br></br>
+                </div>
+                <div>
+        טרנספורמצית התרגום היא <code>T_{(<var>DX</var>, <var>DY</var>)}</code>.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

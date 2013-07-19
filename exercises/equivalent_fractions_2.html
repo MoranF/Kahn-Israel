@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>שברים שווי ערך 2</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="vars">
+		<var id="A">randRange(1, 12)</var>
+		<var id="Bf">randRange(2, 11)</var>
+		<var id="B">Bf + (Bf >= A ? 1 : 0)</var>
+		<var id="M">randRange(3, 9)</var>
+		<var id="C">A * M</var>
+		<var id="D">B * M</var>
+		<var id="SYMBOL">binop( 1 )</var>
+	</div>
+
+	<div class="problems">
+		<div>
+			<p class="question">איזה מספר יכול להחליף את הסימן  <code><var>SYMBOL</var></code> בנוסחה שלמטה?</p>
+			<p><code>\dfrac{<var>A</var>}{<var>B</var>} = \dfrac{<var>C</var>}{<var>SYMBOL</var>}</code></p>
+			<div class="solution" data-forms="integer"><var>D</var></div>
+			<div class="hints">
+				<p>כדי לקבל את המונה הימני    <code><var>C</var></code>, ניתן להכפיל את המונה השמאלי ששווה ל-  <code><var>A</var></code> ב- <code><var>M</var></code>.</p>
+				<p>כדי למצוא את המכנה הימני, הכפילו את המכנה השמאלי ב- <code><var>M</var></code> גם כן.</p>
+				<p><code><var>B</var> \times <var>M</var> = <var>D</var></code></p>
+				<div>
+					<p>שימו לב שגם המונה וגם המכנה מוכפלים ב- <code>{<var>M</var>}</code>.</p>
+					<p>אפשר לכתוב זאת כך: <code>\dfrac{<var>M</var>}{<var>M</var>}</code>, שזה גם שווה ל- <code>1</code> לאחר צמצום.
+					<p>אם כך, אנו יכולים לפתור את הבעיה על ידי הכפלת השבר שמשמאל ב- <code>1</code>.</p>
+				</div>
+				<p>אנו מקבלים במקרה כזה את המשוואה הבאה: <code>\dfrac{<var>A</var>}{<var>B</var>} \times \dfrac{<var>M</var>}{<var>M</var>} = \dfrac{<var>C</var>}{<var>D</var>} </code> לכן התשובה היא  <code><var>D</var></code>.</p>
+			</div>
+		</div>
+
+		<div>
+			<p class="question">איזה מספר יכול להחליף את הסימן  <code><var>SYMBOL</var></code> בנוסחה שלמטה?</p>
+			<p><code>\dfrac{<var>A</var>}{<var>B</var>} = \dfrac{<var>SYMBOL</var>}{<var>D</var>}</code></p>
+			<div class="solution" data-forms="integer"><var>C</var></div>
+			<div class="hints">
+				<p>על מנת לקבל את המכנה הימני  <code><var>D</var></code>, יש להכפיל את המכנה השמאלי ששווה ל-<code><var>B</var></code> ב-<code><var>M</var></code>.</p>
+				<p>כדי למצוא את המונה הימני, הכפילו את המונה השמאלי ב- <code><var>M</var></code> גם כן.</p>
+				<p><code><var>A</var> \times <var>M</var> = <var>C</var></code></p>
+				<div>
+					<p>שימו לב שגם המונה וגם המכנה מוכפלים ב- <code>{<var>M</var>}</code>.</p>
+					<p>אפשר לכתוב זאת כך: <code>\dfrac{<var>M</var>}{<var>M</var>}</code>, שזה גם שווה ל- <code>1</code> לאחר צמצום.
+					<p>אם כך, אנו יכולים לפתור את הבעיה על ידי הכפלת השבר שמשמאל ב- <code>1</code>.</p>
+				</div>
+				<p>אנו מקבלים במקרה כזה את המשוואה הבאה: <code>\dfrac{<var>A</var>}{<var>B</var>} \times \dfrac{<var>M</var>}{<var>M</var>} = \dfrac{<var>C</var>}{<var>D</var>} </code> לכן התשובה היא  <code><var>C</var></code>.</p>
+			</div>
+		</div>
+
+		<div>
+			<p class="question">איזה מספר יכול להחליף את הסימן  <code><var>SYMBOL</var></code> בנוסחה שלמטה?</p>
+			<p><code>\dfrac{<var>C</var>}{<var>D</var>} = \dfrac{<var>A</var>}{<var>SYMBOL</var>}</code></p>
+			<div class="solution" data-forms="integer"><var>B</var></div>
+			<div class="hints">
+				<p>כדי לקבל את המונה הימני    <code><var>A</var></code>, יש לחלק את המונה השמאלי ששווה ל-<code><var>C</var></code> ב- <code><var>M</var></code>.</p>
+				<p>כדי למצוא את המכנה הימני, יש לחלק את המכנה השמאלי ב- <code><var>M</var></code> גם כן.</p>
+				<p><code><var>D</var> \div <var>M</var> = <var>B</var></code></p>
+				<div>
+					<p>שימו לב שגם המונה וגם המכנה מחולקים ב- <code>{<var>M</var>}</code>.</p>
+					<p>אפשר לכתוב זאת כך: <code>\dfrac{<var>M</var>}{<var>M</var>}</code>, שזה גם שווה ל- <code>1</code> לאחר צמצום.
+					<p>אם כך, אנו יכולים לפתור את הבעיה על ידי חלוקת השבר השמאלי ב- <code>1</code>.</p>
+				</div>
+				<p>אנו מקבלים במקרה כזה את המשוואה הבאה: <code>\dfrac{<var>C</var>}{<var>D</var>} \div \dfrac{<var>M</var>}{<var>M</var>} = \dfrac{<var>A</var>}{<var>B</var>} </code> לכן התשובה היא  <code><var>B</var></code>.</p>
+			</div>
+		</div>
+
+		<div>
+			<p class="question">איזה מספר יכול להחליף את הסימן  <code><var>SYMBOL</var></code> בנוסחה שלמטה?</p>
+			<p><code>\dfrac{<var>C</var>}{<var>D</var>} = \dfrac{<var>SYMBOL</var>}{<var>B</var>}</code></p>
+			<div class="solution" data-forms="integer"><var>A</var></div>
+			<div class="hints">
+				<p>על מנת לקבל את המכנה הימני  <code><var>B</var></code>, יש לחלק את המכנה השמאלי ששווה ל-  <code><var>D</var></code> ב- <code><var>M</var></code>.</p>
+				<p>כדי למצוא את המונה הימני, חלקו את המונה השמאלי ב- <code><var>M</var></code> גם כן.</p>
+				<p><code><var>C</var> \div <var>M</var> = <var>A</var></code></p>
+				<div>
+					<p>שימו לב שגם המונה וגם המכנה מחולקים ב- <code>{<var>M</var>}</code>.</p>
+					<p>אפשר לכתוב זאת כך: <code>\dfrac{<var>M</var>}{<var>M</var>}</code>, שזה גם שווה ל- <code>1</code> לאחר צמצום.
+					<p>אם כך, אנו יכולים לפתור את הבעיה על ידי חלוקת השבר השמאלי ב- <code>1</code>.</p>
+				</div>
+				<p>אנו מקבלים במקרה כזה את המשוואה הבאה: <code>\dfrac{<var>C</var>}{<var>D</var>} \div \dfrac{<var>M</var>}{<var>M</var>} = \dfrac{<var>A</var>}{<var>B</var>} </code> לכן התשובה היא  <code><var>A</var></code>.</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

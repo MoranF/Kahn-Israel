@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>השוואת שברים 1</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<!--
+		Compares fractions that have the same numerator or have the same denominator.
+		TODO: would like to draw overlapping circles or rectangle slices for hints.
+	-->
+	<div class="exercise">
+		<div class="problems">
+			<div id="same-numerator">
+				<div class="vars" data-ensure="DEN_1 !== DEN_2">
+					<var id="NUM_1">randRange( 1, 14 )</var>
+					<var id="DEN_1">randRange( NUM_1 + 1, 15 )</var>
+
+					<var id="NUM_2">NUM_1</var>
+					<var id="DEN_2">randRange( NUM_2 + 1, 15 )</var>
+
+					<var id="SOLUTION">(function() {
+						if ( DEN_1 &lt; DEN_2 ) {
+							return "&gt;";
+						} else {
+							return "&lt;";
+						}
+					})()</var>
+					<var id="MORE">DEN_1 > DEN_2 ? "יותר" : "פחות"</var>
+					<var id="SMALLER">DEN_1 > DEN_2 ? "קטנה" : "גדולה"</var>
+					<var id="SMALLERS">DEN_1 > DEN_2 ? "קטנות" : "גדולות"</var>
+					<var id="LESS">DEN_1 > DEN_2 ? "פחות" : "יותר"</var>
+					<var id="BIGGER">SMALLER === "קטנה" ? "גדולה" : "קטנה"</var>
+					<var id="BIGGERS">SMALLER === "קטנה" ? "גדולות" : "קטנות"</var>
+				</div>
+
+				<div class="problem">
+					<p>מלאו את החסר:</p>
+					<p>
+						
+						 <code>\dfrac{<var>NUM_2</var>}{<var>DEN_2</var>}</code>____<code>\dfrac{<var>NUM_1</var>}{<var>DEN_1</var>}</code>
+					</p>
+				</div>
+				<p class="solution"><code><var>SOLUTION</var></code></p>
+				<ul class="choices" data-category="true">
+					<li><code>&lt;</code></li>
+					<li><code>&gt;</code></li>
+				</ul>
+				<div class="hints">
+					<div>
+						<p>זה כמו להשוות שתי פיצות באותו הגודל כאשר את הראשונה חילקנו ל- <var>DEN_1</var> פרוסות שוות ואת השניה חילקנו ל- <var>DEN_2</var> פרוסות שוות.</p>
+						<div style="height: 150px;">
+							<div class="graphie" style="float: left">
+								init({ range: [ [-3, 3], [-3, 3] ], scale: 25 });
+								piechart( [NUM_1, DEN_1 - NUM_1], ["#e00", "#999"], 2 );
+							</div>
+							<div class="graphie" style="float: left">
+								init({ range: [ [-3, 3], [-3, 3] ], scale: 25 });
+								piechart( [NUM_2, DEN_2 - NUM_2], ["#e00", "#999"], 2 );
+							</div>
+						</div>
+					</div>
+					<p>שימו לב שאם נחלק את הפיצה ליותר פרוסות נקבל פרוסות קטנות יותר.</p>
+					<p>השבר משמאל מייצג את הפיצה שחולקה ל<var>MORE</var> פרוסות, ולכן כל פרוסה  <var>SMALLER</var> יותר.</p>
+					<p><var>plural_heb(NUM_1,"פרוסה "+SMALLER,"פרוסות "+SMALLERS)</var> יותר זה סך הכל <var>LESS</var> פיצה מאשר <var>plural_heb(NUM_2,"פרוסה "+BIGGER,"פרוסות "+BIGGERS)</var>
+					<p>לכן, <code>\dfrac{<var>NUM_1</var>}{<var>DEN_1</var>} <var>SOLUTION</var> \dfrac{<var>NUM_2</var>}{<var>DEN_2</var>}</code>.</p>
+				</div>
+			</div>
+
+			<div id="same-denominator">
+				<div class="vars" data-ensure="NUM_1 !== NUM_2">
+					<var id="NUM_1">randRange( 1, 14 )</var>
+					<var id="DEN_1">randRange( NUM_1 + 1, 15 )</var>
+
+					<var id="DEN_2">DEN_1</var>
+					<var id="NUM_2">randRange( 1, DEN_2 - 1 )</var>
+
+					<var id="SOLUTION">(function() {
+						if ( NUM_1 &lt; NUM_2 ) {
+							return "&lt;";
+						} else {
+							return "&gt;";
+						}
+					})()</var>
+					<var id="LESS">NUM_1 &lt; NUM_2 ? "פחות" : "יותר"</var>
+				</div>
+
+				<div class="problem">
+					<p>מלאו את החסר:</p>
+					<p>
+						<code>\dfrac{<var>NUM_1</var>}{<var>DEN_1</var>}</code>
+						____ <code>\dfrac{<var>NUM_2</var>}{<var>DEN_2</var>}</code>
+					</p>
+				</div>
+				<p class="solution"><code><var>SOLUTION</var></code></p>
+				<ul class="choices" data-category="true">
+					<li><code>&lt;</code></li>
+					<li><code>&gt;</code></li>
+				</ul>
+				<div class="hints">
+					<div>
+						<p>זה כמו להשוות שתי פיצות באותו גודל אותן חילקנו ל- <var>DEN_1</var> פרוסות שוות.</p>
+						<p>מכיוון ששתי הפיצות חולקו לאותו מספר פרוסות, גודל כל הפרוסות שוות.</p>
+						<div style="height: 150px;">
+							<div class="graphie" style="float: left">
+								init({ range: [ [-3, 3], [-3, 3] ], scale: 25 });
+								piechart( [NUM_1, DEN_1 - NUM_1], ["#e00", "#999"], 2 );
+							</div>
+							<div class="graphie" style="float: left">
+								init({ range: [ [-3, 3], [-3, 3] ], scale: 25 });
+								piechart( [NUM_2, DEN_2 - NUM_2], ["#e00", "#999"], 2 );
+							</div>
+						</div>
+					</div>
+					<p><var>plural_heb( NUM_1, "פרוסה","פרוסות", "f" )</var> זה סך הכל <var>LESS</var> פיצה מאשר <var>plural_heb( NUM_2, "פרוסה","פרוסות", "f" )</var>.</p>
+					<p>לכן, <code>\dfrac{<var>NUM_1</var>}{<var>DEN_1</var>} <var>SOLUTION</var> \dfrac{<var>NUM_2</var>}{<var>DEN_2</var>}</code>.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

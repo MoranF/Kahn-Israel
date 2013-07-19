@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html data-require="math">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>המרת אחוזים לשברים עשרוניים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+<div class="exercise">
+	<div class="vars">
+		<var id="PCT">randRange( 10, 1999 ) / 10</var> <!-- between 1% and 199.9% with 1 decimal place-->
+		<var id="SOLN">roundTo( 5 , PCT / 100 )</var>
+	</div>
+
+	<div class="problems">
+		<div id="original" data-weight="1">
+			<p class="question">בטאו את  <code><var>PCT</var>\%</code> כשבר עשרוני.</p>
+			<div class="solution" data-type="decimal"><var>SOLN</var></div>
+
+			<div class="hints">
+				<p><code><var>PCT</var>\%</code> הם למעשה  <code><var>PCT</var></code> חלקי 100</p>
+				<p><code><var>PCT</var>\%</code> = <code>\dfrac{<var>PCT</var>}{<var>100</var>}</code></p>
+				<p>על מנת לחלק ב-100, אתם יכולים פשוט להזיז את הנקודה העשרונית בשני מקומות לשמאל.</p>
+				<p><code><var>PCT</var> \rightarrow <var>roundTo( 5, PCT / 10 )</var> \rightarrow <var>SOLN</var></code></p>
+				<p>לכן  <code><var>PCT</var>\%</code> = <code><var>SOLN</var></code><p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

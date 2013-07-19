@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html data-require="math graphie word-problems interactive">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>סידור עצמים</title>
+    <script src="../khan-exercise.js"></script>
+    <style>
+        .sortable {
+            padding: 13px;
+        }
+
+        .sortable > ul > li {
+            background-color: #eee;
+            border: 1px solid #eee;
+            width: 110px;
+            height: 110px;
+        }
+        .sort-key {
+            visibility: hidden;
+            position: absolute;
+        }
+    </style>
+    <script> 
+    function heb(eng)
+    {
+		if(eng=="square"){return "ריבוע";}
+        else if(eng=="circle"){return "עיגול";} 
+        else {return "משולש";}
+	}
+    </script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="vars">
+        <var id="SHAPE">randFromArray(["square", "circle", "triangle"])</var>
+        <var id="HEBSHAPE">heb(SHAPE)</var>
+        <var id="COLORS">shuffle(["#aec6f4", "#fdcf76", "#8ed4b8", "#fd79d4"])</var>
+        <var id="DRAW">{}</var>
+        <var id="SORTER">createSorter()</var>
+    </div>
+
+    <p class="question"></p>
+
+    <div class="problem">
+        <div class="graphie">
+			
+            DRAW.square = function(x, y, size, color) {
+                KhanUtil.currentGraph.path([[x - size, y + size], [x + size, y + size], [x + size, y - size],
+                    [x - size, y - size], true ],
+                    { strokeWidth: 2, stroke: "black", fill: color });
+            };
+            DRAW.circle = function(x, y, size, color) {
+                KhanUtil.currentGraph.circle([x, y], size, { strokeWidth: 2, stroke: "black", fill: color });
+            };
+            DRAW.triangle = function(x, y, size, color) {
+                KhanUtil.currentGraph.path([[x, y + size], [x + (2 * size) / sqrt(3), y - size / sqrt(3)],
+                    [x - (2 * size) / sqrt(3), y - size / sqrt(3)], true],
+                    { strokeWidth: 2, stroke: "black", fill: color });
+            };
+        </div>
+        <ul id="sortable">
+            <li data-each="SIZES as I, SIZE">
+                <span class="sort-key"><var>SIZE</var></span>
+                <div class="graphie add-unique-id">
+                    $(".add-unique-id").eq(I).attr("id", "unique-" + I);
+                    init({ range: [[-11, 11], [-11, 11]], scale: [5, 5] });
+                    DRAW[SHAPE](0, 0, SIZE, COLORS[I]);
+                </div>
+            </li>
+        </ul>
+        <var>SORTER.init("sortable")</var>
+    </div>
+
+    <div class="problems">
+        <div id="small-to-large">
+            <div class="vars" data-apply="appendVars">
+                <var id="SIZES" data-ensure="SIZES.join(',') !== sortNumbers(SIZES).join(',')">
+                    shuffle([4, 5, 6, 7, 8, 9], 4)
+                </var>
+                <var id="SOLUTION">_.map(sortNumbers(SIZES), function(el) {
+                    return "ABCD"[_.indexOf(SIZES, el)];
+                })</var>
+            </div>
+
+            <p class="question">
+                סדר את ה<var>HEBSHAPE</var>ים מהקטן לגדול.
+            </p>
+
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    גרור את ה<var>HEBSHAPE</var>ים מימין לשמאל כדי לסדר אותם מקטן לגדול
+                </div>
+                <div class="guess">SORTER.getContent()</div>
+                <div class="validator-function">
+                    return guess.join(",") === SIZES.sort().join(",");
+                </div>
+                <div class="show-guess">
+                    SORTER.setContent(guess);
+                </div>
+            </div>
+
+            <div class="hints">
+                <div data-each="sortNumbers(SIZES) as I, SIZE">
+                    <div data-if="I === 0" class="graphie">
+                        _(4).times(function(i) {
+                            $("#unique-" + i).data("graphie").label([0, 0], "ABCD"[i]);
+                        });
+                    </div>
+                    <p><span data-if="I === 0">הקטן</span>
+                        <span data-else-if="I === SIZES.length - 1">הגדול</span>
+                        <span data-else>הכמעט הכי קטן</span>
+                         הינו <var>HEBSHAPE</var> <code><var>"ABCD"[_.indexOf(SIZES, SIZE)]</var>
+                        </code><span data-if="I === 0">, אז הוא יגרר לימין </span><span data-else-if="I === SIZES.length - 1">, אז הוא יגרר לשמאל</span>.
+                    </p>
+
+                    <div class="graphie">
+                        init({ range: [[-11, 80], [-11, 11]], scale: [5, 5] });
+                        var x = 0;
+                        _.each(_.first(sortNumbers(SIZES), I + 1), function(size, i) {
+                            DRAW[SHAPE](x, 0, size, COLORS[_.indexOf(SIZES, size)]);
+                            label([x, 0], "ABCD"[_.indexOf(SIZES, size)]);
+                            x += 22;
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="large-to-small">
+            <div class="vars" data-apply="appendVars">
+                <var id="SIZES" data-ensure="SIZES.join(',') !== sortNumbers(SIZES).reverse().join(',')">
+                    shuffle([4, 5, 6, 7, 8, 9], 4)
+                </var>
+                <var id="SOLUTION">_.map(sortNumbers(SIZES).reverse(), function(el) {
+                    return "ABCD"[_.indexOf(SIZES, el)];
+                })</var>
+            </div>
+
+            <p class="question">
+               סדר את ה <var>HEBSHAPE</var>ים מהקטן לגדול מימין לשמאל.
+            </p>
+
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    גרור את ה<var>HEBSHAPE</var>ים מימין לשמאל כדי לסדר אותם מקטן לגדול
+                </div>
+                <div class="guess">SORTER.getContent()</div>
+                <div class="validator-function">
+                    return guess.join(",") === SIZES.sort().reverse().join(",");
+                </div>
+                <div class="show-guess">
+                    SORTER.setContent(guess);
+                </div>
+            </div>
+
+            <div class="hints">
+                <div data-each="sortNumbers(SIZES).reverse() as I, SIZE">
+                    <div data-if="I === 0" class="graphie">
+                        _(4).times(function(i) {
+                            $("#unique-" + i).data("graphie").label([0, 0], "ABCD"[i]);
+                        });
+                    </div>
+                    <p><span data-if="I === 0">הגדול ביותר </span>
+                        <span data-else-if="I === SIZES.length - 1">הקטן ביותר </span>
+                        <span data-else>הכמעט גדול ביותר</span>
+                        הינו  <var>HEBSHAPE</var> <code><var>"ABCD"[_.indexOf(SIZES, SIZE)]</var>
+                        </code><span data-if="I === 0">, אז הוא יגרר לימין </span><span data-else-if="I === SIZES.length - 1">, אז הוא יגרר לשמאל</span>.
+                    </p>
+
+                    <div class="graphie">
+                        init({ range: [[-11, 80], [-11, 11]], scale: [5, 5] });
+                        var x = 0;
+                        _.each(_.first(sortNumbers(SIZES).reverse(), I + 1), function(size, i) {
+                            DRAW[SHAPE](x, 0, size, COLORS[_.indexOf(SIZES, size)]);
+                            label([x, 0], "ABCD"[_.indexOf(SIZES, size)]);
+                            x += 22;
+                        });
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

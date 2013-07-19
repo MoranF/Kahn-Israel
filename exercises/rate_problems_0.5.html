@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html data-require="math word-problems word-problems-heb">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>בעיות קצב 0.5</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="vars">
+		<var id="INDEX">randRange( 0, 3 )</var>
+		<var id="RATE">( INDEX === 0 ? randRange( 5, 11 ) * 10 : randRange( 5, 25 ) )</var>
+		<var id="TIME">( INDEX === 0 ? randRange( 10, 59 ) : randRange( 2, 15 ) )</var>
+		<var id="AMOUNT">TIME * RATE</var>
+		<var id="VERB">[ "לארוז", "לאכול", "לבעוט", "לצייר" ][ INDEX ]</var>
+		<var id="NOUN">[ "ארטיק", "ממתק", "כדור", "ציור" ][ INDEX ]</var>
+		<var id="TIME_UNIT">[ "דקות", "דקות", "דקות", "חודשים" ][ INDEX ]</var>
+		<var id="TIME_UNIT_ONE">[ "דקה", "דקה", "דקה", "חודש" ][ INDEX ]</var>
+		<var id="PROJECT1">[ AMOUNT + " ארטיקים ", "שקית של " + AMOUNT + " ממתקים", "שק של " + AMOUNT + " כדורים", AMOUNT + " ציורים" ][ INDEX ]</var>
+		<var id="PROJECT2">[ "קופסא", "שקית ממתקים", "שק הכדורים במגרש", "ציורים בגלרית האומנות" ][ INDEX ]</var>
+		<var id="PROJECT3">[ "קופסא", "שקית", "שק", "גלריה" ][ INDEX ]</var>
+	</div>
+
+	<div class="problems">
+		<div id="time">
+			<p class="question">אם אדם יכול  <var>VERB</var> <var>RATE</var> <var>NOUN</var>ים ב<var>TIME_UNIT_ONE</var>, כמה <var>TIME_UNIT</var> יקח לו  <var>VERB</var> <var>PROJECT1</var>?</p>
+			
+			<div class="solution" data-type="multiple">
+					<p><span class="sol" data-forms="integer"><var>TIME</var></span> <var>TIME_UNIT</var></p>
+			</div>
+
+			<div class="hints">
+				<p><code> \text{קצב} \times \text{זמן} =\text{כמות}</code></p>
+				<p><code>\text{<var>NOUN</var>ים} <var>AMOUNT</var> = <var>RATE</var>\dfrac{\text{ <var>NOUN</var>ים}}{\text{<var>TIME_UNIT</var>}} \times \text{זמן ב<var>TIME_UNIT</var>}</code></p>
+				<p><code>\text{זמן ב<var>TIME_UNIT</var>} = \dfrac{<var>AMOUNT</var>\text{ <var>NOUN</var>ים}}{<var>RATE</var>\dfrac{\text{<var>NOUN</var>ים}}{\text{<var>TIME_UNIT</var>}}}</code></p>
+				<p><code>\text{זמן ב<var>TIME_UNIT</var>} = \dfrac{<var>AMOUNT</var>}{<var>RATE</var>}\text{ <var>TIME_UNIT</var>}</code></p>
+				<p><code>\text{זמן ב<var>TIME_UNIT</var>} = <var>TIME</var>\text{ <var>TIME_UNIT</var>}</code></p>
+			</div>
+		</div>
+		<div id="amount">
+			<p class="question">אם  אדם יכול <var>VERB</var> <var>RATE</var> <var>NOUN</var>ים ב<var>TIME_UNIT_ONE</var> ולקח לו <var>TIME</var> <var>TIME_UNIT</var> <var>VERB</var> את  ה<var>PROJECT2</var>, כמה <var>NOUN</var>ים יש ב<var>PROJECT3</var>?</p>
+			
+			<div class="solution" data-type="multiple">
+					<p><span class="sol" data-forms="integer"><var>AMOUNT</var></span> <var>NOUN</var>ים</p>
+			</div>
+
+			<div class="hints">
+				<p><code> \text{כמות} = \text{קצב} \times \text{זמן} </code></p>
+				<p><code>\text{כמות של <var>NOUN</var>ים} = <var>RATE</var>\dfrac{\text{<var>NOUN</var>ים}}{\text{<var>TIME_UNIT</var>}} \times <var>TIME</var>\text{ <var>TIME_UNIT</var>}</code></p>
+				<p><code>\text{כמות של <var>NOUN</var>ים} = <var>RATE</var> \times <var>TIME</var>\text{ <var>NOUN</var>ים}</code></p>
+				<p><code>\text{כמות של  <var>NOUN</var>ים} = <var>AMOUNT</var>\text{ <var>NOUN</var>ים}</code></p>
+			</div>
+		</div>
+		<div id="rate">
+			<p class="question">אם אדם יכול <var>VERB</var> <var>PROJECT1</var> ב<var>TIME</var> <var>TIME_UNIT</var>, כמה <var>NOUN</var>ים ב<var>TIME_UNIT_ONE</var> הוא יכול <var>VERB</var>?</p>
+			<div class="solution" data-type="multiple">
+					<p><span class="sol" data-forms="integer"><var>RATE</var></span> <var>NOUN</var>ים ב<var>TIME_UNIT_ONE</var></p>
+			</div>
+
+			<div class="hints">
+				<p><code> \text{קצב} \times \text{זמן} =\text{כמות}</code></p>
+				<p><code> \text{ <var>NOUN</var>ים} <var>AMOUNT</var>= \text{קצב  <var>NOUN</var>ים <var>TIME_UNIT_ONE</var>} \times <var>TIME</var>\text{ <var>TIME_UNIT</var>}</code></p>
+				<p><code>\text{קצב <var>NOUN</var>ים <var>TIME_UNIT_ONE</var>} = \dfrac{<var>AMOUNT</var>\text{ <var>NOUN</var>ים}}{<var>TIME</var>\text{ <var>TIME_UNIT</var>}}</code></p>
+				<p><code>\text{קצב <var>NOUN</var>ים <var>TIME_UNIT_ONE</var>} = \dfrac{<var>AMOUNT</var>}{<var>TIME</var>}\text{<var>NOUN</var>ים ב<var>TIME_UNIT_ONE</var>}</code></p>
+				<p><code>\text{קצב <var>NOUN</var>ים <var>TIME_UNIT_ONE</var>} = <var>RATE</var>\text{ <var>NOUN</var>ים  ב<var>TIME_UNIT_ONE</var>}</code></p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

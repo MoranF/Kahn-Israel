@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html data-require="math">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>המרת אחוזים לשברים עשרוניים</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div>
+			<div class="vars">
+				<var id="PERCENT">roundTo( 1, randRange( 100, 1500 ) / 10 )</var>
+				<var id="DECIMAL">roundTo( 5, PERCENT / 100 )</var>
+			</div>
+			<p>בטאו את האחוז הבא כשבר עשרוני:</p>
+			<p class="question"><code><var>PERCENT</var>\%</code></p>
+			<p class="solution" data-forms="decimal"><var>DECIMAL</var></p>
+			<div class="hints">
+				<div>
+					<p><code><var>PERCENT</var></code> אחוז = <code><var>PERCENT</var></code> חלקי מאה</p>
+					<p><code><var>PERCENT</var>\% = \dfrac{<var>PERCENT</var>}{100}</code></p>
+				</div>
+				<div>
+					<p><code>\hphantom{<var>PERCENT</var>\%} = <var>DECIMAL</var></code></p>
+				</div>
+				<p>דרך נוספת להמיר אחוז לשבר עשרוני היא לחלק ב- <code>100</code> (או להזיז את הנקודה העשרונית שני מקומות לשמאל) ולהוריד את סימן האחוז.</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

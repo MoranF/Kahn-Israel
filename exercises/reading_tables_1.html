@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html data-require="math word-problems graphie">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>קריאת טבלאות 1</title>
+	<script src="../khan-exercise.js"></script>
+	<style>
+		.reading span {
+			width: 80px;
+		}
+		.reading span:first-child {
+			width: 100px;
+		}
+	</style>
+</head>
+<body>
+	<div class="exercise">
+	<div class="problems">
+		<div>
+			<div class="vars">
+				<var id="INDEX">randRange( 0, 3 )</var>
+				<var id="ROWS">[ [ school(1), school(2), school(3), school(4) ], [ person(1), person(2), person(3), person(4) ], [ person(1), person(2), person(3), person(4) ],[ "ישראל", "גרמניה", "הולנד", "ארה'ב" ] ][ INDEX ]</var>
+				<var id="COLUMNS">[ [ "כיתה ג'", "כיתה ד'", "כיתה ה'", "סך הכל" ], [ "ינואר", "פברואר", "מרץ", "סך הכל" ], [ "רבע ראשון", "רבע שני", "רבע שלישי", "רבע רביעי", "סופי" ], [ "קיץ", "סתיו", "חורף", "אביב", "סופי" ] ][ INDEX ]</var>
+				<var id="ENROLLMENTS">
+					(function() {
+						var enrollments = [];
+						var classMin = [ 60, 0, 2, 20 ][ INDEX ];
+						var classMax = [ 80, 6, 10, 40 ][ INDEX ];
+						for ( var i = 0; i &lt; ROWS.length; i++ ) {
+							var enroll = randRange( classMin, classMax, COLUMNS.length - 1 );
+							var total = 0;
+							$.each( enroll, function( i, e ) {
+								total += e;
+							} );
+							enroll.push( total );
+							enrollments.push( enroll );
+						}
+						return enrollments;
+					})()
+				</var>
+				<var id="COL_INDEX">randRange( 0, COLUMNS.length - 1 )</var>
+				<var id="ROW_INDEX">randRange( 0, ROWS.length - 1 )</var>
+				<var id="ANSWER">ENROLLMENTS[ ROW_INDEX ][ COL_INDEX ]</var>
+				<var id="PROBLEM">[ "מראה את כמות הרשמת התלמידים ב4 בתי ספר יסודיים שונים מכיתה ג' עד כיתה ה'", "מראה את כמות התרנגולות אשר נמכרו על ידי 4 חברים מינואר עד מרץ", "מראה את כמות הנקודות עבור כל שחקן במשחק כדורסל", "מראה את כמות הלוחות הסולאריות אשר הותקנו במדינות השונות השנה" ][ INDEX ]</var>
+				<var id="QUESTION">(function() {
+					if ( COL_INDEX === COLUMNS.length - 1 ) {
+						return [ "כמה תלמידים יש בבית הספר  " + ROWS[ ROW_INDEX ] + " בסך הכל? ", "כמה תרנגולות נמכרו על ידי  " + ROWS[ ROW_INDEX ] + " בסך בכל? ", "כמה נקודות נעשו על ידי " + ROWS[ ROW_INDEX ] + " בסך הכל? ", "כמה לוחות סולאריות הותקנו ב" + ROWS[ ROW_INDEX ] + "  בסך הכל? " ][ INDEX ];
+					} else {
+						return [ "כמה תלמידים נרשמו ל" + COLUMNS[ COL_INDEX ] + " בבית ספר " + ROWS[ ROW_INDEX ] + "?", "כמה תרנגולות מכר  " + ROWS[ ROW_INDEX ] + " בחודש  " + COLUMNS[ COL_INDEX ] + "?", "כמה נקודות נעשו על ידי " + ROWS[ ROW_INDEX ] + " ב" + COLUMNS[ COL_INDEX ] + "?", "כמה לוחות סולאריות הותקנו ב" + ROWS[ ROW_INDEX ] + " ב" + COLUMNS[ COL_INDEX ] + "?" ][ INDEX ];
+					}
+				})()
+				</var>
+				<var id="HEADER">[ "בתי ספר", "חקלאים", "שחקנים", "מדינות" ][ INDEX ]</var>
+				<var id="UNIT">[ "תלמידים", "תרנגולות", "נקודות", "לוחות סולריות" ][ INDEX ]</var>
+				<var id="ROW_HINT">[ "כמות הרשמת התלמידים בבית הספר " + ROWS[ ROW_INDEX ] , "כמות התרנגולות הנמכרו על ידי " + ROWS[ ROW_INDEX ], " כמות הנקודות של " + ROWS[ ROW_INDEX ], " כמות הלוחות הסולאריות אשר הותקנו ב" + ROWS [ ROW_INDEX ] ][ INDEX ]</var>
+				<var id="COL_HINT">
+					(function() {
+						if ( COL_INDEX === COLUMNS.length - 1 ) {
+							return [ "המספר הכולל של התלמידים בכל בית ספר", "המספר התרנגולות הנמכרו על ידי כל אדם",  "המספר הנקודות עבור כל אדם", " המספר הכולל של לוחות סולריות אשר הותקנו בכל מדינה " ][ INDEX ];
+						} else {
+							return [ "מספר תלמידי  " + COLUMNS[ COL_INDEX ] + " בכל בית ספר", "מספר התרנגולות הנמכרו בחודש " + COLUMNS[ COL_INDEX ], "מספר הנקודות הנעשו ב " + COLUMNS[ COL_INDEX ], "מספר הלוחות הסולאריות ההותקנו ב" + COLUMNS[ COL_INDEX ] ][ INDEX ];
+						}
+					})()
+				</var>
+				<var id="FINAL_HINT">
+				                    [ "ישנם " + ANSWER + " תלמידי  " + COLUMNS[ COL_INDEX ] + " בבית ספר " + ROWS[ ROW_INDEX ] + ".", ( ANSWER === 1 ? " תרנגולת אחת נמכרה " : ANSWER + " תרנגולות נמכרו " )+ " על ידי "   +ROWS[ ROW_INDEX ] + " ב" + ( COL_INDEX === COLUMNS.length - 1 ? "סך הכל" : COLUMNS[ COL_INDEX ] )  + ".",  ANSWER + " נקודות נעשו על ידי " + ROWS[ ROW_INDEX ] + " ב" +( COL_INDEX === COLUMNS.length - 1 ? "סך הכל" : COLUMNS[ COL_INDEX ] )  + ".", "הותקנו " + ANSWER + " לוחות סולאריות ב" + ROWS[ ROW_INDEX ] + ( COL_INDEX === COLUMNS.length - 1 ? " שנה שעברה" : " ב" + COLUMNS[ COL_INDEX ] ) + "."][ INDEX ]
+
+				</var>
+			</div>
+			<p>הטבלה מתחת  <var>PROBLEM</var>.</p>
+			<p class="question"><var>QUESTION</var></p>
+			<div class="fake_header reading">
+				<span><var>HEADER</var></span><span data-each="COLUMNS as i, column"><var>column</var></span>
+			</div>
+			<div class="fake_row reading" data-each="ROWS as i, row">
+				<span><var>row</var></span><span data-each="ENROLLMENTS[i] as j, enrollment"><var>enrollment</var></span>
+			</div>
+			<div class="solution" data-type="multiple">
+				<span style="padding-right: 5px" class="sol"><var>ANSWER</var></span> <var>UNIT</var>
+			</div>
+
+			<div class="hints">
+				<div>
+					<p>השורה הכחולה מראה  <var>ROW_HINT</var>.</p>
+					<div class="graphie">
+						$( ".fake_row" ).eq( ROW_INDEX ).find( "span" )
+							.css( "background", KhanUtil.BLUE );
+					</div>
+				</div>
+				<div>
+					<p>העמודה הכתומה מראה  <var>COL_HINT</var>.</p>
+					<div class="graphie">
+						var nth = ":nth-child(" + ( COL_INDEX + 2 ) + ")";
+						$( ".fake_row span" + nth )
+							.css( "background", KhanUtil.ORANGE );
+						$( ".fake_header span" + nth )
+							.css( "background", KhanUtil.ORANGE );
+						$( ".fake_row" ).eq( ROW_INDEX ).find( "span" + nth )
+							.css( "background", "#aaa" );
+					</div>
+				</div>
+				<p><var>FINAL_HINT</var></p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

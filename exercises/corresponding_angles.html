@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html data-require="math graphie graphie-helpers angles">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>זויות מתאימות</title>
+	<script src="../khan-exercise.js"></script>
+</head>
+<body>
+	<div class="exercise">
+	<div class="vars">
+		<var id="ANCHOR">randRange( 20, 160 )</var>
+		<var id="KNOWN_INDEX">randRange( 0, 7 )</var>
+		<var id="UNKNOWN_INDEX">( KNOWN_INDEX + 4 ) % 8</var>
+		<var id="MEASURE">KNOWN_INDEX % 2 === 0 ? ANCHOR : 180 - ANCHOR</var>
+	</div>
+
+	<div class="problems">
+		<div>
+			<p>שני הישרים למטה מקבילים, וישנו ישר שלישי שחוצה אותם.</p>
+			<p class="question">אם אנו יודעים שגודלה של   <span class="hint_blue">הזוית הכחולה הוא <var>MEASURE</var> מעלות</span>, מהו גודלה של  <span class="hint_orange">הזוית הכתומה</span>?</p>
+			<p class="solution" data-forms="integer"><var>MEASURE</var></p>
+			<div class="graphie" id="parallel-lines">
+				init({
+					range: [ [ -1, 11 ], [-1, 4] ]
+				});
+				graph.pl = new ParallelLines( 0, 0, 10, 0, 3 );
+				graph.pl.draw();
+				graph.pl.drawTransverse( ANCHOR );
+				graph.pl.drawAngle( KNOWN_INDEX, true );
+				graph.pl.drawAngle( UNKNOWN_INDEX, false, "#FFA500" );
+			</div>
+		</div>
+	</div>
+
+	<div class="hints">
+		<p>שימו לב שהזוית הכחולה והכתומה נמצאות במיקום דומה אבל בנקודות חיתוך שונות. </p>
+		<p>דרך אחת לתאר את היחס בין שתי הזויות היא לומר שהן זויות מתאימות.</p>
+		<p>ישנה הוכחה מדוע זויות מתאימות שוות, אולם כרגע בואו נניח שמשפט זה נכון בלי לפרט את ההוכחה.</p>
+		<div>
+			<p>אם כך, גודלה של הזוית הכתומה הוא  <var>MEASURE</var> מעלות.</p>
+			<div class="graphie" data-update="parallel-lines">
+				graph.pl.drawAngle( UNKNOWN_INDEX, true, "#FFA500" );
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
